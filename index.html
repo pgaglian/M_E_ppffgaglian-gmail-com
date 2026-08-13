@@ -885,50 +885,45 @@ body.eclipse header{
     padding:12px;
     margin:12px;
 }
-/* ===== SOLO CELULAR ===== */
-
-@media screen and (max-width:768px){
-
-     /* Mostrar menú Android */
-
-    #menuAndroid{
-
-        display:flex;
-
-        flex-direction:column;
-
-        gap:20px;
-
-        padding:20px;
-
-    }
 
 
-    .modoMovil #menuAndroid button{
+/* ===== MENU MOVIL ===== */
 
-        width:100%;
+.modoMovil #menuAndroid{
 
-        height:90px;
+    display:flex;
 
-        border-radius:20px;
+    flex-direction:column;
 
-        background:linear-gradient(180deg,#353535,#1d1d1d);
+    gap:20px;
 
-        border:1px solid #666;
-
-        color:#FFD700;
-
-        font-size:26px;
-
-        font-weight:bold;
-
-        box-shadow:0 8px 20px rgba(0,0,0,.50);
-
-    }
-
-
+    padding:20px;
 
 }
+
+.modoMovil #menuAndroid button{
+
+    width:100%;
+
+    height:90px;
+
+    border-radius:20px;
+
+    background:linear-gradient(180deg,#353535,#1d1d1d);
+
+    border:1px solid #666;
+
+    color:#FFD700;
+
+    font-size:26px;
+
+    font-weight:bold;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.50);
+
+}
+
+
 @media screen and (max-width:768px){
 
     #detalleDiaClima button[onclick="abrirPronosticoCompleto()"]{
@@ -1062,6 +1057,7 @@ Manual
     style="
         cursor:pointer;
         text-decoration:none;
+margin-right:12px;
     "
     title="Instagram">
     📸
