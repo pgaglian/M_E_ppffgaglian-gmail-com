@@ -779,6 +779,8 @@ body.eclipse header{
 
 }
 
+
+
 /* =====================================
    POPUP CONFIGURACIÓN
 ===================================== */
@@ -1070,6 +1072,23 @@ margin-right:12px;
         title="WhatsApp">
         ☎️
     </span>
+
+</div>
+
+<div id="btnOpinion">
+
+    <strong>⭐ Calificanos!!</strong>
+
+    <span
+    id="btnOpinionAccion"
+    style="
+        cursor:pointer;
+        font-size:20px;
+    "
+    title="Dejanos tu opinión"
+    onclick="document.getElementById('popupOpinion').style.display='block'">
+    👍
+</span>
 
 </div>
 
@@ -2024,6 +2043,65 @@ font-size:18px;
     </div>
 
 </div>
+
+
+<!-- ===== VENTANA OPINIÓN ===== -->
+
+<div id="popupOpinion" style="display:none;">
+
+    <div class="popupContenido">
+
+        <h2>⭐ ¡Tu opinión nos ayuda!</h2>
+
+<p>
+    😊 Nos gustaría saber qué te pareció.
+</p>
+
+<p>
+    Elegí la opción que mejor representa tu experiencia:
+</p>
+
+<button>😍 ¡Excelente!</button>
+
+<button>😊 ¡Muy buena!</button>
+
+<button>🙂 Buena</button>
+
+<button>💡 Puede mejorar</button>
+
+<p style="margin-top:20px;">
+    💬 ¿Querés contarnos algo más?
+</p>
+
+<textarea
+    id="comentarioOpinion"
+    placeholder="Tu comentario es opcional..."
+    style="
+        width:100%;
+        min-height:90px;
+        box-sizing:border-box;
+        padding:10px;
+        border:none;
+        border-radius:10px;
+        background:#333;
+        color:white;
+        font-size:15px;
+        resize:vertical;
+    "
+></textarea>
+
+<button id="btnEnviarOpinion">
+    📤 Enviar opinión
+</button>
+
+        <button id="btnCancelarOpinion">
+            ❌ Cancelar
+        </button>
+
+    </div>
+
+</div>
+
 
 <div id="viewer">
 
