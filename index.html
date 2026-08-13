@@ -788,6 +788,17 @@ body.eclipse header{
 
 }
 
+#popupOpinion .opcionOpinion.seleccionada{
+
+    background:#555;
+
+    border:2px solid #FFD700;
+
+    color:#FFD700;
+
+}
+
+
 /* =====================================
    POPUP CONFIGURACIÓN
 ===================================== */
@@ -1026,6 +1037,10 @@ Manual
         ✔ Configuración guardada
 
     </div>
+
+<button id="btnCancelarTema">
+    ❌ Cancelar
+</button>
 
 </div>
 
@@ -1428,6 +1443,32 @@ onclick="mostrar('Redes')">
 </div>
 
 </div>
+
+<!-- =====================================
+     PATROCINADORES
+===================================== -->
+
+<div id="btnPatrocinadores"
+     style="
+        margin:25px auto;
+        max-width:500px;
+        padding:16px 20px;
+        background:#222;
+        border:1px solid #666;
+        border-radius:16px;
+        text-align:center;
+        color:#FFD700;
+        font-size:18px;
+        font-weight:bold;
+        cursor:pointer;
+        box-shadow:0 8px 20px rgba(0,0,0,.40);
+     ">
+
+    🤝 Conocé nuestros patrocinadores
+
+</div>
+
+
 
 <!-- =====================================
      MENÚ PRINCIPAL SOLO ANDROID
@@ -2068,14 +2109,21 @@ font-size:18px;
     Elegí la opción que mejor representa tu experiencia:
 </p>
 
-<button>😍 ¡Excelente!</button>
+<button class="opcionOpinion" data-valor="Excelente">
+    😍 ¡Excelente!
+</button>
 
-<button>😊 ¡Muy buena!</button>
+<button class="opcionOpinion" data-valor="Muy buena">
+    😊 ¡Muy buena!
+</button>
 
-<button>🙂 Buena</button>
+<button class="opcionOpinion" data-valor="Buena">
+    🙂 Buena
+</button>
 
-<button>💡 Puede mejorar</button>
-
+<button class="opcionOpinion" data-valor="Puede mejorar">
+    💡 Puede mejorar
+</button>
 <p style="margin-top:20px;">
     💬 ¿Querés contarnos algo más?
 </p>
@@ -2209,9 +2257,11 @@ const nombre = "Usuario";
 
 const usuario = "cliente@gmail.com";
 
-const correoSoporte = "soporte@miempresa.com";
+const correoSoporte = "ppffgaglian@gmail.com";
 
 const asuntoSoporte = "Consulta - Mi Espacio";
+
+let tipoEnvioCorreo = "soporte";
 
 const vencimiento = "2026-08-21";
 
@@ -2914,6 +2964,13 @@ btnTema.onclick = function(){
     }
 
 };
+
+document.getElementById("btnCancelarTema").onclick = function(){
+
+    panelTema.style.display = "none";
+
+};
+
 
 //========================
 // CAMBIO DE AMBIENTES
@@ -3840,10 +3897,72 @@ function aplicarEstadoAmbientes(){
 }
 
 //========================
+// OPINIÓN
+//========================
+
+let valoracionOpinion = "";
+
+document.querySelectorAll(".opcionOpinion").forEach(function(boton){
+
+    boton.onclick = function(){
+
+        document.querySelectorAll(".opcionOpinion").forEach(function(item){
+
+            item.classList.remove("seleccionada");
+
+        });
+
+        boton.classList.add("seleccionada");
+
+        valoracionOpinion = boton.dataset.valor;
+
+    };
+
+});
+
+//========================
+// ENVIAR OPINIÓN
+//========================
+
+document.getElementById("btnEnviarOpinion").onclick = function(){
+
+    tipoEnvioCorreo = "opinion";
+
+    if(valoracionOpinion === ""){
+
+        alert("😊 Elegí una opción para contarnos cómo fue tu experiencia.");
+
+        return;
+
+    }
+
+    const comentario =
+        document.getElementById("comentarioOpinion").value.trim();
+
+    document.querySelector("#popupSoporte h2").innerText =
+        "⭐ Enviar opinión";
+
+    document.getElementById("textoCorreo").innerText =
+        "¿Cómo desea enviar la opinión?";
+
+    document.getElementById("popupSoporte").style.display = "block";
+
+};
+
+
+//========================
 // SOPORTE
 //========================
 
 document.getElementById("btnSoporte").onclick = function(){
+
+    tipoEnvioCorreo = "soporte";
+
+    document.querySelector("#popupSoporte h2").innerText =
+        "✉️ Enviar consulta";
+
+    document.getElementById("textoCorreo").innerText =
+        "¿Cómo desea enviar la consulta?";
 
     document.getElementById("popupSoporte").style.display = "block";
 
@@ -3856,10 +3975,43 @@ document.getElementById("btnCancelarSoporte").onclick = function(){
 };
 
 
+document.getElementById("btnCancelarOpinion").onclick = function(){
+
+    document.getElementById("popupOpinion").style.display = "none";
+
+};
 
 document.getElementById("btnGmail").onclick = function(){
 
-    const cuerpo =
+    let cuerpo;
+    let asunto;
+
+    if(tipoEnvioCorreo === "opinion"){
+
+        const comentario =
+            document.getElementById("comentarioOpinion").value.trim();
+
+        asunto = "⭐ Opinión de usuario";
+
+        cuerpo =
+`Usuario: ${usuario}
+
+Fecha: ${new Date().toLocaleDateString()}
+
+Valoración: ${valoracionOpinion}
+
+Comentario:
+${comentario || "Sin comentario"}
+
+----------------------------------------
+
+`;
+
+    }else{
+
+        asunto = asuntoSoporte;
+
+        cuerpo =
 `Usuario: ${usuario}
 
 Fecha: ${new Date().toLocaleDateString()}
@@ -3870,13 +4022,15 @@ Escriba aquí su consulta.
 
 `;
 
+    }
+
     window.open(
 
         "https://mail.google.com/mail/?view=cm&fs=1" +
 
         "&to=" + encodeURIComponent(correoSoporte) +
 
-        "&su=" + encodeURIComponent(asuntoSoporte) +
+        "&su=" + encodeURIComponent(asunto) +
 
         "&body=" + encodeURIComponent(cuerpo),
 
@@ -3888,7 +4042,33 @@ Escriba aquí su consulta.
 
 document.getElementById("btnOutlook").onclick = function(){
 
-    const cuerpo =
+    let cuerpo;
+    let asunto;
+
+    if(tipoEnvioCorreo === "opinion"){
+
+        const comentario =
+            document.getElementById("comentarioOpinion").value.trim();
+
+        asunto = "⭐ Opinión de usuario";
+
+        cuerpo =
+`Usuario: ${usuario}
+
+Fecha: ${new Date().toLocaleDateString()}
+
+Valoración: ${valoracionOpinion}
+
+Comentario:
+${comentario || "Sin comentario"}
+
+----------------------------------------`;
+
+    }else{
+
+        asunto = asuntoSoporte;
+
+        cuerpo =
 `Usuario: ${usuario}
 
 Fecha: ${new Date().toLocaleDateString()}
@@ -3898,6 +4078,8 @@ Fecha: ${new Date().toLocaleDateString()}
 Escriba aquí su consulta.
 
 `;
+
+    }
 
     window.open(
 
@@ -3905,7 +4087,7 @@ Escriba aquí su consulta.
 
         "?to=" + encodeURIComponent(correoSoporte) +
 
-        "&subject=" + encodeURIComponent(asuntoSoporte) +
+        "&subject=" + encodeURIComponent(asunto) +
 
         "&body=" + encodeURIComponent(cuerpo),
 
@@ -3913,11 +4095,30 @@ Escriba aquí su consulta.
 
     );
 
-};
+};document.getElementById("btnMailto").onclick = function(){
 
-document.getElementById("btnMailto").onclick = function(){
+        let cuerpo;
 
-    const cuerpo =
+    if(tipoEnvioCorreo === "opinion"){
+
+        const comentario =
+            document.getElementById("comentarioOpinion").value.trim();
+
+        cuerpo =
+`Usuario: ${usuario}
+
+Fecha: ${new Date().toLocaleDateString()}
+
+Valoración: ${valoracionOpinion}
+
+Comentario:
+${comentario || "Sin comentario"}
+
+----------------------------------------`;
+
+    }else{
+
+        cuerpo =
 `Usuario: ${usuario}
 
 Fecha: ${new Date().toLocaleDateString()}
@@ -3928,9 +4129,14 @@ Escriba aquí su consulta.
 
 `;
 
+    }
     window.location.href =
         "mailto:" + encodeURIComponent(correoSoporte) +
-        "?subject=" + encodeURIComponent(asuntoSoporte) +
+        "?subject=" + encodeURIComponent(
+    tipoEnvioCorreo === "opinion"
+        ? "⭐ Opinión de usuario"
+        : asuntoSoporte
+) +
         "&body=" + encodeURIComponent(cuerpo);
 
 };
