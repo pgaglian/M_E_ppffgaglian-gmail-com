@@ -1445,32 +1445,6 @@ onclick="mostrar('Redes')">
 </div>
 
 <!-- =====================================
-     PATROCINADORES
-===================================== -->
-
-<div id="btnPatrocinadores"
-     style="
-        margin:25px auto;
-        max-width:500px;
-        padding:16px 20px;
-        background:#222;
-        border:1px solid #666;
-        border-radius:16px;
-        text-align:center;
-        color:#FFD700;
-        font-size:18px;
-        font-weight:bold;
-        cursor:pointer;
-        box-shadow:0 8px 20px rgba(0,0,0,.40);
-     ">
-
-    🤝 Conocé nuestros patrocinadores
-
-</div>
-
-
-
-<!-- =====================================
      MENÚ PRINCIPAL SOLO ANDROID
 ===================================== -->
 
@@ -1496,6 +1470,30 @@ onclick="mostrar('Redes')">
         </div>
 
     </button>
+
+</div>
+
+<!-- ===== MÓDULO PATROCINADORES ===== -->
+
+<div id="Patrocinadores" style="display:none;">
+
+    <div style="
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        gap:12px;
+        margin:20px 0;
+        font-size:22px;
+        font-weight:bold;
+    ">
+
+        <span>📢 Patrocinadores</span>
+
+        <span style="cursor:pointer;">🙌</span>
+
+        <span style="cursor:pointer;">🔍</span>
+
+    </div>
 
 </div>
 
@@ -2257,7 +2255,7 @@ const nombre = "Usuario";
 
 const usuario = "cliente@gmail.com";
 
-const correoSoporte = "ppffgaglian@gmail.com";
+const correoSoporte = "soporte@miempresa.com";
 
 const asuntoSoporte = "Consulta - Mi Espacio";
 
@@ -2372,6 +2370,8 @@ document.getElementById("btnVolverAndroid").style.display="none";
 
     document.getElementById("Clima").style.display="none";
 
+    document.getElementById("Patrocinadores").style.display="none";
+
 // Mostrar módulo elegido
 
 document.getElementById(id).style.display="block";
@@ -2464,6 +2464,8 @@ function inicio(){
     document.getElementById("tituloAmbientes").style.display="block";
 
     aplicarEstadoAmbientes();
+
+    document.getElementById("Patrocinadores").style.display="block";
 
 }
 
@@ -2915,6 +2917,8 @@ cargarOrdenAmbientes();
 aplicarEstadoAcciones();
 aplicarEstadoAmbientes();
 
+
+document.getElementById("Patrocinadores").style.display="block";
 
 //========================
 // ESTADO INICIAL ANDROID
