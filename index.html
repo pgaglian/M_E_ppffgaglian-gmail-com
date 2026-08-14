@@ -1473,29 +1473,6 @@ onclick="mostrar('Redes')">
 
 </div>
 
-<!-- ===== MÓDULO PATROCINADORES ===== -->
-
-<div id="Patrocinadores" style="display:none;">
-
-    <div style="
-        display:flex;
-        justify-content:flex-start;
-        align-items:center;
-        gap:12px;
-        margin:20px 0;
-        font-size:16px;
-        font-weight:normal;
-        color:#fff;
-    ">
-
-       <span style="color:#FFD700;">📢 Patrocinadores</span>
-
-    <span style="cursor:pointer;">🙌</span>
-      
-    </div>
-
-</div>
-
 <!-- ===== MÓDULO CLIMA ===== -->
 
 <div id="Clima" style="display:none;min-height:100vh;">
@@ -2254,13 +2231,13 @@ const nombre = "Usuario";
 
 const usuario = "cliente@gmail.com";
 
-const correoSoporte = "soporte@miempresa.com";
+const correoSoporte = "ppffgaglian@gmail.com";
 
 const asuntoSoporte = "Consulta - Mi Espacio";
 
 let tipoEnvioCorreo = "soporte";
 
-const vencimiento = "2026-08-21";
+const vencimiento = "2026-08-11";
 
 //=========================================================
 // FIN DATOS DEL CLIENTE
@@ -2369,8 +2346,6 @@ document.getElementById("btnVolverAndroid").style.display="none";
 
     document.getElementById("Clima").style.display="none";
 
-    document.getElementById("Patrocinadores").style.display="none";
-
 // Mostrar módulo elegido
 
 document.getElementById(id).style.display="block";
@@ -2443,10 +2418,8 @@ function inicio(){
         document.getElementById("menu").style.display="none";
         document.getElementById("tituloAmbientes").style.display="none";
 
-        document.getElementById("Patrocinadores").style.display="block";
-
         document.getElementById("menuAndroid").style.display="flex";
-        document.getElementById("btnVolverAndroid").style.display="none";                             
+                  document.getElementById("btnVolverAndroid").style.display="none";
 
         return;
     }
@@ -2465,8 +2438,6 @@ function inicio(){
     document.getElementById("tituloAmbientes").style.display="block";
 
     aplicarEstadoAmbientes();
-
-    document.getElementById("Patrocinadores").style.display="block";
 
 }
 
@@ -2919,8 +2890,6 @@ aplicarEstadoAcciones();
 aplicarEstadoAmbientes();
 
 
-document.getElementById("Patrocinadores").style.display="block";
-
 //========================
 // ESTADO INICIAL ANDROID
 //========================
@@ -2997,9 +2966,6 @@ function mostrarMenuAndroid(seccion){
 
     document.getElementById("menuAndroid").style.display="none";
     document.getElementById("btnVolverAndroid").style.display="block";
-    document.getElementById("Patrocinadores").style.display="none";
-
-
     document.querySelector("header").style.display="none";
     document.getElementById("panelCliente").style.display="none";
 
@@ -3098,9 +3064,7 @@ const esMovil = esAndroid || esAppleMobile;
 
 if(esMovil){
 
-    document.body.classList.add("modoMovil");
-
-
+document.body.classList.add("modoMovil");
     document.getElementById("btnGmail").style.display="none";
 
     document.getElementById("btnOutlook").style.display="none";
