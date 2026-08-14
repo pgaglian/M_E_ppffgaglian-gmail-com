@@ -2237,7 +2237,7 @@ const asuntoSoporte = "Consulta - Mi Espacio";
 
 let tipoEnvioCorreo = "soporte";
 
-const vencimiento = "2026-08-11";
+const vencimiento = "2026-08-15";
 
 //=========================================================
 // FIN DATOS DEL CLIENTE
@@ -2806,12 +2806,17 @@ if(diasRestantes < 0){
 if(diasRestantes >= 0){
 
     document.getElementById("txtDias").innerText =
-    diasRestantes + " días";
+    diasRestantes +
+    (diasRestantes === 1 ? " día" : " días");
 
 }else{
 
+    const diasVencido = Math.abs(diasRestantes);
+
     document.getElementById("txtDias").innerText =
-    "Vencido hace " + Math.abs(diasRestantes) + " días";
+    "Vencido hace " +
+    diasVencido +
+    (diasVencido === 1 ? " día" : " días");
 
 }
 
