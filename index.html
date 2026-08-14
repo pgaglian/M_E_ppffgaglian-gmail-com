@@ -1479,7 +1479,7 @@ onclick="mostrar('Redes')">
 
     <div style="
         display:flex;
-        justify-content:center;
+        justify-content:flex-start;
         align-items:center;
         gap:12px;
         margin:20px 0;
@@ -1490,9 +1490,7 @@ onclick="mostrar('Redes')">
         <span>📢 Patrocinadores</span>
 
         <span style="cursor:pointer;">🙌</span>
-
-        <span style="cursor:pointer;">🔍</span>
-
+      
     </div>
 
 </div>
@@ -2996,6 +2994,9 @@ function mostrarMenuAndroid(seccion){
 
     document.getElementById("menuAndroid").style.display="none";
     document.getElementById("btnVolverAndroid").style.display="block";
+    document.getElementById("Patrocinadores").style.display="none";
+
+
     document.querySelector("header").style.display="none";
     document.getElementById("panelCliente").style.display="none";
 
@@ -3094,7 +3095,9 @@ const esMovil = esAndroid || esAppleMobile;
 
 if(esMovil){
 
-document.body.classList.add("modoMovil");
+    document.body.classList.add("modoMovil");
+
+
     document.getElementById("btnGmail").style.display="none";
 
     document.getElementById("btnOutlook").style.display="none";
