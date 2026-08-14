@@ -1483,13 +1483,14 @@ onclick="mostrar('Redes')">
         align-items:center;
         gap:12px;
         margin:20px 0;
-        font-size:22px;
-        font-weight:bold;
+        font-size:16px;
+        font-weight:normal;
+        color:#fff;
     ">
 
-        <span>📢 Patrocinadores</span>
+       <span style="color:#FFD700;">📢 Patrocinadores</span>
 
-        <span style="cursor:pointer;">🙌</span>
+    <span style="cursor:pointer;">🙌</span>
       
     </div>
 
@@ -2442,8 +2443,10 @@ function inicio(){
         document.getElementById("menu").style.display="none";
         document.getElementById("tituloAmbientes").style.display="none";
 
+        document.getElementById("Patrocinadores").style.display="block";
+
         document.getElementById("menuAndroid").style.display="flex";
-                  document.getElementById("btnVolverAndroid").style.display="none";
+        document.getElementById("btnVolverAndroid").style.display="none";                             
 
         return;
     }
