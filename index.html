@@ -798,6 +798,16 @@ body.eclipse header{
 
 }
 
+#popupColaboracion .opcionColaboracion.seleccionada{
+
+    background:#555;
+
+    border:2px solid #FFD700;
+
+    color:#FFD700;
+
+}
+
 
 /* =====================================
    POPUP CONFIGURACIÓN
@@ -2066,6 +2076,112 @@ font-size:18px;
 
 </div>
 
+<!-- ===== VENTANA COLABORACIÓN ===== -->
+
+<div id="popupColaboracion" style="display:none;">
+
+    <div class="popupContenido">
+
+        <h2>☕ Ayudá a mantener ✨ Un Espacio para Tu Lugar</h2>
+
+        <p>
+            Tu acceso está próximo a vencer.
+        </p>
+
+        <p>
+            Si disfrutás de este espacio y querés ayudar a mantenerlo activo,
+            podés realizar una colaboración para contribuir con su renovación.
+        </p>
+
+        <p>
+            <strong>Colaboraciones recomendadas:</strong>
+        </p>
+
+        <button class="opcionColaboracion" data-monto="2000">
+            💙 $2.000
+        </button>
+
+        <button class="opcionColaboracion" data-monto="2500">
+            💙 $2.500
+        </button>
+
+        <button class="opcionColaboracion" data-monto="3000">
+            💙 $3.000
+        </button>
+
+        <button class="opcionColaboracion" data-monto="otro">
+            💙 Otro monto
+        </button>
+
+<div id="contenedorOtroMonto" style="display:none; margin-top:10px;">
+
+    <div style="position:relative;">
+
+        <input
+            type="number"
+            id="otroMontoColaboracion"
+            placeholder="Ingresá el monto"
+            min="1"
+            style="
+                width:100%;
+                box-sizing:border-box;
+                padding:12px 45px 12px 12px;
+                border:none;
+                border-radius:10px;
+                background:#333;
+                color:white;
+                font-size:16px;
+                text-align:center;
+            "
+        >
+
+        <span
+            id="confirmacionOtroMonto"
+            style="
+                display:none;
+                position:absolute;
+                right:12px;
+                top:50%;
+                transform:translateY(-50%);
+                font-size:22px;
+            "
+        >✅</span>
+
+    </div>
+
+</div>
+
+
+
+       <p style="margin-top:20px;">
+    <strong>Alias Mercado Pago:</strong><br>
+    <span id="aliasMercadoPago">TU-ALIAS</span>
+</p>
+
+<p>
+    <strong>CBU:</strong><br>
+    <span id="cbuMercadoPago">TU-CBU</span>
+</p>
+
+<p>
+    <strong>A nombre de:</strong><br>
+    <span id="titularMercadoPago">TU NOMBRE</span>
+</p>
+
+        <button id="btnContinuarColaboracion">
+            📧 Continuar
+        </button>
+
+        <button id="btnCancelarColaboracion">
+            ❌ Cancelar
+        </button>
+
+
+    </div>
+
+</div>
+
+
 
 <!-- ===== VENTANA OPINIÓN ===== -->
 
@@ -2237,7 +2353,7 @@ const asuntoSoporte = "Consulta - Mi Espacio";
 
 let tipoEnvioCorreo = "soporte";
 
-const vencimiento = "2026-08-15";
+const vencimiento = "2026-08-19";
 
 //=========================================================
 // FIN DATOS DEL CLIENTE
@@ -2819,6 +2935,24 @@ if(diasRestantes >= 0){
     (diasVencido === 1 ? " día" : " días");
 
 }
+
+//========================
+// ALERTA DE COLABORACIÓN
+//========================
+
+//========================
+// ALERTA DE COLABORACIÓN
+//========================
+
+window.addEventListener("load", function(){
+
+    if([5, 3, 1, 0].includes(diasRestantes)){
+
+        abrirPopupColaboracion();
+
+    }
+
+});
 
 //========================
 // FECHA Y HORA
@@ -3876,6 +4010,164 @@ function aplicarEstadoAmbientes(){
 }
 
 //========================
+// COLABORACIÓN
+//========================
+
+function abrirPopupColaboracion(){
+
+    document.getElementById("popupColaboracion").style.display = "block";
+
+}
+
+document.getElementById("btnCancelarColaboracion").onclick = function(){
+
+    document.getElementById("popupColaboracion").style.display = "none";
+
+};
+
+let montoColaboracion = "";
+
+document.querySelectorAll(".opcionColaboracion").forEach(function(boton){
+
+    boton.onclick = function(){
+
+        document.querySelectorAll(".opcionColaboracion").forEach(function(item){
+
+            item.classList.remove("seleccionada");
+
+        });
+
+        boton.classList.add("seleccionada");
+
+        if(boton.dataset.monto === "otro"){
+
+            document.getElementById("contenedorOtroMonto").style.display = "block";
+
+            document.getElementById("otroMontoColaboracion").focus();
+
+            montoColaboracion = "";
+
+        }else{
+
+            document.getElementById("contenedorOtroMonto").style.display = "none";
+
+            document.getElementById("otroMontoColaboracion").value = "";
+
+            montoColaboracion = boton.dataset.monto;
+
+        }
+
+    };
+
+});
+
+
+const confirmacionOtroMonto =
+    document.getElementById("confirmacionOtroMonto");
+
+const inputOtroMonto =
+    document.getElementById("otroMontoColaboracion");
+
+let otroMontoValidado = false;
+
+
+// CUANDO ESCRIBE EL MONTO
+inputOtroMonto.addEventListener("input", function(){
+
+    otroMontoValidado = false;
+
+    montoColaboracion = "";
+
+    const valor = this.value.trim();
+
+    if(valor !== "" && Number(valor) > 0){
+
+        confirmacionOtroMonto.innerText = "☑️";
+        confirmacionOtroMonto.style.display = "inline";
+
+    }else{
+
+        confirmacionOtroMonto.style.display = "none";
+
+    }
+
+});
+
+
+// CUANDO TOCA EL ☑️
+confirmacionOtroMonto.onclick = function(){
+
+    const valor = inputOtroMonto.value.trim();
+
+    if(valor === "" || Number(valor) <= 0){
+
+        alert("💙 Ingresá un monto válido.");
+
+        otroMontoValidado = false;
+        montoColaboracion = "";
+
+        confirmacionOtroMonto.style.display = "none";
+
+        return;
+
+    }
+
+    montoColaboracion = valor;
+
+    otroMontoValidado = true;
+
+    confirmacionOtroMonto.innerText = "✅";
+
+};
+
+
+
+document.getElementById("btnContinuarColaboracion").onclick = function(){
+
+    const opcionOtro =
+        document.querySelector('.opcionColaboracion[data-monto="otro"]');
+
+    if(opcionOtro.classList.contains("seleccionada") && !otroMontoValidado){
+
+        alert("☝️ Primero confirmá el monto con el ✅.");
+
+        return;
+
+    }
+
+    if(montoColaboracion === ""){
+
+        const otroMonto =
+            document.getElementById("otroMontoColaboracion").value.trim();
+
+        if(otroMonto === "" || Number(otroMonto) <= 0){
+
+            alert("💙 Ingresá un monto válido para continuar.");
+
+            return;
+
+        }
+
+        montoColaboracion = otroMonto;
+
+    }
+
+    tipoEnvioCorreo = "colaboracion";
+
+    document.querySelector("#popupSoporte h2").innerText =
+        "☕ Enviar colaboración";
+
+    document.getElementById("textoCorreo").innerText =
+        "¿Cómo desea enviar la información de la colaboración?";
+
+    document.getElementById("popupColaboracion").style.display = "none";
+
+    document.getElementById("popupSoporte").style.display = "block";
+
+};
+
+
+//========================
 // OPINIÓN
 //========================
 
@@ -3983,6 +4275,29 @@ Comentario:
 ${comentario || "Sin comentario"}
 
 ----------------------------------------
+
+`;
+
+    }else if(tipoEnvioCorreo === "colaboracion"){
+
+        asunto = "☕ Colaboración para renovación";
+
+        cuerpo =
+`Usuario: ${usuario}
+
+Fecha: ${new Date().toLocaleDateString()}
+
+Colaboración: $${montoColaboracion}
+
+Alias Mercado Pago: ${document.getElementById("aliasMercadoPago").innerText}
+
+CBU: ${document.getElementById("cbuMercadoPago").innerText}
+
+A nombre de: ${document.getElementById("titularMercadoPago").innerText}
+
+----------------------------------------
+
+Quiero realizar esta colaboración para contribuir con la renovación de mi acceso a ✨ Un Espacio para Tu Lugar.
 
 `;
 
