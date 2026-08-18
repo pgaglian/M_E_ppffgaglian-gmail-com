@@ -612,6 +612,99 @@ body.eclipse header{
 
 }
 
+/* ===== CARTEL PATROCINADORES ===== */
+
+/* ===== CARTEL PATROCINADORES ===== */
+
+#cartelPatrocinadores{
+    display:none;
+}
+
+
+/* ===== PATROCINADORES EN PANTALLAS GRANDES ===== */
+
+@media (min-width:768px){
+
+    #cartelPatrocinadores{
+
+        display:block;
+
+        float:right;
+
+        width:260px;
+
+        margin:0 10px 10px 20px;
+
+        padding:10px;
+
+        box-sizing:border-box;
+
+        text-align:center;
+
+        border-radius:15px;
+
+        background:rgba(255,255,255,0.08);
+
+        border:1px solid rgba(255,255,255,0.15);
+
+    }
+
+    #cartelPatrocinadores strong{
+
+        display:block;
+
+        width:auto;
+
+        color:#FFD700;
+
+        font-size:15px;
+
+        margin-bottom:8px;
+
+    }
+
+    #nombrePatrocinador{
+
+        display:block;
+
+        color:#EEE;
+
+        font-size:17px;
+
+        font-weight:bold;
+
+    }
+
+   #contenidoCartelPatrocinador{
+
+    text-align:center;
+
+}
+
+    #logoPatrocinador{
+
+        display:block;
+
+        margin:0 auto 8px auto;
+
+    }
+
+    #detallePatrocinador{
+
+        margin-top:12px;
+
+        color:#FFD700;
+
+        font-size:14px;
+
+        font-weight:bold;
+
+        cursor:pointer;
+
+    }
+
+}
+
 /* ===== AVISO VENCIMIENTO ===== */
 
 #avisoVencimiento{
@@ -1063,6 +1156,25 @@ Manual
 
 <div id="panelCliente">
 
+<div id="cartelPatrocinadores">
+
+    <strong>🐸 QUIENES NOS ACOMPAÑAN</strong>
+
+    <div id="contenidoCartelPatrocinador">
+
+        <div id="logoPatrocinador"></div>
+
+        <div id="nombrePatrocinador"></div>
+
+    </div>
+
+    <div id="detallePatrocinador">
+
+        🔎 Ver detalles
+
+    </div>
+
+</div>
     <div>
        <strong>📧 Usuario:</strong>
 <span id="usuarioCliente"></span>
@@ -1241,18 +1353,17 @@ box-shadow:0 6px 18px rgba(0,0,0,.45);
 
 <div id="avisoVencimiento">
 
-    <h2>🔒 Acceso suspendido</h2>
+    <h2>🔒 Período finalizado</h2>
 
     <p>
-        Su suscripción se encuentra vencida.
+        Tu suscripción ha llegado a su fin.
     </p>
 
     <p>
-        Comuníquese con soporte para renovar el acceso.
+        ☕ Si querés continuar disfrutando de 🐸 ✨ Un Espacio para Tu Lugar, podés colaborar con su renovación.
     </p>
 
 </div>
-
 <div id="acciones">
 
 <div class="card" id="accionCalendario" data-titulo="📅 Calendario"   onclick="mostrar('Calendario')">
@@ -2353,7 +2464,7 @@ const asuntoSoporte = "Consulta - Mi Espacio";
 
 let tipoEnvioCorreo = "soporte";
 
-const vencimiento = "2026-08-19";
+const vencimiento = "2026-09-17";
 
 //=========================================================
 // FIN DATOS DEL CLIENTE
@@ -4358,6 +4469,29 @@ ${comentario || "Sin comentario"}
 
 ----------------------------------------`;
 
+    }else if(tipoEnvioCorreo === "colaboracion"){
+
+        asunto = "☕ Colaboración para renovación";
+
+        cuerpo =
+`Usuario: ${usuario}
+
+Fecha: ${new Date().toLocaleDateString()}
+
+Colaboración: $${montoColaboracion}
+
+Alias Mercado Pago: ${document.getElementById("aliasMercadoPago").innerText}
+
+CBU: ${document.getElementById("cbuMercadoPago").innerText}
+
+A nombre de: ${document.getElementById("titularMercadoPago").innerText}
+
+----------------------------------------
+
+Quiero realizar esta colaboración para contribuir con la renovación de mi acceso a ✨ Un Espacio para Tu Lugar.
+
+`;
+
     }else{
 
         asunto = asuntoSoporte;
@@ -4389,7 +4523,9 @@ Escriba aquí su consulta.
 
     );
 
-};document.getElementById("btnMailto").onclick = function(){
+};
+
+document.getElementById("btnMailto").onclick = function(){
 
         let cuerpo;
 
@@ -4410,9 +4546,30 @@ ${comentario || "Sin comentario"}
 
 ----------------------------------------`;
 
-    }else{
+    }else if(tipoEnvioCorreo === "colaboracion"){
 
-        cuerpo =
+    cuerpo =
+`Usuario: ${usuario}
+
+Fecha: ${new Date().toLocaleDateString()}
+
+Colaboración: $${montoColaboracion}
+
+Alias Mercado Pago: ${document.getElementById("aliasMercadoPago").innerText}
+
+CBU: ${document.getElementById("cbuMercadoPago").innerText}
+
+A nombre de: ${document.getElementById("titularMercadoPago").innerText}
+
+----------------------------------------
+
+Quiero realizar esta colaboración para contribuir con la renovación de mi acceso a ✨ Un Espacio para Tu Lugar.
+
+`;
+
+}else{
+
+    cuerpo =
 `Usuario: ${usuario}
 
 Fecha: ${new Date().toLocaleDateString()}
@@ -4423,12 +4580,15 @@ Escriba aquí su consulta.
 
 `;
 
-    }
+}
     window.location.href =
         "mailto:" + encodeURIComponent(correoSoporte) +
         "?subject=" + encodeURIComponent(
-    tipoEnvioCorreo === "opinion"
-        ? "⭐ Opinión de usuario"
+
+   tipoEnvioCorreo === "opinion"
+    ? "⭐ Opinión de usuario"
+    : tipoEnvioCorreo === "colaboracion"
+        ? "☕ Colaboración para renovación"
         : asuntoSoporte
 ) +
         "&body=" + encodeURIComponent(cuerpo);
@@ -6177,7 +6337,75 @@ function abrirPronosticoCompleto(){
 }
 
 
+//========================
+// PATROCINADORES
+//========================
 
+let patrocinadores = [];
+
+function cargarPatrocinadores(){
+
+    fetch("patrocinadores.json")
+
+    .then(respuesta => respuesta.json())
+
+    .then(datos => {
+
+        patrocinadores = datos;
+
+        mostrarPatrocinadorAleatorio();
+
+    })
+
+    .catch(error => {
+
+        console.log("Error cargando patrocinadores:", error);
+
+    });
+
+}
+
+
+function mostrarPatrocinadorAleatorio(){
+
+    if(!patrocinadores.length){
+        return;
+    }
+
+    const patrocinador =
+        patrocinadores[
+            Math.floor(
+                Math.random() * patrocinadores.length
+            )
+        ];
+
+    const nombre =
+        document.getElementById("nombrePatrocinador");
+
+    const logo =
+        document.getElementById("logoPatrocinador");
+
+    if(!nombre || !logo){
+        return;
+    }
+
+    nombre.innerHTML = "";
+
+    logo.innerHTML = "";
+
+    if(patrocinador.logo){
+
+        logo.innerHTML = "🖼️";
+
+    }
+
+    nombre.innerText =
+        patrocinador.nombre || "";
+
+}
+
+
+cargarPatrocinadores();
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
