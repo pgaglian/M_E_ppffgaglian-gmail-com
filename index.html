@@ -6393,11 +6393,26 @@ function mostrarPatrocinadorAleatorio(){
 
     logo.innerHTML = "";
 
-    if(patrocinador.logo){
+if(patrocinador.logo){
 
-        logo.innerHTML = "🖼️";
+    const imagen =
+        document.createElement("img");
 
-    }
+    imagen.src =
+        "https://raw.githubusercontent.com/pgaglian/patrocinadores/main/" +
+        patrocinador.logo;
+
+    imagen.style.maxWidth = "100px";
+    imagen.style.maxHeight = "60px";
+    imagen.style.width = "auto";
+    imagen.style.height = "auto";
+    imagen.style.objectFit = "contain";
+    imagen.style.display = "block";
+    imagen.style.margin = "0 auto";
+
+    logo.appendChild(imagen);
+
+}
 
     nombre.innerText =
         patrocinador.nombre || "";
