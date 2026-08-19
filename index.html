@@ -629,7 +629,7 @@ body.eclipse header{
 
         display:block;
 
-        float:right;
+       float:right;
 
         width:260px;
 
@@ -685,6 +685,7 @@ body.eclipse header{
 
         display:block;
 
+
         margin:0 auto 8px auto;
 
     }
@@ -699,11 +700,12 @@ body.eclipse header{
 
         font-weight:bold;
 
-        cursor:pointer;
+         cursor:pointer;
 
     }
 
 }
+
 
 /* ===== AVISO VENCIMIENTO ===== */
 
@@ -1170,11 +1172,52 @@ Manual
 
     <div id="detallePatrocinador">
 
-        🔎 Ver detalles
+    👉 Ver detalles
+
+</div>
+
+    <div id="listaDetallesPatrocinadores" style="display:none;">
+
+    <div id="detallePatrocinadorContenido">
+
+        <div id="detalleLogoPatrocinador"></div>
+
+        <div id="detalleNombrePatrocinador"></div>
+
+        <div id="detalleRedesPatrocinador">
+
+            <div id="detalleInstagramPatrocinador">
+                📸 Instagram
+            </div>
+
+            <div id="detalleWhatsappPatrocinador">
+                🟢 WhatsApp
+            </div>
+
+        </div>
+
+        <div id="navegacionPatrocinadores">
+
+            <button id="anteriorPatrocinador">
+                ◀
+            </button>
+
+            <span id="contadorPatrocinadores">
+                1 de 1
+            </span>
+
+            <button id="siguientePatrocinador">
+                ▶
+            </button>
+
+        </div>
 
     </div>
 
 </div>
+
+</div>
+
     <div>
        <strong>📧 Usuario:</strong>
 <span id="usuarioCliente"></span>
@@ -6342,6 +6385,7 @@ function abrirPronosticoCompleto(){
 //========================
 
 let patrocinadores = [];
+let patrocinadorActual = null;
 
 function cargarPatrocinadores(){
 
@@ -6378,6 +6422,8 @@ function mostrarPatrocinadorAleatorio(){
                 Math.random() * patrocinadores.length
             )
         ];
+
+patrocinadorActual = patrocinador;
 
     const nombre =
         document.getElementById("nombrePatrocinador");
