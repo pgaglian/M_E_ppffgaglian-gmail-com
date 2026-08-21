@@ -706,6 +706,141 @@ body.eclipse header{
 
 }
 
+/* =====================================
+   POPUP PATROCINADOR
+===================================== */
+
+#listaDetallesPatrocinadores{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.65);
+
+    z-index:5000;
+
+}
+
+#detallePatrocinadorContenido{
+
+    position:absolute;
+
+    top:50%;
+
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:90%;
+
+    max-width:420px;
+
+    max-height:90vh;
+
+    overflow-y:auto;
+
+    box-sizing:border-box;
+
+    padding:25px;
+
+    background:#222;
+
+    border:1px solid #666;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.60);
+
+}
+
+/* ===== ESTILO INTERNO POPUP PATROCINADORES ===== */
+
+#detalleLogoPatrocinador{
+    margin-bottom:15px;
+}
+
+#detalleNombrePatrocinador{
+    color:#FFD700;
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+#detalleRedesPatrocinador{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    margin-bottom:20px;
+}
+
+#detalleInstagramPatrocinador,
+#detalleWhatsappPatrocinador{
+    padding:10px 14px;
+    border-radius:10px;
+    background:#333;
+    color:white;
+    cursor:pointer;
+}
+
+#detalleInstagramPatrocinador:hover,
+#detalleWhatsappPatrocinador:hover{
+    background:#555;
+}
+
+#navegacionPatrocinadores{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:20px;
+    margin:20px 0;
+}
+
+#anteriorPatrocinador,
+#siguientePatrocinador{
+    width:50px;
+    height:44px;
+    padding:0;
+    border:none;
+    border-radius:10px;
+    background:#333;
+    color:white;
+    font-size:20px;
+    cursor:pointer;
+}
+
+#anteriorPatrocinador:hover,
+#siguientePatrocinador:hover{
+    background:#555;
+}
+
+#contadorPatrocinadores{
+    color:#DDD;
+    font-size:16px;
+    font-weight:bold;
+    min-width:60px;
+}
+
+#cerrarDetallesPatrocinador{
+    display:block;
+    width:100%;
+    margin:10px 0 0;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#333;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+#cerrarDetallesPatrocinador:hover{
+    background:#555;
+}
 
 /* ===== AVISO VENCIMIENTO ===== */
 
@@ -1048,6 +1183,67 @@ body.eclipse header{
 
 }
 
+/* ===== PATROCINADORES EN MOVIL ===== */
+
+@media screen and (max-width:768px){
+
+    #detallePatrocinadorContenido{
+
+        width:92%;
+        max-width:420px;
+        max-height:85vh;
+
+        padding:20px;
+
+        box-sizing:border-box;
+
+    }
+
+    #detalleLogoPatrocinador img{
+
+        max-width:150px !important;
+        max-height:100px !important;
+
+    }
+
+    #detalleNombrePatrocinador{
+
+        font-size:20px;
+        margin-bottom:15px;
+
+    }
+
+    #detalleRedesPatrocinador{
+
+        flex-wrap:wrap;
+        gap:10px;
+
+    }
+
+    #detalleInstagramPatrocinador,
+    #detalleWhatsappPatrocinador{
+
+        padding:10px 12px;
+        font-size:15px;
+
+    }
+
+    #navegacionPatrocinadores{
+
+        gap:15px;
+        margin:15px 0;
+
+    }
+
+    #anteriorPatrocinador,
+    #siguientePatrocinador{
+
+        width:48px;
+        height:44px;
+
+    }
+
+}
 
 @media screen and (max-width:768px){
 
@@ -1056,6 +1252,8 @@ body.eclipse header{
     }
 
 }
+
+
 </style>
 </head>
 <body>
@@ -1211,6 +1409,10 @@ Manual
             </button>
 
         </div>
+
+<button id="cerrarDetallesPatrocinador">
+    ✖ Cerrar
+</button>
 
     </div>
 
@@ -2507,7 +2709,7 @@ const asuntoSoporte = "Consulta - Mi Espacio";
 
 let tipoEnvioCorreo = "soporte";
 
-const vencimiento = "2026-09-17";
+const vencimiento = "2026-09-20";
 
 //=========================================================
 // FIN DATOS DEL CLIENTE
@@ -6389,23 +6591,25 @@ let patrocinadorActual = null;
 
 function cargarPatrocinadores(){
 
-   fetch("https://raw.githubusercontent.com/pgaglian/patrocinadores/main/patrocinadores.json")
+    fetch("https://raw.githubusercontent.com/pgaglian/patrocinadores/main/patrocinadores.json")
 
-    .then(respuesta => respuesta.json())
+        .then(respuesta => respuesta.json())
 
-    .then(datos => {
+        .then(datos => {
 
-        patrocinadores = datos;
+          patrocinadores = datos.filter(
+    patrocinador => patrocinador.activo !== false
+);
 
-        mostrarPatrocinadorAleatorio();
+mostrarPatrocinadorAleatorio();
 
-    })
+        })
 
-    .catch(error => {
+        .catch(error => {
 
-        console.log("Error cargando patrocinadores:", error);
+            console.log("Error cargando patrocinadores:", error);
 
-    });
+        });
 
 }
 
@@ -6416,14 +6620,13 @@ function mostrarPatrocinadorAleatorio(){
         return;
     }
 
-    const patrocinador =
-        patrocinadores[
-            Math.floor(
-                Math.random() * patrocinadores.length
-            )
-        ];
+    const indice =
+        Math.floor(
+            Math.random() * patrocinadores.length
+        );
 
-patrocinadorActual = patrocinador;
+    patrocinadorActual =
+        patrocinadores[indice];
 
     const nombre =
         document.getElementById("nombrePatrocinador");
@@ -6436,39 +6639,194 @@ patrocinadorActual = patrocinador;
     }
 
     nombre.innerHTML = "";
-
     logo.innerHTML = "";
 
-if(patrocinador.logo){
+    if(patrocinadorActual.logo){
 
-    const imagen =
-        document.createElement("img");
+        const imagen =
+            document.createElement("img");
 
-    imagen.src =
-        "https://raw.githubusercontent.com/pgaglian/patrocinadores/main/" +
-        patrocinador.logo;
+        imagen.src =
+            "https://raw.githubusercontent.com/pgaglian/patrocinadores/main/" +
+            patrocinadorActual.logo;
 
-    imagen.style.maxWidth = "100px";
-    imagen.style.maxHeight = "60px";
-    imagen.style.width = "auto";
-    imagen.style.height = "auto";
-    imagen.style.objectFit = "contain";
-    imagen.style.display = "block";
-    imagen.style.margin = "0 auto";
+        imagen.style.maxWidth = "100px";
+        imagen.style.maxHeight = "60px";
+        imagen.style.width = "auto";
+        imagen.style.height = "auto";
+        imagen.style.objectFit = "contain";
+        imagen.style.display = "block";
+        imagen.style.margin = "0 auto";
 
-    logo.appendChild(imagen);
+        logo.appendChild(imagen);
 
-}
+    }
 
     nombre.innerText =
-        patrocinador.nombre || "";
+        patrocinadorActual.nombre || "";
 
 }
+
+
+function mostrarDetallePatrocinador(){
+
+    if(!patrocinadorActual){
+        return;
+    }
+
+    const detalleLogo =
+        document.getElementById("detalleLogoPatrocinador");
+
+    const detalleNombre =
+        document.getElementById("detalleNombrePatrocinador");
+
+    const contador =
+        document.getElementById("contadorPatrocinadores");
+
+const instagram =
+    document.getElementById("detalleInstagramPatrocinador");
+
+const whatsapp =
+    document.getElementById("detalleWhatsappPatrocinador");
+
+
+    detalleLogo.innerHTML = "";
+
+    detalleNombre.innerText =
+    (patrocinadorActual.emoji || "") +
+    " " +
+    (patrocinadorActual.nombre || "");
+
+instagram.style.display =
+    patrocinadorActual.instagram ? "block" : "none";
+
+whatsapp.style.display =
+    patrocinadorActual.whatsapp ? "block" : "none";
+
+instagram.onclick = function(){
+
+    if(patrocinadorActual.instagram){
+        window.open(
+            patrocinadorActual.instagram,
+            "_blank"
+        );
+    }
+
+};
+
+whatsapp.onclick = function(){
+
+    if(patrocinadorActual.whatsapp){
+        window.open(
+            patrocinadorActual.whatsapp,
+            "_blank"
+        );
+    }
+
+};
+
+    if(patrocinadorActual.logo){
+
+        const imagenDetalle =
+            document.createElement("img");
+
+        imagenDetalle.src =
+            "https://raw.githubusercontent.com/pgaglian/patrocinadores/main/" +
+            patrocinadorActual.logo;
+
+        imagenDetalle.style.maxWidth = "180px";
+        imagenDetalle.style.maxHeight = "120px";
+        imagenDetalle.style.width = "auto";
+        imagenDetalle.style.height = "auto";
+        imagenDetalle.style.objectFit = "contain";
+        imagenDetalle.style.display = "block";
+        imagenDetalle.style.margin = "0 auto 12px auto";
+
+        detalleLogo.appendChild(imagenDetalle);
+
+    }
+
+    const indiceActual =
+        patrocinadores.indexOf(patrocinadorActual);
+
+    contador.innerText =
+        (indiceActual + 1) +
+        " de " +
+        patrocinadores.length;
+
+}
+
+
+document.getElementById("detallePatrocinador").onclick = function(){
+
+    if(!patrocinadorActual){
+        return;
+    }
+
+clearInterval(intervaloPatrocinadores);
+
+    mostrarDetallePatrocinador();
+
+    document.getElementById("contenidoCartelPatrocinador").style.display = "none";
+
+    document.getElementById("detallePatrocinador").style.display = "none";
+
+    document.getElementById("listaDetallesPatrocinadores").style.display = "block";
+
+};
+
+
+document.getElementById("anteriorPatrocinador").onclick = function(){
+
+    if(!patrocinadores.length){
+        return;
+    }
+
+    let indiceActual =
+        patrocinadores.indexOf(patrocinadorActual);
+
+    indiceActual--;
+
+    if(indiceActual < 0){
+        indiceActual =
+            patrocinadores.length - 1;
+    }
+
+    patrocinadorActual =
+        patrocinadores[indiceActual];
+
+    mostrarDetallePatrocinador();
+
+};
+
+
+document.getElementById("siguientePatrocinador").onclick = function(){
+
+    if(!patrocinadores.length){
+        return;
+    }
+
+    let indiceActual =
+        patrocinadores.indexOf(patrocinadorActual);
+
+    indiceActual++;
+
+    if(indiceActual >= patrocinadores.length){
+        indiceActual = 0;
+    }
+
+    patrocinadorActual =
+        patrocinadores[indiceActual];
+
+    mostrarDetallePatrocinador();
+
+};
 
 
 cargarPatrocinadores();
 
-setInterval(mostrarPatrocinadorAleatorio, 3000);
+let intervaloPatrocinadores =
+    setInterval(mostrarPatrocinadorAleatorio, 3000);
 
 </script>
 
