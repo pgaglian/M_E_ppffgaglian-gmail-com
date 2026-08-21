@@ -612,7 +612,6 @@ body.eclipse header{
 
 }
 
-/* ===== CARTEL PATROCINADORES ===== */
 
 /* ===== CARTEL PATROCINADORES ===== */
 
@@ -3307,7 +3306,7 @@ function cargarConfiguracionTema(){
 
   if(datos.tema){
 
-    cambiarTema(datos.tema);
+    cambiarTema(datos.tema.split(" ").pop());
 
 }
 
@@ -3382,19 +3381,16 @@ document.getElementById("btnCancelarTema").onclick = function(){
 //========================
 // CAMBIO DE AMBIENTES
 //========================
+
+
 function cambiarTema(tema){
 
-    document.body.classList.remove(
-        "oceano",
-        "bosque",
-        "crepusculo",
-        "biblioteca",
-        "eclipse"
-    );
+    document.body.className="";
 
     document.body.classList.add(tema);
 
 }
+
 //========================
 // MENÚ ANDROID
 //========================
