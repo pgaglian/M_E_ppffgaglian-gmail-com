@@ -1355,7 +1355,7 @@ Manual
         </div>
 
 <button id="cerrarDetallesPatrocinador">
-    ✖ Cerrar
+    ❌ Cerrar
 </button>
 
     </div>
@@ -6769,6 +6769,18 @@ document.getElementById("siguientePatrocinador").onclick = function(){
         patrocinadores[indiceActual];
 
     mostrarDetallePatrocinador();
+}
+
+
+/* ===== CERRAR DETALLES PATROCINADOR ===== */
+
+document.getElementById("cerrarDetallesPatrocinador").onclick = function(){
+
+    document.getElementById("listaDetallesPatrocinadores").style.display = "none";
+
+    document.getElementById("contenidoCartelPatrocinador").style.display = "block";
+
+    document.getElementById("detallePatrocinador").style.display = "block";
 
 };
 
