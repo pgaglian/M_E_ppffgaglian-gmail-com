@@ -2849,7 +2849,9 @@ function inicio(){
     document.getElementById("Clima").style.display="none";
     document.getElementById("album").style.display="none";
 
-    document.getElementById("panelCliente").style.display="block";
+    document.getElementById("panelCliente").style.display =
+    esMovil ? "flex" : "block";
+
     document.querySelector("header").style.display="block";
 
 
