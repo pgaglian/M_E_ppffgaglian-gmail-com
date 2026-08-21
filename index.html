@@ -3385,12 +3385,17 @@ document.getElementById("btnCancelarTema").onclick = function(){
 
 function cambiarTema(tema){
 
-    document.body.className="";
+    document.body.classList.remove(
+        "oceano",
+        "bosque",
+        "crepusculo",
+        "biblioteca",
+        "eclipse"
+    );
 
     document.body.classList.add(tema);
 
 }
-
 //========================
 // MENÚ ANDROID
 //========================
