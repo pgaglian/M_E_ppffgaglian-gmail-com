@@ -1183,68 +1183,6 @@ body.eclipse header{
 
 }
 
-/* ===== PATROCINADORES EN MOVIL ===== */
-
-@media screen and (max-width:768px){
-
-    #detallePatrocinadorContenido{
-
-        width:92%;
-        max-width:420px;
-        max-height:85vh;
-
-        padding:20px;
-
-        box-sizing:border-box;
-
-    }
-
-    #detalleLogoPatrocinador img{
-
-        max-width:150px !important;
-        max-height:100px !important;
-
-    }
-
-    #detalleNombrePatrocinador{
-
-        font-size:20px;
-        margin-bottom:15px;
-
-    }
-
-    #detalleRedesPatrocinador{
-
-        flex-wrap:wrap;
-        gap:10px;
-
-    }
-
-    #detalleInstagramPatrocinador,
-    #detalleWhatsappPatrocinador{
-
-        padding:10px 12px;
-        font-size:15px;
-
-    }
-
-    #navegacionPatrocinadores{
-
-        gap:15px;
-        margin:15px 0;
-
-    }
-
-    #anteriorPatrocinador,
-    #siguientePatrocinador{
-
-        width:48px;
-        height:44px;
-
-    }
-
-}
-
 @media screen and (max-width:768px){
 
     #detalleDiaClima button[onclick="abrirPronosticoCompleto()"]{
@@ -3444,15 +3382,19 @@ document.getElementById("btnCancelarTema").onclick = function(){
 //========================
 // CAMBIO DE AMBIENTES
 //========================
-
 function cambiarTema(tema){
 
-    document.body.className="";
+    document.body.classList.remove(
+        "oceano",
+        "bosque",
+        "crepusculo",
+        "biblioteca",
+        "eclipse"
+    );
 
     document.body.classList.add(tema);
 
 }
-
 //========================
 // MENÚ ANDROID
 //========================
