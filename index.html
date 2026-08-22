@@ -622,6 +622,7 @@ body.eclipse header{
 /* ===== PATROCINADORES EN PANTALLAS GRANDES ===== */
 
 @media (min-width:768px){
+    body:not(.modoMovil){
 
     #cartelPatrocinadores{
 
@@ -710,6 +711,7 @@ body.eclipse header{
 
     }
 
+    }
 }
 
 /* ===== ORDEN PATROCINADORES EN CELULAR ===== */
@@ -737,6 +739,10 @@ body.eclipse header{
 
 }
 
+.modoMovil #panelCliente{
+    display:flex;
+    flex-direction:column;
+}
 
 /* =====================================
    POPUP PATROCINADOR
@@ -2850,14 +2856,33 @@ function inicio(){
     document.getElementById("Clima").style.display="none";
     document.getElementById("album").style.display="none";
 
-    document.getElementById("panelCliente").style.display = "block";
+    document.getElementById("panelCliente").style.display =
+    esMovil ? "flex" : "block";
 
     document.querySelector("header").style.display="block";
 
 
     //========================
-    // VISTA PRINCIPAL
-    // PC / TABLET / CELULAR
+    // ANDROID
+    //========================
+
+   if(esAndroid){
+
+        document.getElementById("acciones").style.display="none";
+        document.getElementById("tituloAcciones").style.display="none";
+
+        document.getElementById("menu").style.display="none";
+        document.getElementById("tituloAmbientes").style.display="none";
+
+        document.getElementById("menuAndroid").style.display="flex";
+                  document.getElementById("btnVolverAndroid").style.display="none";
+
+        return;
+    }
+
+
+    //========================
+    // PC
     //========================
 
     document.getElementById("acciones").style.display="grid";
@@ -3344,6 +3369,23 @@ aplicarEstadoAcciones();
 aplicarEstadoAmbientes();
 
 
+//========================
+// ESTADO INICIAL ANDROID
+//========================
+
+if(/Android/i.test(navigator.userAgent)){
+
+    document.getElementById("acciones").style.display="none";
+    document.getElementById("tituloAcciones").style.display="none";
+
+    document.getElementById("menu").style.display="none";
+    document.getElementById("tituloAmbientes").style.display="none";
+
+    document.getElementById("menuAndroid").style.display="flex";
+
+}
+
+
 setTimeout(function(){
 
     activarDragAccionesInicio();
@@ -3507,6 +3549,7 @@ const esMovil = esAndroid || esAppleMobile;
 
 if(esMovil){
 
+document.body.classList.add("modoMovil");
     document.getElementById("btnGmail").style.display="none";
 
     document.getElementById("btnOutlook").style.display="none";
