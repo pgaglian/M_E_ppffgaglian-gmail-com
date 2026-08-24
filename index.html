@@ -1090,7 +1090,276 @@ body.eclipse header{
 
 }
 
+/* ========================================
+   PANTALLAS COLABORACIÓN
+======================================== */
 
+#pantallaFestejoColaboracion,
+#pantallaRatitasColaboracion{
+
+    display:none;
+
+    position:fixed;
+    inset:0;
+
+    width:100vw;
+    height:100vh;
+
+    z-index:99999;
+
+    align-items:center;
+    justify-content:center;
+
+    box-sizing:border-box;
+    padding:20px;
+
+    cursor:pointer;
+
+}
+
+
+/* ===== FONDO FESTEJO ===== */
+
+#pantallaFestejoColaboracion{
+
+    background:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,.8), transparent 15%),
+    radial-gradient(circle at 80% 30%, rgba(255,255,255,.7), transparent 18%),
+    linear-gradient(135deg,#174ea6,#4285f4,#7b1fa2);
+
+}
+
+
+/* ===== FONDO RATITAS ===== */
+
+#pantallaRatitasColaboracion{
+
+    background:
+    linear-gradient(135deg,#302b63,#24243e);
+
+}
+
+
+/* ===== CONTENIDO ===== */
+
+.festejoContenido,
+.ratitasContenido{
+
+    width:min(700px,90vw);
+    max-width:700px;
+
+    display:flex;
+    flex-direction:column;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:15px;
+
+    text-align:center;
+
+}
+
+
+/* ===== TITULOS ===== */
+
+.festejoContenido h1,
+.ratitasContenido h1{
+
+    width:auto;
+
+    margin:0;
+
+    padding:0;
+
+    font-size:clamp(22px,5vw,70px);
+
+    line-height:1.1;
+
+    text-align:center;
+
+    white-space:nowrap;
+
+}
+/* ===== TEXTOS ===== */
+
+.festejoContenido p,
+.ratitasContenido p{
+
+    width:100%;
+
+    margin:5px 0;
+
+    font-size:clamp(18px,3vw,28px);
+
+    line-height:1.5;
+
+    text-align:center;
+
+}
+
+
+/* ===== RANA ===== */
+
+.ranaFestejo{
+
+    font-size:clamp(60px,12vw,110px);
+
+}
+
+
+/* ===== RATITAS ===== */
+
+.ratitasAnimadas{
+
+    font-size:clamp(45px,9vw,80px);
+
+    letter-spacing:10px;
+
+    animation:ratitasMovimiento 1s ease-in-out infinite alternate;
+
+}
+
+
+/* ===== CARTELES ===== */
+
+.cartelRatita{
+
+    font-size:clamp(22px,4vw,40px);
+
+    font-weight:bold;
+
+    padding:12px 24px;
+
+    border-radius:15px;
+
+    background:rgba(255,255,255,.15);
+
+    backdrop-filter:blur(6px);
+
+    text-align:center;
+
+}
+
+
+/* ===== TEXTO PARA CONTINUAR ===== */
+
+.tocarContinuar{
+
+    margin-top:20px;
+
+    font-size:15px;
+
+    opacity:.8;
+
+    text-align:center;
+
+}
+
+
+/* ========================================
+   LLUVIA DE PAPELITOS
+======================================== */
+
+.lluviaPapelitos{
+
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+}
+
+
+.lluviaPapelitos span{
+
+    position:absolute;
+
+    top:-60px;
+
+    font-size:28px;
+
+    animation:caerPapelito linear infinite;
+
+}
+
+
+/* posiciones y velocidades */
+
+.lluviaPapelitos span:nth-child(1){left:3%;animation-duration:4s;animation-delay:0s;}
+.lluviaPapelitos span:nth-child(2){left:8%;animation-duration:5s;animation-delay:1s;}
+.lluviaPapelitos span:nth-child(3){left:14%;animation-duration:4.5s;animation-delay:2s;}
+.lluviaPapelitos span:nth-child(4){left:20%;animation-duration:6s;animation-delay:.5s;}
+.lluviaPapelitos span:nth-child(5){left:27%;animation-duration:4s;animation-delay:1.5s;}
+.lluviaPapelitos span:nth-child(6){left:34%;animation-duration:5.5s;animation-delay:2.5s;}
+.lluviaPapelitos span:nth-child(7){left:41%;animation-duration:4.5s;animation-delay:.8s;}
+.lluviaPapelitos span:nth-child(8){left:48%;animation-duration:6s;animation-delay:1.8s;}
+.lluviaPapelitos span:nth-child(9){left:55%;animation-duration:4s;animation-delay:2.2s;}
+.lluviaPapelitos span:nth-child(10){left:62%;animation-duration:5s;animation-delay:.3s;}
+.lluviaPapelitos span:nth-child(11){left:69%;animation-duration:4.5s;animation-delay:1.2s;}
+.lluviaPapelitos span:nth-child(12){left:76%;animation-duration:6s;animation-delay:2.8s;}
+.lluviaPapelitos span:nth-child(13){left:82%;animation-duration:4s;animation-delay:.7s;}
+.lluviaPapelitos span:nth-child(14){left:87%;animation-duration:5.5s;animation-delay:1.7s;}
+.lluviaPapelitos span:nth-child(15){left:92%;animation-duration:4.5s;animation-delay:2.5s;}
+.lluviaPapelitos span:nth-child(16){left:97%;animation-duration:6s;animation-delay:1s;}
+.lluviaPapelitos span:nth-child(17){left:11%;animation-duration:5s;animation-delay:3s;}
+.lluviaPapelitos span:nth-child(18){left:38%;animation-duration:4s;animation-delay:3.5s;}
+.lluviaPapelitos span:nth-child(19){left:67%;animation-duration:5.5s;animation-delay:3.2s;}
+.lluviaPapelitos span:nth-child(20){left:90%;animation-duration:4.5s;animation-delay:3.8s;}
+
+
+/* ===== ANIMACIÓN RATITAS ===== */
+
+@keyframes ratitasMovimiento{
+
+    from{
+        transform:translateX(-8px);
+    }
+
+    to{
+        transform:translateX(8px);
+    }
+
+}
+
+
+/* ===== ANIMACIÓN PAPELITOS ===== */
+
+@keyframes caerPapelito{
+
+    0%{
+
+        transform:
+        translateY(-60px)
+        rotate(0deg);
+
+        opacity:0;
+
+    }
+
+    10%{
+
+        opacity:1;
+
+    }
+
+    100%{
+
+        transform:
+        translateY(110vh)
+        rotate(720deg);
+
+        opacity:.8;
+
+    }
+
+}
 /* =====================================
    POPUP CONFIGURACIÓN
 ===================================== */
@@ -2457,6 +2726,102 @@ font-size:18px;
 
 </div>
 
+<!-- ===== FESTEJO COLABORACIÓN ===== -->
+
+<div id="pantallaFestejoColaboracion">
+
+    <div class="lluviaPapelitos">
+
+        <span>🎉</span>
+        <span>📄</span>
+        <span>🎊</span>
+        <span>📜</span>
+        <span>🎉</span>
+        <span>📄</span>
+        <span>🎊</span>
+        <span>📜</span>
+        <span>🎉</span>
+        <span>📄</span>
+        <span>🎊</span>
+        <span>📜</span>
+        <span>🎉</span>
+        <span>📄</span>
+        <span>🎊</span>
+        <span>📜</span>
+        <span>🎉</span>
+        <span>📄</span>
+        <span>🎊</span>
+        <span>📜</span>
+
+    </div>
+
+    <div class="festejoContenido">
+
+        <div class="ranaFestejo">
+            🐸
+        </div>
+
+        <h1>
+            🎉 ¡MUCHÍSIMAS GRACIAS! 🎉
+        </h1>
+
+        <p>
+            Tu colaboración ayuda a mantener<br>
+            ✨ Un Espacio para Tu Lugar
+        </p>
+
+        <p>
+            ❤️ ¡Tu aporte hace la diferencia! ❤️
+        </p>
+
+        <span class="tocarContinuar">
+            Tocá en cualquier lugar para continuar
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- ===== RATITAS COLABORACIÓN ===== -->
+
+<div id="pantallaRatitasColaboracion">
+
+    <div class="ratitasContenido">
+
+        <div class="ratitasAnimadas">
+            🐭 🐭 🐭
+        </div>
+
+        <div class="cartelRatita">
+            🪧 ¡GRACIAS!
+        </div>
+
+        <div class="ratitasAnimadas">
+            🐭 🐭 🐭
+        </div>
+
+       
+        <p>
+            Cada colaboración ayuda a mantener<br>
+            ✨ Un Espacio para Tu Lugar
+        </p>
+
+        <div class="cartelRatita">
+            🪧 ¡Tu aporte suma!
+        </div>
+
+        <span class="tocarContinuar">
+            Tocá en cualquier lugar para continuar
+        </span>
+
+    </div>
+
+</div>
+
+
+
+
 <!-- ===== VENTANA COLABORACIÓN ===== -->
 
 <div id="popupColaboracion" style="display:none;">
@@ -2734,7 +3099,7 @@ const asuntoSoporte = "Consulta - Mi Espacio";
 
 let tipoEnvioCorreo = "soporte";
 
-const vencimiento = "2026-09-20";
+const vencimiento = "2026-08-25";
 
 //=========================================================
 // FIN DATOS DEL CLIENTE
@@ -4429,6 +4794,8 @@ document.getElementById("btnCancelarColaboracion").onclick = function(){
 
 let montoColaboracion = "";
 
+let tipoCelebracionColaboracion = "";
+
 document.querySelectorAll(".opcionColaboracion").forEach(function(boton){
 
     boton.onclick = function(){
@@ -4554,7 +4921,39 @@ document.getElementById("btnContinuarColaboracion").onclick = function(){
 
     }
 
+if(Number(montoColaboracion) >= 1000){
+
+    tipoCelebracionColaboracion = "festejo";
+
+}else{
+
+    tipoCelebracionColaboracion = "ratitas";
+
+}
+
     tipoEnvioCorreo = "colaboracion";
+
+    document.getElementById("popupColaboracion").style.display = "none";
+
+    if(tipoCelebracionColaboracion === "festejo"){
+
+        document.getElementById("pantallaFestejoColaboracion").style.display = "flex";
+
+    }else{
+
+        document.getElementById("pantallaRatitasColaboracion").style.display = "flex";
+
+    }
+
+};
+
+//========================
+// CONTINUAR DESDE CELEBRACIÓN
+//========================
+
+document.getElementById("pantallaFestejoColaboracion").onclick = function(){
+
+    document.getElementById("pantallaFestejoColaboracion").style.display = "none";
 
     document.querySelector("#popupSoporte h2").innerText =
         "☕ Enviar colaboración";
@@ -4562,12 +4961,24 @@ document.getElementById("btnContinuarColaboracion").onclick = function(){
     document.getElementById("textoCorreo").innerText =
         "¿Cómo desea enviar la información de la colaboración?";
 
-    document.getElementById("popupColaboracion").style.display = "none";
-
     document.getElementById("popupSoporte").style.display = "block";
 
 };
 
+
+document.getElementById("pantallaRatitasColaboracion").onclick = function(){
+
+    document.getElementById("pantallaRatitasColaboracion").style.display = "none";
+
+    document.querySelector("#popupSoporte h2").innerText =
+        "☕ Enviar colaboración";
+
+    document.getElementById("textoCorreo").innerText =
+        "¿Cómo desea enviar la información de la colaboración?";
+
+    document.getElementById("popupSoporte").style.display = "block";
+
+};
 
 //========================
 // OPINIÓN
