@@ -3610,10 +3610,10 @@ const fechaVencimiento = new Date(vencimiento);
 
 const diferencia = fechaVencimiento - hoy;
 
-const diasRestantes = Math.max(
-    0,
-    Math.ceil(diferencia / (1000 * 60 * 60 * 24))
+const diasRestantes = Math.ceil(
+    diferencia / (1000 * 60 * 60 * 24)
 );
+
 
 let estado = "";
 
