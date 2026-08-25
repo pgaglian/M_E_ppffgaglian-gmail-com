@@ -3295,7 +3295,11 @@ function inicio(){
     // PC
     //========================
 
+    if(diasRestantes < 0){
+    document.getElementById("acciones").style.display="none";
+}else{
     document.getElementById("acciones").style.display="grid";
+}
     document.getElementById("tituloAcciones").style.display="block";
 
     aplicarEstadoAcciones();
@@ -3771,10 +3775,12 @@ cargarOrdenAcciones();
 
 cargarOrdenAmbientes();
 
-aplicarEstadoAcciones();
-aplicarEstadoAmbientes();
+if(diasRestantes >= 0){
 
+    aplicarEstadoAcciones();
+    aplicarEstadoAmbientes();
 
+}
 //========================
 // ESTADO INICIAL MOVIL
 //========================
