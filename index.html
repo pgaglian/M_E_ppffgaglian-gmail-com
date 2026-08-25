@@ -3276,7 +3276,7 @@ function inicio(){
     // ANDROID
     //========================
 
-   if(esAndroid){
+    if(esAndroid){
 
         document.getElementById("acciones").style.display="none";
         document.getElementById("tituloAcciones").style.display="none";
@@ -3285,7 +3285,7 @@ function inicio(){
         document.getElementById("tituloAmbientes").style.display="none";
 
         document.getElementById("menuAndroid").style.display="flex";
-                  document.getElementById("btnVolverAndroid").style.display="none";
+        document.getElementById("btnVolverAndroid").style.display="none";
 
         return;
     }
@@ -3296,21 +3296,28 @@ function inicio(){
     //========================
 
     if(diasRestantes < 0){
-    document.getElementById("acciones").style.display="none";
-}else{
-    document.getElementById("acciones").style.display="grid";
+
+        document.getElementById("acciones").style.display="none";
+        document.getElementById("tituloAcciones").style.display="none";
+
+        document.getElementById("menu").style.display="none";
+        document.getElementById("tituloAmbientes").style.display="none";
+
+    }else{
+
+        document.getElementById("acciones").style.display="grid";
+        document.getElementById("tituloAcciones").style.display="block";
+
+        aplicarEstadoAcciones();
+
+        document.getElementById("menu").style.display="grid";
+        document.getElementById("tituloAmbientes").style.display="block";
+
+        aplicarEstadoAmbientes();
+
+    }
+
 }
-    document.getElementById("tituloAcciones").style.display="block";
-
-    aplicarEstadoAcciones();
-
-    document.getElementById("menu").style.display="grid";
-    document.getElementById("tituloAmbientes").style.display="block";
-
-    aplicarEstadoAmbientes();
-
-}
-
 
 
 function abrirPDF(pdf,titulo){
@@ -3793,7 +3800,15 @@ if(/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
     document.getElementById("menu").style.display="none";
     document.getElementById("tituloAmbientes").style.display="none";
 
+  if(diasRestantes < 0){
+
+    document.getElementById("menuAndroid").style.display="none";
+
+}else{
+
     document.getElementById("menuAndroid").style.display="flex";
+
+}
 
 }
 
@@ -3880,7 +3895,9 @@ function mostrarMenuAndroid(seccion){
 
     if(seccion=="acciones"){
 
-        document.getElementById("acciones").style.display="grid";
+   
+    document.getElementById("acciones").style.display="grid";
+
         document.getElementById("tituloAcciones").style.display="block";
 
         document.getElementById("menu").style.display="none";
