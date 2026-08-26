@@ -3702,33 +3702,16 @@ if(diasRestantes >= 0){
 // ALERTA DE COLABORACIÓN
 //========================
 
-function verificarAlertaColaboracion(){
+window.addEventListener("load", function(){
 
     if([5, 3, 1, 0].includes(diasRestantes)){
 
-        setTimeout(function(){
-
-            abrirPopupColaboracion();
-
-        }, 500);
+        abrirPopupColaboracion();
 
     }
 
-}
+});
 
-if(document.readyState === "complete"){
-
-    verificarAlertaColaboracion();
-
-}else{
-
-    window.addEventListener("load", function(){
-
-        verificarAlertaColaboracion();
-
-    });
-
-}
 
 //========================
 // FECHA Y HORA
