@@ -3702,7 +3702,7 @@ if(diasRestantes >= 0){
 // ALERTA DE COLABORACIÓN
 //========================
 
-window.addEventListener("load", function(){
+function verificarAlertaColaboracion(){
 
     if([5, 3, 1, 0].includes(diasRestantes)){
 
@@ -3710,8 +3710,21 @@ window.addEventListener("load", function(){
 
     }
 
-});
+}
 
+if(document.readyState === "complete"){
+
+    verificarAlertaColaboracion();
+
+}else{
+
+    window.addEventListener("load", function(){
+
+        verificarAlertaColaboracion();
+
+    });
+
+}
 
 //========================
 // FECHA Y HORA
