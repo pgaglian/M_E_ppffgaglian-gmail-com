@@ -3701,13 +3701,15 @@ if(diasRestantes >= 0){
 // ALERTA DE COLABORACIÓN
 //========================
 
-console.log("✅ LLEGÓ A ALERTA DE COLABORACIÓN");
-
 window.addEventListener("load", function(){
 
     if([5, 3, 1, 0].includes(diasRestantes)){
 
-        abrirPopupColaboracion();
+        setTimeout(function(){
+
+            abrirPopupColaboracion();
+
+        }, 500);
 
     }
 
