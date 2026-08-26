@@ -1723,14 +1723,24 @@ Manual
     </div>
 
 <div>
-
     <strong>🛠️ Soporte:</strong>
 
-  <span id="btnSoporte">
-    ✉️ Enviar consulta
-</span>
+    <span id="btnSoporte">
+        ✉️ Enviar consulta
+    </span>
 
+    <span
+        id="btnColaboracion"
+        style="
+            cursor:pointer;
+            font-size:16px;
+            font-weight:bold;
+            margin-left:20px;
+        ">
+        ☕ Colaborar
+    </span>
 </div>
+
 
 <div id="btnRedes">
 
@@ -3702,7 +3712,7 @@ if(diasRestantes >= 0){
 // ALERTA DE COLABORACIÓN
 //========================
 
-function verificarAlertaColaboracion(){
+window.addEventListener("load", function(){
 
     if([5, 3, 1, 0].includes(diasRestantes)){
 
@@ -3710,21 +3720,7 @@ function verificarAlertaColaboracion(){
 
     }
 
-}
-
-if(document.readyState === "complete"){
-
-    verificarAlertaColaboracion();
-
-}else{
-
-    window.addEventListener("load", function(){
-
-        verificarAlertaColaboracion();
-
-    });
-
-}
+});
 
 //========================
 // FECHA Y HORA
@@ -5085,6 +5081,12 @@ document.getElementById("btnSoporte").onclick = function(){
         "¿Cómo desea enviar la consulta?";
 
     document.getElementById("popupSoporte").style.display = "block";
+
+};
+
+document.getElementById("btnColaboracion").onclick = function(){
+
+    abrirPopupColaboracion();
 
 };
 
