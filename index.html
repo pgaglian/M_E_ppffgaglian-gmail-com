@@ -5628,9 +5628,18 @@ function seleccionarUbicacion(lat,lon,direccion){
     document.getElementById("panelBusquedaClima").style.display = "none";
 
 
-    direccionManual = direccion;
+  direccionManual = direccion;
 
-    buscarCiudad(lat,lon);
+// Guardar la última ubicación elegida
+localStorage.setItem(
+    "ubicacionClima",
+    JSON.stringify({
+        lat: ultimaLatitud,
+        lon: ultimaLongitud
+    })
+);
+
+buscarCiudad(lat,lon);
 
 }
 
@@ -5643,6 +5652,36 @@ function detectarUbicacion(){
     const texto =
     document.getElementById("ubicacionClima");
 
+
+    // ========================
+    // UBICACIÓN GUARDADA
+    // ========================
+
+    const ubicacionGuardada =
+    localStorage.getItem("ubicacionClima");
+
+
+    if(ubicacionGuardada){
+
+        const datos =
+        JSON.parse(ubicacionGuardada);
+
+        ultimaLatitud = datos.lat;
+        ultimaLongitud = datos.lon;
+
+        buscarCiudad(
+            datos.lat,
+            datos.lon
+        );
+
+        return;
+
+    }
+
+
+    // ========================
+    // PEDIR UBICACIÓN
+    // ========================
 
     if(!navigator.geolocation){
 
@@ -5663,41 +5702,59 @@ function detectarUbicacion(){
         function(posicion){
 
             const lat =
-            posicion.coords.latitude.toFixed(4);
+            posicion.coords.latitude;
 
             const lon =
-            posicion.coords.longitude.toFixed(4);
-            ultimaLatitud = posicion.coords.latitude;
-            ultimaLongitud = posicion.coords.longitude;
+            posicion.coords.longitude;
+
+
+            ultimaLatitud = lat;
+            ultimaLongitud = lon;
+
+
+            // ========================
+            // GUARDAR UBICACIÓN
+            // ========================
+
+            localStorage.setItem(
+                "ubicacionClima",
+                JSON.stringify({
+                    lat: lat,
+                    lon: lon
+                })
+            );
+
 
             buscarCiudad(
-    posicion.coords.latitude,
-    posicion.coords.longitude
-);
+                lat,
+                lon
+            );
 
         },
 
 
-  function(){
+        function(){
 
-    texto.innerHTML =
-    `
-    📍 No pudimos obtener tu ubicación
-    <br>
-    <span style="font-size:14px;color:#DDD;">
-    Puedes elegir una ubicación manualmente
-    </span>
-    `;
+            texto.innerHTML =
+            `
+            📍 No pudimos obtener tu ubicación
+            <br>
+            <span style="font-size:14px;color:#DDD;">
+            Puedes elegir una ubicación manualmente
+            </span>
+            `;
 
-}
+        }
 
     );
 
 }
 
+
 function volverMiUbicacion(){
 
     direccionManual = null;
+localStorage.removeItem("ubicacionClima");
 
     document.getElementById("txtCiudadClima").value = "";
 
