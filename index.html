@@ -928,25 +928,27 @@ body.eclipse header{
 
 }
 
-#btnSoporte{
-
+#btnSoporte,
+#btnColaboracion,
+#btnOpinionAccion{
     color:#FFD700;
-
     cursor:pointer;
-
     font-weight:bold;
-
     transition:.25s;
-
 }
 
-#btnSoporte:hover{
-
+#btnSoporte:hover,
+#btnColaboracion:hover,
+#btnOpinionAccion:hover{
     color:white;
-
     text-decoration:underline;
-
 }
+
+#btnOpinionAccion:hover{
+    color:white;
+    text-decoration:underline;
+}
+
 
 /* ===== TITULOS DE PANELES ===== */
 
@@ -1769,15 +1771,17 @@ margin-right:12px;
     <strong>⭐ Calificanos!!</strong>
 
     <span
-    id="btnOpinionAccion"
-    style="
-        cursor:pointer;
-        font-size:20px;
-    "
-    title="Dejanos tu opinión"
-    onclick="document.getElementById('popupOpinion').style.display='block'">
-    👍
-</span>
+        id="btnOpinionAccion"
+        style="
+            cursor:pointer;
+            font-size:16px;
+            font-weight:bold;
+            transition:.25s;
+        "
+        title="Dejanos tu opinión"
+        onclick="document.getElementById('popupOpinion').style.display='block'">
+        👍 Dejanos tu opinión
+    </span>
 
 </div>
 
@@ -3701,20 +3705,6 @@ if(diasRestantes >= 0){
 
 }
 
-
-//========================
-// ALERTA DE COLABORACIÓN
-//========================
-
-window.addEventListener("load", function(){
-
-    if([5, 3, 1, 0].includes(diasRestantes)){
-
-        abrirPopupColaboracion();
-
-    }
-
-});
 
 //========================
 // FECHA Y HORA
