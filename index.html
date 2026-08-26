@@ -3697,21 +3697,16 @@ if(diasRestantes >= 0){
 
 }
 
+
 //========================
 // ALERTA DE COLABORACIÓN
 //========================
 
-window.addEventListener("load", function(){
-
-    console.log("🟢 LOAD COLABORACIÓN");
+function verificarAlertaColaboracion(){
 
     if([5, 3, 1, 0].includes(diasRestantes)){
 
-        console.log("🟢 ENTRÓ AL IF");
-
         setTimeout(function(){
-
-            console.log("🟢 EJECUTANDO ABRIR POPUP");
 
             abrirPopupColaboracion();
 
@@ -3719,7 +3714,22 @@ window.addEventListener("load", function(){
 
     }
 
-});
+}
+
+if(document.readyState === "complete"){
+
+    verificarAlertaColaboracion();
+
+}else{
+
+    window.addEventListener("load", function(){
+
+        verificarAlertaColaboracion();
+
+    });
+
+}
+
 //========================
 // FECHA Y HORA
 //========================
