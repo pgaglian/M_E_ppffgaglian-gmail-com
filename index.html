@@ -3703,9 +3703,15 @@ if(diasRestantes >= 0){
 
 window.addEventListener("load", function(){
 
+    console.log("🟢 LOAD COLABORACIÓN");
+
     if([5, 3, 1, 0].includes(diasRestantes)){
 
+        console.log("🟢 ENTRÓ AL IF");
+
         setTimeout(function(){
+
+            console.log("🟢 EJECUTANDO ABRIR POPUP");
 
             abrirPopupColaboracion();
 
@@ -3714,7 +3720,6 @@ window.addEventListener("load", function(){
     }
 
 });
-
 //========================
 // FECHA Y HORA
 //========================
