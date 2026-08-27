@@ -1931,38 +1931,49 @@ onclick="mostrar('Clima')">
 
     <h2 id="widgetIconoClima"
         style="
-        margin:0;
-        font-size:42px;
+        margin:0 0 6px 0;
+        font-size:38px;
+        line-height:1;
+        text-align:center;
         ">
         🌤
     </h2>
 
     <div id="widgetResumenClima"
          style="
-         margin-top:10px;
-         font-size:18px;
-         line-height:23px;
+         margin:4px 0 8px 0;
+         padding:0 8px;
+         font-size:16px;
+         line-height:21px;
          font-weight:bold;
          text-align:center;
-         min-height:46px;
+         min-height:0;
          ">
         Esperando datos del clima...
     </div>
 
     <div id="widgetTemperaturaClima"
          style="
-         margin-top:10px;
-         font-size:16px;
+         margin:4px 0;
+         font-size:18px;
+         line-height:23px;
          font-weight:bold;
+         text-align:center;
          ">
         --°C
     </div>
 
     <div id="widgetLugarClima"
          style="
-         margin-top:5px;
-         font-size:12px;
-         opacity:.75;
+         margin:2px 0 8px 0;
+         padding:0 4px;
+         font-size:13px;
+         line-height:18px;
+         text-align:center;
+         opacity:.85;
+         white-space:nowrap;
+         overflow:hidden;
+         text-overflow:ellipsis;
          ">
         📍 Obteniendo ubicación...
     </div>
@@ -1975,11 +1986,13 @@ onclick="mostrar('Clima')">
          font-size:11px;
          font-weight:bold;
          opacity:.8;
+         text-align:center;
          ">
         🌤 Ver clima completo ›
     </div>
 
 </div>
+
 <div class="card" id="accionPizarra"  data-titulo="📝 Pizarra"
 onclick="mostrar('Pizarra')">
 
