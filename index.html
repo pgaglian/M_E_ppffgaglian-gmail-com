@@ -1952,32 +1952,55 @@ onclick="mostrar('Clima')">
         Esperando datos del clima...
     </div>
 
-    <div id="widgetTemperaturaClima"
-         style="
-         margin:4px 0;
-         font-size:18px;
-         line-height:23px;
-         font-weight:bold;
-         text-align:center;
-         ">
+    <div
+    style="
+    margin:6px 0 0 0;
+    text-align:center;
+    line-height:20px;
+    white-space:nowrap;
+    ">
+
+    <span id="widgetTemperaturaClima"
+          style="
+          font-size:18px;
+          font-weight:bold;
+          ">
         --°C
-    </div>
+    </span>
 
-    <div id="widgetLugarClima"
-         style="
-         margin:2px 0 8px 0;
-         padding:0 4px;
-         font-size:13px;
-         line-height:18px;
-         text-align:center;
-         opacity:.85;
-         white-space:nowrap;
-         overflow:hidden;
-         text-overflow:ellipsis;
-         ">
-        📍 Obteniendo ubicación...
-    </div>
+    <span
+          style="
+          font-size:17px;
+          margin:0 4px;
+          ">
+        ·
+    </span>
 
+    <span
+          id="widgetSensacionClima"
+          style="
+          font-size:16px;
+          font-weight:bold;
+          ">
+        sensación --°
+    </span>
+
+</div>
+
+<div id="widgetLugarClima"
+     style="
+     margin:4px 0 6px 0;
+     padding:0 4px;
+     font-size:13px;
+     line-height:18px;
+     text-align:center;
+     white-space:nowrap;
+     overflow:hidden;
+     text-overflow:ellipsis;
+     opacity:.85;
+     ">
+    📍 Obteniendo ubicación...
+</div>
     <div
          style="
          margin-top:10px;
