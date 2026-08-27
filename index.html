@@ -1929,56 +1929,57 @@ box-shadow:0 6px 18px rgba(0,0,0,.45);
 <div class="card" id="accionClima" data-titulo="🌤 Clima"
 onclick="mostrar('Clima')">
 
-<h2 id="widgetIconoClima">
-🌤
-</h2>
+    <h2 id="widgetIconoClima"
+        style="
+        margin:0;
+        font-size:42px;
+        ">
+        🌤
+    </h2>
 
-<h3 id="widgetTemperaturaClima"
-style="
-margin:8px 0 4px;
-font-size:28px;
-font-weight:bold;
-">
---°C
-</h3>
+    <div id="widgetResumenClima"
+         style="
+         margin-top:10px;
+         font-size:18px;
+         line-height:23px;
+         font-weight:bold;
+         text-align:center;
+         min-height:46px;
+         ">
+        Esperando datos del clima...
+    </div>
 
-<p id="widgetLugarClima"
-style="
-margin:0;
-font-size:14px;
-opacity:.9;
-white-space:pre-line;
-">
-Obteniendo ubicación...
-</p>
+    <div id="widgetTemperaturaClima"
+         style="
+         margin-top:10px;
+         font-size:16px;
+         font-weight:bold;
+         ">
+        --°C
+    </div>
 
-<p id="widgetResumenClima"
-style="
-font-size:13px;
-line-height:19px;
-margin-top:10px;
-color:#DDD;
-min-height:55px;
-text-align:center;
-padding:0 5px;
-">
-Esperando datos del clima...
-</p>
+    <div id="widgetLugarClima"
+         style="
+         margin-top:5px;
+         font-size:12px;
+         opacity:.75;
+         ">
+        📍 Obteniendo ubicación...
+    </div>
 
-<div
-style="
-margin-top:10px;
-padding-top:8px;
-border-top:1px solid rgba(255,255,255,.15);
-font-size:12px;
-font-weight:bold;
-color:#BFE7FF;
-">
-🌤 Ver clima completo ›
+    <div
+         style="
+         margin-top:10px;
+         padding-top:7px;
+         border-top:1px solid rgba(255,255,255,.15);
+         font-size:11px;
+         font-weight:bold;
+         opacity:.8;
+         ">
+        🌤 Ver clima completo ›
+    </div>
+
 </div>
-
-</div>
-
 <div class="card" id="accionPizarra"  data-titulo="📝 Pizarra"
 onclick="mostrar('Pizarra')">
 
