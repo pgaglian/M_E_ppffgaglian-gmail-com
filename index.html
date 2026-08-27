@@ -1925,59 +1925,56 @@ box-shadow:0 6px 18px rgba(0,0,0,.45);
 
 </div>
 
+
 <div class="card" id="accionClima" data-titulo="🌤 Clima"
 onclick="mostrar('Clima')">
 
-    <h2 id="widgetIconoClima"
-        style="
-        margin:0;
-        font-size:42px;
-        ">
-        🌤
-    </h2>
+<h2 id="widgetIconoClima">
+🌤
+</h2>
 
-    <div id="widgetResumenClima"
-         style="
-         margin-top:10px;
-         font-size:18px;
-         line-height:23px;
-         font-weight:bold;
-         text-align:center;
-         min-height:46px;
-         ">
-        Esperando datos del clima...
-    </div>
+<h3 id="widgetTemperaturaClima"
+style="
+margin:8px 0 4px;
+font-size:28px;
+font-weight:bold;
+">
+--°C
+</h3>
 
-    <div id="widgetTemperaturaClima"
-         style="
-         margin-top:10px;
-         font-size:16px;
-         font-weight:bold;
-         ">
-        --°C
-    </div>
+<p id="widgetLugarClima"
+style="
+margin:0;
+font-size:14px;
+opacity:.9;
+white-space:pre-line;
+">
+Obteniendo ubicación...
+</p>
 
-    <div id="widgetLugarClima"
-         style="
-         margin-top:5px;
-         font-size:12px;
-         opacity:.75;
-         ">
-        📍 Obteniendo ubicación...
-    </div>
+<p id="widgetResumenClima"
+style="
+font-size:13px;
+line-height:19px;
+margin-top:10px;
+color:#DDD;
+min-height:55px;
+text-align:center;
+padding:0 5px;
+">
+Esperando datos del clima...
+</p>
 
-    <div
-         style="
-         margin-top:10px;
-         padding-top:7px;
-         border-top:1px solid rgba(255,255,255,.15);
-         font-size:11px;
-         font-weight:bold;
-         opacity:.8;
-         ">
-        🌤 Ver clima completo ›
-    </div>
-
+<div
+style="
+margin-top:10px;
+padding-top:8px;
+border-top:1px solid rgba(255,255,255,.15);
+font-size:12px;
+font-weight:bold;
+color:#BFE7FF;
+">
+🌤 Ver clima completo ›
 </div>
 
 </div>
@@ -6761,268 +6758,210 @@ function cambiarCieloClima(){
 
 function generarResumenInteligenteClima(datosClima){
 
-    let resultado = {
-        mensaje: "",
-        complemento: "",
-        prioridad: 0,
-        tipo: "normal"
-    };
+let resultado = {
+    mensaje:"",
+    complemento:"",
+    prioridad:0,
+    tipo:"normal"
+};
 
 
     //========================
-    // TORMENTA
+    // PRIORIDAD 1 - SEGURIDAD
     //========================
 
+
+    // Tormentas
+
+if(
+    datosClima.codigo == 95 ||
+    datosClima.codigo == 96 ||
+    datosClima.codigo == 99
+){
+
+    resultado.mensaje =
+    "⛈️ Evitá actividades al aire libre.";
+
+    resultado.accion =
+    "Buscá un lugar seguro.";
+
+    resultado.prioridad = 1;
+    resultado.tipo = "alerta";
+
+    return resultado;
+
+}
+
+
+    // Lluvia fuerte
     if(
-        datosClima.codigo == 95 ||
-        datosClima.codigo == 96 ||
-        datosClima.codigo == 99
-    ){
-
-        resultado.mensaje =
-        "⛈️ Ojo, viene tormenta.<br>" +
-        "⚡ Mejor esperar un rato antes de salir.";
-
-        resultado.prioridad = 1;
-        resultado.tipo = "alerta";
-
-        return resultado;
-    }
-
-
-    //========================
-    // LLUVIA
-    //========================
-
-    if(
-        datosClima.codigo == 61 ||
         datosClima.codigo == 63 ||
         datosClima.codigo == 65 ||
-        datosClima.codigo == 80 ||
-        datosClima.codigo == 81 ||
         datosClima.codigo == 82
     ){
 
         resultado.mensaje =
-        "🌧️ Está lloviendo.<br>" +
-        "☔ Paraguas a mano.";
+        "🌧️ Llevá paraguas.";
 
         resultado.prioridad = 1;
         resultado.tipo = "alerta";
 
         return resultado;
+
     }
 
 
-    //========================
-    // LLOVIZNA
-    //========================
-
-    if(
-        datosClima.codigo == 51 ||
-        datosClima.codigo == 53 ||
-        datosClima.codigo == 55 ||
-        datosClima.codigo == 56 ||
-        datosClima.codigo == 57
-    ){
-
-        resultado.mensaje =
-        "🌦️ Se viene una llovizna.<br>" +
-        "☔ Mejor llevar paraguas.";
-
-        resultado.prioridad = 1;
-        resultado.tipo = "normal";
-
-        return resultado;
-    }
-
-
-    //========================
-    // NIEVE
-    //========================
-
-    if(
-        datosClima.codigo == 71 ||
-        datosClima.codigo == 73 ||
-        datosClima.codigo == 75 ||
-        datosClima.codigo == 77 ||
-        datosClima.codigo == 85 ||
-        datosClima.codigo == 86
-    ){
-
-        resultado.mensaje =
-        "❄️ Está nevando.<br>" +
-        "🧣 Mejor salir bien abrigado.";
-
-        resultado.prioridad = 1;
-        resultado.tipo = "alerta";
-
-        return resultado;
-    }
-
-
-    //========================
-    // NIEBLA
-    //========================
-
-    if(
-        datosClima.codigo == 45 ||
-        datosClima.codigo == 48
-    ){
-
-        resultado.mensaje =
-        "🌫️ Hay niebla.<br>" +
-        "🚗 Si salís, manejá con cuidado.";
-
-        resultado.prioridad = 1;
-        resultado.tipo = "alerta";
-
-        return resultado;
-    }
-
-
-    //========================
-    // VIENTO FUERTE
-    //========================
+    // Viento fuerte
 
     if(datosClima.viento >= 40){
 
-        resultado.mensaje =
-        "💨 Hoy el viento tiene ganas de mandar.<br>" +
-        "⚠️ Mejor asegurar lo que esté afuera.";
+    resultado.mensaje =
+    "💨 Precaución por ráfagas.";
 
-        resultado.prioridad = 1;
-        resultado.tipo = "alerta";
+    resultado.accion =
+    "Asegurá objetos livianos en el exterior.";
 
-        return resultado;
-    }
+    resultado.prioridad = 1;
+    resultado.tipo = "alerta";
 
+    return resultado;
 
-    //========================
-    // MUCHO CALOR
-    //========================
-
-    if(datosClima.temperatura >= 32){
-
-        resultado.mensaje =
-        "🥵 Hace bastante calor.<br>" +
-        "💧 Hidratate y buscá sombra.";
-
-        resultado.prioridad = 2;
-        resultado.tipo = "normal";
-
-        return resultado;
-    }
+}
 
 
-    //========================
-    // MUCHO FRÍO
-    //========================
-
-    if(datosClima.temperatura <= 10){
-
-        resultado.mensaje =
-        "🥶 Hace frío.<br>" +
-        "🧥 Mejor salir bien abrigado.";
-
-        resultado.prioridad = 2;
-        resultado.tipo = "normal";
-
-        return resultado;
-    }
-
-
-    //========================
-    // NOCHE
-    //========================
+    // Niebla
 
     if(
-        datosClima.hora >= 20 ||
-        datosClima.hora < 6
-    ){
+    datosClima.codigo == 45 ||
+    datosClima.codigo == 48
+){
 
-        // Noche despejada
-        if(
-            datosClima.codigo == 0 ||
-            datosClima.codigo == 1
-        ){
+    resultado.mensaje =
+    "🌫️ Conducí con precaución.";
 
-            resultado.mensaje =
-            "🌙 Noche tranquila.<br>" +
-            "✨ Cielo despejado. A descansar.";
+    resultado.accion =
+    "Reducí la velocidad y mantené distancia.";
 
-        }else{
+    resultado.prioridad = 1;
+    resultado.tipo = "alerta";
 
-            resultado.mensaje =
-            "🌙 Ya es hora de bajar un cambio.<br>" +
-            "✨ Que tengas una linda noche.";
+    return resultado;
 
-        }
+}
 
-        resultado.prioridad = 3;
 
-        return resultado;
+
+    //========================
+    // PRIORIDAD 2 - CONFORT
+    //========================
+
+
+if(datosClima.temperatura <= 10){
+
+    resultado.mensaje =
+    "🥶 Hace frío, abrigate.";
+
+    resultado.accion =
+    "Ponete una campera antes de salir.";
+
+    resultado.prioridad = 2;
+
+    return resultado;
+
+}
+
+
+
+   if(datosClima.temperatura >= 32){
+
+    resultado.mensaje =
+    "🥵 Mucho calor, hidratate.";
+
+    resultado.accion =
+    "Tomá agua y evitá el sol directo.";
+
+    resultado.prioridad = 2;
+
+    return resultado;
+
+}
+
+
+if(
+    datosClima.temperatura >= 18 &&
+    datosClima.temperatura <= 28 &&
+    datosClima.viento < 25
+){
+
+    resultado.mensaje =
+    "☀️ Ideal para salir.";
+
+    resultado.accion =
+    "Buen momento para caminar o disfrutar afuera.";
+
+    resultado.prioridad = 2;
+
+    return resultado;
+
+}
+
+
+//========================
+// PRIORIDAD 3 - CONTEXTO
+//========================
+
+let mensajes = [];
+
+
+if(
+    datosClima.hora >= 20 ||
+    datosClima.hora < 6
+){
+
+    mensajes.push(
+        "🌙 Noche tranquila."
+    );
+
+}
+
+
+if(datosClima.humedad >= 80){
+
+    mensajes.push(
+        "💧 Ambiente húmedo."
+    );
+
+}
+
+
+
+if(mensajes.length > 0){
+
+    resultado.mensaje =
+    mensajes.join("<br>");
+
+    if(datosClima.humedad >= 80){
+
+        resultado.accion =
+        "Salí con abrigo liviano, la humedad puede hacer sentir más fresco.";
+
     }
 
+    resultado.prioridad = 3;
 
-    //========================
-    // DESPEJADO
-    //========================
+    return resultado;
 
-    if(datosClima.codigo == 0){
+}
 
-        resultado.mensaje =
-        "☀️ Día lindo. Aprovechalo.<br>" +
-        "😎 Cielo despejado, ideal para salir.";
-
-        resultado.prioridad = 3;
-
-        return resultado;
-    }
-
-
-    //========================
-    // PARCIALMENTE NUBLADO
-    //========================
-
-    if(datosClima.codigo == 1){
-
-        resultado.mensaje =
-        "🌤️ Un lindo día para salir.<br>" +
-        "😎 Algunas nubes, pero pinta bien.";
-
-        resultado.prioridad = 3;
-
-        return resultado;
-    }
-
-
-    //========================
-    // NUBLADO
-    //========================
-
-    if(
-        datosClima.codigo == 2 ||
-        datosClima.codigo == 3
-    ){
-
-        resultado.mensaje =
-        "☁️ Día gris, pero tranqui.<br>" +
-        "🙂 Ideal para hacer las cosas sin apuro.";
-
-        resultado.prioridad = 3;
-
-        return resultado;
-    }
 
 
     //========================
     // DEFAULT
     //========================
 
+
     resultado.mensaje =
-    "🌤️ Un día tranquilo.<br>" +
-    "🙂 Todo parece estar en calma.";
+    "🌤️ Día tranquilo.";
 
     return resultado;
 
