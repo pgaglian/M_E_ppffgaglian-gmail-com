@@ -4458,6 +4458,13 @@ if(Banco.includes("Macro")){
             Banco +
             '</a>';
 
+    }else if(esAppleMobile){
+
+        tarjeta.innerHTML =
+            '<a href="https://apps.apple.com/ar/app/nueva-app-macro/id6651860993" style="color:inherit;text-decoration:none;">' +
+            Banco +
+            '</a>';
+
     }else{
 
         tarjeta.innerHTML =
@@ -4472,8 +4479,7 @@ if(Banco.includes("Macro")){
     tarjeta.innerHTML =
         Banco;
 
-}
-        contenedor.appendChild(tarjeta);
+}        contenedor.appendChild(tarjeta);
 
     });
 
