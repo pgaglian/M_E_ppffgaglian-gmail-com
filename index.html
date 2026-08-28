@@ -4450,37 +4450,47 @@ function mostrarBancosSeleccionados(){
         tarjeta.style.padding = "15px";
         tarjeta.style.borderRadius = "16px";
 
-if(Banco.includes("Macro")){
+        const datosBanco =
+            configuracionBancos.find(function(banco){
 
-    if(esAndroid){
+                return banco.nombre === Banco.replace("🏦 ","");
 
-        tarjeta.innerHTML =
-            '<a href="intent://#Intent;package=com.macro.banco.ar;end" style="color:inherit;text-decoration:none;">' +
-            Banco +
-            '</a>';
+            });
 
-    }else if(esAppleMobile){
 
-        tarjeta.innerHTML =
-            '<a href="https://apps.apple.com/ar/app/nueva-app-macro/id6651860993" style="color:inherit;text-decoration:none;">' +
-            Banco +
-            '</a>';
+        if(datosBanco){
 
-    }else{
+            if(esAndroid){
 
-tarjeta.innerHTML =
-    '<a href="https://www.macro.com.ar/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">' +
-    Banco +
-    '</a>';
+                tarjeta.innerHTML =
+                    '<a href="' + datosBanco.android + '" style="color:inherit;text-decoration:none;">' +
+                    Banco +
+                    '</a>';
 
-    }
+            }else if(esAppleMobile){
 
-}else{
+                tarjeta.innerHTML =
+                    '<a href="' + datosBanco.iphone + '" style="color:inherit;text-decoration:none;">' +
+                    Banco +
+                    '</a>';
 
-    tarjeta.innerHTML =
-        Banco;
+            }else{
 
-}        contenedor.appendChild(tarjeta);
+                tarjeta.innerHTML =
+                    '<a href="' + datosBanco.web + '" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">' +
+                    Banco +
+                    '</a>';
+
+            }
+
+        }else{
+
+            tarjeta.innerHTML =
+                Banco;
+
+        }
+
+        contenedor.appendChild(tarjeta);
 
     });
 
