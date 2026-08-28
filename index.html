@@ -4453,13 +4453,10 @@ if(Banco.includes("Macro")){
 
     if(esAndroid){
 
-if(esAndroid){
-
-    tarjeta.innerHTML =
-        '<a href="intent://#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=com.macro.banco.ar;end" style="color:inherit;text-decoration:none;">' +
-        Banco +
-        '</a>';
-}
+        tarjeta.innerHTML =
+            '<a href="intent://#Intent;package=com.macro.banco.ar;end" style="color:inherit;text-decoration:none;">' +
+            Banco +
+            '</a>';
 
     }else if(esAppleMobile){
 
@@ -4487,6 +4484,31 @@ tarjeta.innerHTML =
     });
 
 }
+
+// ========================
+// CARGAR CONFIGURACION BANCOS
+// ========================
+
+let configuracionBancos = [];
+
+fetch("https://pgaglian.github.io/mi-espacio-datos/bancos.json")
+    .then(function(respuesta){
+
+        return respuesta.json();
+
+    })
+    .then(function(datos){
+
+        configuracionBancos = datos;
+
+        mostrarBancosSeleccionados();
+
+    })
+    .catch(function(error){
+
+        console.log("No se pudo cargar bancos.json", error);
+
+    });
 
 //========================
 // LEER TARJETAS ACCIONES
