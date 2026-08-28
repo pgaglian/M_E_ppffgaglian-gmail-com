@@ -2522,6 +2522,285 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 
 <!-- ===== FIN MODULO CLIMA ===== -->
 
+<!-- ===== MODULO BANCOS ===== -->
+
+<div id="Bancos" style="display:none; min-height:100vh;">
+
+    <!-- CABECERA -->
+
+    <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding:15px;
+    ">
+
+        <button onclick="inicio()">
+            ⬅ Volver
+        </button>
+
+        <button onclick="abrirConfiguracionBancos()">
+            ⚙ Configurar
+        </button>
+
+    </div>
+
+
+    <!-- TITULO -->
+
+    <h2 style="
+        text-align:center;
+        color:#FFD700;
+        margin-top:10px;
+    ">
+        🏦 Bancos
+    </h2>
+
+
+    <!-- COTIZACION -->
+
+    <div class="card" style="
+        width:min(92%,500px);
+        margin:12px auto;
+        padding:18px;
+        border-radius:22px;
+    ">
+
+        <h3 style="
+            margin-top:0;
+            text-align:center;
+        ">
+            💵 Cotización del dólar
+        </h3>
+
+        <div style="
+            display:flex;
+            justify-content:space-around;
+            text-align:center;
+            gap:20px;
+        ">
+
+            <div>
+                <strong>🇦🇷 Oficial</strong>
+                <div id="dolarOficialBancos">
+                    $--
+                </div>
+            </div>
+
+            <div>
+                <strong>🔵 Blue</strong>
+                <div id="dolarBlueBancos">
+                    $--
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- MIS BANCOS -->
+
+    <div class="card" style="
+        width:min(92%,700px);
+        margin:20px auto;
+        padding:20px;
+        border-radius:22px;
+    ">
+
+        <h3 style="
+            margin-top:0;
+            text-align:center;
+        ">
+            🏦 Mis Bancos
+        </h3>
+
+        <div id="BancosSeleccionados"
+             style="
+             display:grid;
+             grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+             gap:12px;
+             ">
+        </div>
+
+    </div>
+
+
+    <!-- PROMOCIONES -->
+
+    <div style="
+        width:min(92%,900px);
+        margin:25px auto;
+    ">
+
+        <h2 style="
+            text-align:center;
+            color:#FFD700;
+        ">
+            🔥 Promociones para vos
+        </h2>
+
+        <div id="promocionesBancos"
+             style="
+             display:grid;
+             grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+             gap:15px;
+             ">
+
+            <div class="card" style="
+                padding:20px;
+                border-radius:18px;
+            ">
+
+                <h3>
+                    🏦 Próximamente
+                </h3>
+
+                <p>
+                    Acá aparecerán las promociones
+                    de los Bancos que tengas seleccionados.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN MODULO BANCOS ===== -->
+
+<!-- ===== CONFIGURACION DE BANCOS ===== -->
+
+<div id="popupConfiguracionBancos"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1000;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,600px);
+        max-height:85vh;
+        overflow-y:auto;
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:20px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        ">
+
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:15px;
+            ">
+
+            <h2 style="margin:0;color:#FFD700;">
+                🏦 Configurar Bancos
+            </h2>
+
+            <button onclick="cerrarConfiguracionBancos()">
+                ✖
+            </button>
+
+        </div>
+
+        <p style="
+            text-align:center;
+            color:#ccc;
+            ">
+            Seleccioná los Bancos que utilizás.
+        </p>
+
+        <div id="listaConfiguracionBancos">
+
+    <div style="
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+        gap:10px;
+    ">
+
+        <label><input type="checkbox"> 🏦 Banco Nación</label>
+        <label><input type="checkbox"> 🏦 Galicia</label>
+        <label><input type="checkbox"> 🏦 Santander</label>
+        <label><input type="checkbox"> 🏦 BBVA</label>
+        <label><input type="checkbox"> 🏦 Macro</label>
+        <label><input type="checkbox"> 🏦 Banco Provincia</label>
+        <label><input type="checkbox"> 🏦 ICBC</label>
+        <label><input type="checkbox"> 🏦 Credicoop</label>
+        <label><input type="checkbox"> 🏦 Patagonia</label>
+        <label><input type="checkbox"> 🏦 Banco Ciudad</label>
+       <label><input type="checkbox"> 🏦 Supervielle</label>
+       <label><input type="checkbox"> 🏦 Banco de Córdoba</label>
+       <label><input type="checkbox"> 🏦 Citibank</label>
+       <label><input type="checkbox"> 🏦 Nuevo Banco de Santa Fe</label>
+       <label><input type="checkbox"> 🏦 Comafi</label>
+       <label><input type="checkbox"> 🏦 Banco de Industria</label>
+       <label><input type="checkbox"> 🏦 Hipotecario</label>
+       <label><input type="checkbox"> 🏦 Valores</label>
+       <label><input type="checkbox"> 🏦 Naranja Digital</label>
+       <label><input type="checkbox"> 🏦 Banco de Neuquén</label>
+       </div>
+
+<div style="
+    text-align:center;
+    margin-top:20px;
+">
+    <button
+        type="button"
+        onclick="guardarConfiguracionBancos()"
+        style="
+        padding:10px 22px;
+        font-size:16px;
+        font-weight:bold;
+        border-radius:10px;
+        ">
+        💾 Guardar Bancos
+    </button>
+
+<div id="mensajeBancos"
+     style="
+     display:none;
+     margin-top:12px;
+     color:#7CFC00;
+     font-weight:bold;
+     font-size:16px;
+     ">
+    ✅ Bancos guardados correctamente
+</div>
+
+
+</div>
+
+
+
+    <div style="
+    margin-top:20px;
+    padding:15px;
+    text-align:center;
+    border-top:1px solid #444;
+    color:#ccc;
+    font-size:14px;
+    line-height:21px;
+">
+    ¿No encontrás tu Banco?<br>
+    📩 Contactá a Soporte y contanos cuál te gustaría que agreguemos.
+</div>
+
+</div>
+
+    </div>
+
+</div>
+
 <!-- ===== MODULO CALENDARIO ===== -->
 
 <div id="Calendario" style="display:none; min-height:100vh;">
@@ -4063,6 +4342,107 @@ cargarListaConfiguracionAmbientes();
 document.getElementById("popupConfiguracion").style.display = "block";
 
 };
+
+// ========================
+// CONFIGURACION DE BANCOS
+// ========================
+
+function abrirConfiguracionBancos(){
+
+    const popup =
+        document.getElementById("popupConfiguracionBancos");
+
+    if(!popup){
+        return;
+    }
+
+    popup.style.display = "flex";
+
+}
+
+
+function cerrarConfiguracionBancos(){
+
+    const popup =
+        document.getElementById("popupConfiguracionBancos");
+
+    if(!popup){
+        return;
+    }
+
+    popup.style.display = "none";
+
+}
+
+// ========================
+// GUARDAR BANCOS SELECCIONADOS
+// ========================
+
+function guardarConfiguracionBancos(){
+
+    const Bancos = [];
+
+    document.querySelectorAll(
+        "#listaConfiguracionBancos input[type='checkbox']"
+    ).forEach(function(checkbox){
+
+        if(checkbox.checked){
+
+            Bancos.push(
+                checkbox.parentElement.textContent.trim()
+            );
+
+        }
+
+    });
+
+    localStorage.setItem(
+        "BancosSeleccionados",
+        JSON.stringify(Bancos)
+    );
+
+    mostrarBancosSeleccionados();
+
+    cerrarConfiguracionBancos();
+
+}
+
+// ========================
+// MOSTRAR BANCOS SELECCIONADOS
+// ========================
+
+function mostrarBancosSeleccionados(){
+
+    const contenedor =
+        document.getElementById("BancosSeleccionados");
+
+    if(!contenedor){
+        return;
+    }
+
+    const Bancos = JSON.parse(
+        localStorage.getItem("BancosSeleccionados")
+    ) || [];
+
+    contenedor.innerHTML = "";
+
+    Bancos.forEach(function(Banco){
+
+        const tarjeta = document.createElement("div");
+
+        tarjeta.className = "card";
+
+        tarjeta.style.padding = "15px";
+        tarjeta.style.borderRadius = "16px";
+
+        tarjeta.innerHTML =
+        Banco;
+
+        contenedor.appendChild(tarjeta);
+
+    });
+
+}
 
 //========================
 // LEER TARJETAS ACCIONES
