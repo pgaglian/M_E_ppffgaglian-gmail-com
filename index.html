@@ -4401,9 +4401,20 @@ function guardarConfiguracionBancos(){
         JSON.stringify(Bancos)
     );
 
-    mostrarBancosSeleccionados();
+   const mensaje =
+    document.getElementById("mensajeBancos");
+
+mensaje.style.display = "block";
+
+setTimeout(function(){
+
+    mensaje.style.display = "none";
 
     cerrarConfiguracionBancos();
+
+},2000);
+
+mostrarBancosSeleccionados();
 
 }
 
@@ -4435,9 +4446,10 @@ function mostrarBancosSeleccionados(){
         tarjeta.style.padding = "15px";
         tarjeta.style.borderRadius = "16px";
 
-        tarjeta.innerHTML =
-        Banco;
-
+tarjeta.innerHTML =
+    '<a href="https://www.santander.com.ar/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">' +
+    Banco +
+    '</a>';
         contenedor.appendChild(tarjeta);
 
     });
