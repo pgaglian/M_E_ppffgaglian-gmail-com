@@ -4460,12 +4460,16 @@ function mostrarBancosSeleccionados(){
 
         if(datosBanco){
 
-            if(esAndroid){
+if(esAndroid){
 
-                tarjeta.innerHTML =
-                    '<a href="' + datosBanco.android + '" style="color:inherit;text-decoration:none;">' +
-                    Banco +
-                    '</a>';
+    tarjeta.innerHTML =
+        '<a href="' + datosBanco.android + '" ' +
+        'onclick="event.preventDefault(); window.location.href=this.href;" ' +
+        'style="color:inherit;text-decoration:none;">' +
+        Banco +
+        '</a>';
+
+}
 
             }else if(esAppleMobile){
 
