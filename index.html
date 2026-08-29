@@ -4491,6 +4491,9 @@ mostrarBancosSeleccionados();
 
 }
 
+
+
+
 // ========================
 // MOSTRAR BANCOS SELECCIONADOS
 // ========================
@@ -4569,11 +4572,220 @@ if(datosBanco){
 
 }
 
+               contenedor.appendChild(tarjeta);
+
+    });
+
+    mostrarPromocionesBancos();
+
+}
+
+
+// ========================
+// MOSTRAR PROMOCIONES BANCOS
+// ========================
+
+function mostrarPromocionesBancos(){
+
+    const contenedor =
+        document.getElementById("promocionesBancos");
+
+    if(!contenedor){
+        return;
+    }
+
+    const bancosSeleccionados =
+        JSON.parse(
+            localStorage.getItem("BancosSeleccionados")
+        ) || [];
+
+    contenedor.innerHTML = "";
+
+    if(bancosSeleccionados.length === 0){
+
+        contenedor.innerHTML = `
+            <div class="card"
+                 style="
+                 padding:20px;
+                 border-radius:18px;
+                 ">
+                <h3>🏦 Seleccioná tus bancos</h3>
+                <p>
+                    Elegí tus bancos para ver las promociones
+                    disponibles.
+                </p>
+            </div>
+        `;
+
+        return;
+    }
+
+    const hoy = new Date();
+
+    const fechaHoy =
+        hoy.getFullYear() + "-" +
+        String(hoy.getMonth() + 1).padStart(2,"0") + "-" +
+        String(hoy.getDate()).padStart(2,"0");
+
+    const diasSemana = [
+        "domingo",
+        "lunes",
+        "martes",
+        "miércoles",
+        "jueves",
+        "viernes",
+        "sábado"
+    ];
+
+    const diaHoy =
+        diasSemana[hoy.getDay()];
+
+    function normalizar(texto){
+
+        return String(texto || "")
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g,"");
+
+    }
+
+    const promocionesHoy =
+        promocionesBancos.filter(function(promocion){
+
+            const bancoCoincide =
+                bancosSeleccionados.some(function(banco){
+
+                    const nombreBanco =
+                        banco.replace("🏦 ","").trim();
+
+                    return normalizar(promocion.banco) ===
+                           normalizar(nombreBanco);
+
+                });
+
+            if(!bancoCoincide){
+                return false;
+            }
+
+            if(promocion.desde &&
+               fechaHoy < promocion.desde){
+
+                return false;
+
+            }
+
+            if(promocion.hasta &&
+               fechaHoy > promocion.hasta){
+
+                return false;
+
+            }
+
+            if(promocion.dias &&
+               promocion.dias.length > 0){
+
+                const diasNormalizados =
+                    promocion.dias.map(function(dia){
+                        return normalizar(dia);
+                    });
+
+                if(!diasNormalizados.includes(
+                    normalizar(diaHoy)
+                )){
+                    return false;
+                }
+
+            }
+
+            return true;
+
+        });
+
+
+    if(promocionesHoy.length === 0){
+
+        contenedor.innerHTML = `
+            <div class="card"
+                 style="
+                 padding:20px;
+                 border-radius:18px;
+                 ">
+
+                <h3>📭 Sin promociones hoy</h3>
+
+                <p>
+                    No hay promociones para tus bancos hoy.
+                </p>
+
+            </div>
+        `;
+
+        return;
+    }
+
+
+    promocionesHoy.forEach(function(promocion){
+
+        const tarjeta =
+            document.createElement("div");
+
+        tarjeta.className = "card";
+
+        tarjeta.style.padding = "20px";
+        tarjeta.style.borderRadius = "18px";
+
+        tarjeta.innerHTML = `
+
+            <h3>
+                🏦 ${promocion.banco}
+            </h3>
+
+            <h3>
+                ${promocion.titulo || ""}
+            </h3>
+
+            <p>
+                ${promocion.detalle || ""}
+            </p>
+
+            ${
+                promocion.tope
+                ? `<p><strong>Tope:</strong> ${promocion.tope}</p>`
+                : ""
+            }
+
+            ${
+                promocion.medioPago
+                ? `<p><strong>Medio de pago:</strong> ${promocion.medioPago}</p>`
+                : ""
+            }
+
+            <a
+                href="${promocion.url || "#"}"
+                target="_blank"
+                rel="noopener noreferrer"
+                style="
+                display:inline-block;
+                margin-top:10px;
+                padding:10px 15px;
+                background:#FFD700;
+                color:#000;
+                text-decoration:none;
+                border-radius:10px;
+                font-weight:bold;
+                "
+            >
+                Ver promoción
+            </a>
+
+        `;
+
         contenedor.appendChild(tarjeta);
 
     });
 
 }
+
 
 function confirmarBancoAndroid(nombreBanco, enlace){
 
@@ -4607,6 +4819,12 @@ function confirmarBancoApple(nombreBanco, enlace){
 
 
 // ========================
+// PROMOCIONES BANCOS
+// ========================
+
+let promocionesBancos = [];
+
+// ========================
 // CARGAR CONFIGURACION BANCOS
 // ========================
 
@@ -4629,6 +4847,36 @@ fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-espacio-datos/main/
     .catch(function(error){
 
         console.log("No se pudo cargar bancos.json", error);
+
+    });
+
+
+// ========================
+// CARGAR PROMOCIONES
+// ========================
+
+fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-espacio-datos/main/Promociones.json")
+
+    .then(function(respuesta){
+
+        return respuesta.json();
+
+    })
+
+    .then(function(datos){
+
+        promocionesBancos = datos;
+
+        mostrarPromocionesBancos();
+
+    })
+
+    .catch(function(error){
+
+        console.log(
+            "No se pudo cargar Promociones.json",
+            error
+        );
 
     });
 
