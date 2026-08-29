@@ -4682,20 +4682,23 @@ function mostrarPromocionesBancos(){
             }
 
             if(promocion.dias &&
-               promocion.dias.length > 0){
+   promocion.dias.length > 0){
 
-                const diasNormalizados =
-                    promocion.dias.map(function(dia){
-                        return normalizar(dia);
-                    });
+    const diasNormalizados =
+        promocion.dias.map(function(dia){
+            return normalizar(dia);
+        });
 
-                if(!diasNormalizados.includes(
-                    normalizar(diaHoy)
-                )){
-                    return false;
-                }
+    if(
+        !diasNormalizados.includes("todos") &&
+        !diasNormalizados.includes(
+            normalizar(diaHoy)
+        )
+    ){
+        return false;
+    }
 
-            }
+}
 
             return true;
 
