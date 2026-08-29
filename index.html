@@ -4456,41 +4456,51 @@ function mostrarBancosSeleccionados(){
             });
 
 
-        if(datosBanco){
+       if(datosBanco){
 
-            if(esAndroid){
+    if(esAndroid){
 
-                tarjeta.innerHTML =
-                    '<a href="' + datosBanco.android + '" style="color:inherit;text-decoration:none;">' +
-                    Banco +
-                    '</a>';
+        tarjeta.innerHTML =
+            '<a href="' + datosBanco.android + '" ' +
+            'onclick="event.preventDefault(); abrirBancoAndroid(\'' +
+            datosBanco.android.replace(/'/g, "\\'") +
+            '\')" ' +
+            'style="color:inherit;text-decoration:none;">' +
+            Banco +
+            '</a>';
 
-            }else if(esAppleMobile){
+    }else if(esAppleMobile){
 
-                tarjeta.innerHTML =
-                    '<a href="' + datosBanco.iphone + '" style="color:inherit;text-decoration:none;">' +
-                    Banco +
-                    '</a>';
+        tarjeta.innerHTML =
+            '<a href="' + datosBanco.iphone + '" style="color:inherit;text-decoration:none;">' +
+            Banco +
+            '</a>';
 
-            }else{
+    }else{
 
-                tarjeta.innerHTML =
-                    '<a href="' + datosBanco.web + '" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">' +
-                    Banco +
-                    '</a>';
+        tarjeta.innerHTML =
+            '<a href="' + datosBanco.web + '" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">' +
+            Banco +
+            '</a>';
 
-            }
+    }
 
-        }else{
+}else{
 
-            tarjeta.innerHTML =
-                Banco;
+    tarjeta.innerHTML =
+        Banco;
 
-        }
+}
 
         contenedor.appendChild(tarjeta);
 
     });
+
+}
+
+function abrirBancoAndroid(enlace){
+
+    window.location.href = enlace;
 
 }
 
