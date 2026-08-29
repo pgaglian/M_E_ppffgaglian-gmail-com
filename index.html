@@ -4456,13 +4456,14 @@ function mostrarBancosSeleccionados(){
             });
 
 
-       if(datosBanco){
+if(datosBanco){
 
     if(esAndroid){
 
         tarjeta.innerHTML =
-            '<a href="' + datosBanco.android + '" ' +
-            'onclick="event.preventDefault(); abrirBancoAndroid(\'' +
+            '<a href="#" ' +
+            'onclick="event.preventDefault(); confirmarBancoAndroid(\'' +
+            datosBanco.nombre.replace(/'/g, "\\'") + '\', \'' +
             datosBanco.android.replace(/'/g, "\\'") +
             '\')" ' +
             'style="color:inherit;text-decoration:none;">' +
@@ -4498,9 +4499,18 @@ function mostrarBancosSeleccionados(){
 
 }
 
-function abrirBancoAndroid(enlace){
+function confirmarBancoAndroid(nombreBanco, enlace){
 
-    window.location.href = enlace;
+    const confirmar = confirm(
+        "🏦 " + nombreBanco + "\n\n" +
+        "¿Deseás abrir " + nombreBanco + " desde Google Play?"
+    );
+
+    if(confirmar){
+
+        window.location.href = enlace;
+
+    }
 
 }
 
