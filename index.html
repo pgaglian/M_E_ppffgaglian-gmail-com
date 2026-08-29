@@ -4470,12 +4470,17 @@ if(datosBanco){
             Banco +
             '</a>';
 
-    }else if(esAppleMobile){
+}else if(esAppleMobile){
 
-        tarjeta.innerHTML =
-            '<a href="' + datosBanco.iphone + '" style="color:inherit;text-decoration:none;">' +
-            Banco +
-            '</a>';
+    tarjeta.innerHTML =
+        '<a href="#" ' +
+        'onclick="event.preventDefault(); confirmarBancoApple(\'' +
+        datosBanco.nombre.replace(/'/g, "\\'") + '\', \'' +
+        datosBanco.iphone.replace(/'/g, "\\'") +
+        '\')" ' +
+        'style="color:inherit;text-decoration:none;">' +
+        Banco +
+        '</a>';
 
     }else{
 
@@ -4513,6 +4518,22 @@ function confirmarBancoAndroid(nombreBanco, enlace){
     }
 
 }
+
+function confirmarBancoApple(nombreBanco, enlace){
+
+    const confirmar = confirm(
+        "🏦 " + nombreBanco + "\n\n" +
+        "¿Deseás abrir " + nombreBanco + " desde App Store?"
+    );
+
+    if(confirmar){
+
+        window.location.href = enlace;
+
+    }
+
+}
+
 
 // ========================
 // CARGAR CONFIGURACION BANCOS
