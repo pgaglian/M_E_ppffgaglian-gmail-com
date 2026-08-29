@@ -4668,10 +4668,35 @@ function abrirConfiguracionBilleteras(){
         return;
     }
 
+
+    const seleccionadas =
+        JSON.parse(
+            localStorage.getItem(
+                "BilleterasSeleccionadas"
+            )
+        ) || [];
+
+
+    const checkboxes =
+        document.querySelectorAll(
+            "#configuracionBilleteras input[type='checkbox']"
+        );
+
+
+    checkboxes.forEach(function(checkbox){
+
+        const nombre =
+            "💳 " + checkbox.value;
+
+        checkbox.checked =
+            seleccionadas.includes(nombre);
+
+    });
+
+
     popup.style.display = "flex";
 
 }
-
 
 function cerrarConfiguracionBilleteras(){
 
@@ -4726,7 +4751,7 @@ setTimeout(function(){
 
     cerrarConfiguracionBancos();
 
-},2000);
+},1000);
 
 mostrarBancosSeleccionados();
 
