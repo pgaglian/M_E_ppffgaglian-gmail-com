@@ -4732,31 +4732,47 @@ mostrarBancosSeleccionados();
 
 }
 
-
-// ========================
+/// ========================
 // GUARDAR CONFIGURACION BILLETERAS
 // ========================
 
 function guardarConfiguracionBilleteras(){
 
-    const seleccionadas = [];
+    const Billeteras = [];
 
     document
         .querySelectorAll(
-            '#configuracionBilleteras input[type="checkbox"]:checked'
+            "#configuracionBilleteras input[type='checkbox']"
         )
         .forEach(function(checkbox){
 
-            seleccionadas.push(
-                "💳 " + checkbox.value
-            );
+            if(checkbox.checked){
+
+                Billeteras.push(
+                    checkbox.parentElement.textContent.trim()
+                );
+
+            }
 
         });
 
     localStorage.setItem(
         "BilleterasSeleccionadas",
-        JSON.stringify(seleccionadas)
+        JSON.stringify(Billeteras)
     );
+
+    const mensaje =
+        document.getElementById("mensajeBilleteras");
+
+    mensaje.style.display = "block";
+
+    setTimeout(function(){
+
+        mensaje.style.display = "none";
+
+        cerrarConfiguracionBilleteras();
+
+    },1000);
 
     mostrarBilleterasSeleccionadas();
 
