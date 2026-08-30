@@ -2539,9 +2539,9 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
             ⬅ Volver
         </button>
 
-        <button onclick="abrirConfiguracionBancos()">
-            ⚙ Configurar
-        </button>
+       <button onclick="abrirMenuConfiguracionBancos()">
+    ⚙ Configurar
+</button>
 
     </div>
 
@@ -2875,6 +2875,274 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 </div>
 
 <!-- ===== FIN CONFIGURACION BILLETERAS ===== -->
+
+<!-- ===== CONFIGURACION DE PROMOCIONES ===== -->
+
+<div id="popupConfiguracionPromociones"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1200;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,600px);
+        max-height:85vh;
+        overflow-y:auto;
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:20px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        ">
+
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:15px;
+            ">
+
+            <h2 style="margin:0;color:#FFD700;">
+                🏷️ Configurar Promociones
+            </h2>
+
+            <button onclick="cerrarConfiguracionPromociones()">
+                ✖
+            </button>
+
+        </div>
+
+        <p style="
+            text-align:center;
+            color:#ccc;
+            ">
+            Seleccioná las categorías de promociones que querés ver.
+        </p>
+
+        <div style="
+            display:flex;
+            gap:10px;
+            justify-content:center;
+            flex-wrap:wrap;
+            margin:15px 0;
+            ">
+
+            <button
+                type="button"
+                onclick="seleccionarTodasPromociones()"
+                style="
+                padding:10px 16px;
+                font-weight:bold;
+                border-radius:10px;
+                ">
+                ☑️ Seleccionar todo
+            </button>
+
+            <button
+                type="button"
+                onclick="quitarSeleccionPromociones()"
+                style="
+                padding:10px 16px;
+                font-weight:bold;
+                border-radius:10px;
+                ">
+                ❌ Quitar selección
+            </button>
+
+        </div>
+
+        <div id="listaConfiguracionPromociones">
+
+            <div style="
+                display:grid;
+                grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+                gap:10px;
+                max-height:45vh;
+                overflow-y:auto;
+                padding-right:5px;
+                ">
+
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                    <input type="checkbox" value="Supermercados">
+                    🛒 Supermercados
+                </label>
+
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                    <input type="checkbox" value="Gastronomía">
+                    🍔 Gastronomía
+                </label>
+
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                    <input type="checkbox" value="Combustible">
+                    ⛽ Combustible
+                </label>
+
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                    <input type="checkbox" value="Viajes">
+                    ✈️ Viajes
+                </label>
+
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                    <input type="checkbox" value="Hoteles">
+                    🏨 Hoteles
+                </label>
+
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                    <input type="checkbox" value="Indumentaria">
+                    👕 Indumentaria
+                </label>
+
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                    <input type="checkbox" value="Tecnología">
+                    💻 Tecnología
+                </label>
+
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                    <input type="checkbox" value="Entretenimiento">
+                    🎬 Entretenimiento
+                </label>
+
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                    <input type="checkbox" value="Salud">
+                    💊 Salud
+                </label>
+
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                    <input type="checkbox" value="Hogar">
+                    🏠 Hogar
+                </label>
+
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                    <input type="checkbox" value="Cuotas">
+                    💳 Cuotas
+                </label>
+
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                    <input type="checkbox" value="Otros">
+                    🎁 Otros
+                </label>
+
+            </div>
+
+        </div>
+
+        <div style="
+            text-align:center;
+            margin-top:20px;
+            ">
+
+            <button
+                type="button"
+                onclick="guardarConfiguracionPromociones()"
+                style="
+                padding:10px 22px;
+                font-size:16px;
+                font-weight:bold;
+                border-radius:10px;
+                ">
+                💾 Guardar Promociones
+            </button>
+
+            <div id="mensajePromociones"
+                 style="
+                 display:none;
+                 margin-top:12px;
+                 color:#7CFC00;
+                 font-weight:bold;
+                 font-size:16px;
+                 ">
+                ✅ Promociones guardadas correctamente
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN CONFIGURACION DE PROMOCIONES ===== -->
+
+
+
+<!-- ===== MENU CONFIGURACION BANCOS ===== -->
+
+<div id="popupMenuConfiguracionBancos"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1100;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,500px);
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:20px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        ">
+
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:20px;
+            ">
+
+            <h2 style="margin:0;color:#FFD700;">
+                🛠️ Configuración
+            </h2>
+
+            <button onclick="cerrarMenuConfiguracionBancos()">
+                ✖
+            </button>
+
+        </div>
+
+        <button
+            type="button"
+            onclick="abrirConfiguracionBancosDesdeMenu()"
+            style="
+            width:100%;
+            padding:15px;
+            margin-bottom:12px;
+            font-size:16px;
+            font-weight:bold;
+            border-radius:10px;
+            ">
+            🏦 Configurar Bancos
+        </button>
+
+        <button
+            type="button"
+            onclick="abrirConfiguracionPromociones()"
+            style="
+            width:100%;
+            padding:15px;
+            font-size:16px;
+            font-weight:bold;
+            border-radius:10px;
+            ">
+            🏷️ Configurar Promociones
+        </button>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN MENU CONFIGURACION BANCOS ===== -->
+
 
 
 <!-- ===== CONFIGURACION DE BANCOS ===== -->
@@ -4628,6 +4896,13 @@ function abrirConfiguracionBancos(){
     const BancosSeleccionados =
         JSON.parse(localStorage.getItem("BancosSeleccionados")) || [];
 
+const categoriasSeleccionadas =
+    JSON.parse(
+        localStorage.getItem(
+            "PromocionesCategoriasSeleccionadas"
+        )
+    ) || [];
+
     document.querySelectorAll(
         "#listaConfiguracionBancos input[type='checkbox']"
     ).forEach(function(checkbox){
@@ -4657,6 +4932,159 @@ function cerrarConfiguracionBancos(){
     popup.style.display = "none";
 
 }
+
+
+
+// ========================
+// MENU CONFIGURACION BANCOS
+// ========================
+
+function abrirMenuConfiguracionBancos(){
+
+    const popup =
+        document.getElementById("popupMenuConfiguracionBancos");
+
+    if(!popup){
+        return;
+    }
+
+    popup.style.display = "flex";
+
+}
+function abrirConfiguracionPromociones(){
+
+    cerrarMenuConfiguracionBancos();
+
+    const popup =
+        document.getElementById("popupConfiguracionPromociones");
+
+    if(!popup){
+        return;
+    }
+
+    const categoriasSeleccionadas =
+        JSON.parse(
+            localStorage.getItem(
+                "PromocionesCategoriasSeleccionadas"
+            )
+        ) || [];
+
+    document.querySelectorAll(
+        "#listaConfiguracionPromociones input[type='checkbox']"
+    ).forEach(function(checkbox){
+
+        checkbox.checked =
+            categoriasSeleccionadas.includes(
+                checkbox.value
+            );
+
+    });
+
+    popup.style.display = "flex";
+
+}
+
+function cerrarMenuConfiguracionBancos(){
+
+    const popup =
+        document.getElementById("popupMenuConfiguracionBancos");
+
+    if(!popup){
+        return;
+    }
+
+    popup.style.display = "none";
+
+}
+
+function abrirConfiguracionBancosDesdeMenu(){
+
+    cerrarMenuConfiguracionBancos();
+
+    abrirConfiguracionBancos();
+
+}
+
+
+function seleccionarTodasPromociones(){
+
+    document.querySelectorAll(
+        "#listaConfiguracionPromociones input[type='checkbox']"
+    ).forEach(function(checkbox){
+
+        checkbox.checked = true;
+
+    });
+
+}
+
+
+function quitarSeleccionPromociones(){
+
+    document.querySelectorAll(
+        "#listaConfiguracionPromociones input[type='checkbox']"
+    ).forEach(function(checkbox){
+
+        checkbox.checked = false;
+
+    });
+
+}
+function guardarConfiguracionPromociones(){
+
+    const categorias = [];
+
+    document.querySelectorAll(
+        "#listaConfiguracionPromociones input[type='checkbox']"
+    ).forEach(function(checkbox){
+
+        if(checkbox.checked){
+            categorias.push(checkbox.value);
+        }
+
+    });
+
+    localStorage.setItem(
+        "PromocionesCategoriasSeleccionadas",
+        JSON.stringify(categorias)
+    );
+
+    const mensaje =
+        document.getElementById("mensajePromociones");
+
+    if(mensaje){
+
+        mensaje.style.display = "block";
+
+        setTimeout(function(){
+
+            mensaje.style.display = "none";
+
+            cerrarConfiguracionPromociones();
+
+        }, 1000);
+
+    }else{
+
+        cerrarConfiguracionPromociones();
+
+    }
+
+}
+
+function cerrarConfiguracionPromociones(){
+
+    const popup =
+        document.getElementById("popupConfiguracionPromociones");
+
+    if(!popup){
+        return;
+    }
+
+    popup.style.display = "none";
+
+}
+
 
 // ========================
 // CONFIGURACION BILLETERAS
@@ -5041,6 +5469,27 @@ function mostrarPromocionesBancos(){
             if(!bancoCoincide){
                 return false;
             }
+if(
+    promocion.categoria &&
+    categoriasSeleccionadas.length > 0
+){
+
+    const categoriaPromocion =
+        normalizar(promocion.categoria);
+
+    const categoriaCoincide =
+        categoriasSeleccionadas.some(function(categoria){
+
+            return normalizar(categoria) ===
+                   categoriaPromocion;
+
+        });
+
+    if(!categoriaCoincide){
+        return false;
+    }
+
+}
 
             if(promocion.desde &&
                fechaHoy < promocion.desde){
