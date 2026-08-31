@@ -5214,7 +5214,7 @@ let promocionesBilleteras = [];
 
 let configuracionBancos = [];
 
-fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-espacio-datos/main/Bancos.json")
+fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Bancos.json")
 
     .then(function(respuesta){
 
@@ -5239,7 +5239,7 @@ fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-espacio-datos/main/
 // CARGAR CONFIGURACION BILLETERAS
 // ========================
 
-fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-espacio-datos/main/Billeteras.json")
+fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Billeteras.json")
 
     .then(function(respuesta){
 
@@ -5312,7 +5312,7 @@ fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-espacio-datos/main/
 // CARGAR PROMOCIONES
 // ========================
 
-fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-espacio-datos/main/Promociones.json")
+fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Promociones.json")
 
     .then(function(respuesta){
 
@@ -8511,7 +8511,7 @@ let patrocinadorActual = null;
 
 function cargarPatrocinadores(){
 
-    fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-espacio-datos/main/patrocinadores.json")
+    fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/patrocinadores.json")
 
         .then(respuesta => respuesta.json())
 
@@ -8568,7 +8568,7 @@ function mostrarPatrocinadorAleatorio(){
 
         imagen.src =
 
-"https://raw.githubusercontent.com/pgaglian/Mi-Espacio-espacio-datos/main/" +
+"https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/" +
 patrocinadorActual.logo;
 
         imagen.style.maxWidth = "100px";
