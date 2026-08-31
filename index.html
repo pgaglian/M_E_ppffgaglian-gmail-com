@@ -3785,6 +3785,12 @@ document.getElementById("btnVolverAndroid").style.display="none";
 
 document.getElementById(id).style.display="block";
 
+if(id=="Bancos"){
+
+    probarCotizacionBancos();
+
+}
+
 
 // Fondo independiente Calendario
 
@@ -3828,6 +3834,46 @@ if(id=="Musica"){
 }
 
 }
+
+
+// ========================
+// PRUEBA COTIZACION BANCOS
+// ========================
+
+async function probarCotizacionBancos(){
+
+    console.log("🔎 Probando cotización Bancos...");
+
+    try{
+
+        const respuesta = await fetch(
+            "https://www.bna.com.ar/Cotizador/MonedasHistorico"
+        );
+
+        console.log("🇦🇷 Banco Nación:", respuesta.status);
+
+    }catch(error){
+
+        console.log("❌ Banco Nación:", error);
+
+    }
+
+    try{
+
+        const respuesta = await fetch(
+            "https://dolarhoy.com/cotizacion-dolar-blue"
+        );
+
+        console.log("🔵 DolarHoy:", respuesta.status);
+
+    }catch(error){
+
+        console.log("❌ DolarHoy:", error);
+
+    }
+
+}
+
 
 function inicio(){
 
