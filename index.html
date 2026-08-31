@@ -5279,26 +5279,15 @@ function confirmarBancoAndroid(nombreBanco, enlace){
         };
 
     document
-    .getElementById("abrirBanco")
-    .onclick = function(){
+        .getElementById("abrirBanco")
+        .onclick = function(){
 
-        popup.remove();
-
-        if(nombreBanco === "Macro"){
-
-            window.location.href =
-                "intent://#Intent;" +
-                "package=com.macro.banco.ar;" +
-                "scheme=https;" +
-                "end";
-
-        }else{
+            popup.remove();
 
             window.location.href = enlace;
 
-        }
+        };
 
-    };
 }
 
 function confirmarBancoApple(nombreBanco, enlace){
