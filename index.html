@@ -5170,16 +5170,108 @@ function mostrarPromocionesBilleteras(){
 
 function confirmarBancoAndroid(nombreBanco, enlace){
 
-    const confirmar = confirm(
-        "🏦 " + nombreBanco + "\n\n" +
-        "¿Deseás abrir " + nombreBanco + " desde Google Play?"
-    );
+    const popup = document.createElement("div");
 
-    if(confirmar){
+    popup.style.position = "fixed";
+    popup.style.inset = "0";
+    popup.style.background = "rgba(0,0,0,.75)";
+    popup.style.zIndex = "99999";
+    popup.style.display = "flex";
+    popup.style.alignItems = "center";
+    popup.style.justifyContent = "center";
+    popup.style.padding = "20px";
 
-        window.location.href = enlace;
+    popup.innerHTML = `
 
-    }
+        <div style="
+            width:min(92%,420px);
+            background:#1d1d1d;
+            border:1px solid #555;
+            border-radius:20px;
+            padding:25px;
+            box-shadow:0 10px 35px rgba(0,0,0,.7);
+            text-align:center;
+            color:white;
+        ">
+
+            <h2 style="
+                margin-top:0;
+                color:#FFD700;
+            ">
+                🏦 Mi Espacio
+            </h2>
+
+            <h3>
+                ${nombreBanco}
+            </h3>
+
+            <p style="
+                font-size:16px;
+                line-height:1.5;
+            ">
+                ¿Deseás abrir ${nombreBanco}
+                desde Google Play?
+            </p>
+
+            <div style="
+                display:flex;
+                gap:12px;
+                margin-top:25px;
+            ">
+
+                <button
+                    type="button"
+                    id="cancelarBanco"
+                    style="
+                    flex:1;
+                    padding:13px;
+                    border-radius:10px;
+                    font-weight:bold;
+                    cursor:pointer;
+                ">
+                    CANCELAR
+                </button>
+
+                <button
+                    type="button"
+                    id="abrirBanco"
+                    style="
+                    flex:1;
+                    padding:13px;
+                    border-radius:10px;
+                    font-weight:bold;
+                    cursor:pointer;
+                    background:#FFD700;
+                    color:#000;
+                ">
+                    ABRIR
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+    document.body.appendChild(popup);
+
+    document
+        .getElementById("cancelarBanco")
+        .onclick = function(){
+
+            popup.remove();
+
+        };
+
+    document
+        .getElementById("abrirBanco")
+        .onclick = function(){
+
+            popup.remove();
+
+            window.location.href = enlace;
+
+        };
 
 }
 
