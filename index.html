@@ -5207,10 +5207,25 @@ function confirmarBancoAndroid(nombreBanco, enlace){
 
             <p style="
                 font-size:16px;
-                line-height:1.5;
+                line-height:1.6;
             ">
-                ¿Deseás abrir ${nombreBanco}
-                desde Google Play?
+                📲 Si ya tenés la aplicación instalada,
+                podés abrirla desde Google Play.
+            </p>
+
+            <p style="
+                font-size:16px;
+                line-height:1.6;
+            ">
+                📥 Si todavía no la tenés,
+                podés instalarla desde Google Play.
+            </p>
+
+            <p style="
+                font-size:16px;
+                margin-top:20px;
+            ">
+                ¿Querés continuar?
             </p>
 
             <div style="
@@ -5229,7 +5244,7 @@ function confirmarBancoAndroid(nombreBanco, enlace){
                     font-weight:bold;
                     cursor:pointer;
                 ">
-                    CANCELAR
+                    ❌ CANCELAR
                 </button>
 
                 <button
@@ -5244,7 +5259,7 @@ function confirmarBancoAndroid(nombreBanco, enlace){
                     background:#FFD700;
                     color:#000;
                 ">
-                    ABRIR
+                    🚀 IR A GOOGLE PLAY
                 </button>
 
             </div>
@@ -5274,7 +5289,6 @@ function confirmarBancoAndroid(nombreBanco, enlace){
         };
 
 }
-
 function confirmarBancoApple(nombreBanco, enlace){
 
     const confirmar = confirm(
