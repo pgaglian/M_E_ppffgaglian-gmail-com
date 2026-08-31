@@ -5455,6 +5455,71 @@ fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Bancos.j
 
 
 // ========================
+// CARGAR COTIZACION DOLAR
+// ========================
+
+function cargarCotizacionBancos(){
+
+    fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Cotizacion.json")
+
+        .then(function(respuesta){
+
+            return respuesta.json();
+
+        })
+
+        .then(function(datos){
+
+            const oficial =
+                document.getElementById("dolarOficialBancos");
+
+            const blue =
+                document.getElementById("dolarBlueBancos");
+
+
+            if(oficial){
+
+                oficial.innerHTML =
+                    "Compra $" + datos.oficial.compra +
+                    "<br>" +
+                    "Venta $" + datos.oficial.venta +
+                    "<br>" +
+                    "<small>🕐 Actualizado " +
+                    datos.oficial.actualizado +
+                    "</small>";
+
+            }
+
+
+            if(blue){
+
+                blue.innerHTML =
+                    "Compra $" + datos.blue.compra +
+                    "<br>" +
+                    "Venta $" + datos.blue.venta +
+                    "<br>" +
+                    "<small>🕐 Actualizado " +
+                    datos.blue.actualizado +
+                    "</small>";
+
+            }
+
+        })
+
+        .catch(function(error){
+
+            console.log(
+                "No se pudo cargar Cotizacion.json",
+                error
+            );
+
+        });
+
+}
+
+
+
+// ========================
 // CARGAR CONFIGURACION BILLETERAS
 // ========================
 
