@@ -2021,9 +2021,52 @@ onclick="mostrar('Correo')">
 onclick="mostrar('Bancos')">
 
 <h2>🏦 Bancos</h2>
-<p>Acceso financiero</p>
-</div>
 
+    <div
+        style="
+        margin:4px 0;
+        padding:0 8px;
+        font-size:15px;
+        line-height:22px;
+        font-weight:bold;
+        text-align:center;
+        ">
+        💵 Oficial:
+        <span id="widgetCompraOficialBancos">Compra $--</span>
+        ·
+        <span id="widgetVentaOficialBancos">Venta $--</span>
+    </div>
+
+    <div
+        style="
+        margin:4px 0 10px 0;
+        padding:0 8px;
+        font-size:15px;
+        line-height:22px;
+        font-weight:bold;
+        text-align:center;
+        ">
+        🔵 Blue:
+        <span id="widgetCompraBlueBancos">Compra $--</span>
+        ·
+        <span id="widgetVentaBlueBancos">Venta $--</span>
+    </div>
+
+    <div
+        style="
+        margin-top:10px;
+        padding-top:8px;
+        border-top:1px solid rgba(255,255,255,.15);
+        font-size:12px;
+        line-height:18px;
+        font-weight:bold;
+        text-align:center;
+        ">
+        💳 <strong>¿Querés ver las promociones de tus bancos?</strong><br>
+        👉 ¡Entrá acá y descubrí tus beneficios! 😊
+    </div>
+
+</div>
 
 <div class="card" id="accionBilleteras" data-titulo="💳 Billeteras" onclick="mostrar('Billeteras')">
 
@@ -5482,8 +5525,19 @@ function cargarCotizacionBancos(){
             const blue =
                 document.getElementById("dolarBlueBancos");
 
+            const widgetCompraOficial =
+                document.getElementById("widgetCompraOficialBancos");
 
-            if(oficial){
+            const widgetVentaOficial =
+                document.getElementById("widgetVentaOficialBancos");
+
+            const widgetCompraBlue =
+                document.getElementById("widgetCompraBlueBancos");
+
+            const widgetVentaBlue =
+                document.getElementById("widgetVentaBlueBancos");
+
+             if(oficial){
 
                 oficial.innerHTML =
                     "Compra $" + datos.oficial.compra +
@@ -5509,6 +5563,27 @@ function cargarCotizacionBancos(){
                     "</small>";
 
             }
+
+            if(widgetCompraOficial){
+                widgetCompraOficial.textContent =
+                    "Compra $" + datos.oficial.compra;
+            }
+
+            if(widgetVentaOficial){
+                widgetVentaOficial.textContent =
+                    "Venta $" + datos.oficial.venta;
+            }
+
+            if(widgetCompraBlue){
+                widgetCompraBlue.textContent =
+                    "Compra $" + datos.blue.compra;
+            }
+
+            if(widgetVentaBlue){
+                widgetVentaBlue.textContent =
+                    "Venta $" + datos.blue.venta;
+            }
+
 
         })
 
