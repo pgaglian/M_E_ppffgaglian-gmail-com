@@ -1,16 +1,16 @@
 {
-  "name": "Mi Espacio",
-  "short_name": "Mi Espacio",
-  "start_url": "/M_E_ppffgaglian-gmail-com/",
-  "scope": "/M_E_ppffgaglian-gmail-com/",
-  "display": "standalone",
-  "background_color": "#111111",
-  "theme_color": "#111111",
-  "icons": [
-    {
-      "src": "/Mi-Espacio-Datos/Img/logo.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    }
-  ]
+"name": "Mi Espacio",
+"short_name": "Mi Espacio",
+"start_url": "/M_E_ppffgaglian-gmail-com/",
+"scope": "/M_E_ppffgaglian-gmail-com/",
+"display": "standalone",
+"background_color": "#111111",
+"theme_color": "#111111",
+"icons": [
+{
+"src": "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Img/logo.png",
+"sizes": "192x192",
+"type": "image/png"
+}
+]
 }
