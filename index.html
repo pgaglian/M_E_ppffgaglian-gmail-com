@@ -3438,108 +3438,125 @@ font-size:18px;
 
 <div id="popupColaboracion" style="display:none;">
 
-    <div class="popupContenido">
+```
+<div class="popupContenido">
 
-        <h2>☕ Ayudá a mantener ✨ Un Espacio para Tu Lugar</h2>
+    <h2>☕ Ayudá a mantener ✨ Un Espacio para Tu Lugar</h2>
 
-        <p>
-            Tu acceso está próximo a vencer.
-        </p>
+    <p>
+        Si disfrutás de este espacio y querés ayudar a mantenerlo activo,
+        podés colaborar con su renovación.
+    </p>
 
-        <p>
-            Si disfrutás de este espacio y querés ayudar a mantenerlo activo,
-            podés realizar una colaboración para contribuir con su renovación.
-        </p>
+    <p>
+        <strong>¿Cómo colaborar?</strong>
+    </p>
 
-        <p>
-            <strong>Colaboraciones recomendadas:</strong>
-        </p>
+    <p>
+        Hacé una transferencia a:
+    </p>
 
-        <button class="opcionColaboracion" data-monto="2000">
-            💙 $2.000
-        </button>
+    <p>
+        <strong>Mercado Pago</strong><br>
+        <strong>Alias:</strong>
+        <span id="aliasMercadoPago">TU-ALIAS</span>
+    </p>
 
-        <button class="opcionColaboracion" data-monto="2500">
-            💙 $2.500
-        </button>
+    <p>
+        <strong>CBU:</strong><br>
+        <span id="cbuMercadoPago">TU-CBU</span>
+    </p>
 
-        <button class="opcionColaboracion" data-monto="3000">
-            💙 $3.000
-        </button>
+    <p>
+        <strong>A nombre de:</strong><br>
+        <span id="titularMercadoPago">TU NOMBRE</span>
+    </p>
 
-        <button class="opcionColaboracion" data-monto="otro">
-            💙 Otro monto
-        </button>
+    <p>
+        Una vez realizada la transferencia,
+        <strong>seleccioná el monto que enviaste</strong>
+        y presioná <strong>Continuar</strong>.
+    </p>
 
-<div id="contenedorOtroMonto" style="display:none; margin-top:10px;">
+    <p>
+        Te llevaremos a nuestro correo para que nos envíes
+        los datos de la colaboración y podamos identificarla.
+    </p>
 
-    <div style="position:relative;">
+    <p>
+        ⏱️ <strong>La activación puede demorar hasta 72 horas.</strong>
+    </p>
 
-        <input
-            type="number"
-            id="otroMontoColaboracion"
-            placeholder="Ingresá el monto"
-            min="1"
-            style="
-                width:100%;
-                box-sizing:border-box;
-                padding:12px 45px 12px 12px;
-                border:none;
-                border-radius:10px;
-                background:#333;
-                color:white;
-                font-size:16px;
-                text-align:center;
-            "
-        >
+    <p>
+        <strong>Seleccioná el monto transferido:</strong>
+    </p>
 
-        <span
-            id="confirmacionOtroMonto"
-            style="
-                display:none;
-                position:absolute;
-                right:12px;
-                top:50%;
-                transform:translateY(-50%);
-                font-size:22px;
-            "
-        >✅</span>
+    <button class="opcionColaboracion" data-monto="2000">
+        💙 $2.000
+    </button>
+
+    <button class="opcionColaboracion" data-monto="2500">
+        💙 $2.500
+    </button>
+
+    <button class="opcionColaboracion" data-monto="3000">
+        💙 $3.000
+    </button>
+
+    <button class="opcionColaboracion" data-monto="otro">
+        💙 Otro monto
+    </button>
+
+    <div id="contenedorOtroMonto" style="display:none; margin-top:10px;">
+
+        <div style="position:relative;">
+
+            <input
+                type="number"
+                id="otroMontoColaboracion"
+                placeholder="Ingresá el monto"
+                min="1"
+                style="
+                    width:100%;
+                    box-sizing:border-box;
+                    padding:12px 45px 12px 12px;
+                    border:none;
+                    border-radius:10px;
+                    background:#333;
+                    color:white;
+                    font-size:16px;
+                    text-align:center;
+                "
+            >
+
+            <span
+                id="confirmacionOtroMonto"
+                style="
+                    display:none;
+                    position:absolute;
+                    right:12px;
+                    top:50%;
+                    transform:translateY(-50%);
+                    font-size:22px;
+                "
+            >✅</span>
+
+        </div>
 
     </div>
 
-</div>
+    <button id="btnContinuarColaboracion">
+        📧 Continuar
+    </button>
 
-
-
-       <p style="margin-top:20px;">
-    <strong>Alias Mercado Pago:</strong><br>
-    <span id="aliasMercadoPago">TU-ALIAS</span>
-</p>
-
-<p>
-    <strong>CBU:</strong><br>
-    <span id="cbuMercadoPago">TU-CBU</span>
-</p>
-
-<p>
-    <strong>A nombre de:</strong><br>
-    <span id="titularMercadoPago">TU NOMBRE</span>
-</p>
-
-        <button id="btnContinuarColaboracion">
-            📧 Continuar
-        </button>
-
-        <button id="btnCancelarColaboracion">
-            ❌ Cancelar
-        </button>
-
-
-    </div>
+    <button id="btnCancelarColaboracion">
+        ❌ Cancelar
+    </button>
 
 </div>
+```
 
-
+</div>
 
 <!-- ===== VENTANA OPINIÓN ===== -->
 
