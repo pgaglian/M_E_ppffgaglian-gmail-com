@@ -1554,6 +1554,17 @@ body.eclipse header{
 }
 
 
+/* BOTONES FIJOS - ACCIONES */
+#btnVolverAndroid {
+    position: sticky !important;
+    top: 0;
+    z-index: 1000;
+    background: #111;
+    padding: 10px;
+}
+
+
+
 </style>
 </head>
 <body>
@@ -3480,7 +3491,7 @@ font-size:18px;
 <!-- CVU -->
 
 <p style="margin:4px 0;">
-    <strong>CVU:</strong> <span id="cbuMercadoPago">0000003100044906201707</span>
+    <strong>CVU:</strong> <span id="cvuMercadoPago">0000003100044906201707</span>
     <button
         type="button"
         onclick="copiarDatoColaboracion('0000003100044906201707')"
@@ -3503,7 +3514,7 @@ font-size:18px;
 <!-- TITULAR -->
 
 <p style="margin:4px 0;">
-    <strong>A nombre de:</strong> Pablo Gagliano
+    <strong>A nombre de:</strong> <span id="titularMercadoPago">Pablo Gagliano</span>
 </p>
 
 
@@ -7124,28 +7135,26 @@ ${comentario || "Sin comentario"}
 
         asunto = "☕ Colaboración para renovación";
 
-        cuerpo =
+       cuerpo =
 `Usuario: ${usuario}
 
 Fecha: ${new Date().toLocaleDateString()}
 
-Quiero realizar esta colaboración para contribuir con la renovación de mi acceso a ✨ Un Espacio para Tu Lugar.
+Realicé una colaboración para contribuir con la renovación de mi acceso a ✨ Un Espacio para Tu Lugar.
 
 Colaboración: $${montoColaboracion}
 
-Alias Mercado Pago: ${document.getElementById("aliasMercadoPago").innerText}
+---------------------------------------------------------------------
 
-CBU: ${document.getElementById("cbuMercadoPago").innerText}
-
-A nombre de: ${document.getElementById("titularMercadoPago").innerText}
-
-----------------------------------------
+⚠️ ¡IMPORTANTE!
 
 📸 Si lo deseás, podés adjuntar una foto en este correo para que podamos publicarla en "🐸 Quiénes nos acompañan".
 
 También podés compartir tu red social para que podamos mencionarte.
 
 Todo esto es opcional. 🫶 🫶 🫶
+
+Tené presente que, una vez verificada la transferencia, la activación puede demorar aproximadamente 72 horas.
 
 `;
 
@@ -7210,28 +7219,26 @@ ${comentario || "Sin comentario"}
 
         asunto = "☕ Colaboración para renovación";
 
-        cuerpo =
+       cuerpo =
 `Usuario: ${usuario}
 
 Fecha: ${new Date().toLocaleDateString()}
 
-Quiero realizar esta colaboración para contribuir con la renovación de mi acceso a ✨ Un Espacio para Tu Lugar.
+Realicé una colaboración para contribuir con la renovación de mi acceso a ✨ Un Espacio para Tu Lugar.
 
 Colaboración: $${montoColaboracion}
 
-Alias Mercado Pago: ${document.getElementById("aliasMercadoPago").innerText}
+---------------------------------------------------------------------
 
-CBU: ${document.getElementById("cbuMercadoPago").innerText}
+⚠️ ¡IMPORTANTE!
 
-A nombre de: ${document.getElementById("titularMercadoPago").innerText}
-
-----------------------------------------
 📸 Si lo deseás, podés adjuntar una foto en este correo para que podamos publicarla en "🐸 Quiénes nos acompañan".
 
 También podés compartir tu red social para que podamos mencionarte.
 
 Todo esto es opcional. 🫶 🫶 🫶
 
+Tené presente que, una vez verificada la transferencia, la activación puede demorar aproximadamente 72 horas.
 
 `;
 
@@ -7291,28 +7298,26 @@ ${comentario || "Sin comentario"}
 
     }else if(tipoEnvioCorreo === "colaboracion"){
 
-    cuerpo =
+  cuerpo =
 `Usuario: ${usuario}
 
 Fecha: ${new Date().toLocaleDateString()}
 
-Quiero realizar esta colaboración para contribuir con la renovación de mi acceso a ✨ Un Espacio para Tu Lugar.
+Realicé una colaboración para contribuir con la renovación de mi acceso a ✨ Un Espacio para Tu Lugar.
 
 Colaboración: $${montoColaboracion}
 
-Alias Mercado Pago: ${document.getElementById("aliasMercadoPago").innerText}
+---------------------------------------------------------------------
 
-CBU: ${document.getElementById("cbuMercadoPago").innerText}
-
-A nombre de: ${document.getElementById("titularMercadoPago").innerText}
-
-----------------------------------------
+⚠️ ¡IMPORTANTE!
 
 📸 Si lo deseás, podés adjuntar una foto en este correo para que podamos publicarla en "🐸 Quiénes nos acompañan".
 
 También podés compartir tu red social para que podamos mencionarte.
 
 Todo esto es opcional. 🫶 🫶 🫶
+
+Tené presente que, una vez verificada la transferencia, la activación puede demorar aproximadamente 72 horas.
 
 `;
 
