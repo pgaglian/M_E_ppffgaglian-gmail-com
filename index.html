@@ -3432,8 +3432,6 @@ font-size:18px;
 </div>
 
 
-
-
 <!-- ===== VENTANA COLABORACIÓN ===== -->
 
 <div id="popupColaboracion" style="display:none;">
@@ -3441,50 +3439,95 @@ font-size:18px;
 ```
 <div class="popupContenido">
 
-    <h2>☕ Ayudá a mantener ✨ Un Espacio para Tu Lugar</h2>
+    <h2>
+        ☕ Ayudá a mantener<br>
+        ✨ Un Espacio para Tu Lugar
+    </h2>
 
     <p>
-        Si disfrutás de este espacio y querés ayudar a mantenerlo activo,
-        podés colaborar con su renovación.
+        Si disfrutás de este espacio y querés ayudar
+        a mantenerlo activo, podés colaborar con su
+        renovación.
     </p>
 
     <p>
-        <strong>¿Cómo colaborar?</strong>
+        <strong>Hacé tu transferencia a:</strong>
     </p>
 
     <p>
-        Hacé una transferencia a:
+        <strong>Mercado Pago</strong>
     </p>
 
-    <p>
-        <strong>Mercado Pago</strong><br>
+    <!-- ALIAS -->
+    <p style="display:flex; align-items:center; justify-content:center; gap:6px; white-space:nowrap;">
         <strong>Alias:</strong>
-        <span id="aliasMercadoPago">TU-ALIAS</span>
+        <span id="aliasMercadoPago">paufer01</span>
+        <button
+            type="button"
+            onclick="copiarDatoColaboracion('paufer01')"
+            title="Copiar alias"
+            style="
+                display:inline-flex !important;
+                align-items:center;
+                justify-content:center;
+                width:auto !important;
+                min-width:0 !important;
+                height:auto !important;
+                border:none !important;
+                background:none !important;
+                padding:0 !important;
+                margin:0 !important;
+                font-size:15px !important;
+                line-height:1 !important;
+                cursor:pointer;
+            "
+        >📋</button>
     </p>
 
-    <p>
-        <strong>CBU:</strong><br>
-        <span id="cbuMercadoPago">TU-CBU</span>
+    <!-- CBU -->
+    <p style="display:flex; align-items:center; justify-content:center; gap:6px; white-space:nowrap;">
+        <strong>CBU:</strong>
+        <span id="cbuMercadoPago">0000003100044906201707</span>
+        <button
+            type="button"
+            onclick="copiarDatoColaboracion('0000003100044906201707')"
+            title="Copiar CBU"
+            style="
+                display:inline-flex !important;
+                align-items:center;
+                justify-content:center;
+                width:auto !important;
+                min-width:0 !important;
+                height:auto !important;
+                border:none !important;
+                background:none !important;
+                padding:0 !important;
+                margin:0 !important;
+                font-size:15px !important;
+                line-height:1 !important;
+                cursor:pointer;
+            "
+        >📋</button>
     </p>
 
-    <p>
-        <strong>A nombre de:</strong><br>
-        <span id="titularMercadoPago">TU NOMBRE</span>
-    </p>
+  <p>
+    <strong>A nombre de:</strong> Pablo Gagliano
+</p>
 
     <p>
-        Una vez realizada la transferencia,
-        <strong>seleccioná el monto que enviaste</strong>
+        Después de transferir,
+        <strong>seleccioná el monto enviado</strong>
         y presioná <strong>Continuar</strong>.
     </p>
 
     <p>
-        Te llevaremos a nuestro correo para que nos envíes
-        los datos de la colaboración y podamos identificarla.
+        📧 Te llevaremos al correo para que nos envíes
+        los datos de la colaboración.
     </p>
 
     <p>
-        ⏱️ <strong>La activación puede demorar hasta 72 horas.</strong>
+        ⏱️ La activación puede demorar hasta
+        <strong>72 horas</strong>.
     </p>
 
     <p>
@@ -3507,7 +3550,8 @@ font-size:18px;
         💙 Otro monto
     </button>
 
-    <div id="contenedorOtroMonto" style="display:none; margin-top:10px;">
+    <div id="contenedorOtroMonto"
+         style="display:none; margin-top:10px;">
 
         <div style="position:relative;">
 
@@ -3557,6 +3601,16 @@ font-size:18px;
 ```
 
 </div>
+
+<script>
+
+function copiarDatoColaboracion(dato){
+
+    navigator.clipboard.writeText(dato);
+
+}
+
+</script>
 
 <!-- ===== VENTANA OPINIÓN ===== -->
 
