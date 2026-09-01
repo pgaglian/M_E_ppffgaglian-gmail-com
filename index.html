@@ -4982,16 +4982,45 @@ function mostrarBilleterasSeleccionadas(){
 
             });
 
-
         if(datosBilletera){
 
-            tarjeta.innerHTML =
-                '<a href="' + 
-                (datosBilletera.web || "#") +
-                '" target="_blank" rel="noopener noreferrer" ' +
-                'style="color:inherit;text-decoration:none;">' +
-                Billetera +
-                '</a>';
+            if(esAndroid){
+
+                tarjeta.innerHTML =
+                    '<a href="#" ' +
+                    'onclick="event.preventDefault(); confirmarBilleteraAndroid(\'' +
+                    datosBilletera.nombre.replace(/'/g, "\\'") +
+                    '\', \'' +
+                    datosBilletera.android.replace(/'/g, "\\'") +
+                    '\')" ' +
+                    'style="color:inherit;text-decoration:none;">' +
+                    Billetera +
+                    '</a>';
+
+            }else if(esAppleMobile){
+
+                tarjeta.innerHTML =
+                    '<a href="#" ' +
+                    'onclick="event.preventDefault(); confirmarBilleteraApple(\'' +
+                    datosBilletera.nombre.replace(/'/g, "\\'") +
+                    '\', \'' +
+                    datosBilletera.iphone.replace(/'/g, "\\'") +
+                    '\')" ' +
+                    'style="color:inherit;text-decoration:none;">' +
+                    Billetera +
+                    '</a>';
+
+            }else{
+
+                tarjeta.innerHTML =
+                    '<a href="' +
+                    datosBilletera.web +
+                    '" target="_blank" rel="noopener noreferrer" ' +
+                    'style="color:inherit;text-decoration:none;">' +
+                    Billetera +
+                    '</a>';
+
+            }
 
         }else{
 
@@ -5005,8 +5034,6 @@ function mostrarBilleterasSeleccionadas(){
     });
 
 }
-
-
 
 // ========================
 // MOSTRAR PROMOCIONES BANCOS
@@ -5463,9 +5490,260 @@ function confirmarBancoApple(nombreBanco, enlace){
 }
 
 
+
 // ========================
-// PROMOCIONES BANCOS
+// CONFIRMAR BILLETERA ANDROID
 // ========================
+
+function confirmarBilleteraAndroid(nombreBilletera, enlace){
+
+    const popup = document.createElement("div");
+
+    popup.style.position = "fixed";
+    popup.style.inset = "0";
+    popup.style.background = "rgba(0,0,0,.75)";
+    popup.style.zIndex = "99999";
+    popup.style.display = "flex";
+    popup.style.alignItems = "center";
+    popup.style.justifyContent = "center";
+    popup.style.padding = "20px";
+
+    popup.innerHTML = `
+
+        <div style="
+            width:min(92%,420px);
+            background:#1d1d1d;
+            border:1px solid #555;
+            border-radius:20px;
+            padding:25px;
+            box-shadow:0 10px 35px rgba(0,0,0,.7);
+            text-align:center;
+            color:white;
+        ">
+
+            <h2 style="
+                margin-top:0;
+                color:#FFD700;
+            ">
+                💳 Mi Espacio
+            </h2>
+
+            <h3>
+                ${nombreBilletera}
+            </h3>
+
+            <p style="
+                font-size:16px;
+                line-height:1.6;
+            ">
+                📲 Si ya tenés la aplicación instalada,
+                podés abrirla desde Google Play.
+            </p>
+
+            <p style="
+                font-size:16px;
+                line-height:1.6;
+            ">
+                📥 Si todavía no la tenés,
+                podés instalarla desde Google Play.
+            </p>
+
+            <p style="
+                font-size:16px;
+                margin-top:20px;
+            ">
+                ¿Querés continuar?
+            </p>
+
+            <div style="
+                display:flex;
+                gap:12px;
+                margin-top:25px;
+            ">
+
+                <button
+                    type="button"
+                    id="cancelarBilleteraAndroid"
+                    style="
+                    flex:1;
+                    padding:13px;
+                    border-radius:10px;
+                    font-weight:bold;
+                    cursor:pointer;
+                ">
+                    ❌ CANCELAR
+                </button>
+
+                <button
+                    type="button"
+                    id="abrirBilleteraAndroid"
+                    style="
+                    flex:1;
+                    padding:13px;
+                    border-radius:10px;
+                    font-weight:bold;
+                    cursor:pointer;
+                    background:#FFD700;
+                    color:#000;
+                ">
+                    🚀 IR A GOOGLE PLAY
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+    document.body.appendChild(popup);
+
+    document
+        .getElementById("cancelarBilleteraAndroid")
+        .onclick = function(){
+
+            popup.remove();
+
+        };
+
+    document
+        .getElementById("abrirBilleteraAndroid")
+        .onclick = function(){
+
+            popup.remove();
+
+            window.location.href = enlace;
+
+        };
+
+}
+
+
+// ========================
+// CONFIRMAR BILLETERA APPLE
+// ========================
+
+function confirmarBilleteraApple(nombreBilletera, enlace){
+
+    const popup = document.createElement("div");
+
+    popup.style.position = "fixed";
+    popup.style.inset = "0";
+    popup.style.background = "rgba(0,0,0,.75)";
+    popup.style.zIndex = "99999";
+    popup.style.display = "flex";
+    popup.style.alignItems = "center";
+    popup.style.justifyContent = "center";
+    popup.style.padding = "20px";
+
+    popup.innerHTML = `
+
+        <div style="
+            width:min(92%,420px);
+            background:#1d1d1d;
+            border:1px solid #555;
+            border-radius:20px;
+            padding:25px;
+            box-shadow:0 10px 35px rgba(0,0,0,.7);
+            text-align:center;
+            color:white;
+        ">
+
+            <h2 style="
+                margin-top:0;
+                color:#FFD700;
+            ">
+                💳 Mi Espacio
+            </h2>
+
+            <h3>
+                ${nombreBilletera}
+            </h3>
+
+            <p style="
+                font-size:16px;
+                line-height:1.6;
+            ">
+                📲 Si ya tenés la aplicación instalada,
+                podés abrirla desde App Store.
+            </p>
+
+            <p style="
+                font-size:16px;
+                line-height:1.6;
+            ">
+                📥 Si todavía no la tenés,
+                podés instalarla desde App Store.
+            </p>
+
+            <p style="
+                font-size:16px;
+                margin-top:20px;
+            ">
+                ¿Querés continuar?
+            </p>
+
+            <div style="
+                display:flex;
+                gap:12px;
+                margin-top:25px;
+            ">
+
+                <button
+                    type="button"
+                    id="cancelarBilleteraApple"
+                    style="
+                    flex:1;
+                    padding:13px;
+                    border-radius:10px;
+                    font-weight:bold;
+                    cursor:pointer;
+                ">
+                    ❌ CANCELAR
+                </button>
+
+                <button
+                    type="button"
+                    id="abrirBilleteraApple"
+                    style="
+                    flex:1;
+                    padding:13px;
+                    border-radius:10px;
+                    font-weight:bold;
+                    cursor:pointer;
+                    background:#FFD700;
+                    color:#000;
+                ">
+                    🍎 IR A APP STORE
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+    document.body.appendChild(popup);
+
+    document
+        .getElementById("cancelarBilleteraApple")
+        .onclick = function(){
+
+            popup.remove();
+
+        };
+
+    document
+        .getElementById("abrirBilleteraApple")
+        .onclick = function(){
+
+            popup.remove();
+
+            window.location.href = enlace;
+
+        };
+
+}
+
 
 
 // ========================
