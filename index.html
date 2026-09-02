@@ -2105,15 +2105,9 @@ box-shadow:0 6px 18px rgba(0,0,0,.45);
 <div class="card" id="accionClima" data-titulo="🌤 Clima"
 onclick="mostrar('Clima')">
 
-    <h2 id="widgetIconoClima"
-        style="
-        margin:0 0 6px 0;
-        font-size:38px;
-        line-height:1;
-        text-align:center;
-        ">
-        🌤
-    </h2>
+   <h2>
+    <span id="widgetIconoClima">🌤</span> Clima
+</h2>
 
     <div id="widgetResumenClima"
          style="
@@ -2168,7 +2162,6 @@ onclick="mostrar('Clima')">
     </div>
 
 </div>
-
 <div class="card" id="accionPizarra"  data-titulo="📝 Pizarra"
 onclick="mostrar('Pizarra')">
 
@@ -4474,13 +4467,25 @@ fecha[2] + "/" + fecha[1] + "/" + fecha[0];
 
 const hoy = new Date();
 
-const fechaVencimiento = new Date(vencimiento);
+const fechaVencimiento = new Date(vencimiento + "T00:00:00");
 
-const diferencia = fechaVencimiento - hoy;
-
-const diasRestantes = Math.ceil(
-    diferencia / (1000 * 60 * 60 * 24)
+const hoySinHora = new Date(
+    hoy.getFullYear(),
+    hoy.getMonth(),
+    hoy.getDate()
 );
+
+const fechaVencimientoSinHora = new Date(
+    fechaVencimiento.getFullYear(),
+    fechaVencimiento.getMonth(),
+    fechaVencimiento.getDate()
+);
+
+const diferencia =
+    fechaVencimientoSinHora - hoySinHora;
+
+const diasRestantes =
+    diferencia / (1000 * 60 * 60 * 24);
 
 
 let estado = "";
