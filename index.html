@@ -2133,6 +2133,18 @@ onclick="mostrar('Clima')">
         --°C
     </div>
 
+<div id="widgetMaxMinClima"
+     style="
+     margin:2px 0 4px 0;
+     font-size:12px;
+     line-height:18px;
+     font-weight:bold;
+     text-align:center;
+     opacity:.9;
+     ">
+    Máx. --° · Mín. --°
+</div>
+
     <div id="widgetLugarClima"
          style="
          margin:2px 0 8px 0;
@@ -3960,7 +3972,7 @@ const asuntoSoporte = "Consulta - Mi Espacio";
 
 let tipoEnvioCorreo = "soporte";
 
-const vencimiento = "2026-09-06";
+const vencimiento = "2026-09-07";
 
 //=========================================================
 // FIN DATOS DEL CLIENTE
@@ -3982,6 +3994,7 @@ let indiceActual = -1;
 let horasClima = null;
 
 let climaActual = null;
+let lugarPrincipalClima = "";
 
 let pronosticoHoras = null;
 
@@ -8060,6 +8073,8 @@ if(ciudad === "Buenos Aires" && provincia === "Ciudad Autónoma de Buenos Aires"
 let lugarPrincipal =
 zona || ciudad;
 
+lugarPrincipalClima = lugarPrincipal;
+
 
 // Mostrado final
 
@@ -8225,8 +8240,12 @@ iconoGrande;
 document.getElementById("widgetTemperaturaClima").innerHTML =
 Math.round(clima.temperature_2m) + "°C";
 
+document.getElementById("widgetMaxMinClima").innerHTML =
+"Máx. " + Math.round(diasClima.temperature_2m_max[0]) +
+"° · Mín. " + Math.round(diasClima.temperature_2m_min[0]) + "°";
+
 document.getElementById("widgetLugarClima").innerHTML =
-document.getElementById("ubicacionClima").innerHTML;
+"📍 " + lugarPrincipalClima;
 
 // ===== INTELIGENCIA CLIMA =====
 
