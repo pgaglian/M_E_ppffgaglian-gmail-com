@@ -3204,6 +3204,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
     </h2>
 
     <!-- MIS RADIOS -->
+
     <div class="card" style="
         width:min(92%,700px);
         margin:20px auto;
@@ -3216,6 +3217,37 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
         ">
             📻 Mis Emisoras
         </h3>
+
+<!-- AVISO SOPORTE -->
+ <div style="
+ text-align:center; 
+margin:8px auto 18px auto; 
+padding:10px 12px; 
+border-radius:12px; 
+background:rgba(255,255,255,.05); 
+color:#ccc; 
+font-size:14px; 
+line-height:1.5;
+ "> 😎 <strong>¿Alguna radio no funciona?</strong><br> 
+
+Enviános un correo a 
+🛠️ <strong>Soporte:</strong>
+
+ <span 
+
+onclick="document.getElementById('btnSoporte').click();" 
+style=" 
+color:#FFD700; 
+font-weight:bold; 
+cursor:pointer; 
+text-decoration:underline;
+ "
+ > ✉️ Enviar consulta </span>
+ y la revisamos. 📻🔧 
+</div>
+
+
+<!-- RADIOS SELECCIONADAS -->
 
         <div id="RadiosSeleccionadas"
              style="
@@ -3273,14 +3305,66 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 
         </div>
 
-        <p style="
-            text-align:center;
-            color:#ccc;
-            ">
-            Seleccioná las emisoras que escuchás.
-        </p>
+<p style="
+    text-align:center;
+    color:#ccc;
+    ">
+    Seleccioná las emisoras que escuchás.
+</p>
 
-        <div id="configuracionRadios"
+
+<!-- FILTRO AM / FM -->
+<div style="
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin:15px 0;
+    flex-wrap:wrap;
+">
+
+    <button
+        type="button"
+        onclick="filtrarRadios('TODAS')"
+        id="filtroRadiosTodas"
+        style="
+        padding:8px 18px;
+        border-radius:10px;
+        font-weight:bold;
+        cursor:pointer;
+        ">
+        📻 Todas
+    </button>
+
+    <button
+        type="button"
+        onclick="filtrarRadios('AM')"
+        id="filtroRadiosAM"
+        style="
+        padding:8px 18px;
+        border-radius:10px;
+        font-weight:bold;
+        cursor:pointer;
+        ">
+        📻 AM
+    </button>
+
+    <button
+        type="button"
+        onclick="filtrarRadios('FM')"
+        id="filtroRadiosFM"
+        style="
+        padding:8px 18px;
+        border-radius:10px;
+        font-weight:bold;
+        cursor:pointer;
+        ">
+        📻 FM
+    </button>
+
+</div>
+
+<div id="configuracionRadios"
+
              style="
              display:grid;
              grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -5368,103 +5452,64 @@ mostrarPromocionesBilleteras();
 
 let configuracionRadios = [];
 
-function abrirConfiguracionRadios() {
-    document.getElementById("popupConfiguracionRadios").style.display = "flex";
-    
-    const guardadas = JSON.parse(localStorage.getItem("RadiosSeleccionadas")) || [];
-    const checkboxes = document.querySelectorAll("#configuracionRadios input[type='checkbox']");
-    
-    checkboxes.forEach(function(chk) {
-        chk.checked = guardadas.includes(chk.value);
-    });
-}
+let filtroRadiosActual = "TODAS";
 
-function cerrarConfiguracionRadios() {
-    document.getElementById("popupConfiguracionRadios").style.display = "none";
-}
+function filtrarRadios(tipo){
 
-function guardarConfiguracionRadios() {
-    const seleccionadas = [];
-    const checkboxes = document.querySelectorAll("#configuracionRadios input[type='checkbox']:checked");
-    
-    checkboxes.forEach(function(chk) {
-        seleccionadas.push(chk.value);
-    });
+    filtroRadiosActual = tipo;
 
-    localStorage.setItem("RadiosSeleccionadas", JSON.stringify(seleccionadas));
+    const contenedor =
+        document.getElementById("configuracionRadios");
 
-    const mensaje = document.getElementById("mensajeRadios");
-    if (mensaje) {
-        mensaje.style.display = "block";
-        setTimeout(function() {
-            mensaje.style.display = "none";
-            cerrarConfiguracionRadios();
-        }, 1200);
-    } else {
-        cerrarConfiguracionRadios();
-    }
-
-    mostrarRadiosSeleccionadas();
-}
-
-function mostrarRadiosSeleccionadas() {
-    const contenedor = document.getElementById("RadiosSeleccionadas");
-    if (!contenedor) return;
-
-    contenedor.innerHTML = "";
-    const guardadas = JSON.parse(localStorage.getItem("RadiosSeleccionadas")) || [];
-
-    if (guardadas.length === 0) {
-        contenedor.innerHTML = "<p style='text-align:center; color:#ccc; grid-column:1/-1;'>No tenés emisoras seleccionadas. Tocá ⚙ Configurar para agregar tus radios.</p>";
+    if(!contenedor){
         return;
     }
 
-    guardadas.forEach(function(idRadio) {
-const radioInfo = configuracionRadios.find(function(r) { return r.id === idRadio; });
-        if (radioInfo) {
-            const card = document.createElement("div");
-            card.className = "card";
-            card.style.padding = "15px";
-            card.style.textAlign = "center";
-            card.innerHTML = 
-                '<img src="' + (radioInfo.logo || '') + '" alt="' + (radioInfo.nombre || '') + '" style="width:50px; height:50px; border-radius:10px; margin-bottom:8px; object-fit:cover;">' +
-                '<h4 style="margin:5px 0;">' + (radioInfo.nombre || '') + '</h4>' +
-                '<p style="font-size:12px; color:#aaa; margin:0 0 10px 0;">' + (radioInfo.frecuencia || '') + '</p>' +
-                '<audio controls src="' + (radioInfo.urlStream || '') + '" style="width:100%; max-width:200px; height:30px;"></audio>';
-            contenedor.appendChild(card);
+    // Guardar temporalmente las selecciones actuales
+    const seleccionadas = JSON.parse(
+        localStorage.getItem("RadiosSeleccionadas")
+    ) || [];
+
+    document.querySelectorAll(
+        "#configuracionRadios input[type='checkbox']:checked"
+    ).forEach(function(checkbox){
+
+        if(!seleccionadas.includes(checkbox.value)){
+            seleccionadas.push(checkbox.value);
         }
+
     });
+
+    contenedor.innerHTML = "";
+
+    configuracionRadios
+        .filter(function(radio){
+
+            return tipo === "TODAS" ||
+                   radio.tipo === tipo;
+
+        })
+        .forEach(function(radio){
+
+            const label = document.createElement("label");
+
+            label.style.display = "flex";
+            label.style.alignItems = "center";
+            label.style.gap = "8px";
+            label.style.cursor = "pointer";
+
+            label.innerHTML =
+                '<input type="checkbox" value="' +
+                radio.id + '"' +
+                (seleccionadas.includes(radio.id) ? " checked" : "") +
+                '> 📻 ' +
+                radio.nombre;
+
+            contenedor.appendChild(label);
+
+        });
+
 }
-
-// CARGAR CONFIGURACION RADIOS DESDE GITHUB
-fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Radios.json")
-    .then(function(res) { return res.json(); })
-    .then(function(datos) {
-        configuracionRadios = datos;
-        const contenedorConfig = document.getElementById("configuracionRadios");
-        if (contenedorConfig) {
-            contenedorConfig.innerHTML = "";
-            configuracionRadios.forEach(function(radio) {
-                const label = document.createElement("label");
-                label.style.display = "flex";
-                label.style.alignItems = "center";
-                label.style.gap = "8px";
-                label.style.cursor = "pointer";
-                label.innerHTML = '<input type="checkbox" value="' + radio.id + '"> 📻 ' + radio.nombre;
-                contenedorConfig.appendChild(label);
-            });
-        }
-        mostrarRadiosSeleccionadas();
-    })
-    .catch(function(err) {
-        console.warn("No se pudo cargar Radios.json", err);
-    });
-
-
- // ========================
-// CONFIGURACION RADIOS
-// ========================
-
 function abrirConfiguracionRadios(){
 
     const popup = document.getElementById("popupConfiguracionRadios");
@@ -5473,13 +5518,18 @@ function abrirConfiguracionRadios(){
         return;
     }
 
-    const seleccionadas = JSON.parse(localStorage.getItem("RadiosSeleccionadas")) || [];
+    const seleccionadas = JSON.parse(
+        localStorage.getItem("RadiosSeleccionadas")
+    ) || [];
 
-    const checkboxes = document.querySelectorAll("#configuracionRadios input[type='checkbox']");
+    filtrarRadios(filtroRadiosActual);
+
+    const checkboxes = document.querySelectorAll(
+        "#configuracionRadios input[type='checkbox']"
+    );
 
     checkboxes.forEach(function(checkbox){
-        const nombre = checkbox.parentElement.textContent.trim();
-        checkbox.checked = seleccionadas.includes(nombre);
+        checkbox.checked = seleccionadas.includes(checkbox.value);
     });
 
     popup.style.display = "flex";
@@ -5498,23 +5548,24 @@ function cerrarConfiguracionRadios(){
 
 }
 
-// ========================
-// GUARDAR CONFIGURACION RADIOS
-// ========================
-
 function guardarConfiguracionRadios(){
 
-    const Radios = [];
+    const radios = [];
 
-    document.querySelectorAll("#configuracionRadios input[type='checkbox']").forEach(function(checkbox){
+    document.querySelectorAll(
+        "#configuracionRadios input[type='checkbox']"
+    ).forEach(function(checkbox){
 
         if(checkbox.checked){
-            Radios.push(checkbox.parentElement.textContent.trim());
+            radios.push(checkbox.value);
         }
 
     });
 
-    localStorage.setItem("RadiosSeleccionadas", JSON.stringify(Radios));
+    localStorage.setItem(
+        "RadiosSeleccionadas",
+        JSON.stringify(radios)
+    );
 
     const mensaje = document.getElementById("mensajeRadios");
 
@@ -5535,14 +5586,11 @@ function guardarConfiguracionRadios(){
     mostrarRadiosSeleccionadas();
 
 }
-
-// ========================
-// MOSTRAR RADIOS SELECCIONADAS
-// ========================
-
 function mostrarRadiosSeleccionadas(){
 
-    const contenedor = document.getElementById("RadiosSeleccionadas");
+    const contenedor = document.getElementById(
+        "RadiosSeleccionadas"
+    );
 
     if(!contenedor){
         return;
@@ -5550,33 +5598,84 @@ function mostrarRadiosSeleccionadas(){
 
     contenedor.innerHTML = "";
 
-    const seleccionadas = JSON.parse(localStorage.getItem("RadiosSeleccionadas")) || [];
+    const seleccionadas = JSON.parse(
+        localStorage.getItem("RadiosSeleccionadas")
+    ) || [];
 
     if(seleccionadas.length === 0){
-        contenedor.innerHTML = '<p style="text-align:center; color:#ccc; grid-column:1/-1;">No tenés emisoras seleccionadas. Tocá ⚙ Configurar para agregar tus radios.</p>';
+
+        contenedor.innerHTML =
+            '<p style="text-align:center; color:#ccc; grid-column:1/-1;">' +
+            'No tenés emisoras seleccionadas. Tocá ⚙ Configurar para agregar tus radios.' +
+            '</p>';
+
         return;
     }
 
-    seleccionadas.forEach(function(nombreRadio){
+    seleccionadas.forEach(function(idRadio){
 
         const radioInfo = configuracionRadios.find(function(r){
-            return ("📻 " + r.nombre) === nombreRadio || r.nombre === nombreRadio;
+
+            return r.id === idRadio;
+
         });
 
+        if(!radioInfo){
+            return;
+        }
+
         const card = document.createElement("div");
+
         card.className = "card";
         card.style.padding = "15px";
         card.style.textAlign = "center";
+        card.style.cursor = "pointer";
 
-        if(radioInfo){
-            card.innerHTML = 
-                '<img src="' + (radioInfo.logo || '') + '" alt="' + (radioInfo.nombre || '') + '" style="width:50px; height:50px; border-radius:10px; margin-bottom:8px; object-fit:cover;">' +
-                '<h4 style="margin:5px 0;">' + (radioInfo.nombre || '') + '</h4>' +
-                '<p style="font-size:12px; color:#aaa; margin:0 0 10px 0;">' + (radioInfo.frecuencia || '') + '</p>' +
-                '<audio controls src="' + (radioInfo.urlStream || '') + '" style="width:100%; max-width:200px; height:30px;"></audio>';
-        } else {
-            card.innerHTML = '<h4 style="margin:5px 0;">' + nombreRadio + '</h4>';
-        }
+        card.innerHTML =
+            '<img src="' + (radioInfo.logo || '') +
+            '" alt="' + (radioInfo.nombre || '') +
+            '" style="width:50px; height:50px; border-radius:10px; margin-bottom:8px; object-fit:cover;">' +
+
+            '<h4 style="margin:5px 0;">' +
+            (radioInfo.nombre || '') +
+            '</h4>' +
+
+            '<p style="font-size:12px; color:#aaa; margin:0;">' +
+            (radioInfo.frecuencia || '') +
+            '</p>';
+
+        card.onclick = function(){
+
+            // Cerrar reproductores anteriores
+            document.querySelectorAll(
+                "#RadiosSeleccionadas audio"
+            ).forEach(function(audio){
+
+                audio.pause();
+                audio.remove();
+
+            });
+
+            const audio = document.createElement("audio");
+
+            audio.controls = true;
+            audio.src = radioInfo.urlStream || "";
+            audio.style.width = "100%";
+            audio.style.maxWidth = "200px";
+            audio.style.height = "30px";
+            audio.style.marginTop = "12px";
+
+            card.appendChild(audio);
+
+            audio.play().catch(function(){
+
+                console.log(
+                    "El navegador requiere iniciar la reproducción manualmente."
+                );
+
+            });
+
+        };
 
         contenedor.appendChild(card);
 
@@ -5584,17 +5683,23 @@ function mostrarRadiosSeleccionadas(){
 
 }
 
+
 // ========================
 // CARGAR RADIOS DESDE GITHUB
 // ========================
 
 fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Radios.json")
-    .then(function(res){ return res.json(); })
+
+    .then(function(res){
+        return res.json();
+    })
+
     .then(function(datos){
 
         configuracionRadios = datos;
 
-        const contenedorConfig = document.getElementById("configuracionRadios");
+        const contenedorConfig =
+            document.getElementById("configuracionRadios");
 
         if(contenedorConfig){
 
@@ -5603,11 +5708,17 @@ fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Radios.j
             configuracionRadios.forEach(function(radio){
 
                 const label = document.createElement("label");
+
                 label.style.display = "flex";
                 label.style.alignItems = "center";
                 label.style.gap = "8px";
                 label.style.cursor = "pointer";
-                label.innerHTML = '<input type="checkbox" value="' + radio.id + '"> 📻 ' + radio.nombre;
+
+                label.innerHTML =
+                    '<input type="checkbox" value="' +
+                    radio.id +
+                    '"> 📻 ' +
+                    radio.nombre;
 
                 contenedorConfig.appendChild(label);
 
@@ -5618,8 +5729,14 @@ fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Radios.j
         mostrarRadiosSeleccionadas();
 
     })
+
     .catch(function(err){
-        console.warn("No se pudo cargar Radios.json", err);
+
+        console.warn(
+            "No se pudo cargar Radios.json",
+            err
+        );
+
     });
 
 // ========================
