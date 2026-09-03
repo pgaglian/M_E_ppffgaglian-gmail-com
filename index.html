@@ -46,12 +46,6 @@ box-shadow:0 10px 30px rgba(0,0,0,.70);
 }
 
 
-#saludo{
-
-    margin:0;
-
-}
-
 #reloj{
 
     position:absolute;
@@ -67,19 +61,10 @@ box-shadow:0 10px 30px rgba(0,0,0,.70);
 }
 
 #fechaHora{
-
     margin-top:-18px;
-
     font-size:16px;
-
     color:#DDD;
-
-}
-
-#fechaHora{
-
     padding-left:0;
-
 }
 
 
@@ -1059,11 +1044,6 @@ body.eclipse header{
     text-decoration:underline;
 }
 
-#btnOpinionAccion:hover{
-    color:white;
-    text-decoration:underline;
-}
-
 
 /* ===== TITULOS DE PANELES ===== */
 
@@ -1676,7 +1656,74 @@ body.eclipse header{
     margin-top: 0 !important;
 }
 
+/* --- Estilos Widget Clima en Acciones --- */
+#widgetClimaAcciones {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #ffffff;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
 
+.widget-clima-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  opacity: 0.85;
+}
+
+.widget-clima-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* 1. Localidad */
+.widget-clima-localidad {
+  font-size: 16px;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+/* 2. Temperatura */
+.widget-clima-temp {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #ffffff;
+}
+
+/* 3. Inteligencia Artificial */
+.widget-clima-ia {
+  margin-top: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-left: 3px solid #60a5fa;
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.widget-clima-ia .ia-titulo {
+  font-size: 11px;
+  font-weight: 700;
+  color: #93c5fd;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+.widget-clima-ia p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.3;
+  color: #f1f5f9;
+}
 
 </style>
 </head>
@@ -2101,79 +2148,83 @@ box-shadow:0 6px 18px rgba(0,0,0,.45);
 
 </div>
 
+<div class="card" id="accionClima" data-titulo="🌤 Clima" onclick="mostrar('Clima')">
 
-<div class="card" id="accionClima" data-titulo="🌤 Clima"
-onclick="mostrar('Clima')">
-
-   <h2>
+  <!-- Encabezado -->
+  <h2>
     <span id="widgetIconoClima">🌤</span> Clima
-</h2>
+  </h2>
 
-    <div id="widgetResumenClima"
-         style="
-         margin:4px 0 8px 0;
-         padding:0 8px;
-         font-size:16px;
-         line-height:21px;
-         font-weight:bold;
-         text-align:center;
-         min-height:0;
-         ">
-        Esperando datos del clima...
-    </div>
+  <!-- 1. Localidad -->
+  <div id="widgetLugarClima"
+       style="
+       margin:4px 0 6px 0;
+       padding:0 4px;
+       font-size:14px;
+       line-height:18px;
+       font-weight:bold;
+       text-align:center;
+       opacity:.9;
+       white-space:nowrap;
+       overflow:hidden;
+       text-overflow:ellipsis;
+       ">
+      📍 Obteniendo ubicación...
+  </div>
+  
+  <!-- 2. Temperatura -->
+  <div id="widgetTemperaturaClima"
+       style="
+       margin:2px 0;
+       font-size:24px;
+       line-height:28px;
+       font-weight:bold;
+       text-align:center;
+       ">
+      --°C
+  </div>
 
-    <div id="widgetTemperaturaClima"
-         style="
-         margin:4px 0;
-         font-size:18px;
-         line-height:23px;
-         font-weight:bold;
-         text-align:center;
-         ">
-        --°C
-    </div>
+  <div id="widgetMaxMinClima"
+       style="
+       margin:0 0 8px 0;
+       font-size:12px;
+       line-height:16px;
+       font-weight:bold;
+       text-align:center;
+       opacity:.85;
+       ">
+      Máx. --° · Mín. --°
+  </div>
 
-<div id="widgetMaxMinClima"
-     style="
-     margin:2px 0 4px 0;
-     font-size:12px;
-     line-height:18px;
-     font-weight:bold;
-     text-align:center;
-     opacity:.9;
-     ">
-    Máx. --° · Mín. --°
+  <!-- 3. Inteligencia Artificial -->
+  <div id="widgetResumenClima"
+       style="
+       margin:6px 0;
+       padding:0 8px;
+       font-size:13px;
+       line-height:18px;
+       font-weight:500;
+       text-align:center;
+       min-height:0;
+       ">
+      Esperando datos del clima...
+  </div>
+
+  <!-- Botón / Pie -->
+  <div style="
+       margin-top:8px;
+       padding-top:7px;
+       border-top:1px solid rgba(255,255,255,.15);
+       font-size:11px;
+       font-weight:bold;
+       opacity:.8;
+       text-align:center;
+       ">
+      🌤 Ver clima completo ›
+  </div>
+
 </div>
 
-    <div id="widgetLugarClima"
-         style="
-         margin:2px 0 8px 0;
-         padding:0 4px;
-         font-size:13px;
-         line-height:18px;
-         text-align:center;
-         opacity:.85;
-         white-space:nowrap;
-         overflow:hidden;
-         text-overflow:ellipsis;
-         ">
-        📍 Obteniendo ubicación...
-    </div>
-
-    <div
-         style="
-         margin-top:10px;
-         padding-top:7px;
-         border-top:1px solid rgba(255,255,255,.15);
-         font-size:11px;
-         font-weight:bold;
-         opacity:.8;
-         text-align:center;
-         ">
-        🌤 Ver clima completo ›
-    </div>
-
-</div>
 <div class="card" id="accionPizarra"  data-titulo="📝 Pizarra"
 onclick="mostrar('Pizarra')">
 
@@ -2322,6 +2373,8 @@ box-shadow:0 6px 18px rgba(0,0,0,.45);
 
 </h2>
 <div class="grid" id="menu">
+
+
 <div class="card" id="ambienteBiblioteca" data-titulo="📚 Biblioteca"
 onclick="mostrar('Libros')">
 
@@ -2405,6 +2458,7 @@ onclick="mostrar('Redes')">
 
 </div>
 
+
 <!-- ===== MÓDULO CLIMA ===== -->
 
 <div id="Clima" style="display:none;min-height:100vh;">
@@ -2429,7 +2483,7 @@ text-align:center;
 color:#FFD700;
 margin-top:10px;
 ">
-    🌤 Clima
+Clima
 </h2>
 
 
@@ -8136,6 +8190,9 @@ fetch(
        console.log("Temperatura real recibida:", clima.temperature_2m);
        console.log("Hora API:", data.current.time);
 
+
+
+
        horasClima = data.hourly;
        diasClima = data.daily;
 
@@ -8945,56 +9002,199 @@ function obtenerIconoClima(codigo, esNoche = false){
 
 function cambiarCieloClima(){
 
-    const hora = new Date().getHours();
-
     const clima =
     document.getElementById("Clima");
 
     if(!clima) return;
 
+    // Si todavía no tenemos clima real, no hacemos nada
+    if(!climaActual || typeof climaActual.weather_code !== "number"){
+        return;
+    }
 
-    if(hora >= 6 && hora < 12){
+    const codigo = climaActual.weather_code;
 
-        // Mañana
+    const hora = new Date(climaActual.time).getHours();
+
+    const esNoche =
+        hora < 6 ||
+        hora >= 19;
+
+
+    //========================
+    // DESPEJADO
+    //========================
+    if(codigo === 0){
+
+        if(esNoche){
+
+            clima.style.background =
+            `
+            radial-gradient(circle at 20% 30%, white 1px, transparent 2px),
+            radial-gradient(circle at 70% 20%, white 1px, transparent 2px),
+            radial-gradient(circle at 40% 70%, white 1px, transparent 2px),
+            linear-gradient(180deg,#020024,#090979,#000)
+            `;
+
+        }else if(hora < 12){
+
+            clima.style.background =
+            `
+            radial-gradient(circle at 75% 20%, rgba(255,255,200,.9) 0%, rgba(255,255,200,0) 18%),
+            linear-gradient(180deg,#87CEEB,#eaf8ff)
+            `;
+
+        }else{
+
+            clima.style.background =
+            `
+            radial-gradient(circle at 75% 20%, rgba(255,220,120,.8) 0%, transparent 20%),
+            linear-gradient(180deg,#FF9966,#CC6699,#333399)
+            `;
+        }
+
+    }
+
+
+    //========================
+    // NUBLADO
+    //========================
+    else if(
+        codigo === 1 ||
+        codigo === 2 ||
+        codigo === 3
+    ){
+
+        if(esNoche){
+
+            clima.style.background =
+            `
+            radial-gradient(circle at 20% 30%, rgba(255,255,255,.35) 1px, transparent 2px),
+            linear-gradient(180deg,#18233a,#303b52,#111827)
+            `;
+
+        }else{
+
+            clima.style.background =
+            `
+            radial-gradient(circle at 25% 25%, rgba(255,255,255,.75) 0%, transparent 25%),
+            radial-gradient(circle at 75% 30%, rgba(255,255,255,.65) 0%, transparent 28%),
+            linear-gradient(180deg,#78909c,#d7e0e5)
+            `;
+        }
+
+    }
+
+
+    //========================
+    // NIEBLA
+    //========================
+    else if(
+        codigo === 45 ||
+        codigo === 48
+    ){
 
         clima.style.background =
         `
-        radial-gradient(circle at 75% 20%, rgba(255,255,200,.9) 0%, rgba(255,255,200,0) 18%),
-        radial-gradient(circle at 20% 30%, rgba(255,255,255,.8) 0%, transparent 20%),
-        linear-gradient(180deg,#87CEEB,#eaf8ff)
-        `;
-
-
-    }else if(hora >=12 && hora <19){
-
-        // Tarde
-
-        clima.style.background =
-        `
-        radial-gradient(circle at 75% 20%, rgba(255,220,120,.8) 0%, transparent 20%),
-        linear-gradient(180deg,#FF9966,#CC6699,#333399)
-        `;
-
-
-    }else{
-
-        // Noche
-
-        clima.style.background =
-        `
-        radial-gradient(circle at 20% 30%, white 1px, transparent 2px),
-        radial-gradient(circle at 70% 20%, white 1px, transparent 2px),
-        radial-gradient(circle at 40% 70%, white 1px, transparent 2px),
-        linear-gradient(180deg,#020024,#090979,#000)
+        linear-gradient(
+            180deg,
+            ${esNoche ? "#303744" : "#aeb9bd"},
+            ${esNoche ? "#59616d" : "#e1e6e7"}
+        )
         `;
 
     }
 
- }
 
-//========================
-// INTELIGENCIA CLIMA
-//========================
+    //========================
+    // LLUVIA
+    //========================
+    else if(
+        codigo === 51 ||
+        codigo === 53 ||
+        codigo === 55 ||
+        codigo === 61 ||
+        codigo === 63 ||
+        codigo === 65 ||
+        codigo === 80 ||
+        codigo === 81 ||
+        codigo === 82
+    ){
+
+        clima.style.background =
+        `
+        linear-gradient(
+            180deg,
+            ${esNoche ? "#101827" : "#536b78"},
+            ${esNoche ? "#263448" : "#a7bbc4"}
+        )
+        `;
+
+    }
+
+
+    //========================
+    // NIEVE
+    //========================
+    else if(
+        codigo === 71 ||
+        codigo === 73 ||
+        codigo === 75 ||
+        codigo === 77
+    ){
+
+        clima.style.background =
+        `
+        radial-gradient(circle at 20% 25%, rgba(255,255,255,.9) 0%, transparent 18%),
+        radial-gradient(circle at 75% 35%, rgba(255,255,255,.8) 0%, transparent 20%),
+        linear-gradient(
+            180deg,
+            ${esNoche ? "#182238" : "#8fa8b8"},
+            ${esNoche ? "#34445d" : "#e9f3f7"}
+        )
+        `;
+
+    }
+
+
+    //========================
+    // TORMENTA
+    //========================
+    else if(
+        codigo === 95 ||
+        codigo === 96 ||
+        codigo === 99
+    ){
+
+        clima.style.background =
+        `
+        linear-gradient(
+            180deg,
+            ${esNoche ? "#05070d" : "#26333b"},
+            ${esNoche ? "#171b29" : "#596b73"}
+        )
+        `;
+
+    }
+
+
+    //========================
+    // CUALQUIER OTRO CÓDIGO
+    //========================
+    else{
+
+        clima.style.background =
+        `
+        linear-gradient(
+            180deg,
+            ${esNoche ? "#020024" : "#87CEEB"},
+            ${esNoche ? "#090979" : "#eaf8ff"}
+        )
+        `;
+
+    }
+
+}
 
 //========================
 // INTELIGENCIA CLIMA
