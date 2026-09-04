@@ -1725,9 +1725,143 @@ body.eclipse header{
   color: #f1f5f9;
 }
 
+/* =========================================================
+   AVISO INICIAL - MI ESPACIO
+   ========================================================= */
+
+#avisoInicialMiEspacio{
+    position:fixed;
+    inset:0;
+    z-index:999999;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    box-sizing:border-box;
+    background:rgba(0,0,0,.90);
+}
+
+#avisoInicialMiEspacio .avisoInicialContenido{
+    width:100%;
+    max-width:650px;
+    max-height:90vh;
+    overflow-y:auto;
+    box-sizing:border-box;
+    padding:28px;
+    background:#222;
+    color:#fff;
+    border:1px solid #666;
+    border-radius:18px;
+    box-shadow:0 10px 40px rgba(0,0,0,.7);
+}
+
+#avisoInicialMiEspacio h2{
+    margin:0 0 20px 0;
+    text-align:center;
+    color:#FFD700;
+    font-size:26px;
+}
+
+#avisoInicialMiEspacio p{
+    font-size:16px;
+    line-height:1.6;
+    margin:0 0 16px 0;
+}
+
+#btnAceptarAvisoMiEspacio{
+    display:block;
+    width:100%;
+    margin-top:24px;
+    padding:14px 18px;
+    border:none;
+    border-radius:12px;
+    background:#FFD700;
+    color:#000;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+#btnAceptarAvisoMiEspacio:hover{
+    opacity:.9;
+}
+
+@media(max-width:600px){
+
+    #avisoInicialMiEspacio{
+        padding:12px;
+    }
+
+    #avisoInicialMiEspacio .avisoInicialContenido{
+        padding:20px;
+        max-height:92vh;
+    }
+
+    #avisoInicialMiEspacio h2{
+        font-size:22px;
+    }
+
+    #avisoInicialMiEspacio p{
+        font-size:15px;
+    }
+
+}
+
+
 </style>
 </head>
+
 <body>
+
+
+<!-- =========================================================
+     AVISO INICIAL - MI ESPACIO
+     ========================================================= -->
+
+<div id="avisoInicialMiEspacio">
+
+    <div class="avisoInicialContenido">
+
+        <h2>⚠️ Aviso importante — Mi Espacio</h2>
+
+        <p>
+            Mi Espacio es una herramienta que organiza y facilita
+            el acceso a información, aplicaciones y servicios de terceros.
+        </p>
+
+        <p>
+            Mi Espacio <strong>no solicita, recopila ni almacena
+            claves, contraseñas, códigos de seguridad, datos de tarjetas
+            ni credenciales de acceso.</strong>
+        </p>
+
+        <p>
+            Los servicios, aplicaciones, promociones, contenidos y enlaces
+            que puedan encontrarse dentro de Mi Espacio pertenecen a
+            terceros y son administrados por sus respectivos responsables.
+            Mi Espacio no forma parte de dichos servicios ni interviene
+            en las operaciones que el usuario realice en ellos.
+        </p>
+
+        <p>
+            Antes de proporcionar información personal, credenciales o
+            realizar una operación, el usuario debe verificar que se
+            encuentra utilizando la aplicación o el servicio oficial
+            correspondiente.
+        </p>
+
+        <p>
+            Al seleccionar <strong>“Aceptar y continuar”</strong>,
+            confirmás que leíste y comprendiste este aviso.
+        </p>
+
+        <button id="btnAceptarAvisoMiEspacio">
+            ✅ Aceptar y continuar
+        </button>
+
+    </div>
+
+</div>
 
 
 <header>
@@ -2926,10 +3060,13 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 
     <!-- PROMOCIONES -->
 
-    <div style="
-        width:min(92%,900px);
-        margin:25px auto;
-    ">
+
+<div id="seccionPromocionesBancos"
+     style="
+     display:none;
+     width:min(92%,900px);
+     margin:25px auto;
+">
 
         <h2 style="
             text-align:center;
@@ -2945,21 +3082,29 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
              gap:15px;
              ">
 
-            <div class="card" style="
-                padding:20px;
-                border-radius:18px;
-            ">
+       
+        </div>
 
-                <h3>
-                    🏦 Próximamente
-                </h3>
+        <!-- PROMOCIONES POR UBICACION -->
 
-                <p>
-                    Acá aparecerán las promociones
-                    de los Bancos que tengas seleccionados.
-                </p>
+        <div style="
+            text-align:center;
+            margin-top:25px;
+        ">
 
-            </div>
+            <button
+                type="button"
+                id="btnPromocionesUbicacion"
+                onclick="mostrarPromocionesPorUbicacion()"
+                style="
+                padding:13px 22px;
+                font-size:16px;
+                font-weight:bold;
+                border-radius:12px;
+                cursor:pointer;
+                ">
+                📍 Ver promociones por ubicación
+            </button>
 
         </div>
 
@@ -4084,6 +4229,49 @@ font-size:18px;
 </div>
 
 <script>
+
+// =========================================================
+// AVISO INICIAL - MI ESPACIO
+// =========================================================
+
+const CLAVE_AVISO_MI_ESPACIO = "MiEspacio_AvisoAceptado";
+
+function controlarAvisoInicial(){
+
+    const aviso = document.getElementById("avisoInicialMiEspacio");
+    const boton = document.getElementById("btnAceptarAvisoMiEspacio");
+
+    if(!aviso || !boton){
+        return;
+    }
+
+    const aceptado =
+        localStorage.getItem(CLAVE_AVISO_MI_ESPACIO);
+
+    if(aceptado === "true"){
+
+        aviso.style.display = "none";
+
+    }else{
+
+        aviso.style.display = "flex";
+
+        boton.onclick = function(){
+
+            localStorage.setItem(
+                CLAVE_AVISO_MI_ESPACIO,
+                "true"
+            );
+
+            aviso.style.display = "none";
+
+        };
+
+    }
+
+}
+
+controlarAvisoInicial();
 
 function copiarDatoColaboracion(dato){
 
@@ -5780,55 +5968,268 @@ function mostrarBancosSeleccionados(){
 
 if(datosBanco){
 
-    if(esAndroid){
-
-        tarjeta.innerHTML =
-            '<a href="#" ' +
-            'onclick="event.preventDefault(); confirmarBancoAndroid(\'' +
-            datosBanco.nombre.replace(/'/g, "\\'") + '\', \'' +
-            datosBanco.android.replace(/'/g, "\\'") +
-            '\')" ' +
-            'style="color:inherit;text-decoration:none;">' +
-            Banco +
-            '</a>';
-
-}else if(esAppleMobile){
-
     tarjeta.innerHTML =
-        '<a href="#" ' +
-        'onclick="event.preventDefault(); confirmarBancoApple(\'' +
-        datosBanco.nombre.replace(/'/g, "\\'") + '\', \'' +
-        datosBanco.iphone.replace(/'/g, "\\'") +
+        '<button type="button" ' +
+        'onclick="mostrarPromocionesBanco(\'' +
+        datosBanco.nombre.replace(/'/g, "\\'") +
         '\')" ' +
-        'style="color:inherit;text-decoration:none;">' +
+        'style="width:100%; background:none; border:none; color:inherit; font:inherit; cursor:pointer;">' +
         Banco +
-        '</a>';
-
-    }else{
-
-        tarjeta.innerHTML =
-            '<a href="' + datosBanco.web + '" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">' +
-            Banco +
-            '</a>';
-
-    }
+        '</button>';
 
 }else{
 
     tarjeta.innerHTML =
         Banco;
 
-}
-
-               contenedor.appendChild(tarjeta);
+}               contenedor.appendChild(tarjeta);
 
     });
 
-    mostrarPromocionesBancos();
-
+   
 }
 
+
+
 // ========================
+// MOSTRAR PROMOCIONES DE UN BANCO
+// ========================
+
+function mostrarPromocionesBanco(nombreBanco){
+
+    const seccion =
+        document.getElementById("seccionPromocionesBancos");
+
+    const contenedor =
+        document.getElementById("promocionesBancos");
+
+    if(!seccion || !contenedor){
+        return;
+    }
+
+    // Mostrar la sección
+    seccion.style.display = "block";
+
+    // Limpiar promociones anteriores
+    contenedor.innerHTML = "";
+
+    // Buscar datos del banco en Bancos.json
+    const datosBanco =
+        configuracionBancos.find(function(banco){
+
+            return banco.nombre === nombreBanco;
+
+        });
+
+    // Crear encabezado
+    const encabezado =
+        document.createElement("div");
+
+    encabezado.style.gridColumn = "1 / -1";
+    encabezado.style.textAlign = "center";
+    encabezado.style.marginBottom = "10px";
+
+    if(datosBanco && datosBanco.logo){
+
+        encabezado.innerHTML = `
+
+            <img
+               src="https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Bancosimg/${datosBanco.logo}"
+                alt="${nombreBanco}"
+                style="
+                width:90px;
+                height:90px;
+                object-fit:contain;
+                border-radius:15px;
+                margin-bottom:10px;
+                "
+            >
+
+            <h2 style="
+                margin:0;
+                color:#FFD700;
+            ">
+                🏦 Promociones de ${nombreBanco}
+            </h2>
+
+        `;
+
+    }else{
+
+        encabezado.innerHTML = `
+
+            <h2 style="
+                margin:0;
+                color:#FFD700;
+            ">
+                🏦 Promociones de ${nombreBanco}
+            </h2>
+
+        `;
+
+    }
+
+    contenedor.appendChild(encabezado);
+
+    // Cargar Promociones.json
+    fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Promociones.json")
+
+        .then(function(respuesta){
+
+            return respuesta.json();
+
+        })
+
+        .then(function(datos){
+
+            const promociones =
+                datos.filter(function(item){
+
+                    return item.tipo === "promocion" &&
+                           item.banco === nombreBanco;
+
+                });
+
+            if(promociones.length === 0){
+
+                const mensaje =
+                    document.createElement("div");
+
+                mensaje.className = "card";
+
+                mensaje.style.padding = "20px";
+                mensaje.style.borderRadius = "18px";
+
+                mensaje.innerHTML = `
+
+                    <h3>
+                        🏦 ${nombreBanco}
+                    </h3>
+
+                    <p>
+                        No hay promociones cargadas
+                        para este banco.
+                    </p>
+
+                `;
+
+                contenedor.appendChild(mensaje);
+
+                return;
+            }
+
+            promociones.forEach(function(promocion){
+
+                const tarjeta =
+                    document.createElement("div");
+
+                tarjeta.className = "card";
+
+                tarjeta.style.padding = "20px";
+                tarjeta.style.borderRadius = "18px";
+
+                tarjeta.innerHTML = `
+
+                    <h3>
+                        🏦 ${promocion.comercio}
+                    </h3>
+
+                    <p>
+                        <strong>
+                            ${promocion.categoria}
+                        </strong>
+                    </p>
+
+                    <p>
+                        ${promocion.beneficio}
+                    </p>
+
+                    ${
+                        promocion.dias &&
+                        promocion.dias.length > 0
+                        ?
+                        `<p>
+                            📅 ${promocion.dias.join(", ")}
+                        </p>`
+                        :
+                        ""
+                    }
+
+                    ${
+                        promocion.tope
+                        ?
+                        `<p>
+                            💰 Tope: ${promocion.tope}
+                        </p>`
+                        :
+                        ""
+                    }
+
+                    ${
+                        promocion.compraMinima
+                        ?
+                        `<p>
+                            🛒 Compra mínima: ${promocion.compraMinima}
+                        </p>`
+                        :
+                        ""
+                    }
+
+                    <a
+                        href="${promocion.url}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style="
+                        display:inline-block;
+                        margin-top:10px;
+                        padding:10px 15px;
+                        background:#FFD700;
+                        color:#000;
+                        text-decoration:none;
+                        border-radius:10px;
+                        font-weight:bold;
+                        "
+                    >
+                        Ver promoción
+                    </a>
+
+                `;
+
+                contenedor.appendChild(tarjeta);
+
+            });
+
+        })
+
+        .catch(function(error){
+
+            console.log(
+                "No se pudo cargar Promociones.json",
+                error
+            );
+
+            contenedor.innerHTML = `
+                <div class="card"
+                     style="
+                     padding:20px;
+                     border-radius:18px;
+                     ">
+
+                    <h3>
+                        ⚠️ Error
+                    </h3>
+
+                    <p>
+                        No se pudieron cargar las promociones
+                        de ${nombreBanco}.
+                    </p>
+
+                </div>
+            `;
+
+        });
+
+}// ========================
 // MOSTRAR BILLETERAS SELECCIONADAS
 // ========================
 
@@ -6861,7 +7262,7 @@ fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Promocio
 
             });
 
-           mostrarPromocionesBancos();
+           
            mostrarPromocionesBilleteras();
 
     })
