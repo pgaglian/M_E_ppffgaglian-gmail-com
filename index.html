@@ -3089,28 +3089,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
        
         </div>
 
-        <!-- PROMOCIONES POR UBICACION -->
-
-        <div style="
-            text-align:center;
-            margin-top:25px;
-        ">
-
-            <button
-                type="button"
-                id="btnPromocionesUbicacion"
-                onclick="mostrarPromocionesPorUbicacion()"
-                style="
-                padding:13px 22px;
-                font-size:16px;
-                font-weight:bold;
-                border-radius:12px;
-                cursor:pointer;
-                ">
-                📍 Ver promociones por ubicación
-            </button>
-
-        </div>
+      
 
     </div>
 
@@ -6054,20 +6033,14 @@ function mostrarPromocionesBanco(nombreBanco){
         return;
     }
 
-    // Mostrar la sección
     seccion.style.display = "block";
 
-    // Buscar datos del banco
     const datosBanco =
         configuracionBancos.find(function(banco){
-
             return banco.nombre === nombreBanco;
-
         });
 
-    // =================================
-    // ENCABEZADO DEL BANCO
-    // =================================
+    /* ===== TITULO ===== */
 
     if(titulo){
 
@@ -6118,205 +6091,53 @@ function mostrarPromocionesBanco(nombreBanco){
 
     }
 
-   // =================================
-// RELOJ DE CARGA
-// =================================
 
-const cargando =
-    document.createElement("div");
+    /* ===== CARGANDO ===== */
 
-cargando.style.position = "absolute";
-cargando.style.left = "50%";
-cargando.style.transform = "translateX(-50%)";
-cargando.style.zIndex = "10";
-cargando.style.padding = "8px 14px";
-cargando.style.fontSize = "28px";
-cargando.style.background = "rgba(0,0,0,0.75)";
-cargando.style.borderRadius = "12px";
+    contenedor.innerHTML = `
+        <div style="
+            text-align:center;
+            padding:20px;
+            font-size:28px;
+        ">
+            ⏳
+        </div>
+    `;
 
-cargando.innerHTML = "⏳";
 
-seccion.style.position = "relative";
+    /* ===== CARGAR FUENTE DE PROMOCIONES ===== */
 
-seccion.appendChild(cargando);
+    fetch(
+        "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Promociones.json"
+    )
 
-    // =================================
-    // CARGAR PROMOCIONES
-    // =================================
+    .then(function(respuesta){
 
-    fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Promociones.json")
+        if(!respuesta.ok){
+            throw new Error("No se pudo cargar Promociones.json");
+        }
 
-        .then(function(respuesta){
+        return respuesta.json();
 
-            return respuesta.json();
+    })
 
-        })
+    .then(function(datos){
 
-        .then(function(datos){
+        const promocionBanco =
+            datos.find(function(item){
 
-            const promociones =
-                datos.filter(function(item){
+                return item.tipo === "banco" &&
+                       item.nombre === nombreBanco;
 
-                    return item.tipo === "promocion" &&
-                           item.banco === nombreBanco;
+            });
 
-                });
 
-            // =================================
-            // CREAR CONTENIDO NUEVO
-            // =================================
+        contenedor.innerHTML = "";
 
-            const nuevoContenedor =
-                document.createElement("div");
 
-            nuevoContenedor.style.display = "grid";
-            nuevoContenedor.style.gridTemplateColumns =
-                "repeat(auto-fit,minmax(250px,1fr))";
-            nuevoContenedor.style.gap = "15px";
+        /* ===== NO HAY FUENTE ===== */
 
-            if(promociones.length === 0){
-
-                const mensaje =
-                    document.createElement("div");
-
-                mensaje.className = "card";
-
-                mensaje.style.padding = "20px";
-                mensaje.style.borderRadius = "18px";
-
-                mensaje.innerHTML = `
-
-                    <h3>
-                        🏦 ${nombreBanco}
-                    </h3>
-
-                    <p>
-                        No hay promociones cargadas
-                        para este banco.
-                    </p>
-
-                `;
-
-                nuevoContenedor.appendChild(mensaje);
-
-            }else{
-
-                promociones.forEach(function(promocion){
-
-                    const tarjeta =
-                        document.createElement("div");
-
-                    tarjeta.className = "card";
-
-                    tarjeta.style.padding = "20px";
-                    tarjeta.style.borderRadius = "18px";
-
-                    tarjeta.innerHTML = `
-
-                        <h3>
-                            🏦 ${promocion.comercio}
-                        </h3>
-
-                        <p>
-                            <strong>
-                                ${promocion.categoria}
-                            </strong>
-                        </p>
-
-                        <p>
-                            ${promocion.beneficio}
-                        </p>
-
-                        ${
-                            promocion.dias &&
-                            promocion.dias.length > 0
-                            ?
-                            `<p>
-                                📅 ${promocion.dias.join(", ")}
-                            </p>`
-                            :
-                            ""
-                        }
-
-                        ${
-                            promocion.tope
-                            ?
-                            `<p>
-                                💰 Tope: ${promocion.tope}
-                            </p>`
-                            :
-                            ""
-                        }
-
-                        ${
-                            promocion.compraMinima
-                            ?
-                            `<p>
-                                🛒 Compra mínima: ${promocion.compraMinima}
-                            </p>`
-                            :
-                            ""
-                        }
-
-                        <a
-                            href="${promocion.url}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style="
-                            display:inline-block;
-                            margin-top:10px;
-                            padding:10px 15px;
-                            background:#FFD700;
-                            color:#000;
-                            text-decoration:none;
-                            border-radius:10px;
-                            font-weight:bold;
-                            "
-                        >
-                            Ver promoción
-                        </a>
-
-                    `;
-
-                    nuevoContenedor.appendChild(tarjeta);
-
-                });
-
-            }
-
-if(cargando){
-
-    cargando.remove();
-
-}
-
-            // =================================
-            // REEMPLAZAR TODO DE UNA VEZ
-            // =================================
-
-            contenedor.innerHTML = "";
-
-            while(nuevoContenedor.firstChild){
-
-                contenedor.appendChild(
-                    nuevoContenedor.firstChild
-                );
-
-            }
-
-        })
-
-        .catch(function(error){
-
-            console.log(
-                "No se pudo cargar Promociones.json",
-                error
-            );
-if(cargando){
-
-    cargando.remove();
-
-}
+        if(!promocionBanco){
 
             contenedor.innerHTML = `
 
@@ -6324,22 +6145,252 @@ if(cargando){
                      style="
                      padding:20px;
                      border-radius:18px;
+                     text-align:center;
                      ">
 
                     <h3>
-                        ⚠️ Error
+                        🏦 ${nombreBanco}
                     </h3>
 
                     <p>
-                        No se pudieron cargar las promociones
-                        de ${nombreBanco}.
+                        No encontramos información de promociones
+                        para este banco.
                     </p>
 
                 </div>
 
             `;
 
-        });
+            return;
+
+        }
+
+
+        /* ===== TARJETA ===== */
+
+        const tarjeta =
+            document.createElement("div");
+
+        tarjeta.className = "card";
+
+        tarjeta.style.padding = "20px";
+        tarjeta.style.borderRadius = "18px";
+        tarjeta.style.textAlign = "center";
+
+
+        tarjeta.innerHTML = `
+
+            <h3>
+                🏦 Promociones de ${nombreBanco}
+            </h3>
+
+            <p>
+                Consultá las promociones y beneficios
+                disponibles en el sitio oficial.
+            </p>
+
+            <p style="
+                font-size:13px;
+                line-height:18px;
+                opacity:.85;
+            ">
+                Mi Espacio informa las promociones que detecta
+                en los sitios oficiales de los bancos.
+                Verificá siempre la vigencia y condiciones
+                en el sitio oficial correspondiente.
+            </p>
+
+            <button
+                type="button"
+                onclick="confirmarSalidaPromocion(
+                    '${nombreBanco.replace(/'/g, "\\'")}',
+                    '${promocionBanco.url.replace(/'/g, "\\'")}'
+                )"
+                style="
+                margin-top:10px;
+                padding:10px 18px;
+                background:#FFD700;
+                color:#000;
+                border:none;
+                border-radius:10px;
+                font-weight:bold;
+                cursor:pointer;
+                "
+            >
+                🔗 Ver promociones
+            </button>
+
+        `;
+
+        contenedor.appendChild(tarjeta);
+
+    })
+
+    .catch(function(error){
+
+        console.log(
+            "No se pudo cargar Promociones.json",
+            error
+        );
+
+        contenedor.innerHTML = `
+
+            <div class="card"
+                 style="
+                 padding:20px;
+                 border-radius:18px;
+                 text-align:center;
+                 ">
+
+                <h3>
+                    ⚠️ Error
+                </h3>
+
+                <p>
+                    No se pudo cargar la información
+                    de promociones de ${nombreBanco}.
+                </p>
+
+            </div>
+
+        `;
+
+    });
+
+}
+function confirmarSalidaPromocion(nombreBanco, url){
+
+    const fondo =
+        document.createElement("div");
+
+    fondo.id = "popupSalidaPromocion";
+
+    fondo.style.position = "fixed";
+    fondo.style.top = "0";
+    fondo.style.left = "0";
+    fondo.style.width = "100%";
+    fondo.style.height = "100%";
+    fondo.style.background = "rgba(0,0,0,0.75)";
+    fondo.style.display = "flex";
+    fondo.style.alignItems = "center";
+    fondo.style.justifyContent = "center";
+    fondo.style.zIndex = "99999";
+    fondo.style.padding = "20px";
+    fondo.style.boxSizing = "border-box";
+
+
+    const ventana =
+        document.createElement("div");
+
+    ventana.className = "card";
+
+    ventana.style.width = "min(92%,450px)";
+    ventana.style.padding = "25px";
+    ventana.style.borderRadius = "20px";
+    ventana.style.textAlign = "center";
+
+
+    ventana.innerHTML = `
+
+        <div style="
+            font-size:36px;
+            margin-bottom:10px;
+        ">
+            🔗
+        </div>
+
+        <h3>
+            Estás saliendo de Mi Espacio
+        </h3>
+
+        <p>
+            Vas a ingresar al sitio externo oficial
+            de <strong>${nombreBanco}</strong>.
+        </p>
+
+        <p style="
+            font-size:13px;
+            line-height:19px;
+            opacity:.85;
+        ">
+            Verificá allí la vigencia y las condiciones
+            de las promociones.
+        </p>
+
+        <div style="
+            display:flex;
+            justify-content:center;
+            gap:12px;
+            margin-top:20px;
+            flex-wrap:wrap;
+        ">
+
+            <button
+                type="button"
+                id="cancelarSalidaPromocion"
+                style="
+                padding:11px 18px;
+                border:none;
+                border-radius:10px;
+                cursor:pointer;
+                font-weight:bold;
+                "
+            >
+                Cancelar
+            </button>
+
+            <button
+                type="button"
+                id="continuarSalidaPromocion"
+                style="
+                padding:11px 18px;
+                background:#FFD700;
+                color:#000;
+                border:none;
+                border-radius:10px;
+                cursor:pointer;
+                font-weight:bold;
+                "
+            >
+                Continuar →
+            </button>
+
+        </div>
+
+    `;
+
+
+    fondo.appendChild(ventana);
+
+    document.body.appendChild(fondo);
+
+
+    /* ===== CANCELAR ===== */
+
+    document
+        .getElementById("cancelarSalidaPromocion")
+        .onclick = function(){
+
+            fondo.remove();
+
+        };
+
+
+    /* ===== CONTINUAR ===== */
+
+    document
+        .getElementById("continuarSalidaPromocion")
+        .onclick = function(){
+
+            fondo.remove();
+
+            window.open(
+                url,
+                "_blank",
+                "noopener,noreferrer"
+            );
+
+        };
 
 }
 
