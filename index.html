@@ -3068,12 +3068,16 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
      margin:25px auto;
 ">
 
-        <h2 style="
-            text-align:center;
-            color:#FFD700;
-        ">
-            🔥 Promociones para vos
-        </h2>
+      <h2 id="tituloPromocionesBancos" style="
+    text-align:center;
+    color:#FFD700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+">
+    🔥 Promociones para vos
+</h2>
 
         <div id="promocionesBancos"
              style="
@@ -3606,138 +3610,51 @@ text-decoration:underline;
         </p>
 
         <div id="listaConfiguracionBancos">
+        </div>
 
-  <div style="
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:10px;
-    max-height:45vh;
-    overflow-y:auto;
-    padding-right:5px;
-">
-
-<label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-
-
-    <input type="checkbox"> 🏦 Banco Nación
-</label>
-
-<label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-    <input type="checkbox"> 🏦 Galicia
-</label>
-
-<label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-    <input type="checkbox"> 🏦 Santander
-</label>
-
-<label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-    <input type="checkbox"> 🏦 BBVA
-</label>
-
-<label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-    <input type="checkbox"> 🏦 Macro
-</label>
-
-<label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-    <input type="checkbox"> 🏦 Banco Provincia
-</label>
-
-<label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-    <input type="checkbox"> 🏦 ICBC
-</label>
-
-<label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-    <input type="checkbox"> 🏦 Credicoop
-</label>
-
-<label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-    <input type="checkbox"> 🏦 Patagonia
-</label>
-
-<label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-    <input type="checkbox"> 🏦 Banco Ciudad
-</label>
-
-<label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-    <input type="checkbox"> 🏦 Supervielle
-</label>
-
-<label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-    <input type="checkbox"> 🏦 Banco de Córdoba
-</label>
-
-<label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-    <input type="checkbox"> 🏦 Nuevo Banco de Santa Fe
-</label>
-
-<label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-    <input type="checkbox"> 🏦 Comafi
-</label>
-
-<label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-    <input type="checkbox"> 🏦 Banco de Industria
-</label>
-
-<label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-    <input type="checkbox"> 🏦 Hipotecario
-</label>
-
-<label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-    <input type="checkbox"> 🏦 Naranja Digital
-</label>
-
-<label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-    <input type="checkbox"> 🏦 Banco de Neuquén
-</label>
-
-       </div>
-
-<div style="
-    text-align:center;
-    margin-top:20px;
-">
-    <button
-        type="button"
-        onclick="guardarConfiguracionBancos()"
-        style="
-        padding:10px 22px;
-        font-size:16px;
-        font-weight:bold;
-        border-radius:10px;
+        <div style="
+            text-align:center;
+            margin-top:20px;
         ">
-        💾 Guardar Bancos
-    </button>
 
-<div id="mensajeBancos"
-     style="
-     display:none;
-     margin-top:12px;
-     color:#7CFC00;
-     font-weight:bold;
-     font-size:16px;
-     ">
-    ✅ Bancos guardados correctamente
-</div>
+            <button
+                type="button"
+                onclick="guardarConfiguracionBancos()"
+                style="
+                padding:10px 22px;
+                font-size:16px;
+                font-weight:bold;
+                border-radius:10px;
+                ">
+                💾 Guardar Bancos
+            </button>
 
+            <div id="mensajeBancos"
+                 style="
+                 display:none;
+                 margin-top:12px;
+                 color:#7CFC00;
+                 font-weight:bold;
+                 font-size:16px;
+                 ">
+                ✅ Bancos guardados correctamente
+            </div>
 
-</div>
+        </div>
 
+        <div style="
+            margin-top:20px;
+            padding:15px;
+            text-align:center;
+            border-top:1px solid #444;
+            color:#ccc;
+            font-size:14px;
+            line-height:21px;
+        ">
+            ¿No encontrás tu Banco?<br>
+            📩 Contactá a Soporte y contanos cuál te gustaría que agreguemos.
 
-
-    <div style="
-    margin-top:20px;
-    padding:15px;
-    text-align:center;
-    border-top:1px solid #444;
-    color:#ccc;
-    font-size:14px;
-    line-height:21px;
-">
-    ¿No encontrás tu Banco?<br>
-    📩 Contactá a Soporte y contanos cuál te gustaría que agreguemos.
-</div>
-
-</div>
+        </div>
 
     </div>
 
@@ -5438,6 +5355,7 @@ document.getElementById("popupConfiguracion").style.display = "block";
 
 };
 
+
 // ========================
 // CONFIGURACION DE BANCOS
 // ========================
@@ -5447,44 +5365,105 @@ function abrirConfiguracionBancos(){
     const popup =
         document.getElementById("popupConfiguracionBancos");
 
-    if(!popup){
+    const lista =
+        document.getElementById("listaConfiguracionBancos");
+
+    if(!popup || !lista){
         return;
     }
 
     const BancosSeleccionados =
-        JSON.parse(localStorage.getItem("BancosSeleccionados")) || [];
+        JSON.parse(
+            localStorage.getItem("BancosSeleccionados")
+        ) || [];
 
-    document.querySelectorAll(
-        "#listaConfiguracionBancos input[type='checkbox']"
-    ).forEach(function(checkbox){
+    // Limpiar lista actual
+    lista.innerHTML = "";
 
-        const nombreBanco =
-            checkbox.parentElement.textContent.trim();
+    // Crear contenedor de bancos
+    const grilla =
+        document.createElement("div");
+
+    grilla.style.display = "grid";
+    grilla.style.gridTemplateColumns =
+        "repeat(auto-fit,minmax(220px,1fr))";
+    grilla.style.gap = "10px";
+    grilla.style.maxHeight = "45vh";
+    grilla.style.overflowY = "auto";
+    grilla.style.paddingRight = "5px";
+
+    configuracionBancos.forEach(function(banco){
+
+        const label =
+            document.createElement("label");
+
+        label.style.display = "flex";
+        label.style.alignItems = "center";
+        label.style.gap = "8px";
+        label.style.cursor = "pointer";
+
+        // Crear checkbox
+        const checkbox =
+            document.createElement("input");
+
+        checkbox.type = "checkbox";
+
+        checkbox.value = banco.nombre;
 
         checkbox.checked =
-            BancosSeleccionados.includes(nombreBanco);
+            BancosSeleccionados.includes(
+                banco.nombre
+            );
+
+        // Agregar checkbox directamente
+        label.appendChild(checkbox);
+
+        // Crear logo o usar 🏦 como respaldo
+        if(banco.logo){
+
+            const imagen =
+                document.createElement("img");
+
+            imagen.src =
+                "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Bancosimg/" +
+                banco.logo;
+
+            imagen.alt =
+                banco.nombre;
+
+            imagen.style.width = "28px";
+            imagen.style.height = "28px";
+            imagen.style.objectFit = "contain";
+            imagen.style.borderRadius = "6px";
+
+            label.appendChild(imagen);
+
+        }else{
+
+            label.appendChild(
+                document.createTextNode("🏦")
+            );
+
+        }
+
+        // Agregar nombre
+        const nombre =
+            document.createElement("span");
+
+        nombre.textContent =
+            banco.nombre;
+
+        label.appendChild(nombre);
+
+        grilla.appendChild(label);
 
     });
+
+    lista.appendChild(grilla);
 
     popup.style.display = "flex";
 
 }
-
-
-function cerrarConfiguracionBancos(){
-
-    const popup =
-        document.getElementById("popupConfiguracionBancos");
-
-    if(!popup){
-        return;
-    }
-
-    popup.style.display = "none";
-
-}
-
-
 
 // ========================
 // CONFIGURACION BILLETERAS
@@ -5547,6 +5526,24 @@ function cerrarConfiguracionBilleteras(){
 }
 
 // ========================
+// CERRAR CONFIGURACION DE BANCOS
+// ========================
+
+function cerrarConfiguracionBancos(){
+
+    const popup =
+        document.getElementById("popupConfiguracionBancos");
+
+    if(!popup){
+        return;
+    }
+
+    popup.style.display = "none";
+
+}
+
+
+// ========================
 // GUARDAR BANCOS SELECCIONADOS
 // ========================
 
@@ -5558,13 +5555,13 @@ function guardarConfiguracionBancos(){
         "#listaConfiguracionBancos input[type='checkbox']"
     ).forEach(function(checkbox){
 
-        if(checkbox.checked){
+     if(checkbox.checked){
 
-            Bancos.push(
-                checkbox.parentElement.textContent.trim()
-            );
+    Bancos.push(
+        checkbox.value
+    );
 
-        }
+}
 
     });
 
@@ -5951,49 +5948,96 @@ function mostrarBancosSeleccionados(){
 
     Bancos.forEach(function(Banco){
 
-        const tarjeta = document.createElement("div");
-
-        tarjeta.className = "card";
-
-        tarjeta.style.padding = "15px";
-        tarjeta.style.borderRadius = "16px";
+        const nombreBanco =
+            Banco.replace("🏦 ","");
 
         const datosBanco =
             configuracionBancos.find(function(banco){
-
-                return banco.nombre === Banco.replace("🏦 ","");
-
+                return banco.nombre === nombreBanco;
             });
 
+        const tarjeta =
+            document.createElement("div");
 
-if(datosBanco){
+        tarjeta.className = "card";
 
-    tarjeta.innerHTML =
-        '<button type="button" ' +
-        'onclick="mostrarPromocionesBanco(\'' +
-        datosBanco.nombre.replace(/'/g, "\\'") +
-        '\')" ' +
-        'style="width:100%; background:none; border:none; color:inherit; font:inherit; cursor:pointer;">' +
-        Banco +
-        '</button>';
+        tarjeta.style.padding = "12px";
+        tarjeta.style.borderRadius = "16px";
 
-}else{
+        const boton =
+            document.createElement("button");
 
-    tarjeta.innerHTML =
-        Banco;
+        boton.type = "button";
 
-}               contenedor.appendChild(tarjeta);
+        boton.onclick =
+            function(){
+                mostrarPromocionesBanco(nombreBanco);
+            };
+
+        boton.style.width = "100%";
+        boton.style.background = "none";
+        boton.style.border = "none";
+        boton.style.color = "inherit";
+        boton.style.font = "inherit";
+        boton.style.cursor = "pointer";
+
+        boton.style.display = "flex";
+        boton.style.alignItems = "center";
+        boton.style.justifyContent = "center";
+        boton.style.gap = "10px";
+
+        if(datosBanco && datosBanco.logo){
+
+            const imagen =
+                document.createElement("img");
+
+            imagen.src =
+                "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Bancosimg/" +
+                datosBanco.logo;
+
+            imagen.alt =
+                nombreBanco;
+
+            imagen.style.width = "38px";
+            imagen.style.height = "38px";
+            imagen.style.objectFit = "contain";
+            imagen.style.borderRadius = "8px";
+
+            boton.appendChild(imagen);
+
+        }else{
+
+            const respaldo =
+                document.createElement("span");
+
+            respaldo.textContent = "🏦";
+
+            boton.appendChild(respaldo);
+
+        }
+
+        const nombre =
+            document.createElement("span");
+
+        nombre.textContent =
+            nombreBanco;
+
+        nombre.style.fontWeight = "bold";
+        nombre.style.fontSize = "16px";
+
+        boton.appendChild(nombre);
+
+        tarjeta.appendChild(boton);
+
+        contenedor.appendChild(tarjeta);
 
     });
 
-   
 }
 
-
-
-// ========================
+// =================================
 // MOSTRAR PROMOCIONES DE UN BANCO
-// ========================
+// =================================
 
 function mostrarPromocionesBanco(nombreBanco){
 
@@ -6003,6 +6047,9 @@ function mostrarPromocionesBanco(nombreBanco){
     const contenedor =
         document.getElementById("promocionesBancos");
 
+    const titulo =
+        document.getElementById("tituloPromocionesBancos");
+
     if(!seccion || !contenedor){
         return;
     }
@@ -6010,10 +6057,11 @@ function mostrarPromocionesBanco(nombreBanco){
     // Mostrar la sección
     seccion.style.display = "block";
 
-    // Limpiar promociones anteriores
-    contenedor.innerHTML = "";
+// Limpiar promociones anteriores
+contenedor.innerHTML = ""; 
 
-    // Buscar datos del banco en Bancos.json
+
+    // Buscar datos del banco
     const datosBanco =
         configuracionBancos.find(function(banco){
 
@@ -6021,57 +6069,63 @@ function mostrarPromocionesBanco(nombreBanco){
 
         });
 
-    // Crear encabezado
-    const encabezado =
-        document.createElement("div");
+    // =================================
+    // ENCABEZADO DEL BANCO
+    // =================================
 
-    encabezado.style.gridColumn = "1 / -1";
-    encabezado.style.textAlign = "center";
-    encabezado.style.marginBottom = "10px";
+    if(titulo){
 
-    if(datosBanco && datosBanco.logo){
+        titulo.innerHTML = "";
 
-        encabezado.innerHTML = `
+        titulo.style.display = "flex";
+        titulo.style.alignItems = "center";
+        titulo.style.justifyContent = "center";
+        titulo.style.gap = "10px";
 
-            <img
-               src="https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Bancosimg/${datosBanco.logo}"
-                alt="${nombreBanco}"
-                style="
-                width:90px;
-                height:90px;
-                object-fit:contain;
-                border-radius:15px;
-                margin-bottom:10px;
-                "
-            >
+        if(datosBanco && datosBanco.logo){
 
-            <h2 style="
-                margin:0;
-                color:#FFD700;
-            ">
-                🏦 Promociones de ${nombreBanco}
-            </h2>
+            const imagen =
+                document.createElement("img");
 
-        `;
+            imagen.src =
+                "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Bancosimg/" +
+                datosBanco.logo;
 
-    }else{
+            imagen.alt =
+                nombreBanco;
 
-        encabezado.innerHTML = `
+            imagen.style.width = "42px";
+            imagen.style.height = "42px";
+            imagen.style.objectFit = "contain";
+            imagen.style.borderRadius = "8px";
 
-            <h2 style="
-                margin:0;
-                color:#FFD700;
-            ">
-                🏦 Promociones de ${nombreBanco}
-            </h2>
+            titulo.appendChild(imagen);
 
-        `;
+        }else{
+
+            const respaldo =
+                document.createElement("span");
+
+            respaldo.textContent = "🏦";
+
+            titulo.appendChild(respaldo);
+
+        }
+
+        const texto =
+            document.createElement("span");
+
+        texto.textContent =
+            "🔥 Promociones para vos";
+
+        titulo.appendChild(texto);
 
     }
 
-    contenedor.appendChild(encabezado);
+    // =================================
+    // CARGAR PROMOCIONES
+    // =================================
 
-    // Cargar Promociones.json
     fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Promociones.json")
 
         .then(function(respuesta){
@@ -6209,6 +6263,7 @@ function mostrarPromocionesBanco(nombreBanco){
             );
 
             contenedor.innerHTML = `
+
                 <div class="card"
                      style="
                      padding:20px;
@@ -6225,11 +6280,14 @@ function mostrarPromocionesBanco(nombreBanco){
                     </p>
 
                 </div>
+
             `;
 
         });
 
-}// ========================
+}
+
+// ========================
 // MOSTRAR BILLETERAS SELECCIONADAS
 // ========================
 
