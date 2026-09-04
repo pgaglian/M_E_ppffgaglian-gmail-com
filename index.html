@@ -6057,10 +6057,6 @@ function mostrarPromocionesBanco(nombreBanco){
     // Mostrar la sección
     seccion.style.display = "block";
 
-// Limpiar promociones anteriores
-contenedor.innerHTML = ""; 
-
-
     // Buscar datos del banco
     const datosBanco =
         configuracionBancos.find(function(banco){
@@ -6122,6 +6118,28 @@ contenedor.innerHTML = "";
 
     }
 
+   // =================================
+// RELOJ DE CARGA
+// =================================
+
+const cargando =
+    document.createElement("div");
+
+cargando.style.position = "absolute";
+cargando.style.left = "50%";
+cargando.style.transform = "translateX(-50%)";
+cargando.style.zIndex = "10";
+cargando.style.padding = "8px 14px";
+cargando.style.fontSize = "28px";
+cargando.style.background = "rgba(0,0,0,0.75)";
+cargando.style.borderRadius = "12px";
+
+cargando.innerHTML = "⏳";
+
+seccion.style.position = "relative";
+
+seccion.appendChild(cargando);
+
     // =================================
     // CARGAR PROMOCIONES
     // =================================
@@ -6143,6 +6161,18 @@ contenedor.innerHTML = "";
                            item.banco === nombreBanco;
 
                 });
+
+            // =================================
+            // CREAR CONTENIDO NUEVO
+            // =================================
+
+            const nuevoContenedor =
+                document.createElement("div");
+
+            nuevoContenedor.style.display = "grid";
+            nuevoContenedor.style.gridTemplateColumns =
+                "repeat(auto-fit,minmax(250px,1fr))";
+            nuevoContenedor.style.gap = "15px";
 
             if(promociones.length === 0){
 
@@ -6167,91 +6197,112 @@ contenedor.innerHTML = "";
 
                 `;
 
-                contenedor.appendChild(mensaje);
+                nuevoContenedor.appendChild(mensaje);
 
-                return;
+            }else{
+
+                promociones.forEach(function(promocion){
+
+                    const tarjeta =
+                        document.createElement("div");
+
+                    tarjeta.className = "card";
+
+                    tarjeta.style.padding = "20px";
+                    tarjeta.style.borderRadius = "18px";
+
+                    tarjeta.innerHTML = `
+
+                        <h3>
+                            🏦 ${promocion.comercio}
+                        </h3>
+
+                        <p>
+                            <strong>
+                                ${promocion.categoria}
+                            </strong>
+                        </p>
+
+                        <p>
+                            ${promocion.beneficio}
+                        </p>
+
+                        ${
+                            promocion.dias &&
+                            promocion.dias.length > 0
+                            ?
+                            `<p>
+                                📅 ${promocion.dias.join(", ")}
+                            </p>`
+                            :
+                            ""
+                        }
+
+                        ${
+                            promocion.tope
+                            ?
+                            `<p>
+                                💰 Tope: ${promocion.tope}
+                            </p>`
+                            :
+                            ""
+                        }
+
+                        ${
+                            promocion.compraMinima
+                            ?
+                            `<p>
+                                🛒 Compra mínima: ${promocion.compraMinima}
+                            </p>`
+                            :
+                            ""
+                        }
+
+                        <a
+                            href="${promocion.url}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style="
+                            display:inline-block;
+                            margin-top:10px;
+                            padding:10px 15px;
+                            background:#FFD700;
+                            color:#000;
+                            text-decoration:none;
+                            border-radius:10px;
+                            font-weight:bold;
+                            "
+                        >
+                            Ver promoción
+                        </a>
+
+                    `;
+
+                    nuevoContenedor.appendChild(tarjeta);
+
+                });
+
             }
 
-            promociones.forEach(function(promocion){
+if(cargando){
 
-                const tarjeta =
-                    document.createElement("div");
+    cargando.remove();
 
-                tarjeta.className = "card";
+}
 
-                tarjeta.style.padding = "20px";
-                tarjeta.style.borderRadius = "18px";
+            // =================================
+            // REEMPLAZAR TODO DE UNA VEZ
+            // =================================
 
-                tarjeta.innerHTML = `
+            contenedor.innerHTML = "";
 
-                    <h3>
-                        🏦 ${promocion.comercio}
-                    </h3>
+            while(nuevoContenedor.firstChild){
 
-                    <p>
-                        <strong>
-                            ${promocion.categoria}
-                        </strong>
-                    </p>
+                contenedor.appendChild(
+                    nuevoContenedor.firstChild
+                );
 
-                    <p>
-                        ${promocion.beneficio}
-                    </p>
-
-                    ${
-                        promocion.dias &&
-                        promocion.dias.length > 0
-                        ?
-                        `<p>
-                            📅 ${promocion.dias.join(", ")}
-                        </p>`
-                        :
-                        ""
-                    }
-
-                    ${
-                        promocion.tope
-                        ?
-                        `<p>
-                            💰 Tope: ${promocion.tope}
-                        </p>`
-                        :
-                        ""
-                    }
-
-                    ${
-                        promocion.compraMinima
-                        ?
-                        `<p>
-                            🛒 Compra mínima: ${promocion.compraMinima}
-                        </p>`
-                        :
-                        ""
-                    }
-
-                    <a
-                        href="${promocion.url}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style="
-                        display:inline-block;
-                        margin-top:10px;
-                        padding:10px 15px;
-                        background:#FFD700;
-                        color:#000;
-                        text-decoration:none;
-                        border-radius:10px;
-                        font-weight:bold;
-                        "
-                    >
-                        Ver promoción
-                    </a>
-
-                `;
-
-                contenedor.appendChild(tarjeta);
-
-            });
+            }
 
         })
 
@@ -6261,6 +6312,11 @@ contenedor.innerHTML = "";
                 "No se pudo cargar Promociones.json",
                 error
             );
+if(cargando){
+
+    cargando.remove();
+
+}
 
             contenedor.innerHTML = `
 
@@ -6376,110 +6432,7 @@ function mostrarBilleterasSeleccionadas(){
 
 }
 
-// ========================
-// MOSTRAR PROMOCIONES BANCOS
-// ========================
 
-function mostrarPromocionesBancos(){
-
-    const contenedor =
-        document.getElementById("promocionesBancos");
-
-    if(!contenedor){
-        return;
-    }
-
-    const bancosSeleccionados =
-        JSON.parse(
-            localStorage.getItem("BancosSeleccionados")
-        ) || [];
-
-    contenedor.innerHTML = "";
-
-    if(bancosSeleccionados.length === 0){
-
-        contenedor.innerHTML = `
-            <div class="card"
-                 style="
-                 padding:20px;
-                 border-radius:18px;
-                 ">
-
-                <h3>🏦 Seleccioná tus bancos</h3>
-
-                <p>
-                    Elegí tus bancos para acceder a sus promociones.
-                </p>
-
-            </div>
-        `;
-
-        return;
-    }
-
-    bancosSeleccionados.forEach(function(bancoSeleccionado){
-
-        const nombreBanco =
-            bancoSeleccionado
-                .replace("🏦 ","")
-                .trim();
-
-        const promocion =
-            promocionesBancos.find(function(item){
-
-                return item.tipo === "banco" &&
-                       item.nombre === nombreBanco;
-
-            });
-
-        if(!promocion){
-            return;
-        }
-
-        const tarjeta =
-            document.createElement("div");
-
-        tarjeta.className = "card";
-
-        tarjeta.style.padding = "20px";
-        tarjeta.style.borderRadius = "18px";
-
-        tarjeta.innerHTML = `
-
-            <h3>
-                🏦 Promociones ${promocion.nombre}
-            </h3>
-
-            <p>
-                Consultá las promociones y beneficios
-                disponibles de ${promocion.nombre}.
-            </p>
-
-            <a
-                href="${promocion.url}"
-                target="_blank"
-                rel="noopener noreferrer"
-                style="
-                display:inline-block;
-                margin-top:10px;
-                padding:10px 15px;
-                background:#FFD700;
-                color:#000;
-                text-decoration:none;
-                border-radius:10px;
-                font-weight:bold;
-                "
-            >
-                Ver promociones
-            </a>
-
-        `;
-
-        contenedor.appendChild(tarjeta);
-
-    });
-
-}
 // ========================
 // MOSTRAR PROMOCIONES BILLETERAS
 // ========================
