@@ -1807,6 +1807,26 @@ body.eclipse header{
 
 }
 
+/* ===== CABECERA BANCOS FIJA EN CELULARES ===== */
+
+@media (max-width: 768px){
+
+    #cabeceraBancos{
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        z-index:9999;
+        box-sizing:border-box;
+        background:rgba(20,20,20,0.96);
+    }
+
+    #Bancos{
+        padding-top:75px;
+    }
+
+}
+
 
 </style>
 </head>
@@ -2960,12 +2980,12 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 
     <!-- CABECERA -->
 
-    <div style="
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        padding:15px;
-    ">
+  <div id="cabeceraBancos" style="
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px;
+">
 
         <button onclick="inicio()">
             ⬅ Volver
