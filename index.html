@@ -6567,6 +6567,11 @@ function mostrarBilleterasSeleccionadas(){
         const tarjeta =
             document.createElement("div");
 
+const datosBilletera =
+    configuracionBilleteras.find(function(billetera){
+        return billetera.nombre === nombreBilletera;
+    });
+
         tarjeta.className = "card";
 
         tarjeta.style.padding = "12px";
@@ -6598,13 +6603,35 @@ function mostrarBilleterasSeleccionadas(){
         boton.style.justifyContent = "center";
         boton.style.gap = "10px";
 
+if(datosBilletera && datosBilletera.logo){
 
-        const respaldo =
-            document.createElement("span");
+    const imagen =
+        document.createElement("img");
 
-        respaldo.textContent = "💳";
+    imagen.src =
+        "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Billeterasimg/" +
+        datosBilletera.logo;
 
-        boton.appendChild(respaldo);
+    imagen.alt =
+        nombreBilletera;
+
+    imagen.style.width = "38px";
+    imagen.style.height = "38px";
+    imagen.style.objectFit = "contain";
+    imagen.style.borderRadius = "8px";
+
+    boton.appendChild(imagen);
+
+}else{
+
+    const respaldo =
+        document.createElement("span");
+
+    respaldo.textContent = "💳";
+
+    boton.appendChild(respaldo);
+
+}
 
 
         const nombre =
@@ -7526,13 +7553,42 @@ fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Billeter
                     checkbox.value =
                         billetera.nombre;
 
-                    label.appendChild(checkbox);
+                  label.appendChild(checkbox);
 
-                    label.appendChild(
-                        document.createTextNode(
-                            " 💳 " + billetera.nombre
-                        )
-                    );
+if(billetera.logo){
+
+    const imagen =
+        document.createElement("img");
+
+    imagen.src =
+        "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Billeterasimg/" +
+        billetera.logo;
+
+    imagen.alt =
+        billetera.nombre;
+
+    imagen.style.width = "32px";
+    imagen.style.height = "32px";
+    imagen.style.objectFit = "contain";
+    imagen.style.borderRadius = "6px";
+
+    label.appendChild(imagen);
+
+}else{
+
+    const respaldo =
+        document.createElement("span");
+
+    respaldo.textContent = "💳";
+
+    label.appendChild(respaldo);
+}
+
+label.appendChild(
+    document.createTextNode(
+        billetera.nombre
+    )
+);
 
                     contenedor.appendChild(label);
 
