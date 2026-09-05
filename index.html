@@ -274,6 +274,45 @@ box-shadow:0 6px 18px rgba(0,0,0,.45);
 transition:.25s;
 
 }
+
+/* ===== DEGRADADO DE TARJETAS SEGÚN APARIENCIA ===== */
+
+body.bosque #acciones .card,
+body.bosque #menu .card{
+
+    background:linear-gradient(135deg,#315c42,#427653);
+
+}
+
+body.oceano #acciones .card,
+body.oceano #menu .card{
+
+    background:linear-gradient(135deg,#24577a,#347ba8);
+
+}
+
+body.crepusculo #acciones .card,
+body.crepusculo #menu .card{
+
+    background:linear-gradient(135deg,#553b70,#70518f);
+
+}
+
+body.biblioteca #acciones .card,
+body.biblioteca #menu .card{
+
+    background:linear-gradient(135deg,#68482f,#8a6445);
+
+}
+
+body.eclipse #acciones .card,
+body.eclipse #menu .card{
+
+    background:linear-gradient(135deg,#30343a,#454b52);
+
+}
+
+
 .card:hover{
 
 transform:translateY(-3px);
@@ -281,6 +320,7 @@ transform:translateY(-3px);
 box-shadow:0 10px 24px rgba(0,0,0,.60);
 
 }
+
 .card img{
     width:100%;
     border-radius:8px;
