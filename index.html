@@ -2547,6 +2547,13 @@ onclick="mostrar('Radios')">
 <p>Emisoras Online</p>
 </div>
 
+<div class="card" id="ambienteEntrenamiento" data-titulo="🏋️ Entrenamiento"
+onclick="mostrar('Entrenamiento')">
+
+<h2>🏋️ Entrenamiento</h2>
+<p>Entrenamiento por intervalos</p>
+</div>
+
 <div class="card" id="ambienteCine" data-titulo="🎬 Cine"
  
 onclick="mostrar('Cine')">
@@ -3645,6 +3652,143 @@ text-decoration:underline;
 
 </div>
 
+
+<!-- ===== MODULO ENTRENAMIENTO ===== -->
+
+<div id="Entrenamiento" style="display:none; min-height:100vh;">
+
+    <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding:15px;
+    ">
+
+        <button onclick="inicio()">
+            ⬅ Volver
+        </button>
+
+        <button>
+            👤 Perfil
+        </button>
+
+    </div>
+
+    <h2 style="text-align:center;color:#FFD700;">
+        🏋️ Entrenamiento
+    </h2>
+
+    <!-- CONFIGURACION DEL ENTRENAMIENTO -->
+
+    <div class="card" style="margin:20px;text-align:center;">
+
+        <h3>⚙️ Configuración</h3>
+
+        <div style="
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+            gap:12px;
+            margin-top:15px;
+        ">
+
+            <div>
+                <div style="font-size:28px;">🟡</div>
+                <strong>Preparación</strong>
+                <p>10 segundos</p>
+            </div>
+
+            <div>
+                <div style="font-size:28px;">🟢</div>
+                <strong>Trabajo</strong>
+                <p>20 segundos</p>
+            </div>
+
+            <div>
+                <div style="font-size:28px;">🔵</div>
+                <strong>Descanso</strong>
+                <p>10 segundos</p>
+            </div>
+
+            <div>
+                <div style="font-size:28px;">🔄</div>
+                <strong>Ciclos</strong>
+                <p>8 ciclos</p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BLOQUES -->
+
+    <div class="card" style="margin:20px;text-align:center;">
+
+        <h3>🧱 Bloques</h3>
+
+        <p>
+            1 bloque
+        </p>
+
+        <p>
+            🛌 Descanso entre bloques: 0 segundos
+        </p>
+
+    </div>
+
+
+    <!-- TIEMPO TOTAL -->
+
+    <div class="card" style="margin:20px;text-align:center;">
+
+        <h3>⏱️ Tiempo total</h3>
+
+        <div style="
+            font-size:32px;
+            font-weight:bold;
+            margin:10px;
+        ">
+            5:20
+        </div>
+
+    </div>
+
+
+    <!-- SONIDOS -->
+
+    <div class="card" style="margin:20px;text-align:center;">
+
+        <h3>🔊 Sonidos</h3>
+
+        <p>
+            🔔 Campana
+        </p>
+
+    </div>
+
+
+    <!-- INICIAR -->
+
+    <div style="
+        text-align:center;
+        margin:30px 20px;
+    ">
+
+        <button style="
+            font-size:20px;
+            padding:12px 30px;
+        ">
+            ▶️ Iniciar entrenamiento
+        </button>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN MODULO ENTRENAMIENTO ===== -->
+
+
+
 <!-- ===== MODULO CALENDARIO ===== -->
 
 <div id="Calendario" style="display:none; min-height:100vh;">
@@ -4468,6 +4612,8 @@ document.getElementById("btnVolverAndroid").style.display="none";
     document.getElementById("Billeteras").style.display="none";
 
     document.getElementById("Radios").style.display="none";
+    
+    document.getElementById("Entrenamiento").style.display="none";
 
 // Mostrar módulo elegido
 
