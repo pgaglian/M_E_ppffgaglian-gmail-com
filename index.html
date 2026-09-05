@@ -1816,7 +1816,9 @@ body.eclipse header{
         top:0;
         z-index:9999;
         box-sizing:border-box;
-        background:rgba(20,20,20,0.98);
+        background:#111;
+        padding:15px;
+        margin-bottom:0;
     }
 
 }
@@ -2474,6 +2476,8 @@ onclick="mostrar('Bancos')">
 </div>
 
 </div>
+
+
 
 <h2 id="tituloAmbientes"
 style="
@@ -3174,44 +3178,33 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 
     <!-- PROMOCIONES -->
 
-    <div style="
-        width:min(92%,900px);
-        margin:25px auto;
+<div id="seccionPromocionesBilleteras"
+     style="
+     display:none;
+     width:min(92%,900px);
+     margin:25px auto;
+">
+
+    <h2 id="tituloPromocionesBilleteras" style="
+        text-align:center;
+        color:#FFD700;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:10px;
     ">
+        🔥 Promociones para vos
+    </h2>
 
-        <h2 style="
-            text-align:center;
-            color:#FFD700;
-        ">
-            🔥 Promociones para vos
-        </h2>
-
-        <div id="promocionesBilleteras"
-             style="
-             display:grid;
-             grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-             gap:15px;
-             ">
-
-            <div class="card" style="
-                padding:20px;
-                border-radius:18px;
-            ">
-
-                <h3>
-                    💳 Próximamente
-                </h3>
-
-                <p>
-                    Acá aparecerán las promociones
-                    de las billeteras que tengas seleccionadas.
-                </p>
-
-            </div>
-
-        </div>
-
+    <div id="promocionesBilleteras"
+         style="
+         display:grid;
+         grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+         gap:15px;
+         ">
     </div>
+
+</div>
 
 </div>
 
@@ -6408,6 +6401,146 @@ function confirmarSalidaPromocion(nombreBanco, url){
 }
 
 // ========================
+// CONFIRMAR SALIDA PROMOCION BILLETERA
+// ========================
+
+function confirmarSalidaPromocionBilletera(nombreBilletera, url){
+
+    const fondo =
+        document.createElement("div");
+
+    fondo.id = "popupSalidaPromocionBilletera";
+
+    fondo.style.position = "fixed";
+    fondo.style.top = "0";
+    fondo.style.left = "0";
+    fondo.style.width = "100%";
+    fondo.style.height = "100%";
+    fondo.style.background = "rgba(0,0,0,0.75)";
+    fondo.style.display = "flex";
+    fondo.style.alignItems = "center";
+    fondo.style.justifyContent = "center";
+    fondo.style.zIndex = "99999";
+    fondo.style.padding = "20px";
+    fondo.style.boxSizing = "border-box";
+
+
+    const ventana =
+        document.createElement("div");
+
+    ventana.className = "card";
+
+    ventana.style.width = "min(92%,450px)";
+    ventana.style.padding = "25px";
+    ventana.style.borderRadius = "20px";
+    ventana.style.textAlign = "center";
+
+
+    ventana.innerHTML = `
+
+        <div style="
+            font-size:36px;
+            margin-bottom:10px;
+        ">
+            🔗
+        </div>
+
+        <h3>
+            Estás saliendo de Mi Espacio
+        </h3>
+
+        <p>
+            Vas a ingresar al sitio externo oficial
+            de <strong>${nombreBilletera}</strong>.
+        </p>
+
+        <p style="
+            font-size:13px;
+            line-height:19px;
+            opacity:.85;
+        ">
+            Verificá allí la vigencia y las condiciones
+            de las promociones.
+        </p>
+
+        <div style="
+            display:flex;
+            justify-content:center;
+            gap:12px;
+            margin-top:20px;
+            flex-wrap:wrap;
+        ">
+
+            <button
+                type="button"
+                id="cancelarSalidaPromocionBilletera"
+                style="
+                padding:11px 18px;
+                border:none;
+                border-radius:10px;
+                cursor:pointer;
+                font-weight:bold;
+                "
+            >
+                Cancelar
+            </button>
+
+            <button
+                type="button"
+                id="continuarSalidaPromocionBilletera"
+                style="
+                padding:11px 18px;
+                background:#FFD700;
+                color:#000;
+                border:none;
+                border-radius:10px;
+                cursor:pointer;
+                font-weight:bold;
+                "
+            >
+                Continuar →
+            </button>
+
+        </div>
+
+    `;
+
+
+    fondo.appendChild(ventana);
+
+    document.body.appendChild(fondo);
+
+
+    /* ===== CANCELAR ===== */
+
+    document
+        .getElementById("cancelarSalidaPromocionBilletera")
+        .onclick = function(){
+
+            fondo.remove();
+
+        };
+
+
+    /* ===== CONTINUAR ===== */
+
+    document
+        .getElementById("continuarSalidaPromocionBilletera")
+        .onclick = function(){
+
+            fondo.remove();
+
+            window.open(
+                url,
+                "_blank",
+                "noopener,noreferrer"
+            );
+
+        };
+
+}
+
+// ========================
 // MOSTRAR BILLETERAS SELECCIONADAS
 // ========================
 
@@ -6428,67 +6561,64 @@ function mostrarBilleterasSeleccionadas(){
 
     Billeteras.forEach(function(Billetera){
 
-        const tarjeta = document.createElement("div");
+        const nombreBilletera =
+            Billetera.replace("💳 ","");
+
+        const tarjeta =
+            document.createElement("div");
 
         tarjeta.className = "card";
 
-        tarjeta.style.padding = "15px";
+        tarjeta.style.padding = "12px";
         tarjeta.style.borderRadius = "16px";
 
-        const datosBilletera =
-            configuracionBilleteras.find(function(billetera){
+        const boton =
+            document.createElement("button");
 
-                return billetera.nombre ===
-                    Billetera.replace("💳 ","");
+        boton.type = "button";
 
-            });
+        boton.onclick =
+            function(){
 
-        if(datosBilletera){
+                mostrarPromocionesBilletera(
+                    nombreBilletera
+                );
 
-            if(esAndroid){
+            };
 
-                tarjeta.innerHTML =
-                    '<a href="#" ' +
-                    'onclick="event.preventDefault(); confirmarBilleteraAndroid(\'' +
-                    datosBilletera.nombre.replace(/'/g, "\\'") +
-                    '\', \'' +
-                    datosBilletera.android.replace(/'/g, "\\'") +
-                    '\')" ' +
-                    'style="color:inherit;text-decoration:none;">' +
-                    Billetera +
-                    '</a>';
+        boton.style.width = "100%";
+        boton.style.background = "none";
+        boton.style.border = "none";
+        boton.style.color = "inherit";
+        boton.style.font = "inherit";
+        boton.style.cursor = "pointer";
 
-            }else if(esAppleMobile){
+        boton.style.display = "flex";
+        boton.style.alignItems = "center";
+        boton.style.justifyContent = "center";
+        boton.style.gap = "10px";
 
-                tarjeta.innerHTML =
-                    '<a href="#" ' +
-                    'onclick="event.preventDefault(); confirmarBilleteraApple(\'' +
-                    datosBilletera.nombre.replace(/'/g, "\\'") +
-                    '\', \'' +
-                    datosBilletera.iphone.replace(/'/g, "\\'") +
-                    '\')" ' +
-                    'style="color:inherit;text-decoration:none;">' +
-                    Billetera +
-                    '</a>';
 
-            }else{
+        const respaldo =
+            document.createElement("span");
 
-                tarjeta.innerHTML =
-                    '<a href="' +
-                    datosBilletera.web +
-                    '" target="_blank" rel="noopener noreferrer" ' +
-                    'style="color:inherit;text-decoration:none;">' +
-                    Billetera +
-                    '</a>';
+        respaldo.textContent = "💳";
 
-            }
+        boton.appendChild(respaldo);
 
-        }else{
 
-            tarjeta.innerHTML =
-                Billetera;
+        const nombre =
+            document.createElement("span");
 
-        }
+        nombre.textContent =
+            nombreBilletera;
+
+        nombre.style.fontWeight = "bold";
+        nombre.style.fontSize = "16px";
+
+        boton.appendChild(nombre);
+
+        tarjeta.appendChild(boton);
 
         contenedor.appendChild(tarjeta);
 
@@ -6506,10 +6636,12 @@ function mostrarPromocionesBilleteras(){
     const contenedor =
         document.getElementById("promocionesBilleteras");
 
+    
     if(!contenedor){
         return;
     }
 
+ 
     const billeterasSeleccionadas =
         JSON.parse(
             localStorage.getItem("BilleterasSeleccionadas")
@@ -6602,6 +6734,120 @@ function mostrarPromocionesBilleteras(){
     });
 
 }
+
+// ========================
+// MOSTRAR PROMOCIONES DE UNA BILLETERA
+// ========================
+
+function mostrarPromocionesBilletera(nombreBilletera){
+
+    const contenedor =
+        document.getElementById("promocionesBilleteras");
+
+const seccion =
+    document.getElementById("seccionPromocionesBilleteras");
+
+
+    if(!contenedor){
+        return;
+    }
+
+seccion.style.display = "block";
+
+    contenedor.innerHTML = "";
+
+    const promocion =
+        promocionesBilleteras.find(function(item){
+
+            return item.tipo === "billetera" &&
+                   item.nombre === nombreBilletera;
+
+        });
+
+    if(!promocion){
+
+        contenedor.innerHTML = `
+            <div class="card"
+                 style="
+                 padding:20px;
+                 border-radius:18px;
+                 text-align:center;
+                 ">
+
+                <h3>
+                    💳 ${nombreBilletera}
+                </h3>
+
+                <p>
+                    No encontramos información de promociones
+                    para esta billetera.
+                </p>
+
+            </div>
+        `;
+
+        return;
+    }
+
+    const tarjeta =
+        document.createElement("div");
+
+    tarjeta.className = "card";
+
+    tarjeta.style.padding = "20px";
+    tarjeta.style.borderRadius = "18px";
+    tarjeta.style.textAlign = "center";
+
+    tarjeta.innerHTML = `
+
+        <h3>
+            💳 Promociones de ${promocion.nombre}
+        </h3>
+
+        <p>
+            Consultá las promociones y beneficios
+            disponibles en el sitio oficial.
+        </p>
+
+        <p style="
+            font-size:13px;
+            line-height:18px;
+            opacity:.85;
+        ">
+            Mi Espacio informa las promociones que detecta
+            en los sitios oficiales de las billeteras.
+            Verificá siempre la vigencia y condiciones
+            en el sitio oficial correspondiente.
+        </p><button
+   
+ type="button"
+    onclick="confirmarSalidaPromocionBilletera(
+        '${nombreBilletera.replace(/'/g, "\\'")}',
+        '${promocion.url.replace(/'/g, "\\'")}'
+    )"
+    style="
+    margin-top:10px;
+    padding:10px 18px;
+    background:#FFD700;
+    color:#000;
+    border:none;
+    border-radius:10px;
+    font-weight:bold;
+    cursor:pointer;
+    "
+>
+    🔗 Ver promociones
+</button>
+
+
+`;
+
+ 
+    contenedor.appendChild(tarjeta);
+
+}
+
+
 
 function confirmarBancoAndroid(nombreBanco, enlace){
 
