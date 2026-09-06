@@ -3726,7 +3726,6 @@ text-decoration:underline;
 
 </div>
 
-
 <!-- ===== MODULO ENTRENAMIENTO ===== -->
 
 <div id="Entrenamiento" style="display:none; min-height:100vh;">
@@ -3735,7 +3734,7 @@ text-decoration:underline;
         display:flex;
         justify-content:space-between;
         align-items:center;
-        padding:15px;
+        padding:10px 15px;
     ">
 
         <button onclick="inicio()">
@@ -3748,95 +3747,309 @@ text-decoration:underline;
 
     </div>
 
-    <h2 style="text-align:center;color:#FFD700;">
+    <h2 style="
+        text-align:center;
+        color:#FFD700;
+        margin:5px 0 18px;
+        font-size:24px;
+    ">
         🏋️ Entrenamiento
     </h2>
 
-    <!-- CONFIGURACION DEL ENTRENAMIENTO -->
 
-    <div class="card" style="margin:20px;text-align:center;">
+    <!-- PREPARACIÓN -->
 
-        <h3>⚙️ Configuración</h3>
+    <div style="
+        margin:7px 12px;
+        padding:12px 16px;
+        background:linear-gradient(90deg,#FFD700,#E6B800);
+        color:#111;
+        border-left:7px solid #FFF176;
+        border-radius:10px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        box-shadow:0 3px 10px rgba(0,0,0,.45);
+    ">
 
         <div style="
-            display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-            gap:12px;
-            margin-top:15px;
+            display:flex;
+            align-items:center;
+            gap:10px;
+            font-size:18px;
+            font-weight:bold;
         ">
-
-            <div>
-                <div style="font-size:28px;">🟡</div>
-                <strong>Preparación</strong>
-                <p>10 segundos</p>
-            </div>
-
-            <div>
-                <div style="font-size:28px;">🟢</div>
-                <strong>Trabajo</strong>
-                <p>20 segundos</p>
-            </div>
-
-            <div>
-                <div style="font-size:28px;">🔵</div>
-                <strong>Descanso</strong>
-                <p>10 segundos</p>
-            </div>
-
-            <div>
-                <div style="font-size:28px;">🔄</div>
-                <strong>Ciclos</strong>
-                <p>8 ciclos</p>
-            </div>
-
+            <span style="font-size:25px;">⏳</span>
+            <span>PREPARACIÓN</span>
         </div>
+
+        <span style="
+            font-size:27px;
+            font-weight:bold;
+            white-space:nowrap;
+        ">
+            00:10
+        </span>
+
+    </div>
+
+
+    <!-- TRABAJO -->
+
+    <div style="
+        margin:7px 12px;
+        padding:12px 16px;
+        background:linear-gradient(90deg,#32CD32,#239B23);
+        color:#111;
+        border-left:7px solid #7CFC00;
+        border-radius:10px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        box-shadow:0 3px 10px rgba(0,0,0,.45);
+    ">
+
+        <div style="
+            display:flex;
+            align-items:center;
+            gap:10px;
+            font-size:18px;
+            font-weight:bold;
+        ">
+            <span style="font-size:25px;">💪</span>
+            <span>TRABAJO</span>
+        </div>
+
+        <span style="
+            font-size:27px;
+            font-weight:bold;
+            white-space:nowrap;
+        ">
+            00:20
+        </span>
+
+    </div>
+
+
+    <!-- DESCANSO -->
+
+    <div style="
+        margin:7px 12px;
+        padding:12px 16px;
+        background:linear-gradient(90deg,#4DA6FF,#2878C8);
+        color:#FFF;
+        border-left:7px solid #87CEFA;
+        border-radius:10px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        box-shadow:0 3px 10px rgba(0,0,0,.45);
+    ">
+
+        <div style="
+            display:flex;
+            align-items:center;
+            gap:10px;
+            font-size:18px;
+            font-weight:bold;
+        ">
+            <span style="font-size:25px;">😮‍💨</span>
+            <span>DESCANSO</span>
+        </div>
+
+        <span style="
+            font-size:27px;
+            font-weight:bold;
+            white-space:nowrap;
+        ">
+            00:10
+        </span>
+
+    </div>
+
+
+    <!-- CICLOS -->
+
+    <div style="
+        margin:7px 12px;
+        padding:12px 16px;
+        background:linear-gradient(90deg,#9B59B6,#71368A);
+        color:#FFF;
+        border-left:7px solid #D7A8E8;
+        border-radius:10px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        box-shadow:0 3px 10px rgba(0,0,0,.45);
+    ">
+
+        <div style="
+            display:flex;
+            align-items:center;
+            gap:10px;
+            font-size:18px;
+            font-weight:bold;
+        ">
+            <span style="font-size:25px;">🔄</span>
+            <span>CICLOS</span>
+        </div>
+
+        <span style="
+            font-size:27px;
+            font-weight:bold;
+            white-space:nowrap;
+        ">
+            8
+        </span>
 
     </div>
 
 
     <!-- BLOQUES -->
 
-    <div class="card" style="margin:20px;text-align:center;">
+    <div style="
+        margin:7px 12px;
+        padding:12px 16px;
+        background:linear-gradient(90deg,#F39C12,#C87808);
+        color:#111;
+        border-left:7px solid #FFD27A;
+        border-radius:10px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        box-shadow:0 3px 10px rgba(0,0,0,.45);
+    ">
 
-        <h3>🧱 Bloques</h3>
+        <div style="
+            display:flex;
+            align-items:center;
+            gap:10px;
+            font-size:18px;
+            font-weight:bold;
+        ">
+            <span style="font-size:25px;">🧱</span>
+            <span>BLOQUES</span>
+        </div>
 
-        <p>
-            1 bloque
-        </p>
+        <span style="
+            font-size:27px;
+            font-weight:bold;
+            white-space:nowrap;
+        ">
+            1
+        </span>
 
-        <p>
-            🛌 Descanso entre bloques: 0 segundos
-        </p>
+    </div>
+
+
+    <!-- DESCANSO ENTRE BLOQUES -->
+
+    <div style="
+        margin:7px 12px;
+        padding:12px 16px;
+        background:linear-gradient(90deg,#3498DB,#216A9B);
+        color:#FFF;
+        border-left:7px solid #87CEFA;
+        border-radius:10px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        box-shadow:0 3px 10px rgba(0,0,0,.45);
+    ">
+
+        <div style="
+            display:flex;
+            align-items:center;
+            gap:10px;
+            font-size:18px;
+            font-weight:bold;
+        ">
+            <span style="font-size:25px;">🛌</span>
+            <span>DESC. BLOQUE</span>
+        </div>
+
+        <span style="
+            font-size:27px;
+            font-weight:bold;
+            white-space:nowrap;
+        ">
+            00:00
+        </span>
 
     </div>
 
 
     <!-- TIEMPO TOTAL -->
 
-    <div class="card" style="margin:20px;text-align:center;">
-
-        <h3>⏱️ Tiempo total</h3>
+    <div style="
+        margin:7px 12px;
+        padding:12px 16px;
+        background:linear-gradient(90deg,#444,#222);
+        color:#FFF;
+        border-left:7px solid #FFD700;
+        border-radius:10px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        box-shadow:0 3px 10px rgba(0,0,0,.45);
+    ">
 
         <div style="
-            font-size:32px;
+            display:flex;
+            align-items:center;
+            gap:10px;
+            font-size:18px;
             font-weight:bold;
-            margin:10px;
         ">
-            5:20
+            <span style="font-size:25px;">⏱️</span>
+            <span>TIEMPO TOTAL</span>
         </div>
+
+        <span style="
+            font-size:27px;
+            font-weight:bold;
+            color:#FFD700;
+            white-space:nowrap;
+        ">
+            04:00
+        </span>
 
     </div>
 
 
-    <!-- SONIDOS -->
+    <!-- SONIDO -->
 
-    <div class="card" style="margin:20px;text-align:center;">
+    <div style="
+        margin:7px 12px;
+        padding:12px 16px;
+        background:linear-gradient(90deg,#555,#333);
+        color:#FFF;
+        border-left:7px solid #AAA;
+        border-radius:10px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        box-shadow:0 3px 10px rgba(0,0,0,.45);
+    ">
 
-        <h3>🔊 Sonidos</h3>
+        <div style="
+            display:flex;
+            align-items:center;
+            gap:10px;
+            font-size:18px;
+            font-weight:bold;
+        ">
+            <span style="font-size:25px;">🔊</span>
+            <span>SONIDO</span>
+        </div>
 
-        <p>
+        <span style="
+            font-size:17px;
+            font-weight:bold;
+            white-space:nowrap;
+        ">
             🔔 Campana
-        </p>
+        </span>
 
     </div>
 
@@ -3845,14 +4058,15 @@ text-decoration:underline;
 
     <div style="
         text-align:center;
-        margin:30px 20px;
+        margin:18px 12px;
     ">
 
         <button style="
             font-size:20px;
-            padding:12px 30px;
+            font-weight:bold;
+            padding:11px 32px;
         ">
-            ▶️ Iniciar entrenamiento
+            ▶️ INICIAR
         </button>
 
     </div>
@@ -3860,8 +4074,6 @@ text-decoration:underline;
 </div>
 
 <!-- ===== FIN MODULO ENTRENAMIENTO ===== -->
-
-
 
 <!-- ===== MODULO CALENDARIO ===== -->
 
