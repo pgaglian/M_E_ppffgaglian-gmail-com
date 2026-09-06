@@ -3987,8 +3987,7 @@ text-decoration:underline;
 
     </div>
 
-
-    <!-- CICLOS -->
+<!-- CICLOS -->
 
     <div style="
         margin:7px 12px;
@@ -4014,51 +4013,125 @@ text-decoration:underline;
             <span>CICLOS</span>
         </div>
 
-        <span id="cantidadCiclos" style="
-            font-size:27px;
-            font-weight:bold;
-        ">
-            8
-        </span>
+      <div style="
+    display:flex;
+    align-items:center;
+    gap:6px;
+">
+
+
+<button
+    onclick="cambiarCiclosEntrenamiento(-1)"
+    style="
+        padding:4px 9px;
+        font-size:20px;
+        line-height:20px;
+        min-width:32px;
+    "
+>
+    −
+</button>
+
+<span id="cantidadCiclos" style="
+    font-size:27px;
+    font-weight:bold;
+    min-width:35px;
+    text-align:center;
+">
+    8
+</span>
+
+<button
+    onclick="cambiarCiclosEntrenamiento(1)"
+    style="
+        padding:4px 9px;
+        font-size:20px;
+        line-height:20px;
+        min-width:32px;
+    "
+>
+    +
+</button>
+
+
+</div>
+
 
     </div>
+
+
 
 
     <!-- BLOQUES -->
 
-    <div style="
-        margin:7px 12px;
-        padding:12px 16px;
-        background:linear-gradient(90deg,#F39C12,#C87808);
-        color:#111;
-        border-left:7px solid #FFD27A;
-        border-radius:10px;
-        display:flex;
-        align-items:center;
-        justify-content:space-between;
-        box-shadow:0 3px 10px rgba(0,0,0,.45);
+<div style="
+    margin:7px 12px;
+    padding:12px 16px;
+    background:linear-gradient(90deg,#F39C12,#C87808);
+    color:#111;
+    border-left:7px solid #FFD27A;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 3px 10px rgba(0,0,0,.45);
+">
+
+
+<div style="
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:18px;
+    font-weight:bold;
+">
+    <span style="font-size:25px;">🧱</span>
+    <span>BLOQUES</span>
+</div>
+
+<div style="
+    display:flex;
+    align-items:center;
+    gap:6px;
+">
+
+    <button
+        onclick="cambiarBloquesEntrenamiento(-1)"
+        style="
+            padding:4px 9px;
+            font-size:20px;
+            line-height:20px;
+            min-width:32px;
+        "
+    >
+        −
+    </button>
+
+    <span id="cantidadBloques" style="
+        font-size:27px;
+        font-weight:bold;
+        min-width:35px;
+        text-align:center;
     ">
+        1
+    </span>
 
-        <div style="
-            display:flex;
-            align-items:center;
-            gap:10px;
-            font-size:18px;
-            font-weight:bold;
-        ">
-            <span style="font-size:25px;">🧱</span>
-            <span>BLOQUES</span>
-        </div>
+    <button
+        onclick="cambiarBloquesEntrenamiento(1)"
+        style="
+            padding:4px 9px;
+            font-size:20px;
+            line-height:20px;
+            min-width:32px;
+        "
+    >
+        +
+    </button>
 
-        <span id="cantidadBloques" style="
-            font-size:27px;
-            font-weight:bold;
-        ">
-            1
-        </span>
+</div>
 
-    </div>
 
+</div>
 
     <!-- DESCANSO ENTRE BLOQUES -->
 
@@ -4086,12 +4159,52 @@ text-decoration:underline;
             <span>DESC. BLOQUE</span>
         </div>
 
-        <span id="tiempoDescansoBloque" style="
-            font-size:27px;
-            font-weight:bold;
-        ">
-            00:00
-        </span>
+  <div style="
+    display:flex;
+    align-items:center;
+    gap:6px;
+">
+
+
+<button
+    onclick="cambiarDescansoBloqueEntrenamiento(-5)"
+    style="
+        padding:4px 9px;
+        font-size:20px;
+        line-height:20px;
+        min-width:32px;
+    "
+>
+    −
+</button>
+
+<span id="tiempoDescansoBloque" style="
+    width:65px;
+    font-size:27px;
+    font-weight:bold;
+    text-align:center;
+    color:#FFF;
+    cursor:pointer;
+"
+onclick="editarTiempoDescansoBloque()">
+    00:00
+</span>
+
+<button
+    onclick="cambiarDescansoBloqueEntrenamiento(5)"
+    style="
+        padding:4px 9px;
+        font-size:20px;
+        line-height:20px;
+        min-width:32px;
+    "
+>
+    +
+</button>
+
+
+</div>
+
 
     </div>
 
@@ -5000,6 +5113,8 @@ function cargarAlbumes(){
 let tiempoPreparacionEntrenamiento = 10;
 let tiempoTrabajoEntrenamiento = 20;
 let tiempoDescansoEntrenamiento = 10;
+let tiempoDescansoBloqueEntrenamiento = 0;
+
 
 function formatearTiempoEntrenamiento(segundos){
 
@@ -5055,7 +5170,64 @@ document.getElementById("tiempoPreparacion").textContent =
 
 
     calcularTiempoTotalEntrenamiento();
+
 }
+
+function cambiarCiclosEntrenamiento(cambio){
+
+
+let ciclos = parseInt(
+    document.getElementById("cantidadCiclos").textContent
+) || 1;
+
+ciclos += cambio;
+
+if(ciclos < 1){
+    ciclos = 1;
+}
+
+document.getElementById("cantidadCiclos").textContent = ciclos;
+
+calcularTiempoTotalEntrenamiento();
+
+
+}
+
+function cambiarBloquesEntrenamiento(cambio){
+
+    let bloques = parseInt(
+        document.getElementById("cantidadBloques").textContent
+    ) || 1;
+
+    bloques += cambio;
+
+    if(bloques < 1){
+        bloques = 1;
+    }
+
+    document.getElementById("cantidadBloques").textContent = bloques;
+
+    calcularTiempoTotalEntrenamiento();
+
+}
+
+function cambiarDescansoBloqueEntrenamiento(cambio){
+
+
+tiempoDescansoBloqueEntrenamiento += cambio;
+
+if(tiempoDescansoBloqueEntrenamiento < 0){
+    tiempoDescansoBloqueEntrenamiento = 0;
+}
+
+document.getElementById("tiempoDescansoBloque").textContent =
+    formatearTiempoEntrenamiento(tiempoDescansoBloqueEntrenamiento);
+
+calcularTiempoTotalEntrenamiento();
+
+}
+
+
 
 
 function editarTiempoPreparacion(){
@@ -5154,12 +5326,53 @@ function editarTiempoDescanso(){
     calcularTiempoTotalEntrenamiento();
 }
 
+function editarTiempoDescansoBloque(){
+
+    let valor = prompt(
+        "Ingresá los 4 números del tiempo:\n\nEjemplo: 0030 = 00:30",
+        "0000"
+    );
+
+    if(valor === null){
+        return;
+    }
+
+    valor = valor.replace(/\D/g,"");
+    valor = valor.padStart(4,"0");
+
+    let minutos = parseInt(valor.substring(0,2)) || 0;
+    let segundos = parseInt(valor.substring(2,4)) || 0;
+
+    if(segundos > 59){
+        segundos = 59;
+    }
+
+    tiempoDescansoBloqueEntrenamiento =
+        (minutos * 60) + segundos;
+
+
+
+
+    document.getElementById("tiempoDescansoBloque").textContent =
+        String(minutos).padStart(2,"0") + ":" +
+        String(segundos).padStart(2,"0");
+
+    calcularTiempoTotalEntrenamiento();
+}
+
+
 
 function calcularTiempoTotalEntrenamiento(){
 
-    let ciclos = 8;
-    let bloques = 1;
-    let descansoEntreBloques = 0;
+    let ciclos = parseInt(
+    document.getElementById("cantidadCiclos").textContent
+) || 1;
+
+    let bloques = parseInt(
+       document.getElementById("cantidadBloques").textContent
+) || 1;
+
+    let descansoEntreBloques = tiempoDescansoBloqueEntrenamiento;
 
     /*
        La preparación se ejecuta una sola vez.
