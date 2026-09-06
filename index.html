@@ -3878,14 +3878,21 @@ text-decoration:underline;
                 −
             </button>
 
-            <span id="tiempoTrabajo" style="
-                font-size:27px;
-                font-weight:bold;
-                min-width:65px;
-                text-align:center;
-            ">
-                00:20
-            </span>
+          <div
+    id="tiempoTrabajo"
+    style="
+        width:65px;
+        font-size:27px;
+        font-weight:bold;
+        text-align:center;
+        color:#111;
+        cursor:pointer;
+        user-select:none;
+    "
+    onclick="editarTiempoTrabajo()"
+>
+    00:20
+</div>
 
             <button
                 onclick="cambiarTiempoEntrenamiento('trabajo',5)"
@@ -3948,14 +3955,21 @@ text-decoration:underline;
                 −
             </button>
 
-            <span id="tiempoDescanso" style="
-                font-size:27px;
-                font-weight:bold;
-                min-width:65px;
-                text-align:center;
-            ">
-                00:10
-            </span>
+          <div
+    id="tiempoDescanso"
+    style="
+        width:65px;
+        font-size:27px;
+        font-weight:bold;
+        text-align:center;
+        color:#FFF;
+        cursor:pointer;
+        user-select:none;
+    "
+    onclick="editarTiempoDescanso()"
+>
+    00:10
+</div>
 
             <button
                 onclick="cambiarTiempoEntrenamiento('descanso',5)"
@@ -5075,6 +5089,71 @@ function editarTiempoPreparacion(){
 
     calcularTiempoTotalEntrenamiento();
 }
+
+
+function editarTiempoTrabajo(){
+
+    let valor = prompt(
+        "Ingresá los 4 números del tiempo:\n\nEjemplo: 0020 = 00:20",
+        "0020"
+    );
+
+    if(valor === null){
+        return;
+    }
+
+    valor = valor.replace(/\D/g,"");
+    valor = valor.padStart(4,"0");
+
+    let minutos = parseInt(valor.substring(0,2)) || 0;
+    let segundos = parseInt(valor.substring(2,4)) || 0;
+
+    if(segundos > 59){
+        segundos = 59;
+    }
+
+    tiempoTrabajoEntrenamiento =
+        (minutos * 60) + segundos;
+
+    document.getElementById("tiempoTrabajo").textContent =
+        String(minutos).padStart(2,"0") + ":" +
+        String(segundos).padStart(2,"0");
+
+    calcularTiempoTotalEntrenamiento();
+}
+
+
+function editarTiempoDescanso(){
+
+    let valor = prompt(
+        "Ingresá los 4 números del tiempo:\n\nEjemplo: 0010 = 00:10",
+        "0010"
+    );
+
+    if(valor === null){
+        return;
+    }
+
+    valor = valor.replace(/\D/g,"");
+    valor = valor.padStart(4,"0");
+
+    let minutos = parseInt(valor.substring(0,2)) || 0;
+    let segundos = parseInt(valor.substring(2,4)) || 0;
+
+    if(segundos > 59){
+        segundos = 59;
+    }
+
+    tiempoDescansoEntrenamiento =
+        (minutos * 60) + segundos;
+
+    document.getElementById("tiempoDescanso").textContent =
+        String(minutos).padStart(2,"0") + ":" +
+        String(segundos).padStart(2,"0");
+
+    calcularTiempoTotalEntrenamiento();
+}
+
 
 function calcularTiempoTotalEntrenamiento(){
 
