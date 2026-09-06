@@ -3801,11 +3801,12 @@ text-decoration:underline;
                 −
             </button>
 
-         <input
+<input
     id="tiempoPreparacion"
-    type="number"
-    value="10"
-    min="0"
+    type="text"
+    value="0010"
+    inputmode="numeric"
+    maxlength="4"
     style="
         width:65px;
         font-size:27px;
@@ -5009,8 +5010,10 @@ function cambiarTiempoEntrenamiento(tipo, cambio){
             tiempoPreparacionEntrenamiento = 0;
         }
 
-        document.getElementById("tiempoPreparacion").textContent =
-            formatearTiempoEntrenamiento(tiempoPreparacionEntrenamiento);
+document.getElementById("tiempoPreparacion").value =
+    formatearTiempoEntrenamiento(tiempoPreparacionEntrenamiento);
+
+
     }
 
 
@@ -5047,11 +5050,26 @@ function cambiarTiempoEntrenamiento(tipo, cambio){
 
 function cambiarTiempoPreparacionDirecto(valor){
 
-    tiempoPreparacionEntrenamiento = parseInt(valor) || 0;
+    valor = valor.replace(/\D/g,"");
+
+    valor = valor.padStart(4,"0");
+
+    let minutos = parseInt(valor.substring(0,2)) || 0;
+    let segundos = parseInt(valor.substring(2,4)) || 0;
+
+    if(segundos > 59){
+        segundos = 59;
+    }
+
+    tiempoPreparacionEntrenamiento =
+        (minutos * 60) + segundos;
+
+    document.getElementById("tiempoPreparacion").value =
+        String(minutos).padStart(2,"0") + ":" +
+        String(segundos).padStart(2,"0");
 
     calcularTiempoTotalEntrenamiento();
 }
-
 
 
 function calcularTiempoTotalEntrenamiento(){
