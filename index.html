@@ -3783,13 +3783,55 @@ text-decoration:underline;
             <span>PREPARACIÓN</span>
         </div>
 
-        <span style="
-            font-size:27px;
-            font-weight:bold;
-            white-space:nowrap;
+        <div style="
+            display:flex;
+            align-items:center;
+            gap:6px;
         ">
-            00:10
-        </span>
+
+            <button
+                onclick="cambiarTiempoEntrenamiento('preparacion',-5)"
+                style="
+                    padding:4px 9px;
+                    font-size:20px;
+                    line-height:20px;
+                    min-width:32px;
+                "
+            >
+                −
+            </button>
+
+         <input
+    id="tiempoPreparacion"
+    type="number"
+    value="10"
+    min="0"
+    style="
+        width:65px;
+        font-size:27px;
+        font-weight:bold;
+        text-align:center;
+        background:transparent;
+        border:none;
+        color:#111;
+        outline:none;
+    "
+    onchange="cambiarTiempoPreparacionDirecto(this.value)"
+>
+
+            <button
+                onclick="cambiarTiempoEntrenamiento('preparacion',5)"
+                style="
+                    padding:4px 9px;
+                    font-size:20px;
+                    line-height:20px;
+                    min-width:32px;
+                "
+            >
+                +
+            </button>
+
+        </div>
 
     </div>
 
@@ -3820,13 +3862,46 @@ text-decoration:underline;
             <span>TRABAJO</span>
         </div>
 
-        <span style="
-            font-size:27px;
-            font-weight:bold;
-            white-space:nowrap;
+        <div style="
+            display:flex;
+            align-items:center;
+            gap:6px;
         ">
-            00:20
-        </span>
+
+            <button
+                onclick="cambiarTiempoEntrenamiento('trabajo',-5)"
+                style="
+                    padding:4px 9px;
+                    font-size:20px;
+                    line-height:20px;
+                    min-width:32px;
+                "
+            >
+                −
+            </button>
+
+            <span id="tiempoTrabajo" style="
+                font-size:27px;
+                font-weight:bold;
+                min-width:65px;
+                text-align:center;
+            ">
+                00:20
+            </span>
+
+            <button
+                onclick="cambiarTiempoEntrenamiento('trabajo',5)"
+                style="
+                    padding:4px 9px;
+                    font-size:20px;
+                    line-height:20px;
+                    min-width:32px;
+                "
+            >
+                +
+            </button>
+
+        </div>
 
     </div>
 
@@ -3857,13 +3932,46 @@ text-decoration:underline;
             <span>DESCANSO</span>
         </div>
 
-        <span style="
-            font-size:27px;
-            font-weight:bold;
-            white-space:nowrap;
+        <div style="
+            display:flex;
+            align-items:center;
+            gap:6px;
         ">
-            00:10
-        </span>
+
+            <button
+                onclick="cambiarTiempoEntrenamiento('descanso',-5)"
+                style="
+                    padding:4px 9px;
+                    font-size:20px;
+                    line-height:20px;
+                    min-width:32px;
+                "
+            >
+                −
+            </button>
+
+            <span id="tiempoDescanso" style="
+                font-size:27px;
+                font-weight:bold;
+                min-width:65px;
+                text-align:center;
+            ">
+                00:10
+            </span>
+
+            <button
+                onclick="cambiarTiempoEntrenamiento('descanso',5)"
+                style="
+                    padding:4px 9px;
+                    font-size:20px;
+                    line-height:20px;
+                    min-width:32px;
+                "
+            >
+                +
+            </button>
+
+        </div>
 
     </div>
 
@@ -3894,10 +4002,9 @@ text-decoration:underline;
             <span>CICLOS</span>
         </div>
 
-        <span style="
+        <span id="cantidadCiclos" style="
             font-size:27px;
             font-weight:bold;
-            white-space:nowrap;
         ">
             8
         </span>
@@ -3931,10 +4038,9 @@ text-decoration:underline;
             <span>BLOQUES</span>
         </div>
 
-        <span style="
+        <span id="cantidadBloques" style="
             font-size:27px;
             font-weight:bold;
-            white-space:nowrap;
         ">
             1
         </span>
@@ -3968,10 +4074,9 @@ text-decoration:underline;
             <span>DESC. BLOQUE</span>
         </div>
 
-        <span style="
+        <span id="tiempoDescansoBloque" style="
             font-size:27px;
             font-weight:bold;
-            white-space:nowrap;
         ">
             00:00
         </span>
@@ -4005,11 +4110,10 @@ text-decoration:underline;
             <span>TIEMPO TOTAL</span>
         </div>
 
-        <span style="
+        <span id="tiempoTotalEntrenamiento" style="
             font-size:27px;
             font-weight:bold;
             color:#FFD700;
-            white-space:nowrap;
         ">
             04:00
         </span>
@@ -4046,7 +4150,6 @@ text-decoration:underline;
         <span style="
             font-size:17px;
             font-weight:bold;
-            white-space:nowrap;
         ">
             🔔 Campana
         </span>
@@ -4058,7 +4161,7 @@ text-decoration:underline;
 
     <div style="
         text-align:center;
-        margin:18px 12px;
+        margin:18px 12px 12px;
     ">
 
         <button style="
@@ -4071,9 +4174,25 @@ text-decoration:underline;
 
     </div>
 
+
+    <!-- VOLVER ABAJO -->
+
+    <div style="
+        text-align:center;
+        margin:10px 12px 25px;
+    ">
+
+      <button onclick="inicio()" title="Volver">
+    ⬅
+</button>
+
+    </div>
+
 </div>
 
 <!-- ===== FIN MODULO ENTRENAMIENTO ===== -->
+
+
 
 <!-- ===== MODULO CALENDARIO ===== -->
 
@@ -4860,6 +4979,110 @@ function cargarAlbumes(){
     }
 
 }
+
+
+
+// ===== CONFIGURACION TIEMPOS ENTRENAMIENTO =====
+
+
+let tiempoPreparacionEntrenamiento = 10;
+let tiempoTrabajoEntrenamiento = 20;
+let tiempoDescansoEntrenamiento = 10;
+
+function formatearTiempoEntrenamiento(segundos){
+
+    let minutos = Math.floor(segundos / 60);
+    let segundosRestantes = segundos % 60;
+
+    return String(minutos).padStart(2,"0") + ":" +
+           String(segundosRestantes).padStart(2,"0");
+}
+
+
+function cambiarTiempoEntrenamiento(tipo, cambio){
+
+    if(tipo === "preparacion"){
+
+        tiempoPreparacionEntrenamiento += cambio;
+
+        if(tiempoPreparacionEntrenamiento < 0){
+            tiempoPreparacionEntrenamiento = 0;
+        }
+
+        document.getElementById("tiempoPreparacion").textContent =
+            formatearTiempoEntrenamiento(tiempoPreparacionEntrenamiento);
+    }
+
+
+    if(tipo === "trabajo"){
+
+        tiempoTrabajoEntrenamiento += cambio;
+
+        if(tiempoTrabajoEntrenamiento < 0){
+            tiempoTrabajoEntrenamiento = 0;
+        }
+
+        document.getElementById("tiempoTrabajo").textContent =
+            formatearTiempoEntrenamiento(tiempoTrabajoEntrenamiento);
+    }
+
+
+    if(tipo === "descanso"){
+
+        tiempoDescansoEntrenamiento += cambio;
+
+        if(tiempoDescansoEntrenamiento < 0){
+            tiempoDescansoEntrenamiento = 0;
+        }
+
+        document.getElementById("tiempoDescanso").textContent =
+            formatearTiempoEntrenamiento(tiempoDescansoEntrenamiento);
+    }
+
+
+    calcularTiempoTotalEntrenamiento();
+}
+
+
+
+function cambiarTiempoPreparacionDirecto(valor){
+
+    tiempoPreparacionEntrenamiento = parseInt(valor) || 0;
+
+    calcularTiempoTotalEntrenamiento();
+}
+
+
+
+function calcularTiempoTotalEntrenamiento(){
+
+    let ciclos = 8;
+    let bloques = 1;
+    let descansoEntreBloques = 0;
+
+    /*
+       La preparación se ejecuta una sola vez.
+
+       Cada bloque tiene:
+       trabajo x ciclos
+       + descansos entre ciclos
+
+       El último ciclo no tiene descanso final.
+    */
+
+    let tiempoPorBloque =
+        (tiempoTrabajoEntrenamiento * ciclos) +
+        (tiempoDescansoEntrenamiento * (ciclos - 1));
+
+    let tiempoTotal =
+        tiempoPreparacionEntrenamiento +
+        (tiempoPorBloque * bloques) +
+        (descansoEntreBloques * (bloques - 1));
+
+    document.getElementById("tiempoTotalEntrenamiento").textContent =
+        formatearTiempoEntrenamiento(tiempoTotal);
+}
+
 
 function mostrar(id){
 
