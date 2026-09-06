@@ -3801,24 +3801,21 @@ text-decoration:underline;
                 −
             </button>
 
-<input
+<div
     id="tiempoPreparacion"
-    type="text"
-    value="0010"
-    inputmode="numeric"
-    maxlength="4"
     style="
         width:65px;
         font-size:27px;
         font-weight:bold;
         text-align:center;
-        background:transparent;
-        border:none;
         color:#111;
-        outline:none;
+        cursor:pointer;
+        user-select:none;
     "
-    onchange="cambiarTiempoPreparacionDirecto(this.value)"
+    onclick="editarTiempoPreparacion()"
 >
+    00:10
+</div>
 
             <button
                 onclick="cambiarTiempoEntrenamiento('preparacion',5)"
@@ -5010,9 +5007,9 @@ function cambiarTiempoEntrenamiento(tipo, cambio){
             tiempoPreparacionEntrenamiento = 0;
         }
 
-document.getElementById("tiempoPreparacion").value =
-    formatearTiempoEntrenamiento(tiempoPreparacionEntrenamiento);
 
+document.getElementById("tiempoPreparacion").textContent =
+    formatearTiempoEntrenamiento(tiempoPreparacionEntrenamiento);
 
     }
 
@@ -5047,8 +5044,16 @@ document.getElementById("tiempoPreparacion").value =
 }
 
 
+function editarTiempoPreparacion(){
 
-function cambiarTiempoPreparacionDirecto(valor){
+    let valor = prompt(
+        "Ingresá los 4 números del tiempo:\n\nEjemplo: 0015 = 00:15",
+        "0010"
+    );
+
+    if(valor === null){
+        return;
+    }
 
     valor = valor.replace(/\D/g,"");
 
@@ -5064,13 +5069,12 @@ function cambiarTiempoPreparacionDirecto(valor){
     tiempoPreparacionEntrenamiento =
         (minutos * 60) + segundos;
 
-    document.getElementById("tiempoPreparacion").value =
+    document.getElementById("tiempoPreparacion").textContent =
         String(minutos).padStart(2,"0") + ":" +
         String(segundos).padStart(2,"0");
 
     calcularTiempoTotalEntrenamiento();
 }
-
 
 function calcularTiempoTotalEntrenamiento(){
 
