@@ -4282,22 +4282,81 @@ onclick="editarTiempoDescansoBloque()">
     </div>
 
 
+<!-- GUARDAR CONFIGURACIÓN -->
+
+<div style="
+    display:flex;
+    justify-content:flex-end;
+    margin:12px 12px 8px;
+">
+
+    <button
+        onclick="guardarConfiguracionEntrenamiento()"
+        style="
+            font-size:17px;
+            font-weight:bold;
+            padding:9px 20px;
+        "
+    >
+        💾 GUARDAR
+    </button>
+
+</div>
+
+
+<div style="
+    display:flex;
+    justify-content:flex-end;
+    margin:0 12px 8px;
+">
+
+    <button
+        onclick="resetearConfiguracionEntrenamiento()"
+        style="
+            font-size:17px;
+            font-weight:bold;
+            padding:9px 20px;
+        "
+    >
+        🔄 RESET
+    </button>
+
+</div>
+
+
+
+<div id="mensajeEntrenamiento"
+     style="
+        display:none;
+        margin-top:10px;
+        color:#7CFC00;
+        font-size:14px;
+        font-weight:bold;
+        text-align:center;
+     ">
+    ✔ Configuración guardada
+</div>
+
+
     <!-- INICIAR -->
 
-    <div style="
-        text-align:center;
-        margin:18px 12px 12px;
-    ">
-
-        <button style="
+<div style="
+    text-align:center;
+    margin:18px 12px 12px;
+">
+    <button
+        onclick="iniciarEntrenamiento()"
+        style="
             font-size:20px;
             font-weight:bold;
             padding:11px 32px;
-        ">
-            ▶️ INICIAR
-        </button>
+        "
+    >
+        ▶️ INICIAR
+    </button>
+</div>
 
-    </div>
+
 
 
     <!-- VOLVER ABAJO -->
@@ -4308,7 +4367,7 @@ onclick="editarTiempoDescansoBloque()">
     ">
 
       <button onclick="inicio()" title="Volver">
-    ⬅
+   🏠
 </button>
 
     </div>
@@ -5398,6 +5457,614 @@ function calcularTiempoTotalEntrenamiento(){
 }
 
 
+function guardarConfiguracionEntrenamiento(){
+
+    let configuracion = {
+
+        preparacion: tiempoPreparacionEntrenamiento,
+
+        trabajo: tiempoTrabajoEntrenamiento,
+
+        descanso: tiempoDescansoEntrenamiento,
+
+        ciclos: parseInt(
+            document.getElementById("cantidadCiclos").textContent
+        ) || 1,
+
+        bloques: parseInt(
+            document.getElementById("cantidadBloques").textContent
+        ) || 1,
+
+        descansoBloque: tiempoDescansoBloqueEntrenamiento
+
+    };
+
+    localStorage.setItem(
+        "configuracionEntrenamiento",
+        JSON.stringify(configuracion)
+    );
+
+    const mensaje =
+        document.getElementById("mensajeEntrenamiento");
+
+    mensaje.style.display = "block";
+
+    setTimeout(function(){
+
+        mensaje.style.display = "none";
+
+    },1200);
+
+}
+
+
+
+function resetearConfiguracionEntrenamiento(){
+
+    tiempoPreparacionEntrenamiento = 0;
+    tiempoTrabajoEntrenamiento = 0;
+    tiempoDescansoEntrenamiento = 0;
+    tiempoDescansoBloqueEntrenamiento = 0;
+
+    document.getElementById("cantidadCiclos").textContent = 0;
+    document.getElementById("cantidadBloques").textContent = 0;
+
+    document.getElementById("tiempoPreparacion").textContent =
+        formatearTiempoEntrenamiento(
+            tiempoPreparacionEntrenamiento
+        );
+
+    document.getElementById("tiempoTrabajo").textContent =
+        formatearTiempoEntrenamiento(
+            tiempoTrabajoEntrenamiento
+        );
+
+    document.getElementById("tiempoDescanso").textContent =
+        formatearTiempoEntrenamiento(
+            tiempoDescansoEntrenamiento
+        );
+
+    document.getElementById("tiempoDescansoBloque").textContent =
+        formatearTiempoEntrenamiento(
+            tiempoDescansoBloqueEntrenamiento
+        );
+
+    calcularTiempoTotalEntrenamiento();
+
+    localStorage.removeItem("configuracionEntrenamiento");
+}
+
+
+
+
+function cargarConfiguracionEntrenamiento(){
+
+    let guardado = localStorage.getItem(
+        "configuracionEntrenamiento"
+    );
+
+    if(!guardado){
+        return;
+    }
+
+    let configuracion = JSON.parse(guardado);
+
+    tiempoPreparacionEntrenamiento =
+        configuracion.preparacion;
+
+    tiempoTrabajoEntrenamiento =
+        configuracion.trabajo;
+
+    tiempoDescansoEntrenamiento =
+        configuracion.descanso;
+
+    tiempoDescansoBloqueEntrenamiento =
+        configuracion.descansoBloque;
+
+    document.getElementById("tiempoPreparacion").textContent =
+        formatearTiempoEntrenamiento(
+            tiempoPreparacionEntrenamiento
+        );
+
+    document.getElementById("tiempoTrabajo").textContent =
+        formatearTiempoEntrenamiento(
+            tiempoTrabajoEntrenamiento
+        );
+
+    document.getElementById("tiempoDescanso").textContent =
+        formatearTiempoEntrenamiento(
+            tiempoDescansoEntrenamiento
+        );
+
+    document.getElementById("tiempoDescansoBloque").textContent =
+        formatearTiempoEntrenamiento(
+            tiempoDescansoBloqueEntrenamiento
+        );
+
+    document.getElementById("cantidadCiclos").textContent =
+        configuracion.ciclos;
+
+    document.getElementById("cantidadBloques").textContent =
+        configuracion.bloques;
+
+    calcularTiempoTotalEntrenamiento();
+}
+
+
+
+// ===== SONIDO TABATA =====
+
+function sonidoTabata(tipo){
+
+    // 🔔 Campana: solo para inicio de preparación,
+    // inicio de trabajo e inicio de descanso
+
+    if(
+        tipo === "inicio" ||
+        tipo === "trabajo" ||
+        tipo === "descanso"
+    ){
+
+        const audio = new Audio(
+            "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/SonidosTabata/campana.mp3"
+        );
+
+        audio.volume = 1;
+
+        audio.play().catch(function(error){
+
+            console.log(
+                "No se pudo reproducir campana.mp3:",
+                error
+            );
+
+        });
+
+        return;
+    }
+
+
+    // 🔢 Cuenta regresiva Tabata: 3 - 2 - 1
+    // Tres pitidos cortos, claros y separados
+
+    if(tipo === "cuenta"){
+
+        const audioContext =
+            new (window.AudioContext ||
+                 window.webkitAudioContext)();
+
+        const ahora =
+            audioContext.currentTime;
+
+        const oscilador =
+            audioContext.createOscillator();
+
+        const ganancia =
+            audioContext.createGain();
+
+        oscilador.frequency.value = 880;
+        oscilador.type = "sine";
+
+        ganancia.gain.setValueAtTime(
+            0.30,
+            ahora
+        );
+
+        ganancia.gain.exponentialRampToValueAtTime(
+            0.001,
+            ahora + 0.12
+        );
+
+        oscilador.connect(ganancia);
+        ganancia.connect(
+            audioContext.destination
+        );
+
+        oscilador.start(ahora);
+        oscilador.stop(ahora + 0.12);
+
+        return;
+    }
+
+
+    // 🔴 Señal final Tabata
+    // Triple tono para indicar finalización
+
+    if(tipo === "final"){
+
+        const audioContext =
+            new (window.AudioContext ||
+                 window.webkitAudioContext)();
+
+        const ahora =
+            audioContext.currentTime;
+
+        function beep(
+            frecuencia,
+            duracion,
+            retraso = 0
+        ){
+
+            const oscilador =
+                audioContext.createOscillator();
+
+            const ganancia =
+                audioContext.createGain();
+
+            oscilador.frequency.value =
+                frecuencia;
+
+            oscilador.type = "sine";
+
+            ganancia.gain.setValueAtTime(
+                0.30,
+                ahora + retraso
+            );
+
+            ganancia.gain.exponentialRampToValueAtTime(
+                0.001,
+                ahora + retraso + duracion
+            );
+
+            oscilador.connect(ganancia);
+            ganancia.connect(
+                audioContext.destination
+            );
+
+            oscilador.start(
+                ahora + retraso
+            );
+
+            oscilador.stop(
+                ahora + retraso + duracion
+            );
+        }
+
+        beep(880, 0.18);
+        beep(1175, 0.18, 0.22);
+        beep(1568, 0.45, 0.44);
+
+    }
+
+}
+
+// ===== MOTOR ENTRENAMIENTO =====
+
+let intervaloEntrenamiento = null;
+let faseEntrenamiento = "";
+let cicloActualEntrenamiento = 1;
+let bloqueActualEntrenamiento = 1;
+let segundosRestantesEntrenamiento = 0;
+
+function iniciarEntrenamiento(){
+
+    clearInterval(intervaloEntrenamiento);
+
+    cicloActualEntrenamiento = 1;
+    bloqueActualEntrenamiento = 1;
+
+    iniciarPreparacionEntrenamiento();
+}
+
+function iniciarPreparacionEntrenamiento(){
+
+    faseEntrenamiento = "preparacion";
+    segundosRestantesEntrenamiento = tiempoPreparacionEntrenamiento;
+
+    ejecutarCuentaRegresivaEntrenamiento(
+        "⏳ PREPARACIÓN",
+        "#FFD700",
+        iniciarTrabajoEntrenamiento
+    );
+}
+
+function iniciarTrabajoEntrenamiento(){
+
+    faseEntrenamiento = "trabajo";
+    segundosRestantesEntrenamiento = tiempoTrabajoEntrenamiento;
+
+    ejecutarCuentaRegresivaEntrenamiento(
+        "💪 TRABAJO",
+        "#32CD32",
+        iniciarDescansoEntrenamiento
+    );
+}
+
+function iniciarDescansoEntrenamiento(){
+
+    if(cicloActualEntrenamiento >= obtenerCiclosEntrenamiento()){
+
+        if(bloqueActualEntrenamiento >= obtenerBloquesEntrenamiento()){
+            finalizarEntrenamiento();
+            return;
+        }
+
+        iniciarDescansoBloqueEntrenamientoMotor();
+        return;
+    }
+
+    faseEntrenamiento = "descanso";
+    segundosRestantesEntrenamiento = tiempoDescansoEntrenamiento;
+
+    ejecutarCuentaRegresivaEntrenamiento(
+        "😮‍💨 DESCANSO",
+        "#3498DB",
+        siguienteCicloEntrenamiento
+    );
+}
+
+function siguienteCicloEntrenamiento(){
+
+    cicloActualEntrenamiento++;
+
+    iniciarTrabajoEntrenamiento();
+}
+
+function iniciarDescansoBloqueEntrenamientoMotor(){
+
+    faseEntrenamiento = "descansoBloque";
+    segundosRestantesEntrenamiento = tiempoDescansoBloqueEntrenamiento;
+
+    ejecutarCuentaRegresivaEntrenamiento(
+        "🛌 DESCANSO BLOQUE",
+        "#3498DB",
+        siguienteBloqueEntrenamiento
+    );
+}
+
+function siguienteBloqueEntrenamiento(){
+
+    bloqueActualEntrenamiento++;
+    cicloActualEntrenamiento = 1;
+
+    iniciarTrabajoEntrenamiento();
+}
+
+function obtenerCiclosEntrenamiento(){
+
+    return parseInt(
+        document.getElementById("cantidadCiclos").textContent
+    ) || 1;
+}
+
+function obtenerBloquesEntrenamiento(){
+
+    return parseInt(
+        document.getElementById("cantidadBloques").textContent
+    ) || 1;
+}
+
+
+function ejecutarCuentaRegresivaEntrenamiento(
+    nombreFase,
+    colorFase,
+    siguienteFuncion
+){
+
+    clearInterval(intervaloEntrenamiento);
+
+    mostrarPantallaEntrenamiento(
+        nombreFase,
+        colorFase
+    );
+
+    actualizarPantallaEntrenamiento();
+
+    // Sonido al comenzar la fase
+    if(faseEntrenamiento === "preparacion"){
+        sonidoTabata("inicio");
+    }
+
+    if(faseEntrenamiento === "trabajo"){
+        sonidoTabata("trabajo");
+    }
+
+    if(
+        faseEntrenamiento === "descanso" ||
+        faseEntrenamiento === "descansoBloque"
+    ){
+        sonidoTabata("descanso");
+    }
+
+    intervaloEntrenamiento = setInterval(function(){
+
+        segundosRestantesEntrenamiento--;
+
+        actualizarPantallaEntrenamiento();
+
+        // Cuenta regresiva sonora: 3 - 2 - 1
+        if(
+            segundosRestantesEntrenamiento >= 1 &&
+            segundosRestantesEntrenamiento <= 3
+        ){
+            sonidoTabata("cuenta");
+        }
+
+        if(segundosRestantesEntrenamiento <= 0){
+
+            clearInterval(intervaloEntrenamiento);
+
+            siguienteFuncion();
+        }
+
+    },1000);
+}
+
+function actualizarPantallaEntrenamiento(){
+
+    let pantalla =
+        document.getElementById("pantallaEntrenamiento");
+
+    if(!pantalla){
+        return;
+    }
+
+    let tiempo =
+        formatearTiempoEntrenamiento(
+            Math.max(0,segundosRestantesEntrenamiento)
+        );
+
+    document.getElementById(
+        "contadorEntrenamiento"
+    ).textContent = tiempo;
+
+    document.getElementById(
+        "cicloActualEntrenamiento"
+    ).textContent =
+        "CICLO " +
+        cicloActualEntrenamiento +
+        " / " +
+        obtenerCiclosEntrenamiento();
+
+    document.getElementById(
+        "bloqueActualEntrenamiento"
+    ).textContent =
+        "BLOQUE " +
+        bloqueActualEntrenamiento +
+        " / " +
+        obtenerBloquesEntrenamiento();
+}
+
+function mostrarPantallaEntrenamiento(
+    nombreFase,
+    colorFase
+){
+
+    let pantalla =
+        document.getElementById("pantallaEntrenamiento");
+
+    if(!pantalla){
+
+        pantalla = document.createElement("div");
+
+        pantalla.id = "pantallaEntrenamiento";
+
+        pantalla.style.cssText = `
+            position:fixed;
+            inset:0;
+            z-index:9999;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            text-align:center;
+            background:${colorFase};
+            color:#111;
+            padding:20px;
+        `;
+
+        pantalla.innerHTML = `
+            <div id="faseActualEntrenamiento"
+                style="
+                    font-size:32px;
+                    font-weight:bold;
+                    margin-bottom:20px;
+                ">
+            </div>
+
+            <div id="contadorEntrenamiento"
+                style="
+                    font-size:100px;
+                    font-weight:bold;
+                    line-height:1;
+                    margin:20px 0;
+                ">
+            </div>
+
+            <div id="cicloActualEntrenamiento"
+                style="
+                    font-size:24px;
+                    font-weight:bold;
+                    margin:5px;
+                ">
+            </div>
+
+            <div id="bloqueActualEntrenamiento"
+                style="
+                    font-size:20px;
+                    font-weight:bold;
+                    margin:5px;
+                ">
+            </div>
+        `;
+
+        document.body.appendChild(pantalla);
+    }
+
+    pantalla.style.background = colorFase;
+
+    document.getElementById(
+        "faseActualEntrenamiento"
+    ).textContent = nombreFase;
+}
+
+function finalizarEntrenamiento(){
+
+sonidoTabata("final");
+
+    clearInterval(intervaloEntrenamiento);
+
+    let pantalla =
+        document.getElementById("pantallaEntrenamiento");
+
+    if(!pantalla){
+        return;
+    }
+
+    pantalla.style.background = "#C62828";
+    pantalla.style.color = "#FFF";
+
+    document.getElementById(
+        "faseActualEntrenamiento"
+    ).textContent = "🔴 FINALIZADO";
+
+    document.getElementById(
+        "contadorEntrenamiento"
+    ).textContent = "00:00";
+
+    document.getElementById(
+        "cicloActualEntrenamiento"
+    ).textContent = "ENTRENAMIENTO";
+
+    document.getElementById(
+        "bloqueActualEntrenamiento"
+    ).textContent = "COMPLETADO";
+
+
+
+let botonVolver = document.createElement("button");
+
+botonVolver.innerHTML = "⬅ Volver";
+
+botonVolver.onclick = function(){
+
+    let pantalla =
+        document.getElementById("pantallaEntrenamiento");
+
+    if(pantalla){
+        pantalla.remove();
+    }
+
+    document.getElementById("Entrenamiento").style.display = "block";
+};
+
+
+botonVolver.style.cssText = `
+    margin-top:50px;
+    padding:10px 25px;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+`;
+
+pantalla.appendChild(botonVolver);
+
+
+
+}
+
+
+
 function mostrar(id){
 
     // Ocultar portada principal
@@ -5441,6 +6108,11 @@ document.getElementById("btnVolverAndroid").style.display="none";
 // Mostrar módulo elegido
 
 document.getElementById(id).style.display="block";
+
+if(id=="Entrenamiento"){
+    cargarConfiguracionEntrenamiento();
+}
+
 
 if(id=="Bancos"){
 
@@ -5501,7 +6173,8 @@ function inicio(){
     document.getElementById("album").style.display="none";
     document.getElementById("Bancos").style.display="none";
    document.getElementById("Billeteras").style.display="none";
-document.getElementById("Radios").style.display="none";
+  document.getElementById("Radios").style.display="none";
+   
 
 
     document.getElementById("panelCliente").style.display =
