@@ -4245,41 +4245,51 @@ onclick="editarTiempoDescansoBloque()">
 
     </div>
 
+<!-- SONIDO -->
 
-    <!-- SONIDO -->
+<div style="
+    margin:7px 12px;
+    padding:12px 16px;
+    background:linear-gradient(90deg,#555,#333);
+    color:#FFF;
+    border-left:7px solid #AAA;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 3px 10px rgba(0,0,0,.45);
+">
 
     <div style="
-        margin:7px 12px;
-        padding:12px 16px;
-        background:linear-gradient(90deg,#555,#333);
-        color:#FFF;
-        border-left:7px solid #AAA;
-        border-radius:10px;
         display:flex;
         align-items:center;
-        justify-content:space-between;
-        box-shadow:0 3px 10px rgba(0,0,0,.45);
+        gap:10px;
+        font-size:18px;
+        font-weight:bold;
     ">
-
-        <div style="
-            display:flex;
-            align-items:center;
-            gap:10px;
-            font-size:18px;
-            font-weight:bold;
-        ">
-            <span style="font-size:25px;">🔊</span>
-            <span>SONIDO</span>
-        </div>
-
-        <span style="
-            font-size:17px;
-            font-weight:bold;
-        ">
-            🔔 Campana
-        </span>
-
+        <span style="font-size:25px;">🔊</span>
+        <span>SONIDO</span>
     </div>
+
+    <select
+        id="sonidoEntrenamiento"
+        style="
+            font-size:16px;
+            font-weight:bold;
+            padding:6px 10px;
+            border-radius:6px;
+            max-width:220px;
+        "
+    >
+        <option value="campana">🔔 Campana</option>
+        <option value="corneta">📯 Corneta</option>
+        <option value="mario">🍄 Mario</option>
+        <option value="silbato">📣 Silbato</option>
+        <option value="tren">🚂 Tren</option>
+        <option value="tabata">⏱️ Tabata clásico</option>
+    </select>
+
+</div>
 
 
 <!-- GUARDAR CONFIGURACIÓN -->
@@ -5086,7 +5096,7 @@ const asuntoSoporte = "Consulta - Mi Espacio";
 
 let tipoEnvioCorreo = "soporte";
 
-const vencimiento = "2026-09-07";
+const vencimiento = "2026-09-20";
 
 //=========================================================
 // FIN DATOS DEL CLIENTE
@@ -5475,7 +5485,11 @@ function guardarConfiguracionEntrenamiento(){
             document.getElementById("cantidadBloques").textContent
         ) || 1,
 
-        descansoBloque: tiempoDescansoBloqueEntrenamiento
+        descansoBloque: tiempoDescansoBloqueEntrenamiento,
+
+        sonido: document.getElementById(
+            "sonidoEntrenamiento"
+        ).value
 
     };
 
@@ -5496,8 +5510,6 @@ function guardarConfiguracionEntrenamiento(){
     },1200);
 
 }
-
-
 
 function resetearConfiguracionEntrenamiento(){
 
@@ -5549,6 +5561,14 @@ function cargarConfiguracionEntrenamiento(){
 
     let configuracion = JSON.parse(guardado);
 
+    if(configuracion.sonido){
+
+        document.getElementById(
+            "sonidoEntrenamiento"
+        ).value = configuracion.sonido;
+
+    }
+
     tiempoPreparacionEntrenamiento =
         configuracion.preparacion;
 
@@ -5592,36 +5612,89 @@ function cargarConfiguracionEntrenamiento(){
 
 
 
+// ===== SONIDOS ENTRENAMIENTO =====
+
+let sonidosEntrenamiento = [];
+
+async function cargarSonidosEntrenamiento(){
+
+    try{
+
+        const respuesta = await fetch(
+            "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/SonidosTabata/SonidosEntrenamiento.json"
+        );
+
+        sonidosEntrenamiento = await respuesta.json();
+
+        console.log(
+            "Sonidos de entrenamiento cargados:",
+            sonidosEntrenamiento
+        );
+
+    }catch(error){
+
+        console.error(
+            "No se pudieron cargar los sonidos de entrenamiento:",
+            error
+        );
+
+    }
+
+}
+
+
 // ===== SONIDO TABATA =====
 
 function sonidoTabata(tipo){
 
-    // 🔔 Campana: solo para inicio de preparación,
-    // inicio de trabajo e inicio de descanso
+if(
+    tipo === "inicio" ||
+    tipo === "trabajo" ||
+    tipo === "descanso"
+){
 
-    if(
-        tipo === "inicio" ||
-        tipo === "trabajo" ||
-        tipo === "descanso"
-    ){
+    const selector =
+        document.getElementById("sonidoEntrenamiento");
 
-        const audio = new Audio(
-            "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/SonidosTabata/campana.mp3"
-        );
+    const sonidoSeleccionado =
+        selector ? selector.value : "campana";
 
-        audio.volume = 1;
+    const sonido =
+        sonidosEntrenamiento.find(function(item){
 
-        audio.play().catch(function(error){
-
-            console.log(
-                "No se pudo reproducir campana.mp3:",
-                error
-            );
+            return item.id === sonidoSeleccionado;
 
         });
 
+    if(!sonido){
+
+        console.log(
+            "No se encontró el sonido seleccionado:",
+            sonidoSeleccionado
+        );
+
         return;
     }
+
+    const audio = new Audio(
+        "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/SonidosTabata/" +
+        sonido.archivo
+    );
+
+    audio.volume = 1;
+
+    audio.play().catch(function(error){
+
+        console.log(
+            "No se pudo reproducir " +
+            sonido.archivo + ":",
+            error
+        );
+
+    });
+
+    return;
+}
 
 
     // 🔢 Cuenta regresiva Tabata: 3 - 2 - 1
@@ -5859,12 +5932,9 @@ function ejecutarCuentaRegresivaEntrenamiento(
         sonidoTabata("trabajo");
     }
 
-    if(
-        faseEntrenamiento === "descanso" ||
-        faseEntrenamiento === "descansoBloque"
-    ){
-        sonidoTabata("descanso");
-    }
+   if(faseEntrenamiento === "descanso"){
+    sonidoTabata("descanso");
+}
 
     intervaloEntrenamiento = setInterval(function(){
 
@@ -6110,7 +6180,9 @@ document.getElementById("btnVolverAndroid").style.display="none";
 document.getElementById(id).style.display="block";
 
 if(id=="Entrenamiento"){
+
     cargarConfiguracionEntrenamiento();
+
 }
 
 
@@ -6165,6 +6237,8 @@ if(id=="Musica"){
 }
 
 function inicio(){
+
+   
 
     document.getElementById("Libros").style.display="none";
     document.getElementById("Musica").style.display="none";
