@@ -5621,7 +5621,7 @@ async function cargarSonidosEntrenamiento(){
     try{
 
         const respuesta = await fetch(
-            "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/SonidosTabata/SonidosEntrenamiento.json"
+"https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/SonidosEntrenamiento.json"
         );
 
         sonidosEntrenamiento = await respuesta.json();
@@ -6182,6 +6182,7 @@ document.getElementById(id).style.display="block";
 if(id=="Entrenamiento"){
 
     cargarConfiguracionEntrenamiento();
+    cargarSonidosEntrenamiento();
 
 }
 
