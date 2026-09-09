@@ -5643,6 +5643,36 @@ async function cargarSonidosEntrenamiento(){
 }
 
 
+// ===== VOCES ENTRENAMIENTO =====
+
+let vocesEntrenamiento = [];
+
+async function cargarVocesEntrenamiento(){
+
+    try{
+
+        const respuesta = await fetch(
+"https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/VocesEntrenamiento.json"
+        );
+
+        vocesEntrenamiento = await respuesta.json();
+
+        console.log(
+            "Voces de entrenamiento cargadas:",
+            vocesEntrenamiento
+        );
+
+    }catch(error){
+
+        console.error(
+            "No se pudieron cargar las voces de entrenamiento:",
+            error
+        );
+
+    }
+
+}
+
 // ===== SONIDO TABATA =====
 
 function sonidoTabata(tipo){
@@ -5719,7 +5749,7 @@ if(
         oscilador.type = "sine";
 
         ganancia.gain.setValueAtTime(
-            0.30,
+            0.50,
             ahora
         );
 
@@ -5770,7 +5800,7 @@ if(
             oscilador.type = "sine";
 
             ganancia.gain.setValueAtTime(
-                0.30,
+                0.50,
                 ahora + retraso
             );
 
@@ -6116,6 +6146,8 @@ botonVolver.onclick = function(){
     }
 
     document.getElementById("Entrenamiento").style.display = "block";
+
+    
 };
 
 
@@ -6180,10 +6212,9 @@ document.getElementById("btnVolverAndroid").style.display="none";
 document.getElementById(id).style.display="block";
 
 if(id=="Entrenamiento"){
-
     cargarConfiguracionEntrenamiento();
     cargarSonidosEntrenamiento();
-
+    cargarVocesEntrenamiento();
 }
 
 
@@ -6248,7 +6279,8 @@ function inicio(){
     document.getElementById("album").style.display="none";
     document.getElementById("Bancos").style.display="none";
    document.getElementById("Billeteras").style.display="none";
-  document.getElementById("Radios").style.display="none";
+   document.getElementById("Radios").style.display="none";
+   document.getElementById("Entrenamiento").style.display="none";
    
 
 
