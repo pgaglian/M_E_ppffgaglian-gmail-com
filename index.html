@@ -4292,6 +4292,51 @@ onclick="editarTiempoDescansoBloque()">
 </div>
 
 
+<!-- VOZ -->
+
+<div style="
+    margin:7px 12px;
+    padding:12px 16px;
+    background:linear-gradient(90deg,#555,#333);
+    color:#FFF;
+    border-left:7px solid #AAA;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 3px 10px rgba(0,0,0,.45);
+">
+
+    <div style="
+        display:flex;
+        align-items:center;
+        gap:10px;
+        font-size:18px;
+        font-weight:bold;
+    ">
+        <span style="font-size:25px;">🗣️</span>
+        <span>VOZ</span>
+    </div>
+
+    <select
+        id="vozEntrenamiento"
+        style="
+            font-size:16px;
+            font-weight:bold;
+            padding:6px 10px;
+            border-radius:6px;
+            max-width:220px;
+        "
+    >
+        <option value="">🔇 Sin voz</option>
+    </select>
+
+</div>
+
+
+
+
+
 <!-- GUARDAR CONFIGURACIÓN -->
 
 <div style="
@@ -5657,6 +5702,28 @@ async function cargarVocesEntrenamiento(){
 
         vocesEntrenamiento = await respuesta.json();
 
+const selectorVoz =
+    document.getElementById("vozEntrenamiento");
+
+if(selectorVoz){
+
+    selectorVoz.innerHTML =
+        '<option value="">🔇 Sin voz</option>';
+
+    vocesEntrenamiento.forEach(function(voz){
+
+        const opcion =
+            document.createElement("option");
+
+        opcion.value = voz.id;
+        opcion.textContent = voz.nombre;
+
+        selectorVoz.appendChild(opcion);
+
+    });
+
+}
+
         console.log(
             "Voces de entrenamiento cargadas:",
             vocesEntrenamiento
@@ -5670,6 +5737,83 @@ async function cargarVocesEntrenamiento(){
         );
 
     }
+
+}
+
+
+
+
+
+// ===== VOZ ENTRENAMIENTO =====
+
+function reproducirVozEntrenamiento(fase){
+
+    const selector =
+        document.getElementById("vozEntrenamiento");
+
+    const vozSeleccionada =
+        selector ? selector.value : "";
+
+    // Sin voz
+    if(!vozSeleccionada){
+        return Promise.resolve();
+    }
+
+    const voz =
+        vocesEntrenamiento.find(function(item){
+
+            return item.id === vozSeleccionada;
+
+        });
+
+    if(!voz){
+        console.log(
+            "No se encontró la voz seleccionada:",
+            vozSeleccionada
+        );
+
+        return Promise.resolve();
+    }
+
+    const archivo =
+        voz[fase];
+
+    if(!archivo){
+        console.log(
+            "No se encontró archivo para la fase:",
+            fase
+        );
+
+        return Promise.resolve();
+    }
+
+    const audio = new Audio(
+        "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/SonidosTabata/" +
+        archivo
+    );
+
+    audio.volume = 1;
+
+    return audio.play().then(function(){
+
+        return new Promise(function(resolve){
+
+            audio.addEventListener(
+                "ended",
+                resolve,
+                {once:true}
+            );
+
+        });
+
+    }).catch(function(error){
+
+        console.error(
+            "No se pudo reproducir la voz:",
+            error
+        );
+
+    });
 
 }
 
@@ -5953,18 +6097,59 @@ function ejecutarCuentaRegresivaEntrenamiento(
 
     actualizarPantallaEntrenamiento();
 
-    // Sonido al comenzar la fase
+    // =====================================================
+    // PREPARACIÓN
+    // Primero voz → después sonido → después comienza
+    // el temporizador
+    // =====================================================
+
     if(faseEntrenamiento === "preparacion"){
-        sonidoTabata("inicio");
+
+        reproducirVozEntrenamiento("preparacion")
+        .then(function(){
+
+            sonidoTabata("inicio");
+
+            intervaloEntrenamiento = setInterval(function(){
+
+                segundosRestantesEntrenamiento--;
+
+                actualizarPantallaEntrenamiento();
+
+                // Cuenta regresiva sonora: 3 - 2 - 1
+                if(
+                    segundosRestantesEntrenamiento >= 1 &&
+                    segundosRestantesEntrenamiento <= 3
+                ){
+                    sonidoTabata("cuenta");
+                }
+
+                if(segundosRestantesEntrenamiento <= 0){
+
+                    clearInterval(intervaloEntrenamiento);
+
+                    siguienteFuncion();
+                }
+
+            },1000);
+
+        });
+
+        return;
     }
+
+    // =====================================================
+    // RESTO DE LAS FASES
+    // Se mantiene el comportamiento actual
+    // =====================================================
 
     if(faseEntrenamiento === "trabajo"){
         sonidoTabata("trabajo");
     }
 
-   if(faseEntrenamiento === "descanso"){
-    sonidoTabata("descanso");
-}
+    if(faseEntrenamiento === "descanso"){
+        sonidoTabata("descanso");
+    }
 
     intervaloEntrenamiento = setInterval(function(){
 
@@ -5988,6 +6173,8 @@ function ejecutarCuentaRegresivaEntrenamiento(
         }
 
     },1000);
+
+
 }
 
 function actualizarPantallaEntrenamiento(){
