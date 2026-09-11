@@ -5671,6 +5671,27 @@ async function cargarSonidosEntrenamiento(){
 
         sonidosEntrenamiento = await respuesta.json();
 
+        const selectorSonido =
+            document.getElementById("sonidoEntrenamiento");
+
+        if(selectorSonido){
+
+            selectorSonido.innerHTML = "";
+
+            sonidosEntrenamiento.forEach(function(sonido){
+
+                const opcion =
+                    document.createElement("option");
+
+                opcion.value = sonido.id;
+                opcion.textContent = sonido.nombre;
+
+                selectorSonido.appendChild(opcion);
+
+            });
+
+        }
+
         console.log(
             "Sonidos de entrenamiento cargados:",
             sonidosEntrenamiento
@@ -5685,10 +5706,7 @@ async function cargarSonidosEntrenamiento(){
 
     }
 
-}
-
-
-// ===== VOCES ENTRENAMIENTO =====
+}// ===== VOCES ENTRENAMIENTO =====
 
 let vocesEntrenamiento = [];
 
@@ -6098,58 +6116,43 @@ function ejecutarCuentaRegresivaEntrenamiento(
     actualizarPantallaEntrenamiento();
 
     // =====================================================
-    // PREPARACIÓN
-    // Primero voz → después sonido → después comienza
-    // el temporizador
+    // AUDIO DE LA FASE
+    // El audio NO controla el reloj.
+    // Se dispara y el temporizador comienza inmediatamente.
     // =====================================================
 
     if(faseEntrenamiento === "preparacion"){
 
-        reproducirVozEntrenamiento("preparacion")
-        .then(function(){
+        reproducirVozEntrenamiento("preparacion");
 
-            sonidoTabata("inicio");
-
-            intervaloEntrenamiento = setInterval(function(){
-
-                segundosRestantesEntrenamiento--;
-
-                actualizarPantallaEntrenamiento();
-
-                // Cuenta regresiva sonora: 3 - 2 - 1
-                if(
-                    segundosRestantesEntrenamiento >= 1 &&
-                    segundosRestantesEntrenamiento <= 3
-                ){
-                    sonidoTabata("cuenta");
-                }
-
-                if(segundosRestantesEntrenamiento <= 0){
-
-                    clearInterval(intervaloEntrenamiento);
-
-                    siguienteFuncion();
-                }
-
-            },1000);
-
-        });
-
-        return;
+        sonidoTabata("inicio");
     }
 
-    // =====================================================
-    // RESTO DE LAS FASES
-    // Se mantiene el comportamiento actual
-    // =====================================================
-
     if(faseEntrenamiento === "trabajo"){
+
+        reproducirVozEntrenamiento("trabajo");
+
         sonidoTabata("trabajo");
     }
 
     if(faseEntrenamiento === "descanso"){
+
+        reproducirVozEntrenamiento("descanso");
+
         sonidoTabata("descanso");
     }
+
+    if(faseEntrenamiento === "descansoBloque"){
+
+        reproducirVozEntrenamiento("descansoBloque");
+
+        sonidoTabata("descanso");
+    }
+
+    // =====================================================
+    // EL RELOJ COMIENZA INMEDIATAMENTE
+    // La duración de la voz o del sonido NO afecta el tiempo.
+    // =====================================================
 
     intervaloEntrenamiento = setInterval(function(){
 
@@ -6173,8 +6176,6 @@ function ejecutarCuentaRegresivaEntrenamiento(
         }
 
     },1000);
-
-
 }
 
 function actualizarPantallaEntrenamiento(){
