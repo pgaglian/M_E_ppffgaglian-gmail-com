@@ -5839,58 +5839,29 @@ function reproducirVozEntrenamiento(fase){
 
 function sonidoTabata(tipo){
 
-if(
-    tipo === "inicio" ||
-    tipo === "trabajo" ||
-    tipo === "descanso"
-){
+    let archivo = "";
 
-    const selector =
-        document.getElementById("sonidoEntrenamiento");
+    // 📣 Silbato Tabata
+    if(
+        tipo === "inicio" ||
+        tipo === "trabajo"
+    ){
 
-    const sonidoSeleccionado =
-        selector ? selector.value : "campana";
+        archivo = "silbatotabata.mp3";
 
-    const sonido =
-        sonidosEntrenamiento.find(function(item){
-
-            return item.id === sonidoSeleccionado;
-
-        });
-
-    if(!sonido){
-
-        console.log(
-            "No se encontró el sonido seleccionado:",
-            sonidoSeleccionado
-        );
-
-        return;
     }
 
-    const audio = new Audio(
-        "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/SonidosTabata/" +
-        sonido.archivo
-    );
 
-    audio.volume = 1;
+    // 🔔 Una campana
+    if(tipo === "descanso"){
 
-    audio.play().catch(function(error){
+        archivo = "1campanatabata.mp3";
 
-        console.log(
-            "No se pudo reproducir " +
-            sonido.archivo + ":",
-            error
-        );
-
-    });
-
-    return;
-}
+    }
 
 
     // 🔢 Cuenta regresiva Tabata: 3 - 2 - 1
-    // Tres pitidos cortos, claros y separados
+    // Se mantiene el sonido electrónico actual
 
     if(tipo === "cuenta"){
 
@@ -5932,64 +5903,37 @@ if(
     }
 
 
-    // 🔴 Señal final Tabata
-    // Triple tono para indicar finalización
+    // 🔔🔔🔔 Tres campanas - final
 
     if(tipo === "final"){
 
-        const audioContext =
-            new (window.AudioContext ||
-                 window.webkitAudioContext)();
-
-        const ahora =
-            audioContext.currentTime;
-
-        function beep(
-            frecuencia,
-            duracion,
-            retraso = 0
-        ){
-
-            const oscilador =
-                audioContext.createOscillator();
-
-            const ganancia =
-                audioContext.createGain();
-
-            oscilador.frequency.value =
-                frecuencia;
-
-            oscilador.type = "sine";
-
-            ganancia.gain.setValueAtTime(
-                0.50,
-                ahora + retraso
-            );
-
-            ganancia.gain.exponentialRampToValueAtTime(
-                0.001,
-                ahora + retraso + duracion
-            );
-
-            oscilador.connect(ganancia);
-            ganancia.connect(
-                audioContext.destination
-            );
-
-            oscilador.start(
-                ahora + retraso
-            );
-
-            oscilador.stop(
-                ahora + retraso + duracion
-            );
-        }
-
-        beep(880, 0.18);
-        beep(1175, 0.18, 0.22);
-        beep(1568, 0.45, 0.44);
+        archivo = "3campanatabata.mp3";
 
     }
+
+
+    // 🔊 Reproducir sonido Tabata
+
+    if(!archivo){
+        return;
+    }
+
+    const audio = new Audio(
+        "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/SonidosTabata/" +
+        archivo
+    );
+
+    audio.volume = 1;
+
+    audio.play().catch(function(error){
+
+        console.log(
+            "No se pudo reproducir " +
+            archivo + ":",
+            error
+        );
+
+    });
 
 }
 
