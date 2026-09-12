@@ -3756,41 +3756,32 @@ text-decoration:underline;
         🏋️ Entrenamiento
     </h2>
 
-<!-- PREPARACIÓN -->
 
-<div style="
-    margin:7px 12px;
-    padding:12px 16px;
-    background:linear-gradient(90deg,#FFD700,#E6B800);
-    color:#111;
-    border-left:7px solid #FFF176;
-    border-radius:10px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px;
-    flex-wrap:wrap;
-    box-shadow:0 3px 10px rgba(0,0,0,.45);
-">
+    <!-- PREPARACIÓN -->
 
     <div style="
+        margin:7px 12px;
+        padding:12px 16px;
+        background:linear-gradient(90deg,#FFD700,#E6B800);
+        color:#111;
+        border-left:7px solid #FFF176;
+        border-radius:10px;
         display:flex;
         align-items:center;
-        gap:10px;
-        font-size:18px;
-        font-weight:bold;
+        justify-content:space-between;
+        box-shadow:0 3px 10px rgba(0,0,0,.45);
     ">
-        <span style="font-size:25px;">⏳</span>
-        <span>PREPARACIÓN</span>
-    </div>
 
-    <div style="
-        display:flex;
-        align-items:center;
-        gap:8px;
-        flex-wrap:wrap;
-        justify-content:flex-end;
-    ">
+        <div style="
+            display:flex;
+            align-items:center;
+            gap:10px;
+            font-size:18px;
+            font-weight:bold;
+        ">
+            <span style="font-size:25px;">⏳</span>
+            <span>PREPARACIÓN</span>
+        </div>
 
         <div style="
             display:flex;
@@ -3810,21 +3801,21 @@ text-decoration:underline;
                 −
             </button>
 
-            <div
-                id="tiempoPreparacion"
-                style="
-                    width:65px;
-                    font-size:27px;
-                    font-weight:bold;
-                    text-align:center;
-                    color:#111;
-                    cursor:pointer;
-                    user-select:none;
-                "
-                onclick="editarTiempoPreparacion()"
-            >
-                00:10
-            </div>
+<div
+    id="tiempoPreparacion"
+    style="
+        width:65px;
+        font-size:27px;
+        font-weight:bold;
+        text-align:center;
+        color:#111;
+        cursor:pointer;
+        user-select:none;
+    "
+    onclick="editarTiempoPreparacion()"
+>
+    00:10
+</div>
 
             <button
                 onclick="cambiarTiempoEntrenamiento('preparacion',5)"
@@ -3840,74 +3831,34 @@ text-decoration:underline;
 
         </div>
 
-<button
-    type="button"
-    title="Seleccionar sonido"
-    onclick="abrirPopupSonidoEntrenamiento('preparacion')"
-    style="
-        font-size:22px;
-        padding:4px 7px;
-        min-width:38px;
-        cursor:pointer;
-    "
->
-    🔊
-</button>
-
-<button
-    type="button"
-    title="Seleccionar voz"
-    onclick="abrirPopupVozEntrenamiento('preparacion')"
-    style="
-        font-size:22px;
-        padding:4px 7px;
-        min-width:38px;
-        cursor:pointer;
-    "
->
-    🗣️
-</button>
-
     </div>
 
-</div>
 
-
-<!-- TRABAJO -->
-
-<div style="
-    margin:7px 12px;
-    padding:12px 16px;
-    background:linear-gradient(90deg,#32CD32,#239B23);
-    color:#111;
-    border-left:7px solid #7CFC00;
-    border-radius:10px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px;
-    flex-wrap:wrap;
-    box-shadow:0 3px 10px rgba(0,0,0,.45);
-">
+    <!-- TRABAJO -->
 
     <div style="
+        margin:7px 12px;
+        padding:12px 16px;
+        background:linear-gradient(90deg,#32CD32,#239B23);
+        color:#111;
+        border-left:7px solid #7CFC00;
+        border-radius:10px;
         display:flex;
         align-items:center;
-        gap:10px;
-        font-size:18px;
-        font-weight:bold;
+        justify-content:space-between;
+        box-shadow:0 3px 10px rgba(0,0,0,.45);
     ">
-        <span style="font-size:25px;">💪</span>
-        <span>TRABAJO</span>
-    </div>
 
-    <div style="
-        display:flex;
-        align-items:center;
-        gap:8px;
-        flex-wrap:wrap;
-        justify-content:flex-end;
-    ">
+        <div style="
+            display:flex;
+            align-items:center;
+            gap:10px;
+            font-size:18px;
+            font-weight:bold;
+        ">
+            <span style="font-size:25px;">💪</span>
+            <span>TRABAJO</span>
+        </div>
 
         <div style="
             display:flex;
@@ -3927,21 +3878,21 @@ text-decoration:underline;
                 −
             </button>
 
-            <div
-                id="tiempoTrabajo"
-                style="
-                    width:65px;
-                    font-size:27px;
-                    font-weight:bold;
-                    text-align:center;
-                    color:#111;
-                    cursor:pointer;
-                    user-select:none;
-                "
-                onclick="editarTiempoTrabajo()"
-            >
-                00:20
-            </div>
+          <div
+    id="tiempoTrabajo"
+    style="
+        width:65px;
+        font-size:27px;
+        font-weight:bold;
+        text-align:center;
+        color:#111;
+        cursor:pointer;
+        user-select:none;
+    "
+    onclick="editarTiempoTrabajo()"
+>
+    00:20
+</div>
 
             <button
                 onclick="cambiarTiempoEntrenamiento('trabajo',5)"
@@ -3957,72 +3908,34 @@ text-decoration:underline;
 
         </div>
 
-        <select
-            id="sonidoTrabajoEntrenamiento"
-            style="
-                font-size:15px;
-                font-weight:bold;
-                padding:6px 8px;
-                border-radius:6px;
-                max-width:190px;
-            "
-        >
-            <option value="">🔊 Predeterminado</option>
-        </select>
-
-        <select
-            id="vozTrabajoEntrenamiento"
-            style="
-                font-size:15px;
-                font-weight:bold;
-                padding:6px 8px;
-                border-radius:6px;
-                max-width:190px;
-            "
-        >
-            <option value="">🗣️ Sin voz</option>
-        </select>
-
     </div>
 
-</div>
 
-
-<!-- DESCANSO -->
-
-<div style="
-    margin:7px 12px;
-    padding:12px 16px;
-    background:linear-gradient(90deg,#4DA6FF,#2878C8);
-    color:#FFF;
-    border-left:7px solid #87CEFA;
-    border-radius:10px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px;
-    flex-wrap:wrap;
-    box-shadow:0 3px 10px rgba(0,0,0,.45);
-">
+    <!-- DESCANSO -->
 
     <div style="
+        margin:7px 12px;
+        padding:12px 16px;
+        background:linear-gradient(90deg,#4DA6FF,#2878C8);
+        color:#FFF;
+        border-left:7px solid #87CEFA;
+        border-radius:10px;
         display:flex;
         align-items:center;
-        gap:10px;
-        font-size:18px;
-        font-weight:bold;
+        justify-content:space-between;
+        box-shadow:0 3px 10px rgba(0,0,0,.45);
     ">
-        <span style="font-size:25px;">😮‍💨</span>
-        <span>DESCANSO</span>
-    </div>
 
-    <div style="
-        display:flex;
-        align-items:center;
-        gap:8px;
-        flex-wrap:wrap;
-        justify-content:flex-end;
-    ">
+        <div style="
+            display:flex;
+            align-items:center;
+            gap:10px;
+            font-size:18px;
+            font-weight:bold;
+        ">
+            <span style="font-size:25px;">😮‍💨</span>
+            <span>DESCANSO</span>
+        </div>
 
         <div style="
             display:flex;
@@ -4042,21 +3955,21 @@ text-decoration:underline;
                 −
             </button>
 
-            <div
-                id="tiempoDescanso"
-                style="
-                    width:65px;
-                    font-size:27px;
-                    font-weight:bold;
-                    text-align:center;
-                    color:#FFF;
-                    cursor:pointer;
-                    user-select:none;
-                "
-                onclick="editarTiempoDescanso()"
-            >
-                00:10
-            </div>
+          <div
+    id="tiempoDescanso"
+    style="
+        width:65px;
+        font-size:27px;
+        font-weight:bold;
+        text-align:center;
+        color:#FFF;
+        cursor:pointer;
+        user-select:none;
+    "
+    onclick="editarTiempoDescanso()"
+>
+    00:10
+</div>
 
             <button
                 onclick="cambiarTiempoEntrenamiento('descanso',5)"
@@ -4072,149 +3985,228 @@ text-decoration:underline;
 
         </div>
 
-        <select
-            id="sonidoDescansoEntrenamiento"
-            style="
-                font-size:15px;
-                font-weight:bold;
-                padding:6px 8px;
-                border-radius:6px;
-                max-width:190px;
-            "
-        >
-            <option value="">🔊 Predeterminado</option>
-        </select>
-
-        <select
-            id="vozDescansoEntrenamiento"
-            style="
-                font-size:15px;
-                font-weight:bold;
-                padding:6px 8px;
-                border-radius:6px;
-                max-width:190px;
-            "
-        >
-            <option value="">🗣️ Sin voz</option>
-        </select>
-
     </div>
 
-</div>
-
-
-<!-- DESCANSO ENTRE BLOQUES -->
-
-<div style="
-    margin:7px 12px;
-    padding:12px 16px;
-    background:linear-gradient(90deg,#3498DB,#216A9B);
-    color:#FFF;
-    border-left:7px solid #87CEFA;
-    border-radius:10px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px;
-    flex-wrap:wrap;
-    box-shadow:0 3px 10px rgba(0,0,0,.45);
-">
+<!-- CICLOS -->
 
     <div style="
+        margin:7px 12px;
+        padding:12px 16px;
+        background:linear-gradient(90deg,#9B59B6,#71368A);
+        color:#FFF;
+        border-left:7px solid #D7A8E8;
+        border-radius:10px;
         display:flex;
         align-items:center;
-        gap:10px;
-        font-size:18px;
-        font-weight:bold;
-    ">
-        <span style="font-size:25px;">🛌</span>
-        <span>DESC. BLOQUE</span>
-    </div>
-
-    <div style="
-        display:flex;
-        align-items:center;
-        gap:8px;
-        flex-wrap:wrap;
-        justify-content:flex-end;
+        justify-content:space-between;
+        box-shadow:0 3px 10px rgba(0,0,0,.45);
     ">
 
         <div style="
             display:flex;
             align-items:center;
-            gap:6px;
+            gap:10px;
+            font-size:18px;
+            font-weight:bold;
         ">
-
-            <button
-                onclick="cambiarDescansoBloqueEntrenamiento(-5)"
-                style="
-                    padding:4px 9px;
-                    font-size:20px;
-                    line-height:20px;
-                    min-width:32px;
-                "
-            >
-                −
-            </button>
-
-            <span
-                id="tiempoDescansoBloque"
-                style="
-                    width:65px;
-                    font-size:27px;
-                    font-weight:bold;
-                    text-align:center;
-                    color:#FFF;
-                    cursor:pointer;
-                "
-                onclick="editarTiempoDescansoBloque()"
-            >
-                00:00
-            </span>
-
-            <button
-                onclick="cambiarDescansoBloqueEntrenamiento(5)"
-                style="
-                    padding:4px 9px;
-                    font-size:20px;
-                    line-height:20px;
-                    min-width:32px;
-                "
-            >
-                +
-            </button>
-
+            <span style="font-size:25px;">🔄</span>
+            <span>CICLOS</span>
         </div>
 
-        <select
-            id="sonidoDescansoBloqueEntrenamiento"
-            style="
-                font-size:15px;
-                font-weight:bold;
-                padding:6px 8px;
-                border-radius:6px;
-                max-width:190px;
-            "
-        >
-            <option value="">🔊 Predeterminado</option>
-        </select>
+      <div style="
+    display:flex;
+    align-items:center;
+    gap:6px;
+">
 
-        <select
-            id="vozDescansoBloqueEntrenamiento"
-            style="
-                font-size:15px;
-                font-weight:bold;
-                padding:6px 8px;
-                border-radius:6px;
-                max-width:190px;
-            "
-        >
-            <option value="">🗣️ Sin voz</option>
-        </select>
+
+<button
+    onclick="cambiarCiclosEntrenamiento(-1)"
+    style="
+        padding:4px 9px;
+        font-size:20px;
+        line-height:20px;
+        min-width:32px;
+    "
+>
+    −
+</button>
+
+<span id="cantidadCiclos" style="
+    font-size:27px;
+    font-weight:bold;
+    min-width:35px;
+    text-align:center;
+">
+    8
+</span>
+
+<button
+    onclick="cambiarCiclosEntrenamiento(1)"
+    style="
+        padding:4px 9px;
+        font-size:20px;
+        line-height:20px;
+        min-width:32px;
+    "
+>
+    +
+</button>
+
+
+</div>
+
 
     </div>
 
+
+
+
+    <!-- BLOQUES -->
+
+<div style="
+    margin:7px 12px;
+    padding:12px 16px;
+    background:linear-gradient(90deg,#F39C12,#C87808);
+    color:#111;
+    border-left:7px solid #FFD27A;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 3px 10px rgba(0,0,0,.45);
+">
+
+
+<div style="
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:18px;
+    font-weight:bold;
+">
+    <span style="font-size:25px;">🧱</span>
+    <span>BLOQUES</span>
 </div>
+
+<div style="
+    display:flex;
+    align-items:center;
+    gap:6px;
+">
+
+    <button
+        onclick="cambiarBloquesEntrenamiento(-1)"
+        style="
+            padding:4px 9px;
+            font-size:20px;
+            line-height:20px;
+            min-width:32px;
+        "
+    >
+        −
+    </button>
+
+    <span id="cantidadBloques" style="
+        font-size:27px;
+        font-weight:bold;
+        min-width:35px;
+        text-align:center;
+    ">
+        1
+    </span>
+
+    <button
+        onclick="cambiarBloquesEntrenamiento(1)"
+        style="
+            padding:4px 9px;
+            font-size:20px;
+            line-height:20px;
+            min-width:32px;
+        "
+    >
+        +
+    </button>
+
+</div>
+
+
+</div>
+
+    <!-- DESCANSO ENTRE BLOQUES -->
+
+    <div style="
+        margin:7px 12px;
+        padding:12px 16px;
+        background:linear-gradient(90deg,#3498DB,#216A9B);
+        color:#FFF;
+        border-left:7px solid #87CEFA;
+        border-radius:10px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        box-shadow:0 3px 10px rgba(0,0,0,.45);
+    ">
+
+        <div style="
+            display:flex;
+            align-items:center;
+            gap:10px;
+            font-size:18px;
+            font-weight:bold;
+        ">
+            <span style="font-size:25px;">🛌</span>
+            <span>DESC. BLOQUE</span>
+        </div>
+
+  <div style="
+    display:flex;
+    align-items:center;
+    gap:6px;
+">
+
+
+<button
+    onclick="cambiarDescansoBloqueEntrenamiento(-5)"
+    style="
+        padding:4px 9px;
+        font-size:20px;
+        line-height:20px;
+        min-width:32px;
+    "
+>
+    −
+</button>
+
+<span id="tiempoDescansoBloque" style="
+    width:65px;
+    font-size:27px;
+    font-weight:bold;
+    text-align:center;
+    color:#FFF;
+    cursor:pointer;
+"
+onclick="editarTiempoDescansoBloque()">
+    00:00
+</span>
+
+<button
+    onclick="cambiarDescansoBloqueEntrenamiento(5)"
+    style="
+        padding:4px 9px;
+        font-size:20px;
+        line-height:20px;
+        min-width:32px;
+    "
+>
+    +
+</button>
+
+
+</div>
+
+
+    </div>
 
 
     <!-- TIEMPO TOTAL -->
@@ -4253,19 +4245,97 @@ text-decoration:underline;
 
     </div>
 
+<!-- SONIDO -->
+
+<div style="
+    margin:7px 12px;
+    padding:12px 16px;
+    background:linear-gradient(90deg,#555,#333);
+    color:#FFF;
+    border-left:7px solid #AAA;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 3px 10px rgba(0,0,0,.45);
+">
+
+    <div style="
+        display:flex;
+        align-items:center;
+        gap:10px;
+        font-size:18px;
+        font-weight:bold;
+    ">
+        <span style="font-size:25px;">🔊</span>
+        <span>SONIDO</span>
+    </div>
+
+    <select
+        id="sonidoEntrenamiento"
+        style="
+            font-size:16px;
+            font-weight:bold;
+            padding:6px 10px;
+            border-radius:6px;
+            max-width:220px;
+        "
+    >
+        <option value="">🔊 Predeterminado</option>
+    </select>
+
+</div>
+
+<!-- VOZ -->
+
+<div style="
+    margin:7px 12px;
+    padding:12px 16px;
+    background:linear-gradient(90deg,#555,#333);
+    color:#FFF;
+    border-left:7px solid #AAA;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 3px 10px rgba(0,0,0,.45);
+">
+
+    <div style="
+        display:flex;
+        align-items:center;
+        gap:10px;
+        font-size:18px;
+        font-weight:bold;
+    ">
+        <span style="font-size:25px;">🗣️</span>
+        <span>VOZ</span>
+    </div>
+
+    <select
+        id="vozEntrenamiento"
+        style="
+            font-size:16px;
+            font-weight:bold;
+            padding:6px 10px;
+            border-radius:6px;
+            max-width:220px;
+        "
+    >
+        <option value="">🔇 Sin voz</option>
+    </select>
+
+</div>
 
 
 
 
 
-
-<!-- GUARDAR Y RESET -->
+<!-- GUARDAR CONFIGURACIÓN -->
 
 <div style="
     display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:10px;
+    justify-content:flex-end;
     margin:12px 12px 8px;
 ">
 
@@ -4279,6 +4349,15 @@ text-decoration:underline;
     >
         💾 GUARDAR
     </button>
+
+</div>
+
+
+<div style="
+    display:flex;
+    justify-content:flex-end;
+    margin:0 12px 8px;
+">
 
     <button
         onclick="resetearConfiguracionEntrenamiento()"
@@ -5679,338 +5758,6 @@ if(selectorVoz){
 
 
 // ===== VOZ ENTRENAMIENTO =====
-
-// ======================================================
-// POPUP SONIDO / VOZ - ENTRENAMIENTO
-// ======================================================
-
-let sonidoPreparacionSeleccionado = "";
-let vozPreparacionSeleccionada = "";
-
-function abrirPopupSonidoEntrenamiento(fase){
-
-    let popup = document.getElementById(
-        "popupSonidoEntrenamiento"
-    );
-
-    if(popup){
-        popup.remove();
-    }
-
-    popup = document.createElement("div");
-
-    popup.id = "popupSonidoEntrenamiento";
-
-    popup.style.cssText = `
-        position:fixed;
-        inset:0;
-        background:rgba(0,0,0,.65);
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        z-index:99999;
-    `;
-
-    let contenido = document.createElement("div");
-
-    contenido.style.cssText = `
-        width:min(90%,380px);
-        max-height:80vh;
-        overflow-y:auto;
-        background:#222;
-        color:white;
-        border-radius:12px;
-        padding:16px;
-        box-shadow:0 5px 25px rgba(0,0,0,.6);
-    `;
-
-    let titulo = document.createElement("div");
-
-    titulo.innerHTML = "🔊 SELECCIONAR SONIDO";
-
-    titulo.style.cssText = `
-        font-size:20px;
-        font-weight:bold;
-        text-align:center;
-        margin-bottom:12px;
-    `;
-
-    contenido.appendChild(titulo);
-
-    // ===== PREDETERMINADO =====
-
-    let predeterminado = document.createElement("button");
-
-    predeterminado.type = "button";
-
-    predeterminado.style.cssText = `
-        display:block;
-        width:100%;
-        padding:11px;
-        margin:5px 0;
-        text-align:left;
-        font-size:16px;
-        font-weight:bold;
-        cursor:pointer;
-    `;
-
-    predeterminado.innerHTML =
-        (sonidoPreparacionSeleccionado === "" ? "✓ " : "") +
-        "🔊 Predeterminado";
-
-    predeterminado.onclick = function(){
-
-        sonidoPreparacionSeleccionado = "";
-
-        popup.remove();
-
-    };
-
-    contenido.appendChild(predeterminado);
-
-    // ===== SONIDOS DEL JSON =====
-
-    if(
-        typeof sonidosEntrenamiento !== "undefined" &&
-        Array.isArray(sonidosEntrenamiento)
-    ){
-
-        sonidosEntrenamiento.forEach(function(sonido){
-
-            let boton = document.createElement("button");
-
-            boton.type = "button";
-
-            boton.style.cssText = `
-                display:block;
-                width:100%;
-                padding:11px;
-                margin:5px 0;
-                text-align:left;
-                font-size:16px;
-                font-weight:bold;
-                cursor:pointer;
-            `;
-
-            boton.innerHTML =
-                (
-                    sonidoPreparacionSeleccionado === sonido.id
-                    ? "✓ "
-                    : ""
-                ) +
-                sonido.nombre;
-
-            boton.onclick = function(){
-
-                sonidoPreparacionSeleccionado =
-                    sonido.id;
-
-                popup.remove();
-
-            };
-
-            contenido.appendChild(boton);
-
-        });
-
-    }
-
-    // ===== CERRAR =====
-
-    let cerrar = document.createElement("button");
-
-    cerrar.type = "button";
-
-    cerrar.innerHTML = "✖ CERRAR";
-
-    cerrar.style.cssText = `
-        display:block;
-        width:100%;
-        padding:10px;
-        margin-top:12px;
-        font-size:16px;
-        font-weight:bold;
-        cursor:pointer;
-    `;
-
-    cerrar.onclick = function(){
-
-        popup.remove();
-
-    };
-
-    contenido.appendChild(cerrar);
-
-    popup.appendChild(contenido);
-
-    document.body.appendChild(popup);
-
-}
-
-
-function abrirPopupVozEntrenamiento(fase){
-
-    let popup = document.getElementById(
-        "popupVozEntrenamiento"
-    );
-
-    if(popup){
-        popup.remove();
-    }
-
-    popup = document.createElement("div");
-
-    popup.id = "popupVozEntrenamiento";
-
-    popup.style.cssText = `
-        position:fixed;
-        inset:0;
-        background:rgba(0,0,0,.65);
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        z-index:99999;
-    `;
-
-    let contenido = document.createElement("div");
-
-    contenido.style.cssText = `
-        width:min(90%,380px);
-        max-height:80vh;
-        overflow-y:auto;
-        background:#222;
-        color:white;
-        border-radius:12px;
-        padding:16px;
-        box-shadow:0 5px 25px rgba(0,0,0,.6);
-    `;
-
-    let titulo = document.createElement("div");
-
-    titulo.innerHTML = "🗣️ SELECCIONAR VOZ";
-
-    titulo.style.cssText = `
-        font-size:20px;
-        font-weight:bold;
-        text-align:center;
-        margin-bottom:12px;
-    `;
-
-    contenido.appendChild(titulo);
-
-    // ===== SIN VOZ =====
-
-    let sinVoz = document.createElement("button");
-
-    sinVoz.type = "button";
-
-    sinVoz.style.cssText = `
-        display:block;
-        width:100%;
-        padding:11px;
-        margin:5px 0;
-        text-align:left;
-        font-size:16px;
-        font-weight:bold;
-        cursor:pointer;
-    `;
-
-    sinVoz.innerHTML =
-        (
-            vozPreparacionSeleccionada === ""
-            ? "✓ "
-            : ""
-        ) +
-        "🗣️ Sin voz";
-
-    sinVoz.onclick = function(){
-
-        vozPreparacionSeleccionada = "";
-
-        popup.remove();
-
-    };
-
-    contenido.appendChild(sinVoz);
-
-    // ===== VOCES DEL JSON =====
-
-    if(
-        typeof vocesEntrenamiento !== "undefined" &&
-        Array.isArray(vocesEntrenamiento)
-    ){
-
-        vocesEntrenamiento.forEach(function(voz){
-
-            let boton = document.createElement("button");
-
-            boton.type = "button";
-
-            boton.style.cssText = `
-                display:block;
-                width:100%;
-                padding:11px;
-                margin:5px 0;
-                text-align:left;
-                font-size:16px;
-                font-weight:bold;
-                cursor:pointer;
-            `;
-
-            boton.innerHTML =
-                (
-                    vozPreparacionSeleccionada === voz.id
-                    ? "✓ "
-                    : ""
-                ) +
-                voz.nombre;
-
-            boton.onclick = function(){
-
-                vozPreparacionSeleccionada =
-                    voz.id;
-
-                popup.remove();
-
-            };
-
-            contenido.appendChild(boton);
-
-        });
-
-    }
-
-    // ===== CERRAR =====
-
-    let cerrar = document.createElement("button");
-
-    cerrar.type = "button";
-
-    cerrar.innerHTML = "✖ CERRAR";
-
-    cerrar.style.cssText = `
-        display:block;
-        width:100%;
-        padding:10px;
-        margin-top:12px;
-        font-size:16px;
-        font-weight:bold;
-        cursor:pointer;
-    `;
-
-    cerrar.onclick = function(){
-
-        popup.remove();
-
-    };
-
-    contenido.appendChild(cerrar);
-
-    popup.appendChild(contenido);
-
-    document.body.appendChild(popup);
-
-}
 
 function reproducirVozEntrenamiento(fase){
 
