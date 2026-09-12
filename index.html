@@ -4281,16 +4281,10 @@ onclick="editarTiempoDescansoBloque()">
             max-width:220px;
         "
     >
-        <option value="campana">🔔 Campana</option>
-        <option value="corneta">📯 Corneta</option>
-        <option value="mario">🍄 Mario</option>
-        <option value="silbato">📣 Silbato</option>
-        <option value="tren">🚂 Tren</option>
-        <option value="tabata">⏱️ Tabata clásico</option>
+        <option value="">🔊 Predeterminado</option>
     </select>
 
 </div>
-
 
 <!-- VOZ -->
 
@@ -5674,11 +5668,12 @@ async function cargarSonidosEntrenamiento(){
         const selectorSonido =
             document.getElementById("sonidoEntrenamiento");
 
-        if(selectorSonido){
+       if(selectorSonido){
 
-            selectorSonido.innerHTML = "";
+    selectorSonido.innerHTML =
+        '<option value="">🔊 Predeterminado</option>';
 
-            sonidosEntrenamiento.forEach(function(sonido){
+    sonidosEntrenamiento.forEach(function(sonido){
 
                 const opcion =
                     document.createElement("option");
@@ -5839,9 +5834,55 @@ function reproducirVozEntrenamiento(fase){
 
 function sonidoTabata(tipo){
 
+    // ===== SONIDO MANUAL =====
+
+    if(tipo !== "cuenta"){
+
+        const selector =
+            document.getElementById("sonidoEntrenamiento");
+
+        const sonidoSeleccionado =
+            selector ? selector.value : "";
+
+        // Si hay un sonido elegido manualmente
+        if(sonidoSeleccionado){
+
+            const sonido =
+                sonidosEntrenamiento.find(function(item){
+
+                    return item.id === sonidoSeleccionado;
+
+                });
+
+            if(sonido && sonido.archivo){
+
+                const audio = new Audio(
+                    "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/SonidosTabata/" +
+                    sonido.archivo
+                );
+
+                audio.volume = 1;
+
+                audio.play().catch(function(error){
+
+                    console.log(
+                        "No se pudo reproducir el sonido manual:",
+                        error
+                    );
+
+                });
+
+                return;
+            }
+
+        }
+
+    }
+
     let archivo = "";
 
     // 📣 Silbato Tabata
+
     if(
         tipo === "inicio" ||
         tipo === "trabajo"
