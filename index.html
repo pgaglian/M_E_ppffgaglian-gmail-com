@@ -3756,32 +3756,41 @@ text-decoration:underline;
         🏋️ Entrenamiento
     </h2>
 
+<!-- PREPARACIÓN -->
 
-    <!-- PREPARACIÓN -->
+<div style="
+    margin:7px 12px;
+    padding:12px 16px;
+    background:linear-gradient(90deg,#FFD700,#E6B800);
+    color:#111;
+    border-left:7px solid #FFF176;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+    box-shadow:0 3px 10px rgba(0,0,0,.45);
+">
 
     <div style="
-        margin:7px 12px;
-        padding:12px 16px;
-        background:linear-gradient(90deg,#FFD700,#E6B800);
-        color:#111;
-        border-left:7px solid #FFF176;
-        border-radius:10px;
         display:flex;
         align-items:center;
-        justify-content:space-between;
-        box-shadow:0 3px 10px rgba(0,0,0,.45);
+        gap:10px;
+        font-size:18px;
+        font-weight:bold;
     ">
+        <span style="font-size:25px;">⏳</span>
+        <span>PREPARACIÓN</span>
+    </div>
 
-        <div style="
-            display:flex;
-            align-items:center;
-            gap:10px;
-            font-size:18px;
-            font-weight:bold;
-        ">
-            <span style="font-size:25px;">⏳</span>
-            <span>PREPARACIÓN</span>
-        </div>
+    <div style="
+        display:flex;
+        align-items:center;
+        gap:8px;
+        flex-wrap:wrap;
+        justify-content:flex-end;
+    ">
 
         <div style="
             display:flex;
@@ -3801,21 +3810,21 @@ text-decoration:underline;
                 −
             </button>
 
-<div
-    id="tiempoPreparacion"
-    style="
-        width:65px;
-        font-size:27px;
-        font-weight:bold;
-        text-align:center;
-        color:#111;
-        cursor:pointer;
-        user-select:none;
-    "
-    onclick="editarTiempoPreparacion()"
->
-    00:10
-</div>
+            <div
+                id="tiempoPreparacion"
+                style="
+                    width:65px;
+                    font-size:27px;
+                    font-weight:bold;
+                    text-align:center;
+                    color:#111;
+                    cursor:pointer;
+                    user-select:none;
+                "
+                onclick="editarTiempoPreparacion()"
+            >
+                00:10
+            </div>
 
             <button
                 onclick="cambiarTiempoEntrenamiento('preparacion',5)"
@@ -3831,34 +3840,72 @@ text-decoration:underline;
 
         </div>
 
+        <select
+            id="sonidoPreparacionEntrenamiento"
+            style="
+                font-size:15px;
+                font-weight:bold;
+                padding:6px 8px;
+                border-radius:6px;
+                max-width:190px;
+            "
+        >
+            <option value="">🔊 Predeterminado</option>
+        </select>
+
+        <select
+            id="vozPreparacionEntrenamiento"
+            style="
+                font-size:15px;
+                font-weight:bold;
+                padding:6px 8px;
+                border-radius:6px;
+                max-width:190px;
+            "
+        >
+            <option value="">🗣️ Sin voz</option>
+        </select>
+
     </div>
 
+</div>
 
-    <!-- TRABAJO -->
+
+<!-- TRABAJO -->
+
+<div style="
+    margin:7px 12px;
+    padding:12px 16px;
+    background:linear-gradient(90deg,#32CD32,#239B23);
+    color:#111;
+    border-left:7px solid #7CFC00;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+    box-shadow:0 3px 10px rgba(0,0,0,.45);
+">
 
     <div style="
-        margin:7px 12px;
-        padding:12px 16px;
-        background:linear-gradient(90deg,#32CD32,#239B23);
-        color:#111;
-        border-left:7px solid #7CFC00;
-        border-radius:10px;
         display:flex;
         align-items:center;
-        justify-content:space-between;
-        box-shadow:0 3px 10px rgba(0,0,0,.45);
+        gap:10px;
+        font-size:18px;
+        font-weight:bold;
     ">
+        <span style="font-size:25px;">💪</span>
+        <span>TRABAJO</span>
+    </div>
 
-        <div style="
-            display:flex;
-            align-items:center;
-            gap:10px;
-            font-size:18px;
-            font-weight:bold;
-        ">
-            <span style="font-size:25px;">💪</span>
-            <span>TRABAJO</span>
-        </div>
+    <div style="
+        display:flex;
+        align-items:center;
+        gap:8px;
+        flex-wrap:wrap;
+        justify-content:flex-end;
+    ">
 
         <div style="
             display:flex;
@@ -3878,21 +3925,21 @@ text-decoration:underline;
                 −
             </button>
 
-          <div
-    id="tiempoTrabajo"
-    style="
-        width:65px;
-        font-size:27px;
-        font-weight:bold;
-        text-align:center;
-        color:#111;
-        cursor:pointer;
-        user-select:none;
-    "
-    onclick="editarTiempoTrabajo()"
->
-    00:20
-</div>
+            <div
+                id="tiempoTrabajo"
+                style="
+                    width:65px;
+                    font-size:27px;
+                    font-weight:bold;
+                    text-align:center;
+                    color:#111;
+                    cursor:pointer;
+                    user-select:none;
+                "
+                onclick="editarTiempoTrabajo()"
+            >
+                00:20
+            </div>
 
             <button
                 onclick="cambiarTiempoEntrenamiento('trabajo',5)"
@@ -3908,34 +3955,72 @@ text-decoration:underline;
 
         </div>
 
+        <select
+            id="sonidoTrabajoEntrenamiento"
+            style="
+                font-size:15px;
+                font-weight:bold;
+                padding:6px 8px;
+                border-radius:6px;
+                max-width:190px;
+            "
+        >
+            <option value="">🔊 Predeterminado</option>
+        </select>
+
+        <select
+            id="vozTrabajoEntrenamiento"
+            style="
+                font-size:15px;
+                font-weight:bold;
+                padding:6px 8px;
+                border-radius:6px;
+                max-width:190px;
+            "
+        >
+            <option value="">🗣️ Sin voz</option>
+        </select>
+
     </div>
 
+</div>
 
-    <!-- DESCANSO -->
+
+<!-- DESCANSO -->
+
+<div style="
+    margin:7px 12px;
+    padding:12px 16px;
+    background:linear-gradient(90deg,#4DA6FF,#2878C8);
+    color:#FFF;
+    border-left:7px solid #87CEFA;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+    box-shadow:0 3px 10px rgba(0,0,0,.45);
+">
 
     <div style="
-        margin:7px 12px;
-        padding:12px 16px;
-        background:linear-gradient(90deg,#4DA6FF,#2878C8);
-        color:#FFF;
-        border-left:7px solid #87CEFA;
-        border-radius:10px;
         display:flex;
         align-items:center;
-        justify-content:space-between;
-        box-shadow:0 3px 10px rgba(0,0,0,.45);
+        gap:10px;
+        font-size:18px;
+        font-weight:bold;
     ">
+        <span style="font-size:25px;">😮‍💨</span>
+        <span>DESCANSO</span>
+    </div>
 
-        <div style="
-            display:flex;
-            align-items:center;
-            gap:10px;
-            font-size:18px;
-            font-weight:bold;
-        ">
-            <span style="font-size:25px;">😮‍💨</span>
-            <span>DESCANSO</span>
-        </div>
+    <div style="
+        display:flex;
+        align-items:center;
+        gap:8px;
+        flex-wrap:wrap;
+        justify-content:flex-end;
+    ">
 
         <div style="
             display:flex;
@@ -3955,21 +4040,21 @@ text-decoration:underline;
                 −
             </button>
 
-          <div
-    id="tiempoDescanso"
-    style="
-        width:65px;
-        font-size:27px;
-        font-weight:bold;
-        text-align:center;
-        color:#FFF;
-        cursor:pointer;
-        user-select:none;
-    "
-    onclick="editarTiempoDescanso()"
->
-    00:10
-</div>
+            <div
+                id="tiempoDescanso"
+                style="
+                    width:65px;
+                    font-size:27px;
+                    font-weight:bold;
+                    text-align:center;
+                    color:#FFF;
+                    cursor:pointer;
+                    user-select:none;
+                "
+                onclick="editarTiempoDescanso()"
+            >
+                00:10
+            </div>
 
             <button
                 onclick="cambiarTiempoEntrenamiento('descanso',5)"
@@ -3985,228 +4070,149 @@ text-decoration:underline;
 
         </div>
 
+        <select
+            id="sonidoDescansoEntrenamiento"
+            style="
+                font-size:15px;
+                font-weight:bold;
+                padding:6px 8px;
+                border-radius:6px;
+                max-width:190px;
+            "
+        >
+            <option value="">🔊 Predeterminado</option>
+        </select>
+
+        <select
+            id="vozDescansoEntrenamiento"
+            style="
+                font-size:15px;
+                font-weight:bold;
+                padding:6px 8px;
+                border-radius:6px;
+                max-width:190px;
+            "
+        >
+            <option value="">🗣️ Sin voz</option>
+        </select>
+
     </div>
-
-<!-- CICLOS -->
-
-    <div style="
-        margin:7px 12px;
-        padding:12px 16px;
-        background:linear-gradient(90deg,#9B59B6,#71368A);
-        color:#FFF;
-        border-left:7px solid #D7A8E8;
-        border-radius:10px;
-        display:flex;
-        align-items:center;
-        justify-content:space-between;
-        box-shadow:0 3px 10px rgba(0,0,0,.45);
-    ">
-
-        <div style="
-            display:flex;
-            align-items:center;
-            gap:10px;
-            font-size:18px;
-            font-weight:bold;
-        ">
-            <span style="font-size:25px;">🔄</span>
-            <span>CICLOS</span>
-        </div>
-
-      <div style="
-    display:flex;
-    align-items:center;
-    gap:6px;
-">
-
-
-<button
-    onclick="cambiarCiclosEntrenamiento(-1)"
-    style="
-        padding:4px 9px;
-        font-size:20px;
-        line-height:20px;
-        min-width:32px;
-    "
->
-    −
-</button>
-
-<span id="cantidadCiclos" style="
-    font-size:27px;
-    font-weight:bold;
-    min-width:35px;
-    text-align:center;
-">
-    8
-</span>
-
-<button
-    onclick="cambiarCiclosEntrenamiento(1)"
-    style="
-        padding:4px 9px;
-        font-size:20px;
-        line-height:20px;
-        min-width:32px;
-    "
->
-    +
-</button>
-
 
 </div>
 
 
-    </div>
-
-
-
-
-    <!-- BLOQUES -->
+<!-- DESCANSO ENTRE BLOQUES -->
 
 <div style="
     margin:7px 12px;
     padding:12px 16px;
-    background:linear-gradient(90deg,#F39C12,#C87808);
-    color:#111;
-    border-left:7px solid #FFD27A;
+    background:linear-gradient(90deg,#3498DB,#216A9B);
+    color:#FFF;
+    border-left:7px solid #87CEFA;
     border-radius:10px;
     display:flex;
     align-items:center;
     justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
     box-shadow:0 3px 10px rgba(0,0,0,.45);
 ">
 
-
-<div style="
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font-size:18px;
-    font-weight:bold;
-">
-    <span style="font-size:25px;">🧱</span>
-    <span>BLOQUES</span>
-</div>
-
-<div style="
-    display:flex;
-    align-items:center;
-    gap:6px;
-">
-
-    <button
-        onclick="cambiarBloquesEntrenamiento(-1)"
-        style="
-            padding:4px 9px;
-            font-size:20px;
-            line-height:20px;
-            min-width:32px;
-        "
-    >
-        −
-    </button>
-
-    <span id="cantidadBloques" style="
-        font-size:27px;
-        font-weight:bold;
-        min-width:35px;
-        text-align:center;
-    ">
-        1
-    </span>
-
-    <button
-        onclick="cambiarBloquesEntrenamiento(1)"
-        style="
-            padding:4px 9px;
-            font-size:20px;
-            line-height:20px;
-            min-width:32px;
-        "
-    >
-        +
-    </button>
-
-</div>
-
-
-</div>
-
-    <!-- DESCANSO ENTRE BLOQUES -->
-
     <div style="
-        margin:7px 12px;
-        padding:12px 16px;
-        background:linear-gradient(90deg,#3498DB,#216A9B);
-        color:#FFF;
-        border-left:7px solid #87CEFA;
-        border-radius:10px;
         display:flex;
         align-items:center;
-        justify-content:space-between;
-        box-shadow:0 3px 10px rgba(0,0,0,.45);
+        gap:10px;
+        font-size:18px;
+        font-weight:bold;
+    ">
+        <span style="font-size:25px;">🛌</span>
+        <span>DESC. BLOQUE</span>
+    </div>
+
+    <div style="
+        display:flex;
+        align-items:center;
+        gap:8px;
+        flex-wrap:wrap;
+        justify-content:flex-end;
     ">
 
         <div style="
             display:flex;
             align-items:center;
-            gap:10px;
-            font-size:18px;
-            font-weight:bold;
+            gap:6px;
         ">
-            <span style="font-size:25px;">🛌</span>
-            <span>DESC. BLOQUE</span>
+
+            <button
+                onclick="cambiarDescansoBloqueEntrenamiento(-5)"
+                style="
+                    padding:4px 9px;
+                    font-size:20px;
+                    line-height:20px;
+                    min-width:32px;
+                "
+            >
+                −
+            </button>
+
+            <span
+                id="tiempoDescansoBloque"
+                style="
+                    width:65px;
+                    font-size:27px;
+                    font-weight:bold;
+                    text-align:center;
+                    color:#FFF;
+                    cursor:pointer;
+                "
+                onclick="editarTiempoDescansoBloque()"
+            >
+                00:00
+            </span>
+
+            <button
+                onclick="cambiarDescansoBloqueEntrenamiento(5)"
+                style="
+                    padding:4px 9px;
+                    font-size:20px;
+                    line-height:20px;
+                    min-width:32px;
+                "
+            >
+                +
+            </button>
+
         </div>
 
-  <div style="
-    display:flex;
-    align-items:center;
-    gap:6px;
-">
+        <select
+            id="sonidoDescansoBloqueEntrenamiento"
+            style="
+                font-size:15px;
+                font-weight:bold;
+                padding:6px 8px;
+                border-radius:6px;
+                max-width:190px;
+            "
+        >
+            <option value="">🔊 Predeterminado</option>
+        </select>
 
-
-<button
-    onclick="cambiarDescansoBloqueEntrenamiento(-5)"
-    style="
-        padding:4px 9px;
-        font-size:20px;
-        line-height:20px;
-        min-width:32px;
-    "
->
-    −
-</button>
-
-<span id="tiempoDescansoBloque" style="
-    width:65px;
-    font-size:27px;
-    font-weight:bold;
-    text-align:center;
-    color:#FFF;
-    cursor:pointer;
-"
-onclick="editarTiempoDescansoBloque()">
-    00:00
-</span>
-
-<button
-    onclick="cambiarDescansoBloqueEntrenamiento(5)"
-    style="
-        padding:4px 9px;
-        font-size:20px;
-        line-height:20px;
-        min-width:32px;
-    "
->
-    +
-</button>
-
-
-</div>
-
+        <select
+            id="vozDescansoBloqueEntrenamiento"
+            style="
+                font-size:15px;
+                font-weight:bold;
+                padding:6px 8px;
+                border-radius:6px;
+                max-width:190px;
+            "
+        >
+            <option value="">🗣️ Sin voz</option>
+        </select>
 
     </div>
+
+</div>
 
 
     <!-- TIEMPO TOTAL -->
@@ -4245,87 +4251,7 @@ onclick="editarTiempoDescansoBloque()">
 
     </div>
 
-<!-- SONIDO -->
 
-<div style="
-    margin:7px 12px;
-    padding:12px 16px;
-    background:linear-gradient(90deg,#555,#333);
-    color:#FFF;
-    border-left:7px solid #AAA;
-    border-radius:10px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    box-shadow:0 3px 10px rgba(0,0,0,.45);
-">
-
-    <div style="
-        display:flex;
-        align-items:center;
-        gap:10px;
-        font-size:18px;
-        font-weight:bold;
-    ">
-        <span style="font-size:25px;">🔊</span>
-        <span>SONIDO</span>
-    </div>
-
-    <select
-        id="sonidoEntrenamiento"
-        style="
-            font-size:16px;
-            font-weight:bold;
-            padding:6px 10px;
-            border-radius:6px;
-            max-width:220px;
-        "
-    >
-        <option value="">🔊 Predeterminado</option>
-    </select>
-
-</div>
-
-<!-- VOZ -->
-
-<div style="
-    margin:7px 12px;
-    padding:12px 16px;
-    background:linear-gradient(90deg,#555,#333);
-    color:#FFF;
-    border-left:7px solid #AAA;
-    border-radius:10px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    box-shadow:0 3px 10px rgba(0,0,0,.45);
-">
-
-    <div style="
-        display:flex;
-        align-items:center;
-        gap:10px;
-        font-size:18px;
-        font-weight:bold;
-    ">
-        <span style="font-size:25px;">🗣️</span>
-        <span>VOZ</span>
-    </div>
-
-    <select
-        id="vozEntrenamiento"
-        style="
-            font-size:16px;
-            font-weight:bold;
-            padding:6px 10px;
-            border-radius:6px;
-            max-width:220px;
-        "
-    >
-        <option value="">🔇 Sin voz</option>
-    </select>
-
-</div>
 
 
 
