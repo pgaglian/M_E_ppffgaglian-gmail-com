@@ -6885,6 +6885,9 @@ if(id=="Musica"){
 
 }
 
+    // Registrar la pantalla actual en el historial
+    history.pushState({ pantalla: id }, "", "#" + id);
+
 }
 
 function inicio(){
