@@ -7537,6 +7537,7 @@ function cambiarTema(tema){
 function mostrarMenuAndroid(seccion){
 
     document.getElementById("menuAndroid").style.display="none";
+    history.pushState({ pantalla: seccion }, "", "#" + seccion);
     document.getElementById("btnVolverAndroid").style.display="block";
     document.querySelector("header").style.display="none";
     document.getElementById("panelCliente").style.display="none";
@@ -13591,7 +13592,6 @@ let intervaloPatrocinadores =
 
 
 // ===== ATRÁS DEL CELULAR =====
-
 
 window.addEventListener("popstate", function(){
 
