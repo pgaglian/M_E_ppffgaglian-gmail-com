@@ -13604,6 +13604,25 @@ let intervaloPatrocinadores =
 // ===== ATRÁS DEL CELULAR =====
 
 window.addEventListener("popstate", function(event){
+
+    // Si hay un popup de salida abierto, primero lo cerramos
+    const popupSalidaPromocion =
+        document.getElementById("popupSalidaPromocion");
+
+    if(popupSalidaPromocion){
+        popupSalidaPromocion.remove();
+        return;
+    }
+
+    const popupSalidaPromocionBilletera =
+        document.getElementById("popupSalidaPromocionBilletera");
+
+    if(popupSalidaPromocionBilletera){
+        popupSalidaPromocionBilletera.remove();
+        return;
+    }
+
+
     const pantallaEntrenamiento =
         document.getElementById("pantallaEntrenamiento");
 
