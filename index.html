@@ -13593,12 +13593,25 @@ let intervaloPatrocinadores =
 
 // ===== ATRÁS DEL CELULAR =====
 
-window.addEventListener("popstate", function(){
+window.addEventListener("popstate", function(event){
+
+    if(event.state && event.state.pantalla === "acciones"){
+
+        mostrarMenuAndroid("acciones");
+        return;
+
+    }
+
+    if(event.state && event.state.pantalla === "ambientes"){
+
+        mostrarMenuAndroid("ambientes");
+        return;
+
+    }
 
     inicio();
 
 });
-
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
