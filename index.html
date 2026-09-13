@@ -6221,14 +6221,17 @@ function mostrarPantallaEntrenamiento(
             background:${colorFase};
             color:#111;
             padding:20px;
+            box-sizing:border-box;
+            overflow:auto;
         `;
 
         pantalla.innerHTML = `
+
             <div id="faseActualEntrenamiento"
                 style="
                     font-size:32px;
                     font-weight:bold;
-                    margin-bottom:20px;
+                    margin-bottom:10px;
                 ">
             </div>
 
@@ -6237,7 +6240,7 @@ function mostrarPantallaEntrenamiento(
                     font-size:120px;
                     font-weight:bold;
                     line-height:1;
-                    margin:20px 0;
+                    margin:10px 0 15px 0;
                 ">
             </div>
 
@@ -6245,7 +6248,7 @@ function mostrarPantallaEntrenamiento(
                 style="
                     font-size:24px;
                     font-weight:bold;
-                    margin:5px;
+                    margin:3px;
                 ">
             </div>
 
@@ -6253,8 +6256,138 @@ function mostrarPantallaEntrenamiento(
                 style="
                     font-size:20px;
                     font-weight:bold;
-                    margin:5px;
+                    margin:3px 0 15px 0;
                 ">
+            </div>
+
+
+            <div
+                style="
+                    width:100%;
+                    max-width:500px;
+                    border-top:2px solid rgba(0,0,0,0.25);
+                    padding-top:12px;
+                    margin-top:5px;
+                "
+            >
+
+                <div
+                    style="
+                        font-size:18px;
+                        font-weight:bold;
+                        margin-bottom:8px;
+                    "
+                >
+                    CONFIGURACIÓN
+                </div>
+
+                <div
+                    style="
+                        display:grid;
+                        grid-template-columns:1fr auto;
+                        gap:4px 20px;
+                        text-align:left;
+                        font-size:16px;
+                        font-weight:bold;
+                    "
+                >
+
+                    <div>Preparación</div>
+                    <div id="configPreparacionEntrenamiento"></div>
+
+                    <div>Trabajo</div>
+                    <div id="configTrabajoEntrenamiento"></div>
+
+                    <div>Descanso</div>
+                    <div id="configDescansoEntrenamiento"></div>
+
+                    <div>Ciclos</div>
+                    <div id="configCiclosEntrenamiento"></div>
+
+                    <div>Bloques</div>
+                    <div id="configBloquesEntrenamiento"></div>
+
+                    <div>Descanso bloque</div>
+                    <div id="configDescansoBloqueEntrenamiento"></div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                style="
+                    width:100%;
+                    max-width:500px;
+                    border-top:2px solid rgba(0,0,0,0.25);
+                    margin-top:15px;
+                    padding-top:12px;
+                    display:grid;
+                    grid-template-columns:1fr 1fr;
+                    gap:8px;
+                "
+            >
+
+                <button
+                    id="btnRetrocederEntrenamiento"
+                    type="button"
+                    style="
+                        padding:12px 8px;
+                        font-size:17px;
+                        font-weight:bold;
+                        border:none;
+                        border-radius:10px;
+                        cursor:pointer;
+                    "
+                >
+                    ◀ Retroceder
+                </button>
+
+                <button
+                    id="btnPausarEntrenamiento"
+                    type="button"
+                    style="
+                        padding:12px 8px;
+                        font-size:17px;
+                        font-weight:bold;
+                        border:none;
+                        border-radius:10px;
+                        cursor:pointer;
+                    "
+                >
+                    ⏸ Pausar
+                </button>
+
+                <button
+                    id="btnCancelarEntrenamiento"
+                    type="button"
+                    style="
+                        padding:12px 8px;
+                        font-size:17px;
+                        font-weight:bold;
+                        border:none;
+                        border-radius:10px;
+                        cursor:pointer;
+                    "
+                >
+                    ❌ Cancelar
+                </button>
+
+                <button
+                    id="btnAdelantarEntrenamiento"
+                    type="button"
+                    style="
+                        padding:12px 8px;
+                        font-size:17px;
+                        font-weight:bold;
+                        border:none;
+                        border-radius:10px;
+                        cursor:pointer;
+                    "
+                >
+                    Adelantar ▶
+                </button>
+
             </div>
         `;
 
@@ -6266,6 +6399,49 @@ function mostrarPantallaEntrenamiento(
     document.getElementById(
         "faseActualEntrenamiento"
     ).textContent = nombreFase;
+
+
+    // ==========================================
+    // CONFIGURACIÓN PROGRAMADA
+    // ==========================================
+
+    document.getElementById(
+        "configPreparacionEntrenamiento"
+    ).textContent =
+        formatearTiempoEntrenamiento(
+            tiempoPreparacionEntrenamiento
+        );
+
+    document.getElementById(
+        "configTrabajoEntrenamiento"
+    ).textContent =
+        formatearTiempoEntrenamiento(
+            tiempoTrabajoEntrenamiento
+        );
+
+    document.getElementById(
+        "configDescansoEntrenamiento"
+    ).textContent =
+        formatearTiempoEntrenamiento(
+            tiempoDescansoEntrenamiento
+        );
+
+    document.getElementById(
+        "configCiclosEntrenamiento"
+    ).textContent =
+        obtenerCiclosEntrenamiento();
+
+    document.getElementById(
+        "configBloquesEntrenamiento"
+    ).textContent =
+        obtenerBloquesEntrenamiento();
+
+    document.getElementById(
+        "configDescansoBloqueEntrenamiento"
+    ).textContent =
+        formatearTiempoEntrenamiento(
+            tiempoDescansoBloqueEntrenamiento
+        );
 }
 
 function finalizarEntrenamiento(){
