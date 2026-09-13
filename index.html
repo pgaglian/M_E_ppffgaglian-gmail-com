@@ -5981,6 +5981,7 @@ if(tipo === "trabajo"){
 // ===== MOTOR ENTRENAMIENTO =====
 
 let intervaloEntrenamiento = null;
+let entrenamientoPausado = false;
 let faseEntrenamiento = "";
 let cicloActualEntrenamiento = 1;
 let bloqueActualEntrenamiento = 1;
@@ -5990,7 +5991,10 @@ function iniciarEntrenamiento(){
 
     clearInterval(intervaloEntrenamiento);
 
+    entrenamientoPausado = false;
+
     cicloActualEntrenamiento = 1;
+
     bloqueActualEntrenamiento = 1;
 
     iniciarPreparacionEntrenamiento();
@@ -6007,6 +6011,27 @@ function iniciarPreparacionEntrenamiento(){
         iniciarTrabajoEntrenamiento
     );
 }
+
+function pausarEntrenamiento(){
+
+    if(entrenamientoPausado){
+
+        entrenamientoPausado = false;
+
+        document.getElementById(
+            "btnPausarEntrenamiento"
+        ).textContent = "⏸ Pausar";
+
+    }else{
+
+        entrenamientoPausado = true;
+
+        document.getElementById(
+            "btnPausarEntrenamiento"
+        ).textContent = "▶ Reanudar";
+    }
+}
+
 
 function iniciarTrabajoEntrenamiento(){
 
@@ -6136,9 +6161,13 @@ function ejecutarCuentaRegresivaEntrenamiento(
     // La duración de la voz o del sonido NO afecta el tiempo.
     // =====================================================
 
-    intervaloEntrenamiento = setInterval(function(){
+  intervaloEntrenamiento = setInterval(function(){
 
-        segundosRestantesEntrenamiento--;
+    if(entrenamientoPausado){
+        return;
+    }
+
+    segundosRestantesEntrenamiento--;
 
         actualizarPantallaEntrenamiento();
 
@@ -6193,6 +6222,90 @@ function actualizarPantallaEntrenamiento(){
         bloqueActualEntrenamiento +
         " / " +
         obtenerBloquesEntrenamiento();
+  
+        // ===== LISTA DINÁMICA DE EVENTOS =====
+
+    let lista =
+        document.getElementById(
+            "listaEventosEntrenamiento"
+        );
+
+    if(lista){
+
+        let eventos =
+            obtenerEventosEntrenamiento();
+
+        let indiceActual = 0;
+
+        if(faseEntrenamiento === "trabajo"){
+
+            for(let i = 0; i < eventos.length; i++){
+
+                if(
+                    eventos[i].fase === "💪 TRABAJO" &&
+                    eventos[i].ciclo === cicloActualEntrenamiento &&
+                    eventos[i].bloque === bloqueActualEntrenamiento
+                ){
+                    indiceActual = i;
+                    break;
+                }
+            }
+        }
+
+        if(faseEntrenamiento === "descanso"){
+
+            for(let i = 0; i < eventos.length; i++){
+
+                if(
+                    eventos[i].fase === "😮‍💨 DESCANSO" &&
+                    eventos[i].ciclo === cicloActualEntrenamiento &&
+                    eventos[i].bloque === bloqueActualEntrenamiento
+                ){
+                    indiceActual = i;
+                    break;
+                }
+            }
+        }
+
+        if(faseEntrenamiento === "descansoBloque"){
+
+            for(let i = 0; i < eventos.length; i++){
+
+                if(
+                    eventos[i].fase === "🛌 DESCANSO BLOQUE" &&
+                    eventos[i].bloque === bloqueActualEntrenamiento
+                ){
+                    indiceActual = i;
+                    break;
+                }
+            }
+        }
+
+        lista.innerHTML = "";
+
+        for(
+            let i = indiceActual;
+            i < eventos.length;
+            i++
+        ){
+
+            let evento = eventos[i];
+
+            let fila =
+                document.createElement("div");
+
+            fila.textContent =
+                evento.fase +
+                "   " +
+                formatearTiempoEntrenamiento(
+                    evento.tiempo
+                );
+
+            lista.appendChild(fila);
+        }
+    }
+
+      
 }
 
 function mostrarPantallaEntrenamiento(
@@ -6209,21 +6322,21 @@ function mostrarPantallaEntrenamiento(
 
         pantalla.id = "pantallaEntrenamiento";
 
-        pantalla.style.cssText = `
-            position:fixed;
-            inset:0;
-            z-index:9999;
-            display:flex;
-            flex-direction:column;
-            align-items:center;
-            justify-content:center;
-            text-align:center;
-            background:${colorFase};
-            color:#111;
-            padding:20px;
-            box-sizing:border-box;
-            overflow:auto;
-        `;
+    pantalla.style.cssText = `
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    text-align:center;
+    background:${colorFase};
+    color:#111;
+    padding:30px 20px 20px 20px;
+    box-sizing:border-box;
+    overflow:auto;
+`;
 
         pantalla.innerHTML = `
 
@@ -6231,7 +6344,7 @@ function mostrarPantallaEntrenamiento(
                 style="
                     font-size:32px;
                     font-weight:bold;
-                    margin-bottom:10px;
+                    margin-bottom:8px;
                 ">
             </div>
 
@@ -6240,7 +6353,7 @@ function mostrarPantallaEntrenamiento(
                     font-size:120px;
                     font-weight:bold;
                     line-height:1;
-                    margin:10px 0 15px 0;
+                    margin:10px 0;
                 ">
             </div>
 
@@ -6256,7 +6369,7 @@ function mostrarPantallaEntrenamiento(
                 style="
                     font-size:20px;
                     font-weight:bold;
-                    margin:3px 0 15px 0;
+                    margin:3px 0 12px 0;
                 ">
             </div>
 
@@ -6266,50 +6379,23 @@ function mostrarPantallaEntrenamiento(
                     width:100%;
                     max-width:500px;
                     border-top:2px solid rgba(0,0,0,0.25);
-                    padding-top:12px;
-                    margin-top:5px;
+                    border-bottom:2px solid rgba(0,0,0,0.25);
+                    padding:10px 0;
+                    margin:5px 0 15px 0;
                 "
             >
 
                 <div
+                    id="listaEventosEntrenamiento"
                     style="
-                        font-size:18px;
-                        font-weight:bold;
-                        margin-bottom:8px;
-                    "
-                >
-                    CONFIGURACIÓN
-                </div>
-
-                <div
-                    style="
-                        display:grid;
-                        grid-template-columns:1fr auto;
-                        gap:4px 20px;
+                        display:flex;
+                        flex-direction:column;
+                        gap:4px;
                         text-align:left;
-                        font-size:16px;
+                        font-size:17px;
                         font-weight:bold;
                     "
                 >
-
-                    <div>Preparación</div>
-                    <div id="configPreparacionEntrenamiento"></div>
-
-                    <div>Trabajo</div>
-                    <div id="configTrabajoEntrenamiento"></div>
-
-                    <div>Descanso</div>
-                    <div id="configDescansoEntrenamiento"></div>
-
-                    <div>Ciclos</div>
-                    <div id="configCiclosEntrenamiento"></div>
-
-                    <div>Bloques</div>
-                    <div id="configBloquesEntrenamiento"></div>
-
-                    <div>Descanso bloque</div>
-                    <div id="configDescansoBloqueEntrenamiento"></div>
-
                 </div>
 
             </div>
@@ -6319,9 +6405,6 @@ function mostrarPantallaEntrenamiento(
                 style="
                     width:100%;
                     max-width:500px;
-                    border-top:2px solid rgba(0,0,0,0.25);
-                    margin-top:15px;
-                    padding-top:12px;
                     display:grid;
                     grid-template-columns:1fr 1fr;
                     gap:8px;
@@ -6331,6 +6414,7 @@ function mostrarPantallaEntrenamiento(
                 <button
                     id="btnRetrocederEntrenamiento"
                     type="button"
+                    onclick="retrocederEntrenamiento()"
                     style="
                         padding:12px 8px;
                         font-size:17px;
@@ -6344,8 +6428,9 @@ function mostrarPantallaEntrenamiento(
                 </button>
 
                 <button
-                    id="btnPausarEntrenamiento"
+                    id="btnAdelantarEntrenamiento"
                     type="button"
+                    onclick="adelantarEntrenamiento()"
                     style="
                         padding:12px 8px;
                         font-size:17px;
@@ -6355,12 +6440,13 @@ function mostrarPantallaEntrenamiento(
                         cursor:pointer;
                     "
                 >
-                    ⏸ Pausar
+                    Adelantar ▶
                 </button>
 
                 <button
                     id="btnCancelarEntrenamiento"
                     type="button"
+                    onclick="cancelarEntrenamiento()"
                     style="
                         padding:12px 8px;
                         font-size:17px;
@@ -6374,8 +6460,9 @@ function mostrarPantallaEntrenamiento(
                 </button>
 
                 <button
-                    id="btnAdelantarEntrenamiento"
+                    id="btnPausarEntrenamiento"
                     type="button"
+                    onclick="pausarEntrenamiento()"
                     style="
                         padding:12px 8px;
                         font-size:17px;
@@ -6385,7 +6472,7 @@ function mostrarPantallaEntrenamiento(
                         cursor:pointer;
                     "
                 >
-                    Adelantar ▶
+                    ⏸ Pausar
                 </button>
 
             </div>
@@ -6400,48 +6487,61 @@ function mostrarPantallaEntrenamiento(
         "faseActualEntrenamiento"
     ).textContent = nombreFase;
 
+   
+}
 
-    // ==========================================
-    // CONFIGURACIÓN PROGRAMADA
-    // ==========================================
 
-    document.getElementById(
-        "configPreparacionEntrenamiento"
-    ).textContent =
-        formatearTiempoEntrenamiento(
-            tiempoPreparacionEntrenamiento
-        );
+// ===== LISTA DE EVENTOS ENTRENAMIENTO =====
 
-    document.getElementById(
-        "configTrabajoEntrenamiento"
-    ).textContent =
-        formatearTiempoEntrenamiento(
-            tiempoTrabajoEntrenamiento
-        );
+function obtenerEventosEntrenamiento(){
 
-    document.getElementById(
-        "configDescansoEntrenamiento"
-    ).textContent =
-        formatearTiempoEntrenamiento(
-            tiempoDescansoEntrenamiento
-        );
+    let eventos = [];
 
-    document.getElementById(
-        "configCiclosEntrenamiento"
-    ).textContent =
-        obtenerCiclosEntrenamiento();
+    let ciclos = obtenerCiclosEntrenamiento();
+    let bloques = obtenerBloquesEntrenamiento();
 
-    document.getElementById(
-        "configBloquesEntrenamiento"
-    ).textContent =
-        obtenerBloquesEntrenamiento();
+    // Preparación
+    eventos.push({
+        fase: "⏳ PREPARACIÓN",
+        tiempo: tiempoPreparacionEntrenamiento
+    });
 
-    document.getElementById(
-        "configDescansoBloqueEntrenamiento"
-    ).textContent =
-        formatearTiempoEntrenamiento(
-            tiempoDescansoBloqueEntrenamiento
-        );
+    for(let bloque = 1; bloque <= bloques; bloque++){
+
+        for(let ciclo = 1; ciclo <= ciclos; ciclo++){
+
+            // Trabajo
+            eventos.push({
+                fase: "💪 TRABAJO",
+                tiempo: tiempoTrabajoEntrenamiento,
+                ciclo: ciclo,
+                bloque: bloque
+            });
+
+            // Descanso entre ciclos
+            if(ciclo < ciclos){
+
+                eventos.push({
+                    fase: "😮‍💨 DESCANSO",
+                    tiempo: tiempoDescansoEntrenamiento,
+                    ciclo: ciclo,
+                    bloque: bloque
+                });
+            }
+        }
+
+        // Descanso entre bloques
+        if(bloque < bloques){
+
+            eventos.push({
+                fase: "🛌 DESCANSO BLOQUE",
+                tiempo: tiempoDescansoBloqueEntrenamiento,
+                bloque: bloque
+            });
+        }
+    }
+
+    return eventos;
 }
 
 function finalizarEntrenamiento(){
