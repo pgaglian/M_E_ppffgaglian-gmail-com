@@ -13607,14 +13607,21 @@ window.addEventListener("popstate", function(event){
 
     if(event.state && event.state.pantalla === "acciones"){
 
-       mostrarMenuAndroid("acciones", false);
+        mostrarMenuAndroid("acciones", false);
         return;
 
     }
 
     if(event.state && event.state.pantalla === "ambientes"){
 
-       mostrarMenuAndroid("ambientes", false);
+        mostrarMenuAndroid("ambientes", false);
+        return;
+
+    }
+
+    if(event.state && event.state.pantalla === "Entrenamiento"){
+
+        mostrar("Entrenamiento");
         return;
 
     }
@@ -13622,7 +13629,6 @@ window.addEventListener("popstate", function(event){
     inicio();
 
 });
-
 
 </script>
 
