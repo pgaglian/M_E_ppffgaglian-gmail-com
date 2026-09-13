@@ -5883,14 +5883,12 @@ if(tipo === "trabajo"){
 
     // 📣 Silbato Tabata
 
-    if(
-        tipo === "inicio" ||
-        tipo === "trabajo"
-    ){
 
-        archivo = "silbatotabata.mp3";
+    if(tipo === "trabajo"){
 
-    }
+    archivo = "silbatotabata.mp3";
+
+}
 
 
     // 🔔 Una campana
@@ -6596,6 +6594,60 @@ function adelantarEntrenamiento(){
         return;
     }
 }
+
+
+// ===== RETROCEDER ENTRENAMIENTO =====
+
+function retrocederEntrenamiento(){
+
+    clearInterval(intervaloEntrenamiento);
+
+    entrenamientoPausado = false;
+
+    if(faseEntrenamiento === "trabajo"){
+
+        if(cicloActualEntrenamiento > 1){
+
+            cicloActualEntrenamiento--;
+
+            iniciarDescansoEntrenamiento();
+            return;
+
+        }
+
+        if(bloqueActualEntrenamiento > 1){
+
+            bloqueActualEntrenamiento--;
+
+            cicloActualEntrenamiento =
+                obtenerCiclosEntrenamiento();
+
+            iniciarTrabajoEntrenamiento();
+            return;
+        }
+
+        iniciarPreparacionEntrenamiento();
+        return;
+    }
+
+    if(faseEntrenamiento === "descanso"){
+
+        iniciarTrabajoEntrenamiento();
+        return;
+    }
+
+    if(faseEntrenamiento === "descansoBloque"){
+
+        iniciarTrabajoEntrenamiento();
+        return;
+    }
+
+    if(faseEntrenamiento === "preparacion"){
+
+        return;
+    }
+}
+
 
 
 // ===== CANCELAR ENTRENAMIENTO =====
