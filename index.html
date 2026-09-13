@@ -7534,10 +7534,20 @@ function cambiarTema(tema){
 // MENÚ ANDROID
 //========================
 
-function mostrarMenuAndroid(seccion){
+function mostrarMenuAndroid(seccion, registrarHistorial = true){
 
     document.getElementById("menuAndroid").style.display="none";
-    history.pushState({ pantalla: seccion }, "", "#" + seccion);
+   if(registrarHistorial){
+
+    history.pushState(
+        { pantalla: seccion },
+        "",
+        "#" + seccion
+    );
+
+}
+
+
     document.getElementById("btnVolverAndroid").style.display="block";
     document.querySelector("header").style.display="none";
     document.getElementById("panelCliente").style.display="none";
@@ -13597,14 +13607,14 @@ window.addEventListener("popstate", function(event){
 
     if(event.state && event.state.pantalla === "acciones"){
 
-        mostrarMenuAndroid("acciones");
+       mostrarMenuAndroid("acciones", false);
         return;
 
     }
 
     if(event.state && event.state.pantalla === "ambientes"){
 
-        mostrarMenuAndroid("ambientes");
+       mostrarMenuAndroid("ambientes", false);
         return;
 
     }
@@ -13612,6 +13622,8 @@ window.addEventListener("popstate", function(event){
     inicio();
 
 });
+
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
