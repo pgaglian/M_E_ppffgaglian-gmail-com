@@ -6335,16 +6335,16 @@ function mostrarPantallaEntrenamiento(
     color:#111;
     padding:30px 20px 20px 20px;
     box-sizing:border-box;
-    overflow:auto;
+    overflow:hidden;
 `;
 
-        pantalla.innerHTML = `
+pantalla.innerHTML = `
 
             <div id="faseActualEntrenamiento"
                 style="
                     font-size:32px;
                     font-weight:bold;
-                    margin-bottom:8px;
+                    margin-bottom:4px;
                 ">
             </div>
 
@@ -6353,7 +6353,7 @@ function mostrarPantallaEntrenamiento(
                     font-size:120px;
                     font-weight:bold;
                     line-height:1;
-                    margin:10px 0;
+                    margin:8px 0 10px 0;
                 ">
             </div>
 
@@ -6361,7 +6361,7 @@ function mostrarPantallaEntrenamiento(
                 style="
                     font-size:24px;
                     font-weight:bold;
-                    margin:3px;
+                    margin:2px;
                 ">
             </div>
 
@@ -6369,7 +6369,7 @@ function mostrarPantallaEntrenamiento(
                 style="
                     font-size:20px;
                     font-weight:bold;
-                    margin:3px 0 12px 0;
+                    margin:2px 0 8px 0;
                 ">
             </div>
 
@@ -6378,24 +6378,42 @@ function mostrarPantallaEntrenamiento(
                 style="
                     width:100%;
                     max-width:500px;
-                    border-top:2px solid rgba(0,0,0,0.25);
-                    border-bottom:2px solid rgba(0,0,0,0.25);
-                    padding:10px 0;
-                    margin:5px 0 15px 0;
+                    margin:8px 0 15px 0;
                 "
             >
 
                 <div
-                    id="listaEventosEntrenamiento"
                     style="
-                        display:flex;
-                        flex-direction:column;
-                        gap:4px;
-                        text-align:left;
-                        font-size:17px;
+                        font-size:18px;
                         font-weight:bold;
+                        text-align:left;
+                        margin-bottom:6px;
                     "
                 >
+                    PRÓXIMOS EVENTOS
+                </div>
+
+                <div
+                    style="
+                        border-top:2px solid rgba(0,0,0,0.25);
+                        border-bottom:2px solid rgba(0,0,0,0.25);
+                        padding:10px 0;
+                    "
+                >
+
+                    <div
+                        id="listaEventosEntrenamiento"
+                        style="
+                            display:flex;
+                            flex-direction:column;
+                            gap:6px;
+                            text-align:left;
+                            font-size:17px;
+                            font-weight:bold;
+                        "
+                    >
+                    </div>
+
                 </div>
 
             </div>
@@ -6408,6 +6426,7 @@ function mostrarPantallaEntrenamiento(
                     display:grid;
                     grid-template-columns:1fr 1fr;
                     gap:8px;
+                    margin-top:5px;
                 "
             >
 
@@ -6544,6 +6563,61 @@ function obtenerEventosEntrenamiento(){
     return eventos;
 }
 
+
+// ===== ADELANTAR ENTRENAMIENTO =====
+
+function adelantarEntrenamiento(){
+
+    clearInterval(intervaloEntrenamiento);
+
+    entrenamientoPausado = false;
+
+    if(faseEntrenamiento === "preparacion"){
+
+        iniciarTrabajoEntrenamiento();
+        return;
+    }
+
+    if(faseEntrenamiento === "trabajo"){
+
+        iniciarDescansoEntrenamiento();
+        return;
+    }
+
+    if(faseEntrenamiento === "descanso"){
+
+        siguienteCicloEntrenamiento();
+        return;
+    }
+
+    if(faseEntrenamiento === "descansoBloque"){
+
+        siguienteBloqueEntrenamiento();
+        return;
+    }
+}
+
+
+// ===== CANCELAR ENTRENAMIENTO =====
+
+function cancelarEntrenamiento(){
+
+    clearInterval(intervaloEntrenamiento);
+
+    entrenamientoPausado = false;
+
+    let pantalla =
+        document.getElementById("pantallaEntrenamiento");
+
+    if(pantalla){
+        pantalla.remove();
+    }
+
+    document.getElementById(
+        "Entrenamiento"
+    ).style.display = "block";
+}
+
 function finalizarEntrenamiento(){
 
 sonidoTabata("final");
@@ -6564,9 +6638,31 @@ sonidoTabata("final");
         "faseActualEntrenamiento"
     ).textContent = "🔴 FINALIZADO";
 
+       let ciclos =
+        obtenerCiclosEntrenamiento();
+
+    let bloques =
+        obtenerBloquesEntrenamiento();
+
+    let totalEntrenamiento =
+        tiempoPreparacionEntrenamiento +
+        (
+            tiempoTrabajoEntrenamiento +
+            tiempoDescansoEntrenamiento
+        ) *
+        ciclos *
+        bloques -
+        tiempoDescansoEntrenamiento *
+        bloques +
+        tiempoDescansoBloqueEntrenamiento *
+        (bloques - 1);
+
     document.getElementById(
         "contadorEntrenamiento"
-    ).textContent = "00:00";
+    ).textContent =
+        formatearTiempoEntrenamiento(
+            totalEntrenamiento
+        );
 
     document.getElementById(
         "cicloActualEntrenamiento"
@@ -6576,7 +6672,32 @@ sonidoTabata("final");
         "bloqueActualEntrenamiento"
     ).textContent = "COMPLETADO";
 
+    // Limpiar lista y controles al finalizar
 
+    let lista =
+        document.getElementById(
+            "listaEventosEntrenamiento"
+        );
+
+    if(lista){
+        lista.parentElement.style.display = "none";
+    }
+
+    document.getElementById(
+        "btnRetrocederEntrenamiento"
+    ).style.display = "none";
+
+    document.getElementById(
+        "btnAdelantarEntrenamiento"
+    ).style.display = "none";
+
+    document.getElementById(
+        "btnCancelarEntrenamiento"
+    ).style.display = "none";
+
+    document.getElementById(
+        "btnPausarEntrenamiento"
+    ).style.display = "none";
 
 let botonVolver = document.createElement("button");
 
