@@ -5836,7 +5836,7 @@ function sonidoTabata(tipo){
 
     // ===== SONIDO MANUAL =====
 
-    if(tipo !== "cuenta"){
+if(tipo === "trabajo"){
 
         const selector =
             document.getElementById("sonidoEntrenamiento");
@@ -6106,12 +6106,9 @@ function ejecutarCuentaRegresivaEntrenamiento(
     // Se dispara y el temporizador comienza inmediatamente.
     // =====================================================
 
-    if(faseEntrenamiento === "preparacion"){
-
-        reproducirVozEntrenamiento("preparacion");
-
-        sonidoTabata("inicio");
-    }
+ if(faseEntrenamiento === "preparacion"){
+    reproducirVozEntrenamiento("preparacion");
+}
 
     if(faseEntrenamiento === "trabajo"){
 
@@ -6237,7 +6234,7 @@ function mostrarPantallaEntrenamiento(
 
             <div id="contadorEntrenamiento"
                 style="
-                    font-size:100px;
+                    font-size:120px;
                     font-weight:bold;
                     line-height:1;
                     margin:20px 0;
