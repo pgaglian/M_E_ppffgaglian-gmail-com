@@ -13589,15 +13589,18 @@ cargarPatrocinadores();
 let intervaloPatrocinadores =
     setInterval(mostrarPatrocinadorAleatorio, 3000);
 
-</script>
 
 // ===== ATRÁS DEL CELULAR =====
+
+history.pushState({ pantalla: "inicio" }, "", location.href);
 
 window.addEventListener("popstate", function(){
 
     inicio();
 
 });
+
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
 
