@@ -13655,6 +13655,13 @@ window.addEventListener("popstate", function(event){
     if(faseEntrenamiento){
 
         pantallaEntrenamiento.style.display="flex";
+
+        history.pushState(
+            { pantalla: "Entrenamiento" },
+            "",
+            location.href
+        );
+
         return;
 
     }
