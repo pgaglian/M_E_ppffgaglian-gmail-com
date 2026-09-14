@@ -13650,15 +13650,18 @@ window.addEventListener("popstate", function(event){
     }
 
 
-    const pantallaEntrenamiento =
-        document.getElementById("pantallaEntrenamiento");
-
     if(pantallaEntrenamiento){
 
-        pantallaEntrenamiento.style.display="none";
+    if(faseEntrenamiento){
+
+        pantallaEntrenamiento.style.display="flex";
+        return;
 
     }
 
+    pantallaEntrenamiento.style.display="none";
+
+}
     if(event.state && event.state.pantalla === "acciones"){
 
         mostrarMenuAndroid("acciones", false);
