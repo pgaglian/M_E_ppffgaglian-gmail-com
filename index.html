@@ -6813,7 +6813,7 @@ pantalla.appendChild(botonVolver);
 
 
 
-function mostrar(id){
+function mostrar(id, registrarHistorial = true){
 
     // Ocultar portada principal
 
@@ -6912,8 +6912,16 @@ if(id=="Musica"){
 
 }
 
-    // Registrar la pantalla actual en el historial
-    history.pushState({ pantalla: id }, "", "#" + id);
+  // Registrar la pantalla actual en el historial
+if(registrarHistorial){
+
+    history.pushState(
+        { pantalla: id },
+        "",
+        "#" + id
+    );
+
+}
 
 }
 
@@ -13655,13 +13663,6 @@ window.addEventListener("popstate", function(event){
     if(faseEntrenamiento){
 
         pantallaEntrenamiento.style.display="flex";
-
-        history.pushState(
-            { pantalla: "Entrenamiento" },
-            "",
-            location.href
-        );
-
         return;
 
     }
@@ -13683,12 +13684,12 @@ window.addEventListener("popstate", function(event){
 
     }
 
-    if(event.state && event.state.pantalla === "Entrenamiento"){
+ if(event.state && event.state.pantalla === "Entrenamiento"){
 
-        mostrar("Entrenamiento");
-        return;
+    mostrar("Entrenamiento", false);
+    return;
 
-    }
+}
 
     inicio();
 
