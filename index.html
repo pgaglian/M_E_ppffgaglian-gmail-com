@@ -13662,16 +13662,7 @@ window.addEventListener("popstate", function(event){
 
     if(faseEntrenamiento){
 
-        clearInterval(intervaloEntrenamiento);
-
-        entrenamientoPausado = false;
-
-        pantallaEntrenamiento.remove();
-
-        faseEntrenamiento = "";
-
-        mostrar("Entrenamiento", false);
-
+        pantallaEntrenamiento.style.display="flex";
         return;
 
     }
@@ -13679,8 +13670,6 @@ window.addEventListener("popstate", function(event){
     pantallaEntrenamiento.style.display="none";
 
 }
-
-
     if(event.state && event.state.pantalla === "acciones"){
 
         mostrarMenuAndroid("acciones", false);
