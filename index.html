@@ -7555,6 +7555,7 @@ function cambiarTema(tema){
     document.body.classList.add(tema);
 
 }
+
 //========================
 // MENÚ ANDROID
 //========================
@@ -7604,11 +7605,19 @@ function mostrarMenuAndroid(seccion, registrarHistorial = true){
 
     if(seccion=="ambientes"){
 
-        document.getElementById("acciones").style.display="none";
-        document.getElementById("tituloAcciones").style.display="none";
+document.getElementById("Libros").style.display="none";
+document.getElementById("Musica").style.display="none";
+document.getElementById("Calendario").style.display="none";
+document.getElementById("album").style.display="none";
+document.getElementById("Clima").style.display="none";
+document.getElementById("Bancos").style.display="none";
+document.getElementById("Billeteras").style.display="none";
+document.getElementById("Radios").style.display="none";
+document.getElementById("Entrenamiento").style.display="none"; 
 
-        document.getElementById("menu").style.display="grid";
-        document.getElementById("tituloAmbientes").style.display="block";
+document.getElementById("acciones").style.display="none"; document.getElementById("tituloAcciones").style.display="none";
+
+document.getElementById("menu").style.display="grid";       document.getElementById("tituloAmbientes").style.display="block";
 
     }
 
