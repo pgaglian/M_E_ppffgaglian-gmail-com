@@ -6320,7 +6320,7 @@ function mostrarPantallaEntrenamiento(
 
         pantalla.id = "pantallaEntrenamiento";
 
- pantalla.style.cssText = `
+pantalla.style.cssText = `
     position:fixed;
     inset:0;
     z-index:9999;
@@ -6520,8 +6520,6 @@ pantalla.innerHTML = `
     </div>
 
 `;
-
-
         document.body.appendChild(pantalla);
     }
 
@@ -6912,10 +6910,8 @@ if(id=="Musica"){
 
 }
 
-
-// Registrar la pantalla actual en el historial
-
-history.pushState({ pantalla: id }, "", "#" + id);
+    // Registrar la pantalla actual en el historial
+    history.pushState({ pantalla: id }, "", "#" + id);
 
 }
 
@@ -13652,18 +13648,14 @@ window.addEventListener("popstate", function(event){
     }
 
 
+    const pantallaEntrenamiento =
+        document.getElementById("pantallaEntrenamiento");
+
     if(pantallaEntrenamiento){
 
-    if(faseEntrenamiento){
-
-        pantallaEntrenamiento.style.display="flex";
-        return;
+        pantallaEntrenamiento.style.display="none";
 
     }
-
-    pantallaEntrenamiento.style.display="none";
-
-}
 
     if(event.state && event.state.pantalla === "acciones"){
 
@@ -13679,12 +13671,12 @@ window.addEventListener("popstate", function(event){
 
     }
 
-if(event.state && event.state.pantalla === "Entrenamiento"){
+    if(event.state && event.state.pantalla === "Entrenamiento"){
 
-    mostrar("Entrenamiento");
-    return;
+        mostrar("Entrenamiento");
+        return;
 
-}
+    }
 
     inicio();
 
