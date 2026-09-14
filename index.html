@@ -6813,7 +6813,7 @@ pantalla.appendChild(botonVolver);
 
 
 
-function mostrar(id, registrarHistorial = true){
+function mostrar(id){
 
     // Ocultar portada principal
 
@@ -6912,16 +6912,10 @@ if(id=="Musica"){
 
 }
 
-  // Registrar la pantalla actual en el historial
-if(registrarHistorial){
 
-    history.pushState(
-        { pantalla: id },
-        "",
-        "#" + id
-    );
+// Registrar la pantalla actual en el historial
 
-}
+history.pushState({ pantalla: id }, "", "#" + id);
 
 }
 
@@ -13670,6 +13664,7 @@ window.addEventListener("popstate", function(event){
     pantallaEntrenamiento.style.display="none";
 
 }
+
     if(event.state && event.state.pantalla === "acciones"){
 
         mostrarMenuAndroid("acciones", false);
@@ -13684,9 +13679,9 @@ window.addEventListener("popstate", function(event){
 
     }
 
- if(event.state && event.state.pantalla === "Entrenamiento"){
+if(event.state && event.state.pantalla === "Entrenamiento"){
 
-    mostrar("Entrenamiento", false);
+    mostrar("Entrenamiento");
     return;
 
 }
