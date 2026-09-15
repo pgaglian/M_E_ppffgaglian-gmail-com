@@ -6203,6 +6203,8 @@ function reproducirVozEntrenamiento(fase){
 
 // ===== SONIDO TABATA =====
 
+let audioContextEntrenamiento = null;
+
 function sonidoTabata(tipo){
 
     // ===== SONIDO MANUAL =====
@@ -6273,44 +6275,54 @@ if(tipo === "trabajo"){
     // 🔢 Cuenta regresiva Tabata: 3 - 2 - 1
     // Se mantiene el sonido electrónico actual
 
-    if(tipo === "cuenta"){
+if(tipo === "cuenta"){
 
-        const audioContext =
+    if(!audioContextEntrenamiento){
+
+        audioContextEntrenamiento =
             new (window.AudioContext ||
                  window.webkitAudioContext)();
-
-        const ahora =
-            audioContext.currentTime;
-
-        const oscilador =
-            audioContext.createOscillator();
-
-        const ganancia =
-            audioContext.createGain();
-
-        oscilador.frequency.value = 880;
-        oscilador.type = "sine";
-
-        ganancia.gain.setValueAtTime(
-            0.50,
-            ahora
-        );
-
-        ganancia.gain.exponentialRampToValueAtTime(
-            0.001,
-            ahora + 0.12
-        );
-
-        oscilador.connect(ganancia);
-        ganancia.connect(
-            audioContext.destination
-        );
-
-        oscilador.start(ahora);
-        oscilador.stop(ahora + 0.12);
-
-        return;
     }
+
+    if(
+        audioContextEntrenamiento.state === "suspended"
+    ){
+        audioContextEntrenamiento.resume();
+    }
+
+    const ahora =
+        audioContextEntrenamiento.currentTime;
+
+    const oscilador =
+        audioContextEntrenamiento.createOscillator();
+
+    const ganancia =
+        audioContextEntrenamiento.createGain();
+
+    oscilador.frequency.value = 880;
+    oscilador.type = "sine";
+
+    ganancia.gain.setValueAtTime(
+        0.50,
+        ahora
+    );
+
+    ganancia.gain.exponentialRampToValueAtTime(
+        0.001,
+        ahora + 0.12
+    );
+
+    oscilador.connect(ganancia);
+
+    ganancia.connect(
+        audioContextEntrenamiento.destination
+    );
+
+    oscilador.start(ahora);
+    oscilador.stop(ahora + 0.12);
+
+    return;
+}
 
 
     // 🔔🔔🔔 Tres campanas - final
@@ -7022,14 +7034,13 @@ function ejecutarCuentaRegresivaEntrenamiento(
 
         actualizarPantallaEntrenamiento();
 
-// ===== CUENTA REGRESIVA: ÚLTIMOS 3 SEGUNDOS =====
-
-if(
-    segundosRestantesEntrenamiento <= 3 &&
-    segundosRestantesEntrenamiento > 0
-){
-    sonidoTabata("cuenta");
-}
+        // Cuenta regresiva sonora: 3 - 2 - 1
+        if(
+            segundosRestantesEntrenamiento >= 1 &&
+            segundosRestantesEntrenamiento <= 3
+        ){
+            sonidoTabata("cuenta");
+        }
 
         if(segundosRestantesEntrenamiento <= 0){
 
