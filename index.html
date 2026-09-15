@@ -7022,13 +7022,13 @@ function ejecutarCuentaRegresivaEntrenamiento(
 
         actualizarPantallaEntrenamiento();
 
-        // Cuenta regresiva sonora: 3 - 2 - 1
+// ===== CUENTA REGRESIVA: ÚLTIMOS 3 SEGUNDOS =====
 
-       if(
-    segundosRestantesEntrenamiento >= 1 &&
-    segundosRestantesEntrenamiento <= 3
+if(
+    segundosRestantesEntrenamiento <= 3 &&
+    segundosRestantesEntrenamiento > 0
 ){
-        sonidoTabata("cuenta");
+    sonidoTabata("cuenta");
 }
 
         if(segundosRestantesEntrenamiento <= 0){
