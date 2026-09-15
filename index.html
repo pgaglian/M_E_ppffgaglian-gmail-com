@@ -3726,6 +3726,300 @@ text-decoration:underline;
 
 </div>
 
+<!-- ===== PERFILES DE ENTRENAMIENTO ===== -->
+
+<div id="popupPerfilesEntrenamiento"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1000;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,600px);
+        max-height:85vh;
+        overflow-y:auto;
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:20px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        ">
+
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:15px;
+            ">
+
+            <h2 style="margin:0;color:#FFD700;">
+                👤 Perfiles de Entrenamiento
+            </h2>
+
+            <button onclick="cerrarPerfilesEntrenamiento()">
+                ✖
+            </button>
+
+        </div>
+
+        <p style="
+            text-align:center;
+            color:#ccc;
+            ">
+            Seleccioná un perfil de entrenamiento.
+        </p>
+
+        <div id="listaPerfilesEntrenamiento">
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN PERFILES DE ENTRENAMIENTO ===== -->
+
+
+<!-- ===== CONFIRMAR PERFIL DE ENTRENAMIENTO ===== -->
+
+<div id="popupConfirmarPerfilEntrenamiento"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1000;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,420px);
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:25px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        color:white;
+        text-align:center;
+        ">
+
+        <h2 style="
+            margin:0 0 20px;
+            color:#FFD700;
+        ">
+            👤 Guardar perfil
+        </h2>
+
+        <p style="
+            color:#ccc;
+            font-size:16px;
+            line-height:22px;
+        ">
+            ¿Querés guardar esta configuración como perfil?
+        </p>
+
+        <div style="
+            display:flex;
+            justify-content:center;
+            gap:12px;
+            margin-top:25px;
+            flex-wrap:wrap;
+        ">
+
+            <button
+                type="button"
+                onclick="confirmarGuardarPerfilEntrenamiento()"
+                style="
+                padding:10px 22px;
+                font-size:16px;
+                font-weight:bold;
+                border-radius:10px;
+                ">
+                ✅ Sí
+            </button>
+
+            <button
+                type="button"
+                onclick="cerrarConfirmarPerfilEntrenamiento()"
+                style="
+                padding:10px 22px;
+                font-size:16px;
+                font-weight:bold;
+                border-radius:10px;
+                ">
+                ❌ No
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN CONFIRMAR PERFIL DE ENTRENAMIENTO ===== -->
+
+<!-- ===== CONFIRMAR ELIMINAR PERFIL ===== -->
+
+<div id="popupEliminarPerfilEntrenamiento"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1000;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,420px);
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:25px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        color:white;
+        text-align:center;
+        ">
+
+        <h2 style="
+            margin:0 0 20px;
+            color:#FFD700;
+        ">
+            🗑️ Eliminar perfil
+        </h2>
+
+        <p id="mensajeEliminarPerfilEntrenamiento"
+           style="
+           color:#ccc;
+           font-size:16px;
+           line-height:22px;
+           ">
+        </p>
+
+        <div style="
+            display:flex;
+            justify-content:center;
+            gap:12px;
+            margin-top:25px;
+            flex-wrap:wrap;
+        ">
+
+            <button
+                type="button"
+                onclick="confirmarEliminarPerfilEntrenamiento()">
+                🗑️ Sí, eliminar
+            </button>
+
+            <button
+                type="button"
+                onclick="cerrarEliminarPerfilEntrenamiento()">
+                ❌ Cancelar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN CONFIRMAR ELIMINAR PERFIL ===== -->
+
+<!-- ===== EDITAR PERFIL DE ENTRENAMIENTO ===== -->
+
+<div id="popupEditarPerfilEntrenamiento"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1000;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,420px);
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:25px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        color:white;
+        ">
+
+        <h2 style="
+            margin:0 0 20px;
+            color:#FFD700;
+            text-align:center;
+        ">
+            ✏️ Editar perfil
+        </h2>
+
+
+        <label style="
+            display:block;
+            margin-bottom:8px;
+            color:#ccc;
+            ">
+            Nombre del perfil
+        </label>
+
+
+        <input
+            id="nombreEditarPerfilEntrenamiento"
+            type="text"
+            maxlength="20"
+            placeholder="Nombre del perfil"
+            style="
+            width:100%;
+            box-sizing:border-box;
+            padding:12px;
+            border-radius:10px;
+            border:1px solid #555;
+            background:#292929;
+            color:white;
+            font-size:16px;
+            ">
+
+
+        <div style="
+            display:flex;
+            justify-content:center;
+            gap:12px;
+            margin-top:25px;
+            flex-wrap:wrap;
+        ">
+
+            <button
+                type="button"
+                onclick="guardarEdicionPerfilEntrenamiento()">
+                💾 Guardar cambios
+            </button>
+
+            <button
+                type="button"
+                onclick="cerrarEditarPerfilEntrenamiento()">
+                ❌ Cancelar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN EDITAR PERFIL DE ENTRENAMIENTO ===== -->
+
 <!-- ===== MODULO ENTRENAMIENTO ===== -->
 
 <div id="Entrenamiento" style="display:none; min-height:100vh;">
@@ -3741,9 +4035,9 @@ text-decoration:underline;
             ⬅ Volver
         </button>
 
-        <button>
-            👤 Perfil
-        </button>
+     <button onclick="abrirPerfilesEntrenamiento()">
+    👤 Perfil
+</button>
 
     </div>
 
@@ -5505,6 +5799,26 @@ function calcularTiempoTotalEntrenamiento(){
         formatearTiempoEntrenamiento(tiempoTotal);
 }
 
+// =====================================================
+// COMPARAR CONFIGURACION CON PERFILES
+// =====================================================
+
+function configuracionYaEsPerfil(configuracion){
+
+    const perfiles = JSON.parse(
+        localStorage.getItem("perfilesEntrenamiento") || "[]"
+    );
+
+    return perfiles.some(function(perfil){
+
+        return JSON.stringify(perfil.configuracion) ===
+               JSON.stringify(configuracion);
+
+    });
+
+}
+
+
 
 function guardarConfiguracionEntrenamiento(){
 
@@ -5528,9 +5842,17 @@ function guardarConfiguracionEntrenamiento(){
 
         sonido: document.getElementById(
             "sonidoEntrenamiento"
+        ).value,
+
+        voz: document.getElementById(
+            "vozEntrenamiento"
         ).value
 
     };
+
+    // =====================================================
+    // GUARDAR CONFIGURACION NORMAL
+    // =====================================================
 
     localStorage.setItem(
         "configuracionEntrenamiento",
@@ -5548,7 +5870,56 @@ function guardarConfiguracionEntrenamiento(){
 
     },1200);
 
+
+    // =====================================================
+    // SI YA EXISTE COMO PERFIL, NO PREGUNTAR
+    // =====================================================
+
+    if(configuracionYaEsPerfil(configuracion)){
+
+        return;
+
+    }
+
+
+    // =====================================================
+    // VERIFICAR LIMITE DE PERFILES
+    // =====================================================
+
+    const perfiles =
+        JSON.parse(
+            localStorage.getItem("perfilesEntrenamiento") || "[]"
+        );
+
+    if(perfiles.length >= 10){
+
+        return;
+
+    }
+
+
+    // =====================================================
+    // ABRIR POPUP
+    // =====================================================
+
+    setTimeout(function(){
+
+        const popup =
+            document.getElementById(
+                "popupConfirmarPerfilEntrenamiento"
+            );
+
+        if(popup){
+
+            popup.style.display = "flex";
+
+        }
+
+    },1300);
+
 }
+
+
 
 function resetearConfiguracionEntrenamiento(){
 
@@ -5975,6 +6346,488 @@ if(tipo === "trabajo"){
     });
 
 }
+
+// =====================================================
+// PERFILES DE ENTRENAMIENTO
+// =====================================================
+
+function abrirPerfilesEntrenamiento(){
+
+    const popup =
+        document.getElementById("popupPerfilesEntrenamiento");
+
+    const lista =
+        document.getElementById("listaPerfilesEntrenamiento");
+
+    if(!popup || !lista){
+        return;
+    }
+
+    let perfiles =
+        JSON.parse(
+            localStorage.getItem("perfilesEntrenamiento") || "[]"
+        );
+
+
+    // =====================================================
+    // ELIMINAR DUPLICADOS
+    // =====================================================
+
+    const perfilesUnicos = [];
+
+    perfiles.forEach(function(perfil){
+
+        const existe =
+            perfilesUnicos.some(function(p){
+
+                return JSON.stringify(p.configuracion) ===
+                       JSON.stringify(perfil.configuracion);
+
+            });
+
+        if(!existe){
+
+            perfilesUnicos.push(perfil);
+
+        }
+
+    });
+
+    perfiles = perfilesUnicos;
+
+
+    // Guardar la lista limpia
+
+    localStorage.setItem(
+        "perfilesEntrenamiento",
+        JSON.stringify(perfiles)
+    );
+
+
+    // =====================================================
+    // MOSTRAR PERFILES
+    // =====================================================
+
+    lista.innerHTML = "";
+
+
+    if(perfiles.length === 0){
+
+        const mensaje =
+            document.createElement("div");
+
+        mensaje.style.textAlign = "center";
+        mensaje.style.color = "#aaa";
+        mensaje.style.padding = "20px 5px";
+
+        mensaje.textContent =
+            "Todavía no tenés perfiles guardados.";
+
+        lista.appendChild(mensaje);
+
+    }
+
+
+    perfiles.forEach(function(perfil, indice){
+
+        const tarjeta =
+            document.createElement("div");
+
+        tarjeta.style.display = "flex";
+        tarjeta.style.alignItems = "center";
+        tarjeta.style.justifyContent = "space-between";
+        tarjeta.style.gap = "10px";
+        tarjeta.style.padding = "12px";
+        tarjeta.style.marginBottom = "10px";
+        tarjeta.style.background = "#292929";
+        tarjeta.style.border = "1px solid #555";
+        tarjeta.style.borderRadius = "12px";
+        tarjeta.style.flexWrap = "wrap";
+
+
+        // =================================================
+        // NOMBRE
+        // =================================================
+
+        const nombre =
+            document.createElement("span");
+
+        nombre.textContent =
+            "🏋️ " + perfil.nombre;
+
+        nombre.style.color = "#fff";
+        nombre.style.fontWeight = "bold";
+        nombre.style.flex = "1";
+
+
+        tarjeta.appendChild(nombre);
+
+
+        // =================================================
+        // CONTENEDOR BOTONES
+        // =================================================
+
+        const botones =
+            document.createElement("div");
+
+        botones.style.display = "flex";
+        botones.style.gap = "6px";
+        botones.style.flexWrap = "wrap";
+
+
+        // =================================================
+        // USAR
+        // =================================================
+
+        const botonUsar =
+            document.createElement("button");
+
+        botonUsar.type = "button";
+        botonUsar.textContent = "▶ Usar";
+
+        botonUsar.onclick = function(){
+
+            seleccionarPerfilEntrenamiento(indice);
+
+        };
+
+        botones.appendChild(botonUsar);
+
+
+        // =================================================
+        // EDITAR
+        // =================================================
+
+        const botonEditar =
+            document.createElement("button");
+
+        botonEditar.type = "button";
+        botonEditar.textContent = "✏️ Editar";
+
+        botonEditar.onclick = function(){
+
+            editarPerfilEntrenamiento(indice);
+
+        };
+
+        botones.appendChild(botonEditar);
+
+
+        // =================================================
+        // ELIMINAR
+        // =================================================
+
+        const botonEliminar =
+            document.createElement("button");
+
+        botonEliminar.type = "button";
+        botonEliminar.textContent = "🗑️ Eliminar";
+
+        botonEliminar.onclick = function(){
+
+            eliminarPerfilEntrenamiento(indice);
+
+        };
+
+        botones.appendChild(botonEliminar);
+
+
+        tarjeta.appendChild(botones);
+
+        lista.appendChild(tarjeta);
+
+    });
+
+
+    popup.style.display = "flex";
+
+}
+
+
+// =====================================================
+// CERRAR PERFILES
+// =====================================================
+
+function cerrarPerfilesEntrenamiento(){
+
+    const popup =
+        document.getElementById("popupPerfilesEntrenamiento");
+
+    if(popup){
+        popup.style.display = "none";
+    }
+
+}
+
+// =====================================================
+// ELIMINAR PERFIL DE ENTRENAMIENTO
+// =====================================================
+
+// =====================================================
+// ELIMINAR PERFIL DE ENTRENAMIENTO
+// =====================================================
+
+let indicePerfilEliminar = null;
+
+
+function eliminarPerfilEntrenamiento(indice){
+
+    const perfiles =
+        JSON.parse(
+            localStorage.getItem("perfilesEntrenamiento") || "[]"
+        );
+
+
+    if(!perfiles[indice]){
+        return;
+    }
+
+
+    indicePerfilEliminar = indice;
+
+
+    const mensaje =
+        document.getElementById(
+            "mensajeEliminarPerfilEntrenamiento"
+        );
+
+
+    if(mensaje){
+
+        mensaje.textContent =
+            '¿Querés eliminar el perfil "' +
+            perfiles[indice].nombre +
+            '"?';
+
+    }
+
+
+    const popup =
+        document.getElementById(
+            "popupEliminarPerfilEntrenamiento"
+        );
+
+
+    if(popup){
+
+        popup.style.display = "flex";
+
+    }
+
+}
+
+
+// =====================================================
+// CONFIRMAR ELIMINACION
+// =====================================================
+
+function confirmarEliminarPerfilEntrenamiento(){
+
+    if(indicePerfilEliminar === null){
+        return;
+    }
+
+
+    const perfiles =
+        JSON.parse(
+            localStorage.getItem("perfilesEntrenamiento") || "[]"
+        );
+
+
+    if(!perfiles[indicePerfilEliminar]){
+        cerrarEliminarPerfilEntrenamiento();
+        return;
+    }
+
+
+    perfiles.splice(indicePerfilEliminar, 1);
+
+
+    localStorage.setItem(
+        "perfilesEntrenamiento",
+        JSON.stringify(perfiles)
+    );
+
+
+    indicePerfilEliminar = null;
+
+
+    cerrarEliminarPerfilEntrenamiento();
+
+
+    abrirPerfilesEntrenamiento();
+
+}
+
+
+// =====================================================
+// CERRAR CONFIRMACION DE ELIMINAR
+// =====================================================
+
+function cerrarEliminarPerfilEntrenamiento(){
+
+    const popup =
+        document.getElementById(
+            "popupEliminarPerfilEntrenamiento"
+        );
+
+
+    if(popup){
+
+        popup.style.display = "none";
+
+    }
+
+
+    indicePerfilEliminar = null;
+
+}
+
+// =====================================================
+// EDITAR PERFIL DE ENTRENAMIENTO
+// =====================================================
+
+let indicePerfilEditar = null;
+
+
+function editarPerfilEntrenamiento(indice){
+
+    const perfiles =
+        JSON.parse(
+            localStorage.getItem("perfilesEntrenamiento") || "[]"
+        );
+
+
+    if(!perfiles[indice]){
+        return;
+    }
+
+
+    indicePerfilEditar = indice;
+
+
+    const campo =
+        document.getElementById(
+            "nombreEditarPerfilEntrenamiento"
+        );
+
+
+    if(campo){
+
+        campo.value =
+            perfiles[indice].nombre || "";
+
+        campo.focus();
+
+    }
+
+
+    const popup =
+        document.getElementById(
+            "popupEditarPerfilEntrenamiento"
+        );
+
+
+    if(popup){
+
+        popup.style.display = "flex";
+
+    }
+
+}
+
+
+// =====================================================
+// CERRAR EDICION
+// =====================================================
+
+function cerrarEditarPerfilEntrenamiento(){
+
+    const popup =
+        document.getElementById(
+            "popupEditarPerfilEntrenamiento"
+        );
+
+
+    if(popup){
+
+        popup.style.display = "none";
+
+    }
+
+
+    indicePerfilEditar = null;
+
+}
+
+// =====================================================
+// GUARDAR CAMBIO DE NOMBRE DEL PERFIL
+// =====================================================
+
+function guardarEdicionPerfilEntrenamiento(){
+
+    if(indicePerfilEditar === null){
+        return;
+    }
+
+
+    const campo =
+        document.getElementById(
+            "nombreEditarPerfilEntrenamiento"
+        );
+
+
+    if(!campo){
+        return;
+    }
+
+
+    const nuevoNombre =
+        campo.value.trim();
+
+
+    if(nuevoNombre === ""){
+        return;
+    }
+
+
+    const perfiles =
+        JSON.parse(
+            localStorage.getItem("perfilesEntrenamiento") || "[]"
+        );
+
+
+    if(!perfiles[indicePerfilEditar]){
+        return;
+    }
+
+
+    perfiles[indicePerfilEditar].nombre =
+        nuevoNombre.substring(0,20);
+
+
+    localStorage.setItem(
+        "perfilesEntrenamiento",
+        JSON.stringify(perfiles)
+    );
+
+
+    cerrarEditarPerfilEntrenamiento();
+
+
+    abrirPerfilesEntrenamiento();
+
+}
+
+// =====================================================
+// CREAR PERFIL — POR AHORA SOLO AVISO
+// =====================================================
+
+function crearPerfilEntrenamiento(){
+
+    alert("Acá vamos a crear el perfil.");
+}
+
 
 // ===== MOTOR ENTRENAMIENTO =====
 
