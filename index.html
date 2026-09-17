@@ -9800,15 +9800,23 @@ function mostrarRadiosSeleccionadas(){
 
         card.onclick = function(){
 
-    // Cerrar reproductores anteriores
+    // Cancelar cualquier reproductor anterior
     document.querySelectorAll(
         "#RadiosSeleccionadas audio"
     ).forEach(function(audio){
 
         audio.pause();
+        audio.src = "";
+        audio.load();
         audio.remove();
 
     });
+
+    // Cancelar temporizadores anteriores
+    if(window.temporizadorRadioActivo){
+        clearTimeout(window.temporizadorRadioActivo);
+        window.temporizadorRadioActivo = null;
+    }
 
     const audio = document.createElement("audio");
 
@@ -9820,7 +9828,6 @@ function mostrarRadiosSeleccionadas(){
 
     card.appendChild(audio);
 
-    // Usar las alternativas disponibles
     const streams = Array.isArray(radioInfo.streams) &&
                     radioInfo.streams.length
         ? radioInfo.streams
@@ -9829,7 +9836,6 @@ function mostrarRadiosSeleccionadas(){
     let indiceStream = 0;
     let intentos = 0;
     const maxIntentosPorStream = 3;
-    let temporizadorReintento = null;
 
     function reproducirStream(){
 
@@ -9881,11 +9887,17 @@ function mostrarRadiosSeleccionadas(){
 
     function siguienteIntento(){
 
-        clearTimeout(temporizadorReintento);
+        if(audio.paused === false){
+            return;
+        }
+
+        if(window.temporizadorRadioActivo){
+            clearTimeout(window.temporizadorRadioActivo);
+        }
 
         if(intentos < maxIntentosPorStream){
 
-            temporizadorReintento = setTimeout(function(){
+            window.temporizadorRadioActivo = setTimeout(function(){
 
                 reproducirStream();
 
@@ -9896,7 +9908,7 @@ function mostrarRadiosSeleccionadas(){
             indiceStream++;
             intentos = 0;
 
-            temporizadorReintento = setTimeout(function(){
+            window.temporizadorRadioActivo = setTimeout(function(){
 
                 reproducirStream();
 
@@ -9921,7 +9933,6 @@ function mostrarRadiosSeleccionadas(){
     reproducirStream();
 
 };
-
         contenedor.appendChild(card);
 
     });
