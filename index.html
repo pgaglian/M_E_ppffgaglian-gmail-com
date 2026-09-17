@@ -3817,13 +3817,43 @@ text-decoration:underline;
             👤 Guardar perfil
         </h2>
 
-        <p style="
+               <p style="
             color:#ccc;
             font-size:16px;
             line-height:22px;
         ">
-            ¿Querés guardar esta configuración como perfil?
+            Nombre del perfil
         </p>
+
+        <input
+            id="nombreNuevoPerfilEntrenamiento"
+            type="text"
+            maxlength="20"
+            placeholder="Escribí un nombre"
+            style="
+            width:100%;
+            box-sizing:border-box;
+            padding:12px;
+            margin-top:5px;
+            font-size:16px;
+            border-radius:10px;
+            border:1px solid #666;
+            background:#292929;
+            color:white;
+            text-align:center;
+            ">
+
+        <p id="mensajeNuevoPerfilEntrenamiento"
+           style="
+           display:none;
+           color:#7CFC00;
+           font-size:16px;
+           font-weight:bold;
+           margin:12px 0 0;
+           ">
+            ✅ Perfil guardado correctamente
+        </p>
+
 
         <div style="
             display:flex;
@@ -3835,14 +3865,14 @@ text-decoration:underline;
 
             <button
                 type="button"
-                onclick="confirmarGuardarPerfilEntrenamiento()"
+                onclick="guardarNuevoPerfilEntrenamiento()"
                 style="
                 padding:10px 22px;
                 font-size:16px;
                 font-weight:bold;
                 border-radius:10px;
                 ">
-                ✅ Sí
+                💾 Guardar
             </button>
 
             <button
@@ -3854,7 +3884,7 @@ text-decoration:underline;
                 font-weight:bold;
                 border-radius:10px;
                 ">
-                ❌ No
+                ❌ Cancelar
             </button>
 
         </div>
@@ -3864,6 +3894,8 @@ text-decoration:underline;
 </div>
 
 <!-- ===== FIN CONFIRMAR PERFIL DE ENTRENAMIENTO ===== -->
+
+
 
 <!-- ===== CONFIRMAR ELIMINAR PERFIL ===== -->
 
@@ -3945,10 +3977,11 @@ text-decoration:underline;
      align-items:center;
      justify-content:center;
      padding:20px;
+     overflow-y:auto;
      ">
 
     <div style="
-        width:min(92%,420px);
+        width:min(92%,500px);
         background:#1d1d1d;
         border:1px solid #555;
         border-radius:20px;
@@ -3966,14 +3999,15 @@ text-decoration:underline;
         </h2>
 
 
+        <!-- NOMBRE -->
+
         <label style="
             display:block;
             margin-bottom:8px;
             color:#ccc;
-            ">
+        ">
             Nombre del perfil
         </label>
-
 
         <input
             id="nombreEditarPerfilEntrenamiento"
@@ -3989,8 +4023,256 @@ text-decoration:underline;
             background:#292929;
             color:white;
             font-size:16px;
+            margin-bottom:18px;
             ">
 
+
+        <!-- PREPARACIÓN -->
+
+        <div style="
+            margin:7px 0;
+            padding:12px 16px;
+            background:linear-gradient(90deg,#FFD700,#E6B800);
+            color:#111;
+            border-left:7px solid #FFF176;
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+        ">
+
+            <strong>⏳ PREPARACIÓN</strong>
+
+            <span
+                id="editarTiempoPreparacion"
+                style="
+                font-size:22px;
+                font-weight:bold;
+                ">
+                00:00
+            </span>
+
+        </div>
+
+
+        <!-- TRABAJO -->
+
+        <div style="
+            margin:7px 0;
+            padding:12px 16px;
+            background:linear-gradient(90deg,#32CD32,#239B23);
+            color:#111;
+            border-left:7px solid #7CFC00;
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+        ">
+
+            <strong>💪 TRABAJO</strong>
+
+            <span
+                id="editarTiempoTrabajo"
+                style="
+                font-size:22px;
+                font-weight:bold;
+                ">
+                00:00
+            </span>
+
+        </div>
+
+
+        <!-- DESCANSO -->
+
+        <div style="
+            margin:7px 0;
+            padding:12px 16px;
+            background:linear-gradient(90deg,#4DA6FF,#2878C8);
+            color:#FFF;
+            border-left:7px solid #87CEFA;
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+        ">
+
+            <strong>😮‍💨 DESCANSO</strong>
+
+            <span
+                id="editarTiempoDescanso"
+                style="
+                font-size:22px;
+                font-weight:bold;
+                ">
+                00:00
+            </span>
+
+        </div>
+
+
+        <!-- CICLOS -->
+
+        <div style="
+            margin:7px 0;
+            padding:12px 16px;
+            background:linear-gradient(90deg,#9B59B6,#71368A);
+            color:#FFF;
+            border-left:7px solid #D7A8E8;
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+        ">
+
+            <strong>🔄 CICLOS</strong>
+
+            <span
+                id="editarCantidadCiclos"
+                style="
+                font-size:22px;
+                font-weight:bold;
+                ">
+                0
+            </span>
+
+        </div>
+
+
+        <!-- BLOQUES -->
+
+        <div style="
+            margin:7px 0;
+            padding:12px 16px;
+            background:linear-gradient(90deg,#F39C12,#C87808);
+            color:#111;
+            border-left:7px solid #FFD27A;
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+        ">
+
+            <strong>🧱 BLOQUES</strong>
+
+            <span
+                id="editarCantidadBloques"
+                style="
+                font-size:22px;
+                font-weight:bold;
+                ">
+                0
+            </span>
+
+        </div>
+
+
+        <!-- DESCANSO ENTRE BLOQUES -->
+
+        <div style="
+            margin:7px 0;
+            padding:12px 16px;
+            background:linear-gradient(90deg,#3498DB,#216A9B);
+            color:#FFF;
+            border-left:7px solid #87CEFA;
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+        ">
+
+            <strong>🛌 DESC. BLOQUE</strong>
+
+            <span
+                id="editarTiempoDescansoBloque"
+                style="
+                font-size:22px;
+                font-weight:bold;
+                ">
+                00:00
+            </span>
+
+        </div>
+
+
+        <!-- SONIDO -->
+
+        <div style="
+            margin:7px 0;
+            padding:12px 16px;
+            background:linear-gradient(90deg,#555,#333);
+            color:#FFF;
+            border-left:7px solid #AAA;
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+        ">
+
+            <strong>🔊 SONIDO</strong>
+
+            <select
+                id="editarSonidoEntrenamiento"
+                style="
+                font-size:16px;
+                font-weight:bold;
+                padding:6px 10px;
+                border-radius:6px;
+                max-width:220px;
+                ">
+                <option value="">🔊 Predeterminado</option>
+            </select>
+
+        </div>
+
+
+        <!-- VOZ -->
+
+        <div style="
+            margin:7px 0;
+            padding:12px 16px;
+            background:linear-gradient(90deg,#555,#333);
+            color:#FFF;
+            border-left:7px solid #AAA;
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+        ">
+
+            <strong>🗣️ VOZ</strong>
+
+            <select
+                id="editarVozEntrenamiento"
+                style="
+                font-size:16px;
+                font-weight:bold;
+                padding:6px 10px;
+                border-radius:6px;
+                max-width:220px;
+                ">
+                <option value="">🔇 Sin voz</option>
+            </select>
+
+        </div>
+
+
+        <!-- MENSAJE -->
+
+        <p
+            id="mensajeEditarPerfilEntrenamiento"
+            style="
+            display:none;
+            color:#7CFC00;
+            font-size:16px;
+            font-weight:bold;
+            text-align:center;
+            margin:15px 0 0;
+            ">
+        </p>
+
+
+        <!-- BOTONES -->
 
         <div style="
             display:flex;
@@ -4002,13 +4284,37 @@ text-decoration:underline;
 
             <button
                 type="button"
-                onclick="guardarEdicionPerfilEntrenamiento()">
-                💾 Guardar cambios
+                onclick="guardarEdicionPerfilEntrenamiento()"
+                style="
+                padding:10px 18px;
+                font-size:16px;
+                font-weight:bold;
+                border-radius:10px;
+                ">
+                💾 Guardar
             </button>
 
             <button
                 type="button"
-                onclick="cerrarEditarPerfilEntrenamiento()">
+                onclick="guardarComoPerfilEntrenamiento()"
+                style="
+                padding:10px 18px;
+                font-size:16px;
+                font-weight:bold;
+                border-radius:10px;
+                ">
+                💾 Guardar como
+            </button>
+
+            <button
+                type="button"
+                onclick="cerrarEditarPerfilEntrenamiento()"
+                style="
+                padding:10px 18px;
+                font-size:16px;
+                font-weight:bold;
+                border-radius:10px;
+                ">
                 ❌ Cancelar
             </button>
 
@@ -5872,17 +6178,6 @@ function guardarConfiguracionEntrenamiento(){
 
 
     // =====================================================
-    // SI YA EXISTE COMO PERFIL, NO PREGUNTAR
-    // =====================================================
-
-    if(configuracionYaEsPerfil(configuracion)){
-
-        return;
-
-    }
-
-
-    // =====================================================
     // VERIFICAR LIMITE DE PERFILES
     // =====================================================
 
@@ -5891,34 +6186,55 @@ function guardarConfiguracionEntrenamiento(){
             localStorage.getItem("perfilesEntrenamiento") || "[]"
         );
 
-    if(perfiles.length >= 10){
+   if(perfiles.length >= 10){
 
-        return;
+    const popup =
+        document.getElementById(
+            "popupConfirmarPerfilEntrenamiento"
+        );
+
+    const mensaje =
+        document.getElementById(
+            "mensajeNuevoPerfilEntrenamiento"
+        );
+
+    if(popup){
+
+        popup.style.display = "flex";
 
     }
 
+    if(mensaje){
 
-    // =====================================================
-    // ABRIR POPUP
-    // =====================================================
+        mensaje.textContent =
+            "⚠️ Ya tenés 10 perfiles guardados. No se pueden guardar más.";
 
-    setTimeout(function(){
+        mensaje.style.color = "#FFD700";
 
-        const popup =
-            document.getElementById(
-                "popupConfirmarPerfilEntrenamiento"
-            );
+        mensaje.style.display = "block";
 
-        if(popup){
+    }
 
-            popup.style.display = "flex";
-
-        }
-
-    },1300);
+    return;
 
 }
 
+// =====================================================
+// ABRIR POPUP
+// =====================================================
+
+    const popup =
+        document.getElementById(
+            "popupConfirmarPerfilEntrenamiento"
+        );
+
+    if(popup){
+
+        popup.style.display = "flex";
+
+    }
+
+}
 
 
 function resetearConfiguracionEntrenamiento(){
@@ -6718,21 +7034,214 @@ function editarPerfilEntrenamiento(indice){
     indicePerfilEditar = indice;
 
 
-    const campo =
+    const perfil =
+        perfiles[indice];
+
+
+    const configuracion =
+        perfil.configuracion || {};
+
+
+    // =====================================================
+    // NOMBRE
+    // =====================================================
+
+    const campoNombre =
         document.getElementById(
             "nombreEditarPerfilEntrenamiento"
         );
 
 
-    if(campo){
+    if(campoNombre){
 
-        campo.value =
-            perfiles[indice].nombre || "";
-
-        campo.focus();
+        campoNombre.value =
+            perfil.nombre || "";
 
     }
 
+
+    // =====================================================
+    // TIEMPOS
+    // =====================================================
+
+    const campoPreparacion =
+        document.getElementById(
+            "editarTiempoPreparacion"
+        );
+
+    if(campoPreparacion){
+
+        campoPreparacion.textContent =
+            formatearTiempoEntrenamiento(
+                parseInt(configuracion.preparacion) || 0
+            );
+
+    }
+
+
+    const campoTrabajo =
+        document.getElementById(
+            "editarTiempoTrabajo"
+        );
+
+    if(campoTrabajo){
+
+        campoTrabajo.textContent =
+            formatearTiempoEntrenamiento(
+                parseInt(configuracion.trabajo) || 0
+            );
+
+    }
+
+
+    const campoDescanso =
+        document.getElementById(
+            "editarTiempoDescanso"
+        );
+
+    if(campoDescanso){
+
+        campoDescanso.textContent =
+            formatearTiempoEntrenamiento(
+                parseInt(configuracion.descanso) || 0
+            );
+
+    }
+
+
+    const campoDescansoBloque =
+        document.getElementById(
+            "editarTiempoDescansoBloque"
+        );
+
+    if(campoDescansoBloque){
+
+        campoDescansoBloque.textContent =
+            formatearTiempoEntrenamiento(
+                parseInt(configuracion.descansoBloque) || 0
+            );
+
+    }
+
+
+    // =====================================================
+    // CICLOS
+    // =====================================================
+
+    const campoCiclos =
+        document.getElementById(
+            "editarCantidadCiclos"
+        );
+
+    if(campoCiclos){
+
+        campoCiclos.textContent =
+            parseInt(configuracion.ciclos) || 1;
+
+    }
+
+
+    // =====================================================
+    // BLOQUES
+    // =====================================================
+
+    const campoBloques =
+        document.getElementById(
+            "editarCantidadBloques"
+        );
+
+    if(campoBloques){
+
+        campoBloques.textContent =
+            parseInt(configuracion.bloques) || 1;
+
+    }
+
+// =====================================================
+// SONIDO
+// =====================================================
+
+const campoSonido =
+    document.getElementById(
+        "editarSonidoEntrenamiento"
+    );
+
+if(campoSonido){
+
+    campoSonido.innerHTML =
+        '<option value="">🔊 Predeterminado</option>';
+
+    if(
+        typeof sonidosEntrenamiento !== "undefined" &&
+        Array.isArray(sonidosEntrenamiento)
+    ){
+
+        sonidosEntrenamiento.forEach(function(sonido){
+
+            const opcion =
+                document.createElement("option");
+
+            opcion.value =
+                sonido.id;
+
+            opcion.textContent =
+                sonido.nombre;
+
+            campoSonido.appendChild(opcion);
+
+        });
+
+    }
+
+    campoSonido.value =
+        configuracion.sonido || "";
+
+}
+
+// =====================================================
+// VOZ
+// =====================================================
+
+const campoVoz =
+    document.getElementById(
+        "editarVozEntrenamiento"
+    );
+
+if(campoVoz){
+
+    campoVoz.innerHTML =
+        '<option value="">🔇 Sin voz</option>';
+
+    if(
+        typeof vocesEntrenamiento !== "undefined" &&
+        Array.isArray(vocesEntrenamiento)
+    ){
+
+        vocesEntrenamiento.forEach(function(voz){
+
+            const opcion =
+                document.createElement("option");
+
+            opcion.value =
+                voz.id;
+
+            opcion.textContent =
+                voz.nombre;
+
+            campoVoz.appendChild(opcion);
+
+        });
+
+    }
+
+    campoVoz.value =
+        configuracion.voz || "";
+
+}
+
+    // =====================================================
+    // ABRIR POPUP
+    // =====================================================
 
     const popup =
         document.getElementById(
@@ -6831,6 +7340,27 @@ function guardarEdicionPerfilEntrenamiento(){
 
 }
 
+
+// =====================================================
+// CERRAR POPUP CONFIRMAR PERFIL
+// =====================================================
+
+function cerrarConfirmarPerfilEntrenamiento(){
+
+    const popup =
+        document.getElementById(
+            "popupConfirmarPerfilEntrenamiento"
+        );
+
+    if(popup){
+
+        popup.style.display = "none";
+
+    }
+
+}
+
+
 // =====================================================
 // CREAR PERFIL — POR AHORA SOLO AVISO
 // =====================================================
@@ -6838,6 +7368,165 @@ function guardarEdicionPerfilEntrenamiento(){
 function crearPerfilEntrenamiento(){
 
     alert("Acá vamos a crear el perfil.");
+}
+
+
+
+
+// =====================================================
+// GUARDAR NUEVO PERFIL DE ENTRENAMIENTO
+// =====================================================
+
+function guardarNuevoPerfilEntrenamiento(){
+
+    const campo =
+        document.getElementById(
+            "nombreNuevoPerfilEntrenamiento"
+        );
+
+    if(!campo){
+        return;
+    }
+
+
+    const nombre =
+        campo.value.trim();
+
+
+    if(nombre === ""){
+
+        return;
+    }
+
+
+    if(nombre.length > 20){
+
+        return;
+    }
+
+
+    const perfiles =
+        JSON.parse(
+            localStorage.getItem("perfilesEntrenamiento") || "[]"
+        );
+
+
+    if(perfiles.length >= 10){
+
+        return;
+    }
+
+
+    const nombreRepetido =
+        perfiles.some(function(perfil){
+
+            return (
+                (perfil.nombre || "")
+                .trim()
+                .toLowerCase()
+            ) === nombre.toLowerCase();
+
+        });
+
+
+  if(nombreRepetido){
+
+    const mensaje =
+        document.getElementById(
+            "mensajeNuevoPerfilEntrenamiento"
+        );
+
+    if(mensaje){
+
+        mensaje.textContent =
+            "⚠️ Ya existe un perfil con ese nombre";
+
+        mensaje.style.color = "#FFD700";
+        mensaje.style.display = "block";
+
+    }
+
+    return;
+}
+
+
+    const configuracion =
+        JSON.parse(
+            localStorage.getItem("configuracionEntrenamiento") || "null"
+        );
+
+
+    if(!configuracion){
+
+        return;
+    }
+
+
+    const nuevoPerfil = {
+
+        nombre: nombre,
+
+        configuracion: configuracion
+
+    };
+
+
+    perfiles.push(nuevoPerfil);
+
+
+    localStorage.setItem(
+        "perfilesEntrenamiento",
+        JSON.stringify(perfiles)
+    );
+
+
+    // =================================================
+    // MENSAJE DENTRO DEL POPUP
+    // =================================================
+
+ const mensaje =
+    document.getElementById("mensajeNuevoPerfilEntrenamiento");
+
+    const popup =
+        document.getElementById(
+            "popupConfirmarPerfilEntrenamiento"
+        );
+
+
+    if(mensaje){
+
+        mensaje.textContent =
+            "✅ Perfil guardado correctamente";
+
+        mensaje.style.display = "block";
+
+    }
+
+
+    // =================================================
+    // CERRAR POPUP DESPUÉS DEL MENSAJE
+    // =================================================
+
+    setTimeout(function(){
+
+        if(mensaje){
+
+            mensaje.style.display = "none";
+
+        }
+
+        if(popup){
+
+            popup.style.display = "none";
+
+        }
+
+        campo.value = "";
+
+    },1200);
+
+
+
 }
 
 
