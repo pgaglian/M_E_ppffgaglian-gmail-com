@@ -9800,36 +9800,127 @@ function mostrarRadiosSeleccionadas(){
 
         card.onclick = function(){
 
-            // Cerrar reproductores anteriores
-            document.querySelectorAll(
-                "#RadiosSeleccionadas audio"
-            ).forEach(function(audio){
+    // Cerrar reproductores anteriores
+    document.querySelectorAll(
+        "#RadiosSeleccionadas audio"
+    ).forEach(function(audio){
 
-                audio.pause();
-                audio.remove();
+        audio.pause();
+        audio.remove();
 
-            });
+    });
 
-            const audio = document.createElement("audio");
+    const audio = document.createElement("audio");
 
-            audio.controls = true;
-            audio.src = radioInfo.urlStream || "";
-            audio.style.width = "100%";
-            audio.style.maxWidth = "200px";
-            audio.style.height = "30px";
-            audio.style.marginTop = "12px";
+    audio.controls = true;
+    audio.style.width = "100%";
+    audio.style.maxWidth = "200px";
+    audio.style.height = "30px";
+    audio.style.marginTop = "12px";
 
-            card.appendChild(audio);
+    card.appendChild(audio);
 
-            audio.play().catch(function(){
+    // Usar las alternativas disponibles
+    const streams = Array.isArray(radioInfo.streams) &&
+                    radioInfo.streams.length
+        ? radioInfo.streams
+        : [radioInfo.urlStream];
 
-                console.log(
-                    "El navegador requiere iniciar la reproducción manualmente."
-                );
+    let indiceStream = 0;
+    let intentos = 0;
+    const maxIntentosPorStream = 3;
+    let temporizadorReintento = null;
 
-            });
+    function reproducirStream(){
 
-        };
+        if(indiceStream >= streams.length){
+
+            console.log(
+                "No se pudo reproducir " +
+                radioInfo.nombre +
+                " después de probar todos los streams."
+            );
+
+            return;
+        }
+
+        const url = streams[indiceStream];
+
+        if(!url){
+
+            indiceStream++;
+            intentos = 0;
+            reproducirStream();
+            return;
+
+        }
+
+        intentos++;
+
+        console.log(
+            "Intentando " +
+            radioInfo.nombre +
+            " - stream " +
+            (indiceStream + 1) +
+            "/" +
+            streams.length +
+            " - intento " +
+            intentos
+        );
+
+        audio.src = url;
+        audio.load();
+
+        audio.play().catch(function(){
+
+            siguienteIntento();
+
+        });
+
+    }
+
+    function siguienteIntento(){
+
+        clearTimeout(temporizadorReintento);
+
+        if(intentos < maxIntentosPorStream){
+
+            temporizadorReintento = setTimeout(function(){
+
+                reproducirStream();
+
+            }, 3000);
+
+        }else{
+
+            indiceStream++;
+            intentos = 0;
+
+            temporizadorReintento = setTimeout(function(){
+
+                reproducirStream();
+
+            }, 1000);
+
+        }
+
+    }
+
+    audio.addEventListener("error", function(){
+
+        siguienteIntento();
+
+    });
+
+    audio.addEventListener("stalled", function(){
+
+        siguienteIntento();
+
+    });
+
+    reproducirStream();
+
+};
 
         contenedor.appendChild(card);
 
