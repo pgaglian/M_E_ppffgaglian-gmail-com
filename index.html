@@ -4043,14 +4043,55 @@ text-decoration:underline;
 
             <strong>⏳ PREPARACIÓN</strong>
 
-            <span
-                id="editarTiempoPreparacion"
-                style="
-                font-size:22px;
-                font-weight:bold;
-                ">
-                00:00
-            </span>
+            <div style="
+                display:flex;
+                align-items:center;
+                gap:6px;
+            ">
+
+                <button
+                    type="button"
+                    onclick="cambiarTiempoPerfilEntrenamiento('preparacion',-5)"
+                    style="
+                        padding:4px 9px;
+                        font-size:20px;
+                        line-height:20px;
+                        min-width:32px;
+                    "
+                >
+                    −
+                </button>
+
+                <span
+                    id="editarTiempoPreparacion"
+                    onclick="editarTiempoPerfilEntrenamiento('preparacion')"
+                    style="
+                        width:65px;
+                        font-size:27px;
+                        font-weight:bold;
+                        text-align:center;
+                        color:#111;
+                        cursor:pointer;
+                        user-select:none;
+                    "
+                >
+                    00:00
+                </span>
+
+                <button
+                    type="button"
+                    onclick="cambiarTiempoPerfilEntrenamiento('preparacion',5)"
+                    style="
+                        padding:4px 9px;
+                        font-size:20px;
+                        line-height:20px;
+                        min-width:32px;
+                    "
+                >
+                    +
+                </button>
+
+            </div>
 
         </div>
 
@@ -4071,14 +4112,55 @@ text-decoration:underline;
 
             <strong>💪 TRABAJO</strong>
 
-            <span
-                id="editarTiempoTrabajo"
-                style="
-                font-size:22px;
-                font-weight:bold;
-                ">
-                00:00
-            </span>
+            <div style="
+                display:flex;
+                align-items:center;
+                gap:6px;
+            ">
+
+                <button
+                    type="button"
+                    onclick="cambiarTiempoPerfilEntrenamiento('trabajo',-5)"
+                    style="
+                        padding:4px 9px;
+                        font-size:20px;
+                        line-height:20px;
+                        min-width:32px;
+                    "
+                >
+                    −
+                </button>
+
+                <span
+                    id="editarTiempoTrabajo"
+                    onclick="editarTiempoPerfilEntrenamiento('trabajo')"
+                    style="
+                        width:65px;
+                        font-size:27px;
+                        font-weight:bold;
+                        text-align:center;
+                        color:#111;
+                        cursor:pointer;
+                        user-select:none;
+                    "
+                >
+                    00:00
+                </span>
+
+                <button
+                    type="button"
+                    onclick="cambiarTiempoPerfilEntrenamiento('trabajo',5)"
+                    style="
+                        padding:4px 9px;
+                        font-size:20px;
+                        line-height:20px;
+                        min-width:32px;
+                    "
+                >
+                    +
+                </button>
+
+            </div>
 
         </div>
 
@@ -4099,14 +4181,55 @@ text-decoration:underline;
 
             <strong>😮‍💨 DESCANSO</strong>
 
-            <span
-                id="editarTiempoDescanso"
-                style="
-                font-size:22px;
-                font-weight:bold;
-                ">
-                00:00
-            </span>
+            <div style="
+                display:flex;
+                align-items:center;
+                gap:6px;
+            ">
+
+                <button
+                    type="button"
+                    onclick="cambiarTiempoPerfilEntrenamiento('descanso',-5)"
+                    style="
+                        padding:4px 9px;
+                        font-size:20px;
+                        line-height:20px;
+                        min-width:32px;
+                    "
+                >
+                    −
+                </button>
+
+                <span
+                    id="editarTiempoDescanso"
+                    onclick="editarTiempoPerfilEntrenamiento('descanso')"
+                    style="
+                        width:65px;
+                        font-size:27px;
+                        font-weight:bold;
+                        text-align:center;
+                        color:#FFF;
+                        cursor:pointer;
+                        user-select:none;
+                    "
+                >
+                    00:00
+                </span>
+
+                <button
+                    type="button"
+                    onclick="cambiarTiempoPerfilEntrenamiento('descanso',5)"
+                    style="
+                        padding:4px 9px;
+                        font-size:20px;
+                        line-height:20px;
+                        min-width:32px;
+                    "
+                >
+                    +
+                </button>
+
+            </div>
 
         </div>
 
@@ -4127,14 +4250,51 @@ text-decoration:underline;
 
             <strong>🔄 CICLOS</strong>
 
-            <span
-                id="editarCantidadCiclos"
-                style="
-                font-size:22px;
-                font-weight:bold;
-                ">
-                0
-            </span>
+            <div style="
+                display:flex;
+                align-items:center;
+                gap:6px;
+            ">
+
+                <button
+                    type="button"
+                    onclick="cambiarCiclosPerfilEntrenamiento(-1)"
+                    style="
+                        padding:4px 9px;
+                        font-size:20px;
+                        line-height:20px;
+                        min-width:32px;
+                    "
+                >
+                    −
+                </button>
+
+                <span
+                    id="editarCantidadCiclos"
+                    style="
+                        font-size:27px;
+                        font-weight:bold;
+                        min-width:35px;
+                        text-align:center;
+                    "
+                >
+                    0
+                </span>
+
+                <button
+                    type="button"
+                    onclick="cambiarCiclosPerfilEntrenamiento(1)"
+                    style="
+                        padding:4px 9px;
+                        font-size:20px;
+                        line-height:20px;
+                        min-width:32px;
+                    "
+                >
+                    +
+                </button>
+
+            </div>
 
         </div>
 
@@ -4155,14 +4315,51 @@ text-decoration:underline;
 
             <strong>🧱 BLOQUES</strong>
 
-            <span
-                id="editarCantidadBloques"
-                style="
-                font-size:22px;
-                font-weight:bold;
-                ">
-                0
-            </span>
+            <div style="
+                display:flex;
+                align-items:center;
+                gap:6px;
+            ">
+
+                <button
+                    type="button"
+                    onclick="cambiarBloquesPerfilEntrenamiento(-1)"
+                    style="
+                        padding:4px 9px;
+                        font-size:20px;
+                        line-height:20px;
+                        min-width:32px;
+                    "
+                >
+                    −
+                </button>
+
+                <span
+                    id="editarCantidadBloques"
+                    style="
+                        font-size:27px;
+                        font-weight:bold;
+                        min-width:35px;
+                        text-align:center;
+                    "
+                >
+                    0
+                </span>
+
+                <button
+                    type="button"
+                    onclick="cambiarBloquesPerfilEntrenamiento(1)"
+                    style="
+                        padding:4px 9px;
+                        font-size:20px;
+                        line-height:20px;
+                        min-width:32px;
+                    "
+                >
+                    +
+                </button>
+
+            </div>
 
         </div>
 
@@ -4183,16 +4380,103 @@ text-decoration:underline;
 
             <strong>🛌 DESC. BLOQUE</strong>
 
-            <span
-                id="editarTiempoDescansoBloque"
-                style="
-                font-size:22px;
-                font-weight:bold;
-                ">
-                00:00
-            </span>
+            <div style="
+                display:flex;
+                align-items:center;
+                gap:6px;
+            ">
+
+                <button
+                    type="button"
+                    onclick="cambiarTiempoPerfilEntrenamiento('descansoBloque',-5)"
+                    style="
+                        padding:4px 9px;
+                        font-size:20px;
+                        line-height:20px;
+                        min-width:32px;
+                    "
+                >
+                    −
+                </button>
+
+                <span
+                    id="editarTiempoDescansoBloque"
+                    onclick="editarTiempoPerfilEntrenamiento('descansoBloque')"
+                    style="
+                        width:65px;
+                        font-size:27px;
+                        font-weight:bold;
+                        text-align:center;
+                        color:#FFF;
+                        cursor:pointer;
+                        user-select:none;
+                    "
+                >
+                    00:00
+                </span>
+
+                <button
+                    type="button"
+                    onclick="cambiarTiempoPerfilEntrenamiento('descansoBloque',5)"
+                    style="
+                        padding:4px 9px;
+                        font-size:20px;
+                        line-height:20px;
+                        min-width:32px;
+                    "
+                >
+                    +
+                </button>
+
+            </div>
 
         </div>
+
+
+<!-- TIEMPO TOTAL -->
+<div style="
+    background:linear-gradient(90deg,#16A085,#117A65);
+    color:#FFF;
+    border-left:5px solid #76D7C4;
+    padding:10px 12px;
+    margin-top:8px;
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+">
+
+    <strong>⏱️ Tiempo total</strong>
+
+    <span
+        id="editarTiempoTotalEntrenamiento"
+        style="
+            font-size:27px;
+            font-weight:bold;
+        "
+    >00:00</span>
+
+</div>
+
+
+<!-- RESET -->
+<button
+    type="button"
+    onclick="resetearEdicionPerfilEntrenamiento()"
+    style="
+        width:100%;
+        margin-top:10px;
+        padding:10px;
+        font-size:16px;
+        font-weight:bold;
+        border:none;
+        border-radius:8px;
+        cursor:pointer;
+    "
+>
+    🔄 Restablecer valores
+</button>
+
 
 
         <!-- SONIDO -->
@@ -5814,7 +6098,6 @@ function cargarAlbumes(){
 }
 
 
-
 // ===== CONFIGURACION TIEMPOS ENTRENAMIENTO =====
 
 
@@ -5823,6 +6106,147 @@ let tiempoTrabajoEntrenamiento = 20;
 let tiempoDescansoEntrenamiento = 10;
 let tiempoDescansoBloqueEntrenamiento = 0;
 
+function cambiarTiempoPerfilEntrenamiento(tipo, cambio){
+
+    if(
+        tipo !== "preparacion" &&
+        tipo !== "trabajo" &&
+        tipo !== "descanso" &&
+        tipo !== "descansoBloque"
+    ){
+        return;
+    }
+
+    let idCampo =
+        tipo === "preparacion"
+        ? "editarTiempoPreparacion"
+        : tipo === "trabajo"
+        ? "editarTiempoTrabajo"
+        : tipo === "descanso"
+        ? "editarTiempoDescanso"
+        : "editarTiempoDescansoBloque";
+
+    let campo = document.getElementById(idCampo);
+
+    if(!campo){
+        return;
+    }
+
+    let valor = campo.textContent || "00:00";
+
+    valor = valor.replace(/\D/g,"");
+    valor = valor.padStart(4,"0");
+
+    let minutos = parseInt(valor.substring(0,2)) || 0;
+    let segundos = parseInt(valor.substring(2,4)) || 0;
+
+    let total = (minutos * 60) + segundos;
+
+    total += cambio;
+
+    if(total < 0){
+        total = 0;
+    }
+
+    campo.textContent =
+        formatearTiempoEntrenamiento(total);
+
+}
+
+
+function editarTiempoPerfilEntrenamiento(tipo){
+
+    if(
+        tipo !== "preparacion" &&
+        tipo !== "trabajo" &&
+        tipo !== "descanso" &&
+        tipo !== "descansoBloque"
+    ){
+        return;
+    }
+
+    let idCampo =
+        tipo === "preparacion"
+        ? "editarTiempoPreparacion"
+        : tipo === "trabajo"
+        ? "editarTiempoTrabajo"
+        : tipo === "descanso"
+        ? "editarTiempoDescanso"
+        : "editarTiempoDescansoBloque";
+
+    let campo = document.getElementById(idCampo);
+
+    if(!campo){
+        return;
+    }
+
+    let valorActual = campo.textContent || "00:00";
+
+    let valor = prompt(
+        "Ingresá los 4 números del tiempo:\n\nEjemplo: 0015 = 00:15",
+        valorActual.replace(":","")
+    );
+
+    if(valor === null){
+        return;
+    }
+
+    valor = valor.replace(/\D/g,"");
+    valor = valor.padStart(4,"0");
+
+    let minutos = parseInt(valor.substring(0,2)) || 0;
+    let segundos = parseInt(valor.substring(2,4)) || 0;
+
+    if(segundos > 59){
+        segundos = 59;
+    }
+
+    campo.textContent =
+        String(minutos).padStart(2,"0") + ":" +
+        String(segundos).padStart(2,"0");
+
+}
+
+
+function cambiarCiclosPerfilEntrenamiento(cambio){
+
+    let campo = document.getElementById("editarCantidadCiclos");
+
+    if(!campo){
+        return;
+    }
+
+    let ciclos = parseInt(campo.textContent) || 1;
+
+    ciclos += cambio;
+
+    if(ciclos < 1){
+        ciclos = 1;
+    }
+
+    campo.textContent = ciclos;
+
+}
+
+function cambiarBloquesPerfilEntrenamiento(cambio){
+
+    let campo = document.getElementById("editarCantidadBloques");
+
+    if(!campo){
+        return;
+    }
+
+    let bloques = parseInt(campo.textContent) || 1;
+
+    bloques += cambio;
+
+    if(bloques < 1){
+        bloques = 1;
+    }
+
+    campo.textContent = bloques;
+
+}
 
 function formatearTiempoEntrenamiento(segundos){
 
@@ -9657,14 +10081,22 @@ function filtrarRadios(tipo){
                 '<input type="checkbox" value="' +
                 radio.id + '"' +
                 (seleccionadas.includes(radio.id) ? " checked" : "") +
-                '> 📻 ' +
-                radio.nombre;
+                '>' +
+
+                '<img src="' + (radio.logo || '') +
+                '" alt="' + (radio.nombre || '') +
+                '" style="width:45px;height:45px;border-radius:8px;object-fit:cover;">' +
+
+                '<span>' +
+                radio.nombre +
+                '</span>';
 
             contenedor.appendChild(label);
 
         });
 
 }
+
 function abrirConfiguracionRadios(){
 
     const popup = document.getElementById("popupConfiguracionRadios");
@@ -9702,24 +10134,37 @@ function cerrarConfiguracionRadios(){
     popup.style.display = "none";
 
 }
-
 function guardarConfiguracionRadios(){
 
-    const radios = [];
+    // Recuperar las radios que ya estaban guardadas
+    const radiosGuardadas = JSON.parse(
+        localStorage.getItem("RadiosSeleccionadas")
+    ) || [];
 
+    // Convertirlas en Set para evitar duplicados
+    const radios = new Set(radiosGuardadas);
+
+    // Actualizar solamente las radios que pertenecen al filtro actual
     document.querySelectorAll(
         "#configuracionRadios input[type='checkbox']"
     ).forEach(function(checkbox){
 
         if(checkbox.checked){
-            radios.push(checkbox.value);
+
+            radios.add(checkbox.value);
+
+        }else{
+
+            radios.delete(checkbox.value);
+
         }
 
     });
 
+    // Guardar nuevamente todas las radios
     localStorage.setItem(
         "RadiosSeleccionadas",
-        JSON.stringify(radios)
+        JSON.stringify(Array.from(radios))
     );
 
     const mensaje = document.getElementById("mensajeRadios");
@@ -9741,6 +10186,8 @@ function guardarConfiguracionRadios(){
     mostrarRadiosSeleccionadas();
 
 }
+
+
 function mostrarRadiosSeleccionadas(){
 
     const contenedor = document.getElementById(
