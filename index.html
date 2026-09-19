@@ -10266,16 +10266,696 @@ function mostrarRadiosSeleccionadas(){
         window.temporizadorRadioActivo = null;
     }
 
-    const audio = document.createElement("audio");
+let reproductorRadio = document.getElementById("reproductorRadioFijo");
 
-    audio.controls = true;
-    audio.style.width = "100%";
-    audio.style.maxWidth = "200px";
-    audio.style.height = "30px";
-    audio.style.marginTop = "12px";
+if(reproductorRadio){
 
-    card.appendChild(audio);
+    reproductorRadio.audio.pause();
+    reproductorRadio.audio.src = "";
+    reproductorRadio.audio.load();
 
+    reproductorRadio.remove();
+
+    reproductorRadio = null;
+
+}
+
+
+if(!reproductorRadio){
+
+    const contenedorReproductor = document.createElement("div");
+
+    contenedorReproductor.id = "reproductorRadioFijo";
+
+    /* =====================================================
+       ESTEREO RETRO 80s
+       ===================================================== */
+
+    contenedorReproductor.style.position = "fixed";
+    contenedorReproductor.style.bottom = "15px";
+    contenedorReproductor.style.left = "50%";
+    contenedorReproductor.style.transform = "translateX(-50%)";
+
+    contenedorReproductor.style.zIndex = "9999";
+
+    contenedorReproductor.style.width = "430px";
+    contenedorReproductor.style.maxWidth = "94vw";
+
+    contenedorReproductor.style.boxSizing = "border-box";
+
+    contenedorReproductor.style.padding = "14px";
+
+    contenedorReproductor.style.borderRadius = "12px";
+
+    contenedorReproductor.style.border =
+        "2px solid #777";
+
+    contenedorReproductor.style.background =
+        "linear-gradient(145deg,#666,#292929 45%,#111)";
+
+    contenedorReproductor.style.boxShadow =
+        "0 10px 35px rgba(0,0,0,.85)," +
+        "inset 0 2px 3px rgba(255,255,255,.35)," +
+        "inset 0 -3px 5px rgba(0,0,0,.8)";
+
+    contenedorReproductor.style.fontFamily =
+        "Arial, Helvetica, sans-serif";
+
+    contenedorReproductor.style.color = "#ddd";
+
+
+    /* =====================================================
+       MARCO SUPERIOR
+       ===================================================== */
+
+    const frente = document.createElement("div");
+
+    frente.style.background =
+        "linear-gradient(180deg,#444,#181818)";
+
+    frente.style.border =
+        "2px solid #111";
+
+    frente.style.borderRadius = "7px";
+
+    frente.style.padding = "10px";
+
+    frente.style.boxShadow =
+        "inset 0 1px 2px rgba(255,255,255,.2)";
+
+
+    /* =====================================================
+       MARCA / MODELO
+       ===================================================== */
+
+    const marca = document.createElement("div");
+
+    marca.innerHTML =
+        "<span style='" +
+        "font-size:11px;" +
+        "letter-spacing:3px;" +
+        "color:#aaa;" +
+        "'>MI ESPACIO</span>" +
+
+        "<span style='" +
+        "float:right;" +
+        "font-size:9px;" +
+        "letter-spacing:2px;" +
+        "color:#888;" +
+        "'>STEREO DIGITAL</span>";
+
+    marca.style.marginBottom = "7px";
+
+    frente.appendChild(marca);
+
+
+    /* =====================================================
+       PANTALLA DIGITAL
+       ===================================================== */
+
+    const pantalla = document.createElement("div");
+
+    pantalla.style.background =
+        "linear-gradient(180deg,#050805,#102414,#030503)";
+
+    pantalla.style.border =
+        "2px solid #111";
+
+    pantalla.style.borderRadius = "4px";
+
+    pantalla.style.padding = "6px";
+
+    pantalla.style.textAlign = "center";
+
+    pantalla.style.boxShadow =
+        "inset 0 0 15px rgba(0,255,80,.22)";
+
+    pantalla.style.fontFamily = "monospace";
+
+    pantalla.style.color = "#61ff7a";
+
+    pantalla.innerHTML =
+        "<div style='font-size:12px;letter-spacing:2px'>" +
+        (radioInfo.nombre || "RADIO") +
+        "</div>" +
+
+        "<div style='" +
+        "font-size:20px;" +
+        "font-weight:bold;" +
+        "letter-spacing:2px;" +
+        "margin-top:2px;" +
+        "'>" +
+        (radioInfo.frecuencia || "") +
+        "</div>";
+
+    frente.appendChild(pantalla);
+
+
+    /* =====================================================
+       DIAL RETRO
+       ===================================================== */
+
+    const dial = document.createElement("div");
+
+    dial.style.position = "relative";
+
+    dial.style.height = "82px";
+
+    dial.style.marginTop = "9px";
+
+    dial.style.border =
+        "2px solid #111";
+
+    dial.style.borderRadius = "5px";
+
+    dial.style.background =
+        "linear-gradient(180deg,#252525,#090909)";
+
+    dial.style.overflow = "hidden";
+
+    dial.style.boxShadow =
+        "inset 0 0 10px rgba(0,0,0,.9)";
+
+
+    /* ===== NÚMEROS DEL DIAL ===== */
+
+    const numerosDial = document.createElement("div");
+
+    numerosDial.style.position = "absolute";
+
+    numerosDial.style.left = "12px";
+
+    numerosDial.style.right = "12px";
+
+    numerosDial.style.top = "11px";
+
+    numerosDial.style.display = "flex";
+
+    numerosDial.style.justifyContent =
+        "space-between";
+
+    numerosDial.style.color = "#aaa";
+
+    numerosDial.style.fontFamily =
+        "monospace";
+
+    numerosDial.style.fontSize = "9px";
+
+    numerosDial.innerHTML =
+        "<span>88</span>" +
+        "<span>92</span>" +
+        "<span>96</span>" +
+        "<span>100</span>" +
+        "<span>104</span>" +
+        "<span>108</span>";
+
+    dial.appendChild(numerosDial);
+
+
+    /* ===== ESCALA ===== */
+
+    const escala = document.createElement("div");
+
+    escala.style.position = "absolute";
+
+    escala.style.left = "10px";
+
+    escala.style.right = "10px";
+
+    escala.style.top = "29px";
+
+    escala.style.height = "24px";
+
+    escala.style.background =
+        "repeating-linear-gradient(" +
+        "90deg," +
+        "transparent 0px," +
+        "transparent 7px," +
+        "#aaa 8px," +
+        "#aaa 9px" +
+        ")";
+
+    escala.style.borderTop =
+        "1px solid #aaa";
+
+    dial.appendChild(escala);
+
+
+    /* ===== AM / FM ===== */
+
+    const am = document.createElement("span");
+
+    am.innerHTML = "AM";
+
+    am.style.position = "absolute";
+
+    am.style.left = "14px";
+
+    am.style.bottom = "8px";
+
+    am.style.fontSize = "11px";
+
+    am.style.fontWeight = "bold";
+
+    am.style.color = "#c8c8c8";
+
+    dial.appendChild(am);
+
+
+    const fm = document.createElement("span");
+
+    fm.innerHTML = "FM";
+
+    fm.style.position = "absolute";
+
+    fm.style.right = "14px";
+
+    fm.style.bottom = "8px";
+
+    fm.style.fontSize = "11px";
+
+    fm.style.fontWeight = "bold";
+
+    fm.style.color = "#c8c8c8";
+
+    dial.appendChild(fm);
+
+
+    /* ===== AGUJA ===== */
+
+    const aguja = document.createElement("div");
+
+    aguja.style.position = "absolute";
+
+    aguja.style.top = "5px";
+
+    aguja.style.bottom = "5px";
+
+    aguja.style.left = "50%";
+
+    aguja.style.width = "2px";
+
+    aguja.style.background = "#ff3131";
+
+    aguja.style.boxShadow =
+        "0 0 8px #ff2020";
+
+    aguja.style.transform =
+        "translateX(-50%)";
+
+    dial.appendChild(aguja);
+
+
+    frente.appendChild(dial);
+
+
+    /* =====================================================
+       VU METERS
+       ===================================================== */
+
+    const zonaVU = document.createElement("div");
+
+    zonaVU.style.display = "flex";
+
+    zonaVU.style.gap = "4px";
+
+    zonaVU.style.marginTop = "8px";
+
+    zonaVU.style.height = "30px";
+
+    zonaVU.style.padding = "4px";
+
+    zonaVU.style.boxSizing = "border-box";
+
+    zonaVU.style.background = "#080808";
+
+    zonaVU.style.border =
+        "1px solid #555";
+
+    zonaVU.style.borderRadius = "4px";
+
+    zonaVU.style.alignItems = "center";
+
+    const barrasVU = [];
+
+    for(let i = 0; i < 28; i++){
+
+        const barra = document.createElement("div");
+
+        barra.style.flex = "1";
+
+        barra.style.height = "5px";
+
+        barra.style.borderRadius = "1px";
+
+        barra.style.background =
+            i > 23
+                ? "#ff3030"
+                : i > 17
+                    ? "#ffd21c"
+                    : "#25ff61";
+
+        barra.style.boxShadow =
+            "0 0 4px currentColor";
+
+        zonaVU.appendChild(barra);
+
+        barrasVU.push(barra);
+
+    }
+
+    frente.appendChild(zonaVU);
+
+
+    /* =====================================================
+       PARTE INFERIOR — PARLANTES
+       ===================================================== */
+
+    const parlantes = document.createElement("div");
+
+    parlantes.style.display = "grid";
+
+    parlantes.style.gridTemplateColumns =
+        "1fr 1fr";
+
+    parlantes.style.gap = "10px";
+
+    parlantes.style.marginTop = "10px";
+
+
+    function crearParlante(){
+
+        const parlante = document.createElement("div");
+
+        parlante.style.height = "62px";
+
+        parlante.style.borderRadius = "5px";
+
+        parlante.style.border =
+            "2px solid #111";
+
+        parlante.style.background =
+            "repeating-linear-gradient(" +
+            "90deg," +
+            "#171717 0px," +
+            "#171717 3px," +
+            "#292929 4px," +
+            "#292929 6px" +
+            ")";
+
+        parlante.style.boxShadow =
+            "inset 0 0 15px #000";
+
+        return parlante;
+
+    }
+
+
+    parlantes.appendChild(
+        crearParlante()
+    );
+
+    parlantes.appendChild(
+        crearParlante()
+    );
+
+    frente.appendChild(parlantes);
+
+
+    /* =====================================================
+       CONTROLES FÍSICOS
+       ===================================================== */
+
+    const controles = document.createElement("div");
+
+    controles.style.display = "flex";
+
+    controles.style.justifyContent =
+        "space-between";
+
+    controles.style.alignItems = "center";
+
+    controles.style.marginTop = "9px";
+
+
+    function crearPerilla(texto){
+
+        const grupo = document.createElement("div");
+
+        grupo.style.textAlign = "center";
+
+        const perilla = document.createElement("div");
+
+        perilla.style.width = "27px";
+
+        perilla.style.height = "27px";
+
+        perilla.style.margin = "auto";
+
+        perilla.style.borderRadius = "50%";
+
+        perilla.style.background =
+            "radial-gradient(circle at 35% 30%,#777,#222 55%,#080808)";
+
+        perilla.style.border =
+            "2px solid #111";
+
+        perilla.style.boxShadow =
+            "0 2px 4px #000";
+
+        const etiqueta =
+            document.createElement("div");
+
+        etiqueta.innerHTML = texto;
+
+        etiqueta.style.fontSize = "8px";
+
+        etiqueta.style.marginTop = "3px";
+
+        etiqueta.style.color = "#999";
+
+        grupo.appendChild(perilla);
+
+        grupo.appendChild(etiqueta);
+
+        return grupo;
+
+    }
+
+
+    controles.appendChild(
+        crearPerilla("TUNE")
+    );
+
+    controles.appendChild(
+        crearPerilla("VOLUME")
+    );
+
+    controles.appendChild(
+        crearPerilla("BASS")
+    );
+
+    controles.appendChild(
+        crearPerilla("TREBLE")
+    );
+
+
+    /* =====================================================
+       AUDIO REAL
+       ===================================================== */
+
+    const audioNuevo =
+        document.createElement("audio");
+
+    audioNuevo.controls = true;
+
+    audioNuevo.style.width = "100%";
+
+    audioNuevo.style.height = "32px";
+
+    audioNuevo.style.marginTop = "8px";
+
+
+    /* =====================================================
+       BOTÓN CERRAR
+       ===================================================== */
+
+    const botonCerrar =
+        document.createElement("button");
+
+    botonCerrar.innerHTML = "✕";
+
+    botonCerrar.title =
+        "Cerrar reproductor";
+
+    botonCerrar.style.cursor =
+        "pointer";
+
+    botonCerrar.style.position =
+        "absolute";
+
+    botonCerrar.style.right = "7px";
+
+    botonCerrar.style.top = "7px";
+
+    botonCerrar.style.width = "26px";
+
+    botonCerrar.style.height = "26px";
+
+    botonCerrar.style.borderRadius = "50%";
+
+    botonCerrar.style.border =
+        "1px solid #888";
+
+    botonCerrar.style.background =
+        "#222";
+
+    botonCerrar.style.color =
+        "#fff";
+
+botonCerrar.onclick =
+    function(){
+
+        if(window.temporizadorRadioActivo){
+
+            clearTimeout(
+                window.temporizadorRadioActivo
+            );
+
+            window.temporizadorRadioActivo =
+                null;
+
+        }
+
+        audioNuevo.__radioCerrada =
+            true;
+
+        audioNuevo.pause();
+
+        audioNuevo.src = "";
+
+        audioNuevo.load();
+
+        contenedorReproductor.remove();
+
+    };
+
+    frente.appendChild(audioNuevo);
+
+    frente.appendChild(botonCerrar);
+
+    contenedorReproductor.appendChild(frente);
+
+    document.body.appendChild(
+        contenedorReproductor
+    );
+
+
+    reproductorRadio =
+        contenedorReproductor;
+
+    reproductorRadio.audio =
+        audioNuevo;
+
+   
+
+    /* =====================================================
+       LUCES REACTIVAS
+       ===================================================== */
+
+    let animacionVU = null;
+
+    function moverVU(){
+
+        if(
+            audioNuevo.paused ||
+            audioNuevo.ended ||
+            audioNuevo.__radioCerrada
+        ){
+
+            barrasVU.forEach(
+                function(barra){
+
+                    barra.style.opacity =
+                        "0.35";
+
+                }
+            );
+
+            return;
+
+        }
+
+
+        barrasVU.forEach(
+            function(barra,index){
+
+                const onda =
+                    Math.sin(
+                        Date.now() / 120 +
+                        index * .8
+                    );
+
+                const altura =
+                    0.25 +
+                    Math.abs(onda) * .75;
+
+                barra.style.opacity =
+                    altura;
+
+            }
+        );
+
+
+        animacionVU =
+            requestAnimationFrame(
+                moverVU
+            );
+
+    }
+
+
+    audioNuevo.addEventListener(
+        "play",
+        function(){
+
+            if(animacionVU === null){
+
+                moverVU();
+
+            }
+
+        }
+    );
+
+
+    audioNuevo.addEventListener(
+        "pause",
+        function(){
+
+            if(animacionVU){
+
+                cancelAnimationFrame(
+                    animacionVU
+                );
+
+                animacionVU = null;
+
+            }
+
+            barrasVU.forEach(
+                function(barra){
+
+                    barra.style.opacity =
+                        "0.35";
+
+                }
+            );
+
+        }
+    );
+
+}
     const streams = Array.isArray(radioInfo.streams) &&
                     radioInfo.streams.length
         ? radioInfo.streams
@@ -10333,11 +11013,15 @@ function mostrarRadiosSeleccionadas(){
 
     }
 
-    function siguienteIntento(){
+   function siguienteIntento(){
 
-        if(audio.paused === false){
-            return;
-        }
+    if(audio.__radioCerrada){
+        return;
+    }
+
+    if(audio.paused === false){
+        return;
+    }
 
         if(window.temporizadorRadioActivo){
             clearTimeout(window.temporizadorRadioActivo);
