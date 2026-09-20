@@ -10268,10 +10268,13 @@ function mostrarRadiosSeleccionadas(){
 
 let reproductorRadio = document.getElementById("reproductorRadioFijo");
 
+
 if(reproductorRadio){
 
+    reproductorRadio.audio.__radioCerrada = true;
+
     reproductorRadio.audio.pause();
-    reproductorRadio.audio.src = "";
+    reproductorRadio.audio.removeAttribute("src");
     reproductorRadio.audio.load();
 
     reproductorRadio.remove();
@@ -10280,6 +10283,8 @@ if(reproductorRadio){
 
 }
 
+
+let audioNuevo = null;
 
 if(!reproductorRadio){
 
@@ -10760,21 +10765,20 @@ if(!reproductorRadio){
     );
 
 
-    /* =====================================================
-       AUDIO REAL
-       ===================================================== */
+/* =====================================================
+   AUDIO REAL
+   ===================================================== */
 
-    const audioNuevo =
-        document.createElement("audio");
+audioNuevo = document.createElement("audio");
 
-    audioNuevo.controls = true;
+audioNuevo.controls = false;
+audioNuevo.autoplay = false;
 
-    audioNuevo.style.width = "100%";
+audioNuevo.style.width = "100%";
 
-    audioNuevo.style.height = "32px";
+audioNuevo.style.height = "32px";
 
-    audioNuevo.style.marginTop = "8px";
-
+audioNuevo.style.marginTop = "8px";
 
     /* =====================================================
        BOTÓN CERRAR
@@ -10830,13 +10834,20 @@ botonCerrar.onclick =
         audioNuevo.__radioCerrada =
             true;
 
-        audioNuevo.pause();
+audioNuevo.pause();
 
-        audioNuevo.src = "";
+audioNuevo.removeAttribute("src");
 
-        audioNuevo.load();
+audioNuevo.load();
 
-        contenedorReproductor.remove();
+audioNuevo.pause();
+audioNuevo.currentTime = 0;
+audioNuevo.src = "";
+audioNuevo.load();
+
+contenedorReproductor.remove();
+
+reproductorRadio = null;
 
     };
 
@@ -10849,6 +10860,86 @@ botonCerrar.onclick =
     document.body.appendChild(
         contenedorReproductor
     );
+
+/* =====================================================
+   REPRODUCTOR MOVIBLE
+   ===================================================== */
+
+let moviendoReproductor = false;
+let desplazamientoX = 0;
+let desplazamientoY = 0;
+
+contenedorReproductor.addEventListener(
+    "pointerdown",
+    function(e){
+
+        if(
+            e.target.tagName === "AUDIO" ||
+            e.target.tagName === "BUTTON"
+        ){
+            return;
+        }
+
+        moviendoReproductor = true;
+
+        const rect =
+            contenedorReproductor.getBoundingClientRect();
+
+        desplazamientoX =
+            e.clientX - rect.left;
+
+        desplazamientoY =
+            e.clientY - rect.top;
+
+        contenedorReproductor.style.bottom =
+            "auto";
+
+        contenedorReproductor.style.left =
+            rect.left + "px";
+
+        contenedorReproductor.style.top =
+            rect.top + "px";
+
+        contenedorReproductor.style.transform =
+            "none";
+
+        contenedorReproductor.setPointerCapture(
+            e.pointerId
+        );
+    }
+);
+
+contenedorReproductor.addEventListener(
+    "pointermove",
+    function(e){
+
+        if(!moviendoReproductor){
+            return;
+        }
+
+        contenedorReproductor.style.left =
+            (e.clientX - desplazamientoX) + "px";
+
+        contenedorReproductor.style.top =
+            (e.clientY - desplazamientoY) + "px";
+    }
+);
+
+contenedorReproductor.addEventListener(
+    "pointerup",
+    function(){
+
+        moviendoReproductor = false;
+    }
+);
+
+contenedorReproductor.addEventListener(
+    "pointercancel",
+    function(){
+
+        moviendoReproductor = false;
+    }
+);
 
 
     reproductorRadio =
@@ -11002,10 +11093,10 @@ botonCerrar.onclick =
             intentos
         );
 
-        audio.src = url;
-        audio.load();
+       audioNuevo.src = url;
+      audioNuevo.load();
 
-        audio.play().catch(function(){
+     audioNuevo.play().catch(function(){
 
             siguienteIntento();
 
@@ -11015,11 +11106,11 @@ botonCerrar.onclick =
 
    function siguienteIntento(){
 
-    if(audio.__radioCerrada){
+    if(audioNuevo.__radioCerrada){
         return;
     }
 
-    if(audio.paused === false){
+    if(audioNuevo.paused === false){
         return;
     }
 
@@ -11050,13 +11141,13 @@ botonCerrar.onclick =
 
     }
 
-    audio.addEventListener("error", function(){
+ audioNuevo.addEventListener("error", function(){
 
         siguienteIntento();
 
     });
 
-    audio.addEventListener("stalled", function(){
+   audioNuevo.addEventListener("stalled", function(){
 
         siguienteIntento();
 
