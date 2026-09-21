@@ -10369,9 +10369,6 @@ if (!reproductorRadio) {
     asaArrastre.style.cursor =
         "grab";
 
-asaArrastre.style.touchAction =
-    "none";
-
     asaArrastre.title =
         "Arrastrá para mover";
 
@@ -11321,7 +11318,11 @@ asaArrastre.style.touchAction =
         0;
 
 
-  asaArrastre.addEventListener(
+asaArrastre.style.touchAction =
+    "none";
+
+
+asaArrastre.addEventListener(
     "pointerdown",
     function(e){
 
@@ -11330,84 +11331,92 @@ asaArrastre.style.touchAction =
         moviendo =
             true;
 
+        const rect =
+            contenedorReproductor
+                .getBoundingClientRect();
 
-            const rect =
-                contenedorReproductor
-                    .getBoundingClientRect();
+        offsetX =
+            e.clientX -
+            rect.left;
+
+        offsetY =
+            e.clientY -
+            rect.top;
+
+        contenedorReproductor.style.bottom =
+            "auto";
+
+        contenedorReproductor.style.left =
+            rect.left + "px";
+
+        contenedorReproductor.style.top =
+            rect.top + "px";
+
+        contenedorReproductor.style.transform =
+            "none";
+
+        asaArrastre.setPointerCapture(
+            e.pointerId
+        );
+
+    }
+);
 
 
-            offsetX =
-                e.clientX -
-                rect.left;
+asaArrastre.addEventListener(
+    "pointermove",
+    function(e){
 
-            offsetY =
-                e.clientY -
-                rect.top;
+        if(!moviendo){
+            return;
+        }
+
+        e.preventDefault();
+
+        contenedorReproductor.style.left =
+            (e.clientX - offsetX) +
+            "px";
+
+        contenedorReproductor.style.top =
+            (e.clientY - offsetY) +
+            "px";
+
+    }
+);
 
 
-            contenedorReproductor.style.bottom =
-                "auto";
+asaArrastre.addEventListener(
+    "pointerup",
+    function(e){
 
-            contenedorReproductor.style.left =
-                rect.left + "px";
+        moviendo =
+            false;
 
-            contenedorReproductor.style.top =
-                rect.top + "px";
+        if(
+            asaArrastre.hasPointerCapture(
+                e.pointerId
+            )
+        ){
 
-            contenedorReproductor.style.transform =
-                "none";
-
-
-            asaArrastre.setPointerCapture(
+            asaArrastre.releasePointerCapture(
                 e.pointerId
             );
 
         }
-    );
+
+    }
+);
 
 
-    asaArrastre.addEventListener(
-        "pointermove",
-        function(e){
+asaArrastre.addEventListener(
+    "pointercancel",
+    function(){
 
-            if(!moviendo){
-                return;
-            }
+        moviendo =
+            false;
 
-
-            contenedorReproductor.style.left =
-                (e.clientX - offsetX) +
-                "px";
-
-            contenedorReproductor.style.top =
-                (e.clientY - offsetY) +
-                "px";
-
-        }
-    );
-
-
-    asaArrastre.addEventListener(
-        "pointerup",
-        function(){
-
-            moviendo =
-                false;
-
-        }
-    );
-
-
-    asaArrastre.addEventListener(
-        "pointercancel",
-        function(){
-
-            moviendo =
-                false;
-
-        }
-    );
-
+    }
+);
 
     /* =====================================================
        REFERENCIA DEL REPRODUCTOR
