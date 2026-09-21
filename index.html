@@ -10596,6 +10596,9 @@ if (!reproductorRadio) {
     zonaVU.style.margin =
         "0 5px";
 
+zonaVU.style.transform =
+    "translateX(18px)";
+
     zonaVU.style.padding =
         "3px 4px";
 
@@ -10836,7 +10839,14 @@ cajaControles.appendChild(
         "5px";
 
     boxVolumen.style.transform =
-    "translateX(12px)";
+    "translateX(20px)";
+
+if(window.innerWidth <= 600){
+
+    boxVolumen.style.transform =
+        "translateX(15px)";
+
+}
 
     const iconoVolumen =
         document.createElement("span");
@@ -11626,67 +11636,65 @@ document.addEventListener(
 
     function moverVU(){
 
-        if(
-            audioNuevo.paused ||
-            audioNuevo.ended ||
-            audioNuevo.__radioCerrada
-        ){
-
-            barrasVU.forEach(
-                function(barra){
-
-                    barra.style.opacity =
-                        "0.35";
-
-                    barra.style.height =
-                        "25%";
-
-                }
-            );
-
-            animacionVU =
-                null;
-
-            return;
-
-        }
-
+    if(
+        audioNuevo.paused ||
+        audioNuevo.ended ||
+        audioNuevo.__radioCerrada
+    ){
 
         barrasVU.forEach(
-            function(barra,index){
-
-                const onda =
-                    Math.sin(
-                        Date.now() / 100 +
-                        index * 0.7
-                    );
-
-
-                const altura =
-                    0.20 +
-                    Math.abs(onda) *
-                    0.80;
-
+            function(barra){
 
                 barra.style.opacity =
-                    altura;
-
+                    "0.35";
 
                 barra.style.height =
-                    (altura * 100) +
-                    "%";
+                    "25%";
 
             }
         );
 
-
         animacionVU =
-            requestAnimationFrame(
-                moverVU
-            );
+            null;
+
+        return;
 
     }
 
+
+    barrasVU.forEach(
+        function(barra,index){
+
+            const onda =
+                Math.sin(
+                    Date.now() / 100 +
+                    index * 0.7
+                );
+
+
+            const altura =
+                0.20 +
+                Math.abs(onda) *
+                0.80;
+
+
+            barra.style.opacity =
+                altura;
+
+            barra.style.height =
+                (altura * 100) +
+                "%";
+
+        }
+    );
+
+
+    animacionVU =
+        requestAnimationFrame(
+            moverVU
+        );
+
+}
 
     audioNuevo.addEventListener(
         "play",
