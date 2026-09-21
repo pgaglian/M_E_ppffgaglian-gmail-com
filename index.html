@@ -10669,6 +10669,32 @@ if (!reproductorRadio) {
     }
 
 
+/* =====================================================
+   AJUSTE VU PARA CELULAR
+   ===================================================== */
+
+if(
+    window.innerWidth <= 600
+){
+
+    zonaVU.style.width =
+        "95px";
+
+    zonaVU.style.gap =
+        "1px";
+
+    barrasVU.forEach(
+        function(barra){
+
+            barra.style.width =
+                "2px";
+
+        }
+    );
+
+}
+
+
     /* =====================================================
        CONTROLES
        ===================================================== */
