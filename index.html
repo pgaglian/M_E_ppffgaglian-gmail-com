@@ -10720,7 +10720,7 @@ bloquePlay.style.flexDirection =
     "column";
 
 bloquePlay.style.alignItems =
-    "center";
+    "flex-end";
 
 bloquePlay.style.justifyContent =
     "center";
@@ -10809,10 +10809,13 @@ bloquePlay.appendChild(
     btnPlayPause.style.fontSize =
         "12px";
 
+btnPlayPause.style.transform =
+    "translateX(20px)";
     
 bloquePlay.appendChild(
     btnPlayPause
 );
+
 
 cajaControles.appendChild(
     bloquePlay
@@ -10832,6 +10835,8 @@ cajaControles.appendChild(
     boxVolumen.style.gap =
         "5px";
 
+    boxVolumen.style.transform =
+    "translateX(12px)";
 
     const iconoVolumen =
         document.createElement("span");
@@ -10933,6 +10938,8 @@ cajaControles.appendChild(
     botonCerrar.style.flexShrink =
         "0";
 
+botonCerrar.style.transform =
+    "translateY(-12px)";
 
     panelSuperior.appendChild(
         boxEmisora
