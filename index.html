@@ -10585,7 +10585,7 @@ if (!reproductorRadio) {
         "center";
 
     zonaVU.style.gap =
-        "3px";
+        "4px";
 
     zonaVU.style.height =
         "30px";
@@ -10605,11 +10605,14 @@ zonaVU.style.transform =
     zonaVU.style.boxSizing =
         "border-box";
 
-    zonaVU.style.background =
-        "rgba(0,0,0,.35)";
+   zonaVU.style.background =
+    "linear-gradient(to bottom,#02070b,#000000)";
 
-    zonaVU.style.border =
-        "1px solid rgba(0,240,255,.15)";
+  zonaVU.style.border =
+    "1px solid rgba(0,240,255,.45)";
+
+zonaVU.style.borderBottom =
+    "2px solid rgba(0,240,255,.45)";
 
     zonaVU.style.borderRadius =
         "5px";
@@ -10624,7 +10627,7 @@ zonaVU.style.transform =
             document.createElement("div");
 
         barra.style.width =
-            "4px";
+            "5px";
 
         barra.style.height =
             "25%";
@@ -10635,21 +10638,20 @@ zonaVU.style.transform =
         barra.style.borderRadius =
             "2px";
 
-        barra.style.background =
-            i > 14
-                ? "#ff00a0"
-                : "#00f0ff";
+     barra.style.background =
+    "linear-gradient(to top," +
+    "#00ff66 0%," +
+    "#00f0ff 50%," +
+    "#ff003c 100%)";
 
-        barra.style.boxShadow =
-            i > 14
-                ? "0 0 6px #ff00a0"
-                : "0 0 6px #00f0ff";
+barra.style.boxShadow =
+    "0 0 4px rgba(0,240,255,.8)";
 
         barra.style.opacity =
             "0.35";
 
         barra.style.transition =
-            "height .05s linear,opacity .05s linear";
+            "height .05s linear,opacity .08s linear";
 
         zonaVU.appendChild(
             barra
@@ -11292,6 +11294,38 @@ botonCerrar.style.transform =
         0.8;
 
 
+audioNuevo.crossOrigin =
+    "anonymous";
+
+const contextoAudio =
+    new (window.AudioContext ||
+         window.webkitAudioContext)();
+
+const analizadorAudio =
+    contextoAudio.createAnalyser();
+
+analizadorAudio.fftSize =
+    64;
+
+const fuenteAudio =
+    contextoAudio.createMediaElementSource(
+        audioNuevo
+    );
+
+fuenteAudio.connect(
+    analizadorAudio
+);
+
+analizadorAudio.connect(
+    contextoAudio.destination
+);
+
+const datosVU =
+    new Uint8Array(
+        analizadorAudio.frequencyBinCount
+    );
+
+
     /* =====================================================
        VOLUMEN
        ===================================================== */
@@ -11633,8 +11667,7 @@ document.addEventListener(
     let animacionVU =
         null;
 
-
-    function moverVU(){
+function moverVU(){
 
     if(
         audioNuevo.paused ||
@@ -11646,7 +11679,7 @@ document.addEventListener(
             function(barra){
 
                 barra.style.opacity =
-                    "0.35";
+                    "0.20";
 
                 barra.style.height =
                     "25%";
@@ -11662,28 +11695,50 @@ document.addEventListener(
     }
 
 
+    analizadorAudio.getByteFrequencyData(
+        datosVU
+    );
+
+
     barrasVU.forEach(
         function(barra,index){
 
-            const onda =
-                Math.sin(
-                    Date.now() / 100 +
-                    index * 0.7
-                );
+            
 
+     const nivel =
+    datosVU[
+        Math.min(
+            datosVU.length - 1,
+          Math.floor(
+   index *
+(datosVU.length * 0.65) /
+(barrasVU.length - 1)
+
+
+)
+        )
+
+
+    ] /
+    255;
 
             const altura =
-                0.20 +
-                Math.abs(onda) *
-                0.80;
+                Math.max(
+                    0.08,
+                    nivel
+                );
 
-
-            barra.style.opacity =
-                altura;
 
             barra.style.height =
                 (altura * 100) +
                 "%";
+
+
+barra.style.opacity =
+    Math.max(
+        0.45,
+        altura * 1.15
+    );
 
         }
     );
