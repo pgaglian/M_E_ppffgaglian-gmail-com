@@ -10369,6 +10369,9 @@ if (!reproductorRadio) {
     asaArrastre.style.cursor =
         "grab";
 
+asaArrastre.style.touchAction =
+    "none";
+
     asaArrastre.title =
         "Arrastrá para mover";
 
@@ -11318,12 +11321,14 @@ if (!reproductorRadio) {
         0;
 
 
-    asaArrastre.addEventListener(
-        "pointerdown",
-        function(e){
+  asaArrastre.addEventListener(
+    "pointerdown",
+    function(e){
 
-            moviendo =
-                true;
+        e.preventDefault();
+
+        moviendo =
+            true;
 
 
             const rect =
