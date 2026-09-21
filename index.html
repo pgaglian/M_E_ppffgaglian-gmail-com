@@ -10546,16 +10546,6 @@ if (!reproductorRadio) {
 
         "</span>" +
 
-        "<span style='" +
-        "font-size:9px;" +
-        "color:#00ff66;" +
-        "white-space:nowrap;" +
-        "'>" +
-
-        "● En vivo" +
-
-        "</span>" +
-
         "</div>" +
 
         "<div style='" +
@@ -10700,20 +10690,70 @@ if(
        CONTROLES
        ===================================================== */
 
-    const cajaControles =
-        document.createElement("div");
+ const cajaControles =
+    document.createElement("div");
 
-    cajaControles.style.display =
-        "flex";
+cajaControles.style.display =
+    "flex";
 
-    cajaControles.style.alignItems =
-        "center";
+cajaControles.style.alignItems =
+    "center";
 
-    cajaControles.style.gap =
-        "10px";
+cajaControles.style.gap =
+    "10px";
 
-    cajaControles.style.flexShrink =
-        "0";
+cajaControles.style.flexShrink =
+    "0";
+
+
+/* =====================================================
+   ESTADO EN VIVO + PLAY
+   ===================================================== */
+
+const bloquePlay =
+    document.createElement("div");
+
+bloquePlay.style.display =
+    "flex";
+
+bloquePlay.style.flexDirection =
+    "column";
+
+bloquePlay.style.alignItems =
+    "center";
+
+bloquePlay.style.justifyContent =
+    "center";
+
+bloquePlay.style.gap =
+    "5px";
+
+bloquePlay.style.flexShrink =
+    "0";
+
+
+const indicadorEnVivo =
+    document.createElement("div");
+
+indicadorEnVivo.innerHTML =
+    "● En vivo";
+
+indicadorEnVivo.style.fontSize =
+    "8px";
+
+indicadorEnVivo.style.color =
+    "#00ff66";
+
+indicadorEnVivo.style.whiteSpace =
+    "nowrap";
+
+indicadorEnVivo.style.lineHeight =
+    "1";
+
+
+bloquePlay.appendChild(
+    indicadorEnVivo
+);
 
 
     /* ===== PLAY / PAUSE ===== */
@@ -10769,6 +10809,14 @@ if(
     btnPlayPause.style.fontSize =
         "12px";
 
+    
+bloquePlay.appendChild(
+    btnPlayPause
+);
+
+cajaControles.appendChild(
+    bloquePlay
+);
 
     /* ===== VOLUMEN ===== */
 
@@ -10828,14 +10876,9 @@ if(
         sliderVolumen
     );
 
-
-    cajaControles.appendChild(
-        btnPlayPause
-    );
-
-    cajaControles.appendChild(
-        boxVolumen
-    );
+cajaControles.appendChild(
+    boxVolumen
+);
 
 
     /* =====================================================
@@ -10908,24 +10951,7 @@ if(
     );
 
 
-/* =====================================================
-   AJUSTE PANEL SUPERIOR PARA CELULAR
-   ===================================================== */
 
-if(
-    window.innerWidth <= 600
-){
-
-    panelSuperior.style.flexWrap =
-        "wrap";
-
-    boxEmisora.style.width =
-        "100%";
-
-    zonaVU.style.margin =
-        "0 auto";
-
-}
 
     /* =====================================================
        PANEL INFERIOR
