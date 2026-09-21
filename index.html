@@ -11418,6 +11418,109 @@ asaArrastre.addEventListener(
     }
 );
 
+
+/* =====================================================
+   ARRASTRE DESDE ZONAS LIBRES DEL CHASIS
+   ===================================================== */
+
+contenedorReproductor.addEventListener(
+    "pointerdown",
+    function(e){
+
+        /* La asa ya tiene su propio sistema */
+        if(
+            e.target === asaArrastre ||
+            asaArrastre.contains(e.target)
+        ){
+            return;
+        }
+
+        /* Los controles no arrastran */
+        if(
+            e.target.closest("button") ||
+            e.target.closest("input") ||
+            e.target.closest("audio")
+        ){
+            return;
+        }
+
+        e.preventDefault();
+
+        moviendo =
+            true;
+
+        const rect =
+            contenedorReproductor
+                .getBoundingClientRect();
+
+        offsetX =
+            e.clientX -
+            rect.left;
+
+        offsetY =
+            e.clientY -
+            rect.top;
+
+        contenedorReproductor.style.bottom =
+            "auto";
+
+        contenedorReproductor.style.left =
+            rect.left + "px";
+
+        contenedorReproductor.style.top =
+            rect.top + "px";
+
+        contenedorReproductor.style.transform =
+            "none";
+
+    }
+);
+
+
+document.addEventListener(
+    "pointermove",
+    function(e){
+
+        if(!moviendo){
+            return;
+        }
+
+        e.preventDefault();
+
+        contenedorReproductor.style.left =
+            (e.clientX - offsetX) +
+            "px";
+
+        contenedorReproductor.style.top =
+            (e.clientY - offsetY) +
+            "px";
+
+    }
+);
+
+
+document.addEventListener(
+    "pointerup",
+    function(){
+
+        moviendo =
+            false;
+
+    }
+);
+
+
+document.addEventListener(
+    "pointercancel",
+    function(){
+
+        moviendo =
+            false;
+
+    }
+);
+
+
     /* =====================================================
        REFERENCIA DEL REPRODUCTOR
        ===================================================== */
