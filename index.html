@@ -11189,6 +11189,46 @@ botonCerrar.style.transform =
         "<span>108</span>" +
         "<span style='color:#00f0ff'>FM</span>";
 
+const frecuenciaDial =
+    document.createElement("div");
+
+frecuenciaDial.innerHTML =
+    radioInfo.frecuencia || "";
+
+frecuenciaDial.style.position =
+    "absolute";
+
+frecuenciaDial.style.top =
+    "4px";
+
+frecuenciaDial.style.left =
+    "50%";
+
+frecuenciaDial.style.transform =
+    "translateX(-50%)";
+
+frecuenciaDial.style.color =
+    "#00f0ff";
+
+frecuenciaDial.style.fontFamily =
+    "monospace";
+
+frecuenciaDial.style.fontSize =
+    "11px";
+
+frecuenciaDial.style.fontWeight =
+    "bold";
+
+frecuenciaDial.style.textShadow =
+    "0 0 6px #00f0ff";
+
+frecuenciaDial.style.whiteSpace =
+    "nowrap";
+
+dial.appendChild(
+    frecuenciaDial
+);
+
 
     const escala =
         document.createElement("div");
@@ -11224,8 +11264,41 @@ botonCerrar.style.transform =
     aguja.style.bottom =
         "0";
 
+ let frecuenciaNumero =
+    parseFloat(
+        String(
+            radioInfo.frecuencia || ""
+        )
+        .replace(",", ".")
+        .match(/[\d.]+/)
+    );
+
+if(
+    !isNaN(frecuenciaNumero)
+){
+
+    let posicionAguja =
+        ((frecuenciaNumero - 88) /
+         (108 - 88)) * 100;
+
+    posicionAguja =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                posicionAguja
+            )
+        );
+
+   aguja.style.left =
+    "25%";
+
+}else{
+
     aguja.style.left =
-        "62%";
+        "50%";
+
+}
 
     aguja.style.width =
         "2px";
@@ -11658,6 +11731,67 @@ document.addEventListener(
 
     reproductorRadio.audio =
         audioNuevo;
+
+/* =====================================================
+   POSICIÓN AUTOMÁTICA DE LA AGUJA
+   ===================================================== */
+
+const textoFrecuencia =
+    String(
+        radioInfo.frecuencia || ""
+    ).replace(",", ".");
+
+const coincidenciaFrecuencia =
+    textoFrecuencia.match(
+        /[\d]+(?:\.[\d]+)?/
+    );
+
+if(coincidenciaFrecuencia){
+
+    const numeroFrecuencia =
+        parseFloat(
+            coincidenciaFrecuencia[0]
+        );
+
+    const tipoRadio =
+        String(
+            radioInfo.tipo ||
+            radioInfo.frecuencia ||
+            ""
+        ).toUpperCase();
+
+    let posicionAguja =
+        50;
+
+    if(tipoRadio.includes("AM")){
+
+        posicionAguja =
+            ((numeroFrecuencia - 530) /
+             (1710 - 530)) * 100;
+
+    }else{
+
+  posicionAguja =
+    14.3 +
+    (
+        (numeroFrecuencia - 88) /
+        (108 - 88)
+    ) * 71.4;
+
+    }
+
+    posicionAguja =
+        Math.max(
+            5,
+            Math.min(
+                95,
+                posicionAguja
+            )
+        );
+
+    aguja.style.left =
+        posicionAguja + "%";
+}
 
 
     /* =====================================================
