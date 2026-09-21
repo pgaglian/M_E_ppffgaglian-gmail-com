@@ -10680,6 +10680,7 @@ if(
     zonaVU.style.width =
         "95px";
 
+    
     zonaVU.style.gap =
         "1px";
 
@@ -10906,6 +10907,25 @@ if(
         botonCerrar
     );
 
+
+/* =====================================================
+   AJUSTE PANEL SUPERIOR PARA CELULAR
+   ===================================================== */
+
+if(
+    window.innerWidth <= 600
+){
+
+    panelSuperior.style.flexWrap =
+        "wrap";
+
+    boxEmisora.style.width =
+        "100%";
+
+    zonaVU.style.margin =
+        "0 auto";
+
+}
 
     /* =====================================================
        PANEL INFERIOR
