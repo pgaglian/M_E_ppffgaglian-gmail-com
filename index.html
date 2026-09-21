@@ -11304,54 +11304,27 @@ if (!reproductorRadio) {
     );
 
 
-   /* =====================================================
-   SISTEMA DE ARRASTRE — TODO EL CHASIS LIBRE
-   ===================================================== */
+    /* =====================================================
+       SISTEMA DE ARRASTRE
+       ===================================================== */
 
-let moviendo =
-    false;
+    let moviendo =
+        false;
 
-let offsetX =
-    0;
+    let offsetX =
+        0;
 
-let offsetY =
-    0;
-
-
-/* =====================================================
-   ELEMENTOS QUE NO DEBEN ARRASTRAR
-   ===================================================== */
-
-function elementoEsControl(e){
-
-    const elemento =
-        e.target;
-
-    return (
-        elemento.tagName === "BUTTON" ||
-        elemento.tagName === "INPUT" ||
-        elemento.tagName === "AUDIO" ||
-        elemento.closest("button") ||
-        elemento.closest("input") ||
-        elemento.closest("audio")
-    );
-
-}
+    let offsetY =
+        0;
 
 
-/* =====================================================
-   INICIO DEL ARRASTRE
-   ===================================================== */
+asaArrastre.style.touchAction =
+    "none";
 
-contenedorReproductor.addEventListener(
+
+asaArrastre.addEventListener(
     "pointerdown",
     function(e){
-
-        if(
-            elementoEsControl(e)
-        ){
-            return;
-        }
 
         e.preventDefault();
 
@@ -11382,7 +11355,7 @@ contenedorReproductor.addEventListener(
         contenedorReproductor.style.transform =
             "none";
 
-        contenedorReproductor.setPointerCapture(
+        asaArrastre.setPointerCapture(
             e.pointerId
         );
 
@@ -11390,11 +11363,7 @@ contenedorReproductor.addEventListener(
 );
 
 
-/* =====================================================
-   MOVIMIENTO
-   ===================================================== */
-
-contenedorReproductor.addEventListener(
+asaArrastre.addEventListener(
     "pointermove",
     function(e){
 
@@ -11416,11 +11385,7 @@ contenedorReproductor.addEventListener(
 );
 
 
-/* =====================================================
-   FIN DEL ARRASTRE
-   ===================================================== */
-
-contenedorReproductor.addEventListener(
+asaArrastre.addEventListener(
     "pointerup",
     function(e){
 
@@ -11428,12 +11393,12 @@ contenedorReproductor.addEventListener(
             false;
 
         if(
-            contenedorReproductor.hasPointerCapture(
+            asaArrastre.hasPointerCapture(
                 e.pointerId
             )
         ){
 
-            contenedorReproductor.releasePointerCapture(
+            asaArrastre.releasePointerCapture(
                 e.pointerId
             );
 
@@ -11443,7 +11408,7 @@ contenedorReproductor.addEventListener(
 );
 
 
-contenedorReproductor.addEventListener(
+asaArrastre.addEventListener(
     "pointercancel",
     function(){
 
@@ -11452,7 +11417,6 @@ contenedorReproductor.addEventListener(
 
     }
 );
-
 
     /* =====================================================
        REFERENCIA DEL REPRODUCTOR
