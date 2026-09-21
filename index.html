@@ -6019,7 +6019,7 @@ const asuntoSoporte = "Consulta - Mi Espacio";
 
 let tipoEnvioCorreo = "soporte";
 
-const vencimiento = "2026-09-20";
+const vencimiento = "2026-10-20";
 
 //=========================================================
 // FIN DATOS DEL CLIENTE
@@ -10286,499 +10286,530 @@ if(reproductorRadio){
 
 let audioNuevo = null;
 
-if(!reproductorRadio){
+if (!reproductorRadio) {
 
-    const contenedorReproductor = document.createElement("div");
+    const contenedorReproductor =
+        document.createElement("div");
 
-    contenedorReproductor.id = "reproductorRadioFijo";
+    contenedorReproductor.id =
+        "reproductorRadioFijo";
+
 
     /* =====================================================
-       ESTEREO RETRO 80s
+       ESTILO BASE — CYBERPUNK / RETRO 80s
        ===================================================== */
 
     contenedorReproductor.style.position = "fixed";
-    contenedorReproductor.style.bottom = "15px";
+    contenedorReproductor.style.bottom = "20px";
     contenedorReproductor.style.left = "50%";
-    contenedorReproductor.style.transform = "translateX(-50%)";
+    contenedorReproductor.style.transform =
+        "translateX(-50%)";
 
     contenedorReproductor.style.zIndex = "9999";
 
-    contenedorReproductor.style.width = "430px";
-    contenedorReproductor.style.maxWidth = "94vw";
+    contenedorReproductor.style.width = "720px";
+    contenedorReproductor.style.maxWidth = "95vw";
 
-    contenedorReproductor.style.boxSizing = "border-box";
+    contenedorReproductor.style.boxSizing =
+        "border-box";
 
-    contenedorReproductor.style.padding = "14px";
+    contenedorReproductor.style.padding =
+        "10px 16px 16px 16px";
 
-    contenedorReproductor.style.borderRadius = "12px";
+    contenedorReproductor.style.borderRadius =
+        "20px";
 
     contenedorReproductor.style.border =
-        "2px solid #777";
+        "1px solid rgba(0,240,255,.4)";
 
     contenedorReproductor.style.background =
-        "linear-gradient(145deg,#666,#292929 45%,#111)";
+        "linear-gradient(180deg,#0d0f1d 0%,#05060b 100%)";
 
     contenedorReproductor.style.boxShadow =
-        "0 10px 35px rgba(0,0,0,.85)," +
-        "inset 0 2px 3px rgba(255,255,255,.35)," +
-        "inset 0 -3px 5px rgba(0,0,0,.8)";
+        "0 15px 40px rgba(0,0,0,.9)," +
+        "0 0 20px rgba(0,240,255,.25)";
 
     contenedorReproductor.style.fontFamily =
-        "Arial, Helvetica, sans-serif";
+        "'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
 
-    contenedorReproductor.style.color = "#ddd";
-
-
-    /* =====================================================
-       MARCO SUPERIOR
-       ===================================================== */
-
-    const frente = document.createElement("div");
-
-    frente.style.background =
-        "linear-gradient(180deg,#444,#181818)";
-
-    frente.style.border =
-        "2px solid #111";
-
-    frente.style.borderRadius = "7px";
-
-    frente.style.padding = "10px";
-
-    frente.style.boxShadow =
-        "inset 0 1px 2px rgba(255,255,255,.2)";
+    contenedorReproductor.style.color =
+        "#fff";
 
 
     /* =====================================================
-       MARCA / MODELO
+       ASA SUPERIOR DE ARRASTRE
        ===================================================== */
 
-    const marca = document.createElement("div");
+    const asaArrastre =
+        document.createElement("div");
 
-    marca.innerHTML =
+    asaArrastre.style.width = "50px";
+    asaArrastre.style.height = "18px";
+
+    asaArrastre.style.margin =
+        "0 auto 8px auto";
+
+    asaArrastre.style.background =
+        "rgba(255,255,255,.08)";
+
+    asaArrastre.style.border =
+        "1px solid rgba(0,240,255,.3)";
+
+    asaArrastre.style.borderRadius =
+        "10px";
+
+    asaArrastre.style.display = "flex";
+
+    asaArrastre.style.justifyContent =
+        "center";
+
+    asaArrastre.style.alignItems =
+        "center";
+
+    asaArrastre.style.cursor =
+        "grab";
+
+    asaArrastre.title =
+        "Arrastrá para mover";
+
+    asaArrastre.innerHTML =
+        "<div style='" +
+        "width:18px;" +
+        "height:2px;" +
+        "background:#00f0ff;" +
+        "box-shadow:0 2px 0 #00f0ff;" +
+        "'></div>";
+
+    contenedorReproductor.appendChild(
+        asaArrastre
+    );
+
+
+    /* =====================================================
+       CUERPO PRINCIPAL
+       ===================================================== */
+
+    const cuerpo =
+        document.createElement("div");
+
+    cuerpo.style.display = "flex";
+
+    cuerpo.style.flexDirection =
+        "column";
+
+    cuerpo.style.gap = "12px";
+
+
+    /* =====================================================
+       PANEL SUPERIOR
+       ===================================================== */
+
+    const panelSuperior =
+        document.createElement("div");
+
+    panelSuperior.style.display = "flex";
+
+    panelSuperior.style.alignItems =
+        "center";
+
+    panelSuperior.style.justifyContent =
+        "space-between";
+
+    panelSuperior.style.background =
+        "rgba(10,15,30,.7)";
+
+    panelSuperior.style.border =
+        "1px solid rgba(0,240,255,.3)";
+
+    panelSuperior.style.borderRadius =
+        "14px";
+
+    panelSuperior.style.padding =
+        "10px 14px";
+
+    panelSuperior.style.gap =
+        "12px";
+
+
+    /* =====================================================
+       EMISORA
+       ===================================================== */
+
+    const boxEmisora =
+        document.createElement("div");
+
+    boxEmisora.style.display =
+        "flex";
+
+    boxEmisora.style.alignItems =
+        "center";
+
+    boxEmisora.style.gap =
+        "10px";
+
+    boxEmisora.style.minWidth =
+        "0";
+
+
+    const logo =
+        document.createElement("div");
+
+    logo.style.width = "46px";
+    logo.style.height = "46px";
+
+    logo.style.borderRadius =
+        "10px";
+
+    logo.style.background =
+        "linear-gradient(135deg,#180036,#41006f)";
+
+    logo.style.border =
+        "1px solid #ff007f";
+
+    logo.style.boxShadow =
+        "0 0 10px rgba(255,0,127,.5)";
+
+    logo.style.display =
+        "flex";
+
+    logo.style.flexDirection =
+        "column";
+
+    logo.style.justifyContent =
+        "center";
+
+    logo.style.alignItems =
+        "center";
+
+    logo.style.lineHeight =
+        "1";
+
+    logo.style.flexShrink =
+        "0";
+
+
+    const nombreRadio =
+        (typeof radioInfo !== "undefined" &&
+         radioInfo.nombre)
+            ? radioInfo.nombre
+            : "RADIO";
+
+
+    const frecuenciaRadio =
+        (typeof radioInfo !== "undefined" &&
+         radioInfo.frecuencia)
+            ? radioInfo.frecuencia
+            : "";
+
+
+    logo.innerHTML =
         "<span style='" +
-        "font-size:11px;" +
-        "letter-spacing:3px;" +
-        "color:#aaa;" +
-        "'>MI ESPACIO</span>" +
+        "font-weight:900;" +
+        "font-size:13px;" +
+        "color:#ff007f;" +
+        "text-shadow:0 0 5px #ff007f;" +
+        "'>FM</span>" +
 
         "<span style='" +
-        "float:right;" +
         "font-size:9px;" +
-        "letter-spacing:2px;" +
-        "color:#888;" +
-        "'>STEREO DIGITAL</span>";
-
-    marca.style.marginBottom = "7px";
-
-    frente.appendChild(marca);
+        "color:#fff;" +
+        "font-weight:bold;" +
+        "'>RADIO</span>";
 
 
-    /* =====================================================
-       PANTALLA DIGITAL
-       ===================================================== */
+    const infoTexto =
+        document.createElement("div");
 
-    const pantalla = document.createElement("div");
+    infoTexto.style.minWidth =
+        "0";
 
-    pantalla.style.background =
-        "linear-gradient(180deg,#050805,#102414,#030503)";
 
-    pantalla.style.border =
-        "2px solid #111";
+    infoTexto.innerHTML =
+        "<div style='" +
+        "display:flex;" +
+        "align-items:center;" +
+        "gap:8px;" +
+        "min-width:0;" +
+        "'>" +
 
-    pantalla.style.borderRadius = "4px";
+        "<span style='" +
+        "font-weight:bold;" +
+        "font-size:14px;" +
+        "color:#00f0ff;" +
+        "text-shadow:0 0 8px rgba(0,240,255,.6);" +
+        "white-space:nowrap;" +
+        "overflow:hidden;" +
+        "text-overflow:ellipsis;" +
+        "'>" +
 
-    pantalla.style.padding = "6px";
+        nombreRadio +
 
-    pantalla.style.textAlign = "center";
+        "</span>" +
 
-    pantalla.style.boxShadow =
-        "inset 0 0 15px rgba(0,255,80,.22)";
+        "<span style='" +
+        "font-size:9px;" +
+        "color:#00ff66;" +
+        "white-space:nowrap;" +
+        "'>" +
 
-    pantalla.style.fontFamily = "monospace";
+        "● En vivo" +
 
-    pantalla.style.color = "#61ff7a";
+        "</span>" +
 
-    pantalla.innerHTML =
-        "<div style='font-size:12px;letter-spacing:2px'>" +
-        (radioInfo.nombre || "RADIO") +
         "</div>" +
 
         "<div style='" +
-        "font-size:20px;" +
-        "font-weight:bold;" +
-        "letter-spacing:2px;" +
-        "margin-top:2px;" +
+        "font-size:10px;" +
+        "color:#8fa0b5;" +
+        "margin-top:3px;" +
         "'>" +
-        (radioInfo.frecuencia || "") +
+
+        frecuenciaRadio +
+
         "</div>";
 
-    frente.appendChild(pantalla);
+
+    boxEmisora.appendChild(
+        logo
+    );
+
+    boxEmisora.appendChild(
+        infoTexto
+    );
 
 
     /* =====================================================
-       DIAL RETRO
+       VU / ECUALIZADOR VISUAL
        ===================================================== */
 
-    const dial = document.createElement("div");
+    const zonaVU =
+        document.createElement("div");
 
-    dial.style.position = "relative";
+    zonaVU.style.display =
+        "flex";
 
-    dial.style.height = "82px";
+    zonaVU.style.alignItems =
+        "flex-end";
 
-    dial.style.marginTop = "9px";
+    zonaVU.style.justifyContent =
+        "center";
 
-    dial.style.border =
-        "2px solid #111";
+    zonaVU.style.gap =
+        "3px";
 
-    dial.style.borderRadius = "5px";
+    zonaVU.style.height =
+        "30px";
 
-    dial.style.background =
-        "linear-gradient(180deg,#252525,#090909)";
+    zonaVU.style.width =
+        "150px";
 
-    dial.style.overflow = "hidden";
+    zonaVU.style.margin =
+        "0 5px";
 
-    dial.style.boxShadow =
-        "inset 0 0 10px rgba(0,0,0,.9)";
+    zonaVU.style.padding =
+        "3px 4px";
 
+    zonaVU.style.boxSizing =
+        "border-box";
 
-    /* ===== NÚMEROS DEL DIAL ===== */
-
-    const numerosDial = document.createElement("div");
-
-    numerosDial.style.position = "absolute";
-
-    numerosDial.style.left = "12px";
-
-    numerosDial.style.right = "12px";
-
-    numerosDial.style.top = "11px";
-
-    numerosDial.style.display = "flex";
-
-    numerosDial.style.justifyContent =
-        "space-between";
-
-    numerosDial.style.color = "#aaa";
-
-    numerosDial.style.fontFamily =
-        "monospace";
-
-    numerosDial.style.fontSize = "9px";
-
-    numerosDial.innerHTML =
-        "<span>88</span>" +
-        "<span>92</span>" +
-        "<span>96</span>" +
-        "<span>100</span>" +
-        "<span>104</span>" +
-        "<span>108</span>";
-
-    dial.appendChild(numerosDial);
-
-
-    /* ===== ESCALA ===== */
-
-    const escala = document.createElement("div");
-
-    escala.style.position = "absolute";
-
-    escala.style.left = "10px";
-
-    escala.style.right = "10px";
-
-    escala.style.top = "29px";
-
-    escala.style.height = "24px";
-
-    escala.style.background =
-        "repeating-linear-gradient(" +
-        "90deg," +
-        "transparent 0px," +
-        "transparent 7px," +
-        "#aaa 8px," +
-        "#aaa 9px" +
-        ")";
-
-    escala.style.borderTop =
-        "1px solid #aaa";
-
-    dial.appendChild(escala);
-
-
-    /* ===== AM / FM ===== */
-
-    const am = document.createElement("span");
-
-    am.innerHTML = "AM";
-
-    am.style.position = "absolute";
-
-    am.style.left = "14px";
-
-    am.style.bottom = "8px";
-
-    am.style.fontSize = "11px";
-
-    am.style.fontWeight = "bold";
-
-    am.style.color = "#c8c8c8";
-
-    dial.appendChild(am);
-
-
-    const fm = document.createElement("span");
-
-    fm.innerHTML = "FM";
-
-    fm.style.position = "absolute";
-
-    fm.style.right = "14px";
-
-    fm.style.bottom = "8px";
-
-    fm.style.fontSize = "11px";
-
-    fm.style.fontWeight = "bold";
-
-    fm.style.color = "#c8c8c8";
-
-    dial.appendChild(fm);
-
-
-    /* ===== AGUJA ===== */
-
-    const aguja = document.createElement("div");
-
-    aguja.style.position = "absolute";
-
-    aguja.style.top = "5px";
-
-    aguja.style.bottom = "5px";
-
-    aguja.style.left = "50%";
-
-    aguja.style.width = "2px";
-
-    aguja.style.background = "#ff3131";
-
-    aguja.style.boxShadow =
-        "0 0 8px #ff2020";
-
-    aguja.style.transform =
-        "translateX(-50%)";
-
-    dial.appendChild(aguja);
-
-
-    frente.appendChild(dial);
-
-
-    /* =====================================================
-       VU METERS
-       ===================================================== */
-
-    const zonaVU = document.createElement("div");
-
-    zonaVU.style.display = "flex";
-
-    zonaVU.style.gap = "4px";
-
-    zonaVU.style.marginTop = "8px";
-
-    zonaVU.style.height = "30px";
-
-    zonaVU.style.padding = "4px";
-
-    zonaVU.style.boxSizing = "border-box";
-
-    zonaVU.style.background = "#080808";
+    zonaVU.style.background =
+        "rgba(0,0,0,.35)";
 
     zonaVU.style.border =
-        "1px solid #555";
+        "1px solid rgba(0,240,255,.15)";
 
-    zonaVU.style.borderRadius = "4px";
+    zonaVU.style.borderRadius =
+        "5px";
 
-    zonaVU.style.alignItems = "center";
 
     const barrasVU = [];
 
-    for(let i = 0; i < 28; i++){
 
-        const barra = document.createElement("div");
+    for(let i = 0; i < 20; i++){
 
-        barra.style.flex = "1";
-
-        barra.style.height = "5px";
-
-        barra.style.borderRadius = "1px";
-
-        barra.style.background =
-            i > 23
-                ? "#ff3030"
-                : i > 17
-                    ? "#ffd21c"
-                    : "#25ff61";
-
-        barra.style.boxShadow =
-            "0 0 4px currentColor";
-
-        zonaVU.appendChild(barra);
-
-        barrasVU.push(barra);
-
-    }
-
-    frente.appendChild(zonaVU);
-
-
-    /* =====================================================
-       PARTE INFERIOR — PARLANTES
-       ===================================================== */
-
-    const parlantes = document.createElement("div");
-
-    parlantes.style.display = "grid";
-
-    parlantes.style.gridTemplateColumns =
-        "1fr 1fr";
-
-    parlantes.style.gap = "10px";
-
-    parlantes.style.marginTop = "10px";
-
-
-    function crearParlante(){
-
-        const parlante = document.createElement("div");
-
-        parlante.style.height = "62px";
-
-        parlante.style.borderRadius = "5px";
-
-        parlante.style.border =
-            "2px solid #111";
-
-        parlante.style.background =
-            "repeating-linear-gradient(" +
-            "90deg," +
-            "#171717 0px," +
-            "#171717 3px," +
-            "#292929 4px," +
-            "#292929 6px" +
-            ")";
-
-        parlante.style.boxShadow =
-            "inset 0 0 15px #000";
-
-        return parlante;
-
-    }
-
-
-    parlantes.appendChild(
-        crearParlante()
-    );
-
-    parlantes.appendChild(
-        crearParlante()
-    );
-
-    frente.appendChild(parlantes);
-
-
-    /* =====================================================
-       CONTROLES FÍSICOS
-       ===================================================== */
-
-    const controles = document.createElement("div");
-
-    controles.style.display = "flex";
-
-    controles.style.justifyContent =
-        "space-between";
-
-    controles.style.alignItems = "center";
-
-    controles.style.marginTop = "9px";
-
-
-    function crearPerilla(texto){
-
-        const grupo = document.createElement("div");
-
-        grupo.style.textAlign = "center";
-
-        const perilla = document.createElement("div");
-
-        perilla.style.width = "27px";
-
-        perilla.style.height = "27px";
-
-        perilla.style.margin = "auto";
-
-        perilla.style.borderRadius = "50%";
-
-        perilla.style.background =
-            "radial-gradient(circle at 35% 30%,#777,#222 55%,#080808)";
-
-        perilla.style.border =
-            "2px solid #111";
-
-        perilla.style.boxShadow =
-            "0 2px 4px #000";
-
-        const etiqueta =
+        const barra =
             document.createElement("div");
 
-        etiqueta.innerHTML = texto;
+        barra.style.width =
+            "4px";
 
-        etiqueta.style.fontSize = "8px";
+        barra.style.height =
+            "25%";
 
-        etiqueta.style.marginTop = "3px";
+        barra.style.minHeight =
+            "3px";
 
-        etiqueta.style.color = "#999";
+        barra.style.borderRadius =
+            "2px";
 
-        grupo.appendChild(perilla);
+        barra.style.background =
+            i > 14
+                ? "#ff00a0"
+                : "#00f0ff";
 
-        grupo.appendChild(etiqueta);
+        barra.style.boxShadow =
+            i > 14
+                ? "0 0 6px #ff00a0"
+                : "0 0 6px #00f0ff";
 
-        return grupo;
+        barra.style.opacity =
+            "0.35";
+
+        barra.style.transition =
+            "height .05s linear,opacity .05s linear";
+
+        zonaVU.appendChild(
+            barra
+        );
+
+        barrasVU.push(
+            barra
+        );
 
     }
 
 
-    controles.appendChild(
-        crearPerilla("TUNE")
+    /* =====================================================
+       CONTROLES
+       ===================================================== */
+
+    const cajaControles =
+        document.createElement("div");
+
+    cajaControles.style.display =
+        "flex";
+
+    cajaControles.style.alignItems =
+        "center";
+
+    cajaControles.style.gap =
+        "10px";
+
+    cajaControles.style.flexShrink =
+        "0";
+
+
+    /* ===== PLAY / PAUSE ===== */
+
+    const btnPlayPause =
+        document.createElement("button");
+
+    btnPlayPause.type =
+        "button";
+
+    btnPlayPause.innerHTML =
+        "▶";
+
+    btnPlayPause.title =
+        "Reproducir / Pausar";
+
+    btnPlayPause.style.width =
+        "36px";
+
+    btnPlayPause.style.height =
+        "36px";
+
+    btnPlayPause.style.padding =
+        "0";
+
+    btnPlayPause.style.borderRadius =
+        "50%";
+
+    btnPlayPause.style.border =
+        "1px solid #00f0ff";
+
+    btnPlayPause.style.background =
+        "radial-gradient(circle,#0a2540,#020b14)";
+
+    btnPlayPause.style.color =
+        "#00f0ff";
+
+    btnPlayPause.style.cursor =
+        "pointer";
+
+    btnPlayPause.style.display =
+        "flex";
+
+    btnPlayPause.style.justifyContent =
+        "center";
+
+    btnPlayPause.style.alignItems =
+        "center";
+
+    btnPlayPause.style.boxShadow =
+        "0 0 10px rgba(0,240,255,.4)";
+
+    btnPlayPause.style.fontSize =
+        "12px";
+
+
+    /* ===== VOLUMEN ===== */
+
+    const boxVolumen =
+        document.createElement("div");
+
+    boxVolumen.style.display =
+        "flex";
+
+    boxVolumen.style.alignItems =
+        "center";
+
+    boxVolumen.style.gap =
+        "5px";
+
+
+    const iconoVolumen =
+        document.createElement("span");
+
+    iconoVolumen.innerHTML =
+        "🔊";
+
+    iconoVolumen.style.fontSize =
+        "11px";
+
+
+    const sliderVolumen =
+        document.createElement("input");
+
+    sliderVolumen.type =
+        "range";
+
+    sliderVolumen.min =
+        "0";
+
+    sliderVolumen.max =
+        "1";
+
+    sliderVolumen.step =
+        "0.01";
+
+    sliderVolumen.value =
+        "0.8";
+
+    sliderVolumen.style.width =
+        "65px";
+
+    sliderVolumen.style.accentColor =
+        "#00f0ff";
+
+
+    boxVolumen.appendChild(
+        iconoVolumen
     );
 
-    controles.appendChild(
-        crearPerilla("VOLUME")
-    );
-
-    controles.appendChild(
-        crearPerilla("BASS")
-    );
-
-    controles.appendChild(
-        crearPerilla("TREBLE")
+    boxVolumen.appendChild(
+        sliderVolumen
     );
 
 
-/* =====================================================
-   AUDIO REAL
-   ===================================================== */
+    cajaControles.appendChild(
+        btnPlayPause
+    );
 
-audioNuevo = document.createElement("audio");
+    cajaControles.appendChild(
+        boxVolumen
+    );
 
-audioNuevo.controls = false;
-audioNuevo.autoplay = false;
-
-audioNuevo.style.width = "100%";
-
-audioNuevo.style.height = "32px";
-
-audioNuevo.style.marginTop = "8px";
 
     /* =====================================================
        BOTÓN CERRAR
@@ -10787,7 +10818,11 @@ audioNuevo.style.marginTop = "8px";
     const botonCerrar =
         document.createElement("button");
 
-    botonCerrar.innerHTML = "✕";
+    botonCerrar.type =
+        "button";
+
+    botonCerrar.innerHTML =
+        "✕";
 
     botonCerrar.title =
         "Cerrar reproductor";
@@ -10795,152 +10830,583 @@ audioNuevo.style.marginTop = "8px";
     botonCerrar.style.cursor =
         "pointer";
 
-    botonCerrar.style.position =
-        "absolute";
+    botonCerrar.style.width =
+        "26px";
 
-    botonCerrar.style.right = "7px";
+    botonCerrar.style.height =
+        "26px";
 
-    botonCerrar.style.top = "7px";
+    botonCerrar.style.padding =
+        "0";
 
-    botonCerrar.style.width = "26px";
-
-    botonCerrar.style.height = "26px";
-
-    botonCerrar.style.borderRadius = "50%";
+    botonCerrar.style.borderRadius =
+        "50%";
 
     botonCerrar.style.border =
-        "1px solid #888";
+        "1px solid #ff0055";
 
     botonCerrar.style.background =
-        "#222";
+        "rgba(255,0,85,.15)";
 
     botonCerrar.style.color =
-        "#fff";
+        "#ff0055";
 
-botonCerrar.onclick =
-    function(){
+    botonCerrar.style.fontWeight =
+        "bold";
 
-        if(window.temporizadorRadioActivo){
+    botonCerrar.style.fontSize =
+        "11px";
 
-            clearTimeout(
-                window.temporizadorRadioActivo
-            );
+    botonCerrar.style.boxShadow =
+        "0 0 8px rgba(255,0,85,.4)";
 
-            window.temporizadorRadioActivo =
-                null;
+    botonCerrar.style.flexShrink =
+        "0";
+
+
+    panelSuperior.appendChild(
+        boxEmisora
+    );
+
+    panelSuperior.appendChild(
+        zonaVU
+    );
+
+    panelSuperior.appendChild(
+        cajaControles
+    );
+
+    panelSuperior.appendChild(
+        botonCerrar
+    );
+
+
+    /* =====================================================
+       PANEL INFERIOR
+       ===================================================== */
+
+    const panelInferior =
+        document.createElement("div");
+
+    panelInferior.style.display =
+        "grid";
+
+    panelInferior.style.gridTemplateColumns =
+        "72px 1fr 72px";
+
+    panelInferior.style.gap =
+        "14px";
+
+    panelInferior.style.alignItems =
+        "center";
+
+    panelInferior.style.background =
+        "#040508";
+
+    panelInferior.style.border =
+        "1px solid rgba(255,255,255,.1)";
+
+    panelInferior.style.borderRadius =
+        "14px";
+
+    panelInferior.style.padding =
+        "10px 14px";
+
+
+    /* =====================================================
+       PARLANTES
+       ===================================================== */
+
+    function crearParlanteNeon(){
+
+        const p =
+            document.createElement("div");
+
+        p.style.width =
+            "58px";
+
+        p.style.height =
+            "58px";
+
+        p.style.borderRadius =
+            "50%";
+
+        p.style.border =
+            "2px solid #ff00a0";
+
+        p.style.background =
+            "radial-gradient(" +
+            "circle," +
+            "#351035 0%," +
+            "#160016 35%," +
+            "#030003 70%," +
+            "#000 100%" +
+            ")";
+
+        p.style.boxShadow =
+            "0 0 12px rgba(255,0,160,.5)," +
+            "inset 0 0 10px #000";
+
+        p.style.position =
+            "relative";
+
+        p.style.margin =
+            "auto";
+
+
+        const cono =
+            document.createElement("div");
+
+        cono.style.position =
+            "absolute";
+
+        cono.style.left =
+            "50%";
+
+        cono.style.top =
+            "50%";
+
+        cono.style.transform =
+            "translate(-50%,-50%)";
+
+        cono.style.width =
+            "32px";
+
+        cono.style.height =
+            "32px";
+
+        cono.style.borderRadius =
+            "50%";
+
+        cono.style.border =
+            "1px solid rgba(255,0,160,.45)";
+
+        cono.style.boxShadow =
+            "inset 0 0 7px #000";
+
+
+        const centro =
+            document.createElement("div");
+
+        centro.style.position =
+            "absolute";
+
+        centro.style.left =
+            "50%";
+
+        centro.style.top =
+            "50%";
+
+        centro.style.transform =
+            "translate(-50%,-50%)";
+
+        centro.style.width =
+            "8px";
+
+        centro.style.height =
+            "8px";
+
+        centro.style.borderRadius =
+            "50%";
+
+        centro.style.background =
+            "#ff00a0";
+
+        centro.style.boxShadow =
+            "0 0 8px #ff00a0";
+
+
+        p.appendChild(
+            cono
+        );
+
+        p.appendChild(
+            centro
+        );
+
+        return p;
+
+    }
+
+
+    /* =====================================================
+       DIAL
+       ===================================================== */
+
+    const dial =
+        document.createElement("div");
+
+    dial.style.position =
+        "relative";
+
+    dial.style.height =
+        "62px";
+
+    dial.style.background =
+        "linear-gradient(180deg,#101522,#05070c)";
+
+    dial.style.border =
+        "1px solid rgba(255,255,255,.15)";
+
+    dial.style.borderRadius =
+        "8px";
+
+    dial.style.overflow =
+        "hidden";
+
+    dial.style.display =
+        "flex";
+
+    dial.style.flexDirection =
+        "column";
+
+    dial.style.justifyContent =
+        "center";
+
+    dial.style.padding =
+        "0 12px";
+
+
+    const numerosDial =
+        document.createElement("div");
+
+    numerosDial.style.display =
+        "flex";
+
+    numerosDial.style.justifyContent =
+        "space-between";
+
+    numerosDial.style.alignItems =
+        "center";
+
+    numerosDial.style.color =
+        "#8a99ad";
+
+    numerosDial.style.fontFamily =
+        "monospace";
+
+    numerosDial.style.fontSize =
+        "10px";
+
+    numerosDial.innerHTML =
+        "<span style='color:#ff00a0'>AM</span>" +
+        "<span>88</span>" +
+        "<span>92</span>" +
+        "<span>96</span>" +
+        "<span>100</span>" +
+        "<span>104</span>" +
+        "<span>108</span>" +
+        "<span style='color:#00f0ff'>FM</span>";
+
+
+    const escala =
+        document.createElement("div");
+
+    escala.style.height =
+        "12px";
+
+    escala.style.marginTop =
+        "4px";
+
+    escala.style.background =
+        "repeating-linear-gradient(" +
+        "90deg," +
+        "transparent 0px," +
+        "transparent 5px," +
+        "#4a5a70 6px," +
+        "#4a5a70 7px" +
+        ")";
+
+    escala.style.borderTop =
+        "1px solid #4a5a70";
+
+
+    const aguja =
+        document.createElement("div");
+
+    aguja.style.position =
+        "absolute";
+
+    aguja.style.top =
+        "0";
+
+    aguja.style.bottom =
+        "0";
+
+    aguja.style.left =
+        "62%";
+
+    aguja.style.width =
+        "2px";
+
+    aguja.style.background =
+        "#ff3300";
+
+    aguja.style.boxShadow =
+        "0 0 8px #ff3300";
+
+
+    dial.appendChild(
+        numerosDial
+    );
+
+    dial.appendChild(
+        escala
+    );
+
+    dial.appendChild(
+        aguja
+    );
+
+
+    panelInferior.appendChild(
+        crearParlanteNeon()
+    );
+
+    panelInferior.appendChild(
+        dial
+    );
+
+    panelInferior.appendChild(
+        crearParlanteNeon()
+    );
+
+
+    cuerpo.appendChild(
+        panelSuperior
+    );
+
+    cuerpo.appendChild(
+        panelInferior
+    );
+
+    contenedorReproductor.appendChild(
+        cuerpo
+    );
+
+
+    /* =====================================================
+       AUDIO REAL
+       IMPORTANTE: SIN "const"
+       ===================================================== */
+
+    audioNuevo =
+        document.createElement("audio");
+
+    audioNuevo.controls =
+        false;
+
+    audioNuevo.autoplay =
+        false;
+
+    audioNuevo.volume =
+        0.8;
+
+
+    /* =====================================================
+       VOLUMEN
+       ===================================================== */
+
+    sliderVolumen.addEventListener(
+        "input",
+        function(){
+
+            audioNuevo.volume =
+                parseFloat(
+                    this.value
+                );
 
         }
+    );
 
-        audioNuevo.__radioCerrada =
-            true;
 
-audioNuevo.pause();
+    /* =====================================================
+       PLAY / PAUSE
+       ===================================================== */
 
-audioNuevo.removeAttribute("src");
+    btnPlayPause.onclick =
+        function(){
 
-audioNuevo.load();
+            if(
+                audioNuevo.paused
+            ){
 
-audioNuevo.pause();
-audioNuevo.currentTime = 0;
-audioNuevo.src = "";
-audioNuevo.load();
+                audioNuevo.play()
+                    .catch(
+                        function(){}
+                    );
 
-contenedorReproductor.remove();
+            }else{
 
-reproductorRadio = null;
+                audioNuevo.pause();
 
-    };
+            }
 
-    frente.appendChild(audioNuevo);
+        };
 
-    frente.appendChild(botonCerrar);
 
-    contenedorReproductor.appendChild(frente);
+    /* =====================================================
+       CERRAR
+       ===================================================== */
+
+    botonCerrar.onclick =
+        function(){
+
+            if(
+                window.temporizadorRadioActivo
+            ){
+
+                clearTimeout(
+                    window.temporizadorRadioActivo
+                );
+
+                window.temporizadorRadioActivo =
+                    null;
+
+            }
+
+
+            audioNuevo.__radioCerrada =
+                true;
+
+
+            audioNuevo.pause();
+
+            audioNuevo.removeAttribute(
+                "src"
+            );
+
+            audioNuevo.load();
+
+            audioNuevo.currentTime =
+                0;
+
+            audioNuevo.src =
+                "";
+
+            audioNuevo.load();
+
+
+            contenedorReproductor.remove();
+
+            reproductorRadio =
+                null;
+
+        };
+
+
+    /* =====================================================
+       INSERTAR EN PANTALLA
+       ===================================================== */
 
     document.body.appendChild(
         contenedorReproductor
     );
 
-/* =====================================================
-   REPRODUCTOR MOVIBLE
-   ===================================================== */
 
-let moviendoReproductor = false;
-let desplazamientoX = 0;
-let desplazamientoY = 0;
+    /* =====================================================
+       SISTEMA DE ARRASTRE
+       ===================================================== */
 
-contenedorReproductor.addEventListener(
-    "pointerdown",
-    function(e){
+    let moviendo =
+        false;
 
-        if(
-            e.target.tagName === "AUDIO" ||
-            e.target.tagName === "BUTTON"
-        ){
-            return;
+    let offsetX =
+        0;
+
+    let offsetY =
+        0;
+
+
+    asaArrastre.addEventListener(
+        "pointerdown",
+        function(e){
+
+            moviendo =
+                true;
+
+
+            const rect =
+                contenedorReproductor
+                    .getBoundingClientRect();
+
+
+            offsetX =
+                e.clientX -
+                rect.left;
+
+            offsetY =
+                e.clientY -
+                rect.top;
+
+
+            contenedorReproductor.style.bottom =
+                "auto";
+
+            contenedorReproductor.style.left =
+                rect.left + "px";
+
+            contenedorReproductor.style.top =
+                rect.top + "px";
+
+            contenedorReproductor.style.transform =
+                "none";
+
+
+            asaArrastre.setPointerCapture(
+                e.pointerId
+            );
+
         }
+    );
 
-        moviendoReproductor = true;
 
-        const rect =
-            contenedorReproductor.getBoundingClientRect();
+    asaArrastre.addEventListener(
+        "pointermove",
+        function(e){
 
-        desplazamientoX =
-            e.clientX - rect.left;
+            if(!moviendo){
+                return;
+            }
 
-        desplazamientoY =
-            e.clientY - rect.top;
 
-        contenedorReproductor.style.bottom =
-            "auto";
+            contenedorReproductor.style.left =
+                (e.clientX - offsetX) +
+                "px";
 
-        contenedorReproductor.style.left =
-            rect.left + "px";
+            contenedorReproductor.style.top =
+                (e.clientY - offsetY) +
+                "px";
 
-        contenedorReproductor.style.top =
-            rect.top + "px";
-
-        contenedorReproductor.style.transform =
-            "none";
-
-        contenedorReproductor.setPointerCapture(
-            e.pointerId
-        );
-    }
-);
-
-contenedorReproductor.addEventListener(
-    "pointermove",
-    function(e){
-
-        if(!moviendoReproductor){
-            return;
         }
+    );
 
-        contenedorReproductor.style.left =
-            (e.clientX - desplazamientoX) + "px";
 
-        contenedorReproductor.style.top =
-            (e.clientY - desplazamientoY) + "px";
-    }
-);
+    asaArrastre.addEventListener(
+        "pointerup",
+        function(){
 
-contenedorReproductor.addEventListener(
-    "pointerup",
-    function(){
+            moviendo =
+                false;
 
-        moviendoReproductor = false;
-    }
-);
+        }
+    );
 
-contenedorReproductor.addEventListener(
-    "pointercancel",
-    function(){
 
-        moviendoReproductor = false;
-    }
-);
+    asaArrastre.addEventListener(
+        "pointercancel",
+        function(){
 
+            moviendo =
+                false;
+
+        }
+    );
+
+
+    /* =====================================================
+       REFERENCIA DEL REPRODUCTOR
+       ===================================================== */
 
     reproductorRadio =
         contenedorReproductor;
@@ -10948,13 +11414,14 @@ contenedorReproductor.addEventListener(
     reproductorRadio.audio =
         audioNuevo;
 
-   
 
     /* =====================================================
-       LUCES REACTIVAS
+       ANIMACIÓN VU
        ===================================================== */
 
-    let animacionVU = null;
+    let animacionVU =
+        null;
+
 
     function moverVU(){
 
@@ -10970,8 +11437,14 @@ contenedorReproductor.addEventListener(
                     barra.style.opacity =
                         "0.35";
 
+                    barra.style.height =
+                        "25%";
+
                 }
             );
+
+            animacionVU =
+                null;
 
             return;
 
@@ -10983,16 +11456,24 @@ contenedorReproductor.addEventListener(
 
                 const onda =
                     Math.sin(
-                        Date.now() / 120 +
-                        index * .8
+                        Date.now() / 100 +
+                        index * 0.7
                     );
 
+
                 const altura =
-                    0.25 +
-                    Math.abs(onda) * .75;
+                    0.20 +
+                    Math.abs(onda) *
+                    0.80;
+
 
                 barra.style.opacity =
                     altura;
+
+
+                barra.style.height =
+                    (altura * 100) +
+                    "%";
 
             }
         );
@@ -11010,7 +11491,13 @@ contenedorReproductor.addEventListener(
         "play",
         function(){
 
-            if(animacionVU === null){
+            btnPlayPause.innerHTML =
+                "❚❚";
+
+
+            if(
+                animacionVU === null
+            ){
 
                 moverVU();
 
@@ -11024,15 +11511,23 @@ contenedorReproductor.addEventListener(
         "pause",
         function(){
 
-            if(animacionVU){
+            btnPlayPause.innerHTML =
+                "▶";
+
+
+            if(
+                animacionVU
+            ){
 
                 cancelAnimationFrame(
                     animacionVU
                 );
 
-                animacionVU = null;
+                animacionVU =
+                    null;
 
             }
+
 
             barrasVU.forEach(
                 function(barra){
@@ -11040,13 +11535,18 @@ contenedorReproductor.addEventListener(
                     barra.style.opacity =
                         "0.35";
 
+                    barra.style.height =
+                        "25%";
+
                 }
             );
 
         }
     );
 
+
 }
+
     const streams = Array.isArray(radioInfo.streams) &&
                     radioInfo.streams.length
         ? radioInfo.streams
