@@ -11423,8 +11423,13 @@ asaArrastre.addEventListener(
    ARRASTRE DESDE ZONAS LIBRES DEL CHASIS
    ===================================================== */
 
+contenedorReproductor.style.touchAction =
+    "none";
+
 contenedorReproductor.addEventListener(
     "pointerdown",
+
+
     function(e){
 
         /* La asa ya tiene su propio sistema */
