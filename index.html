@@ -10105,19 +10105,10 @@ function abrirConfiguracionRadios(){
         return;
     }
 
-    const seleccionadas = JSON.parse(
-        localStorage.getItem("RadiosSeleccionadas")
-    ) || [];
-
+  
     filtrarRadios(filtroRadiosActual);
 
-    const checkboxes = document.querySelectorAll(
-        "#configuracionRadios input[type='checkbox']"
-    );
 
-    checkboxes.forEach(function(checkbox){
-        checkbox.checked = seleccionadas.includes(checkbox.value);
-    });
 
     popup.style.display = "flex";
 
@@ -10248,17 +10239,7 @@ function mostrarRadiosSeleccionadas(){
 
         card.onclick = function(){
 
-    // Cancelar cualquier reproductor anterior
-    document.querySelectorAll(
-        "#RadiosSeleccionadas audio"
-    ).forEach(function(audio){
 
-        audio.pause();
-        audio.src = "";
-        audio.load();
-        audio.remove();
-
-    });
 
     // Cancelar temporizadores anteriores
     if(window.temporizadorRadioActivo){
@@ -10307,7 +10288,7 @@ if (!reproductorRadio) {
 
     contenedorReproductor.style.zIndex = "9999";
 
-    contenedorReproductor.style.width = "720px";
+    contenedorReproductor.style.width = "620px";
     contenedorReproductor.style.maxWidth = "95vw";
 
     contenedorReproductor.style.boxSizing =
@@ -10488,18 +10469,15 @@ if (!reproductorRadio) {
         "0";
 
 
-    const nombreRadio =
-        (typeof radioInfo !== "undefined" &&
-         radioInfo.nombre)
-            ? radioInfo.nombre
-            : "RADIO";
+const nombreRadio =
+    radioInfo.nombre
+        ? radioInfo.nombre
+        : "RADIO";
 
-
-    const frecuenciaRadio =
-        (typeof radioInfo !== "undefined" &&
-         radioInfo.frecuencia)
-            ? radioInfo.frecuencia
-            : "";
+const frecuenciaRadio =
+    radioInfo.frecuencia
+        ? radioInfo.frecuencia
+        : "";
 
 
     logo.innerHTML =
@@ -10898,6 +10876,62 @@ cajaControles.appendChild(
 );
 
 
+/* =====================================================
+   BOTÓN MINIMIZAR
+   ===================================================== */
+
+const botonMinimizar =
+    document.createElement("button");
+
+botonMinimizar.type =
+    "button";
+
+botonMinimizar.innerHTML =
+    "−";
+
+botonMinimizar.title =
+    "Minimizar reproductor";
+
+botonMinimizar.style.cursor =
+    "pointer";
+
+botonMinimizar.style.width =
+    "26px";
+
+botonMinimizar.style.height =
+    "26px";
+
+botonMinimizar.style.padding =
+    "0";
+
+botonMinimizar.style.borderRadius =
+    "50%";
+
+botonMinimizar.style.border =
+    "1px solid #00f0ff";
+
+botonMinimizar.style.background =
+    "rgba(0,240,255,.12)";
+
+botonMinimizar.style.color =
+    "#00f0ff";
+
+botonMinimizar.style.fontWeight =
+    "bold";
+
+botonMinimizar.style.fontSize =
+    "16px";
+
+botonMinimizar.style.boxShadow =
+    "0 0 8px rgba(0,240,255,.4)";
+
+botonMinimizar.style.flexShrink =
+    "0";
+
+botonMinimizar.style.transform =
+    "translateY(-12px)";
+
+
     /* =====================================================
        BOTÓN CERRAR
        ===================================================== */
@@ -10965,9 +10999,50 @@ botonCerrar.style.transform =
         cajaControles
     );
 
-    panelSuperior.appendChild(
-        botonCerrar
-    );
+   /* =====================================================
+   CONTROLES SUPERIORES — NO AFECTAN EL DISEÑO
+   ===================================================== */
+
+const controlesSuperiores =
+    document.createElement("div");
+
+controlesSuperiores.style.position =
+    "absolute";
+
+controlesSuperiores.style.top =
+    "6px";
+
+controlesSuperiores.style.right =
+    "14px";
+
+controlesSuperiores.style.display =
+    "flex";
+
+controlesSuperiores.style.alignItems =
+    "center";
+
+controlesSuperiores.style.gap =
+    "4px";
+
+controlesSuperiores.style.zIndex =
+    "20";
+
+controlesSuperiores.style.pointerEvents =
+    "none";
+
+botonCerrar.style.pointerEvents =
+    "auto";
+
+botonCerrar.style.transform =
+    "translateY(0)";
+
+controlesSuperiores.appendChild(
+    botonCerrar
+);
+
+contenedorReproductor.appendChild(
+    controlesSuperiores
+);
 
 
 
@@ -11179,15 +11254,30 @@ botonCerrar.style.transform =
     numerosDial.style.fontSize =
         "10px";
 
-    numerosDial.innerHTML =
-        "<span style='color:#ff00a0'>AM</span>" +
-        "<span>88</span>" +
-        "<span>92</span>" +
-        "<span>96</span>" +
-        "<span>100</span>" +
-        "<span>104</span>" +
-        "<span>108</span>" +
-        "<span style='color:#00f0ff'>FM</span>";
+const tipoDial =
+    String(
+        radioInfo.tipo || ""
+    ).toUpperCase();
+
+const colorAM =
+    tipoDial.includes("AM")
+        ? "#ff3300"
+        : "#555";
+
+const colorFM =
+    tipoDial.includes("FM")
+        ? "#00ff66"
+        : "#555";
+
+numerosDial.innerHTML =
+    "<span style='color:" + colorAM + ";font-weight:bold;text-shadow:0 0 6px " + colorAM + "'>AM</span>" +
+    "<span>88</span>" +
+    "<span>92</span>" +
+    "<span>96</span>" +
+    "<span>100</span>" +
+    "<span>104</span>" +
+    "<span>108</span>" +
+    "<span style='color:" + colorFM + ";font-weight:bold;text-shadow:0 0 6px " + colorFM + "'>FM</span>";
 
 const frecuenciaDial =
     document.createElement("div");
@@ -11264,41 +11354,7 @@ dial.appendChild(
     aguja.style.bottom =
         "0";
 
- let frecuenciaNumero =
-    parseFloat(
-        String(
-            radioInfo.frecuencia || ""
-        )
-        .replace(",", ".")
-        .match(/[\d.]+/)
-    );
-
-if(
-    !isNaN(frecuenciaNumero)
-){
-
-    let posicionAguja =
-        ((frecuenciaNumero - 88) /
-         (108 - 88)) * 100;
-
-    posicionAguja =
-        Math.max(
-            0,
-            Math.min(
-                100,
-                posicionAguja
-            )
-        );
-
-   aguja.style.left =
-    "25%";
-
-}else{
-
-    aguja.style.left =
-        "50%";
-
-}
+ 
 
     aguja.style.width =
         "2px";
@@ -11474,14 +11530,7 @@ const datosVU =
 
             audioNuevo.load();
 
-            audioNuevo.currentTime =
-                0;
-
-            audioNuevo.src =
-                "";
-
-            audioNuevo.load();
-
+          
 
             contenedorReproductor.remove();
 
@@ -11736,16 +11785,12 @@ document.addEventListener(
    POSICIÓN AUTOMÁTICA DE LA AGUJA
    ===================================================== */
 
-const textoFrecuencia =
+const coincidenciaFrecuencia =
     String(
         radioInfo.frecuencia || ""
-    ).replace(",", ".");
-
-const coincidenciaFrecuencia =
-    textoFrecuencia.match(
-        /[\d]+(?:\.[\d]+)?/
-    );
-
+    )
+    .replace(",", ".")
+    .match(/[\d]+(?:\.[\d]+)?/);
 if(coincidenciaFrecuencia){
 
     const numeroFrecuencia =
@@ -11763,22 +11808,35 @@ if(coincidenciaFrecuencia){
     let posicionAguja =
         50;
 
-    if(tipoRadio.includes("AM")){
+if(tipoRadio.includes("AM")){
+
+    const valorAM =
+        numeroFrecuencia / 10;
+
+    if(valorAM < 88){
 
         posicionAguja =
-            ((numeroFrecuencia - 530) /
-             (1710 - 530)) * 100;
+            (valorAM / 88) * 14.3;
 
     }else{
 
-  posicionAguja =
-    14.3 +
-    (
-        (numeroFrecuencia - 88) /
-        (108 - 88)
-    ) * 71.4;
-
+        posicionAguja =
+            14.3 +
+            (
+                (valorAM - 88) /
+                (108 - 88)
+            ) * 71.4;
     }
+
+}else{
+
+    posicionAguja =
+        14.3 +
+        (
+            (numeroFrecuencia - 88) /
+            (108 - 88)
+        ) * 71.4;
+}
 
     posicionAguja =
         Math.max(
