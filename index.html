@@ -10288,7 +10288,9 @@ if (!reproductorRadio) {
 
     contenedorReproductor.style.zIndex = "9999";
 
-    contenedorReproductor.style.width = "620px";
+    contenedorReproductor.style.width =
+    "620px"; 
+
     contenedorReproductor.style.maxWidth = "95vw";
 
     contenedorReproductor.style.boxSizing =
@@ -10406,7 +10408,14 @@ if (!reproductorRadio) {
         "14px";
 
     panelSuperior.style.padding =
-        "10px 14px";
+        "10px 30px";
+   
+    panelSuperior.style.width =
+    "100%";
+
+    panelSuperior.style.boxSizing =
+    "border-box";
+
 
     panelSuperior.style.gap =
         "12px";
@@ -10819,7 +10828,7 @@ cajaControles.appendChild(
         "5px";
 
     boxVolumen.style.transform =
-    "translateX(20px)";
+    "translateX(15px)";
 
 if(window.innerWidth <= 600){
 
@@ -10999,9 +11008,10 @@ botonCerrar.style.transform =
         cajaControles
     );
 
-   /* =====================================================
-   CONTROLES SUPERIORES — NO AFECTAN EL DISEÑO
-   ===================================================== */
+    panelSuperior.appendChild(
+        botonCerrar
+    );
+
 
 const controlesSuperiores =
     document.createElement("div");
@@ -11030,11 +11040,21 @@ controlesSuperiores.style.zIndex =
 controlesSuperiores.style.pointerEvents =
     "none";
 
+botonMinimizar.style.pointerEvents =
+    "auto";
+
 botonCerrar.style.pointerEvents =
     "auto";
 
+botonMinimizar.style.transform =
+    "translateY(0)";
+
 botonCerrar.style.transform =
     "translateY(0)";
+
+controlesSuperiores.appendChild(
+    botonMinimizar
+);
 
 controlesSuperiores.appendChild(
     botonCerrar
@@ -11043,8 +11063,6 @@ controlesSuperiores.appendChild(
 contenedorReproductor.appendChild(
     controlesSuperiores
 );
-
-
 
 
     /* =====================================================
@@ -11077,6 +11095,12 @@ contenedorReproductor.appendChild(
 
     panelInferior.style.padding =
         "10px 14px";
+
+    panelInferior.style.width =
+    "100%";
+
+    panelInferior.style.boxSizing =
+    "border-box";
 
 
     /* =====================================================
