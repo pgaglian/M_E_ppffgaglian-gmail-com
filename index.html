@@ -11408,7 +11408,16 @@ dial.appendChild(
     dial.appendChild(
         aguja
     );
+ 
+    if(
+    window.innerWidth <= 600 &&
+    window.innerHeight > window.innerWidth
+    ){
 
+    dial.style.transform =
+        "scaleX(1.08)";
+
+    }
 
     panelInferior.appendChild(
         crearParlanteNeon()
