@@ -11074,41 +11074,449 @@ contenedorReproductor.appendChild(
     controlesSuperiores
 );
 
+/* =====================================================
+   BARRA MINI DEL REPRODUCTOR
+   ===================================================== */
+
+const barraMini =
+    document.createElement("div");
+
+barraMini.style.position =
+    "fixed";
+
+barraMini.style.left =
+    "50%";
+
+barraMini.style.bottom =
+    "12px";
+
+barraMini.style.transform =
+    "translateX(-50%)";
+
+barraMini.style.width =
+    "360px";
+
+barraMini.style.maxWidth =
+    "92vw";
+
+barraMini.style.height =
+    "46px";
+
+barraMini.style.display =
+    "none";
+
+barraMini.style.alignItems =
+    "center";
+
+barraMini.style.gap =
+    "8px";
+
+barraMini.style.padding =
+    "6px 10px";
+
+barraMini.style.boxSizing =
+    "border-box";
+
+barraMini.style.background =
+    "#0d0f1d";
+
+barraMini.style.border =
+    "1px solid #00f0ff";
+
+barraMini.style.borderRadius =
+    "14px";
+
+barraMini.style.boxShadow =
+    "0 0 15px rgba(0,240,255,.35)";
+
+barraMini.style.zIndex =
+    "100000";
+
+
+/* BOTÓN PLAY */
+
+const btnMiniPlay =
+    document.createElement("button");
+
+btnMiniPlay.type =
+    "button";
+
+btnMiniPlay.innerHTML =
+    "▶";
+
+btnMiniPlay.title =
+    "Reproducir / Pausar";
+
+btnMiniPlay.style.width =
+    "32px";
+
+btnMiniPlay.style.height =
+    "32px";
+
+btnMiniPlay.style.padding =
+    "0";
+
+btnMiniPlay.style.borderRadius =
+    "50%";
+
+btnMiniPlay.style.border =
+    "1px solid #00f0ff";
+
+btnMiniPlay.style.background =
+    "radial-gradient(circle,#0a2540,#020b14)";
+
+btnMiniPlay.style.color =
+    "#00f0ff";
+
+btnMiniPlay.style.cursor =
+    "pointer";
+
+btnMiniPlay.style.flexShrink =
+    "0";
+
+btnMiniPlay.style.fontSize =
+    "11px";
+
+
+/* NOMBRE DE LA RADIO */
+
+const textoMini =
+    document.createElement("div");
+
+textoMini.innerHTML =
+    radioInfo.nombre || "Radio";
+
+textoMini.style.color =
+    "#ffffff";
+
+textoMini.style.fontSize =
+    "12px";
+
+textoMini.style.fontWeight =
+    "bold";
+
+textoMini.style.whiteSpace =
+    "nowrap";
+
+textoMini.style.overflow =
+    "hidden";
+
+textoMini.style.textOverflow =
+    "ellipsis";
+
+textoMini.style.flex =
+    "1";
+
+
+/* BOTÓN RESTAURAR */
+
+const btnMiniRestaurar =
+    document.createElement("button");
+
+btnMiniRestaurar.type =
+    "button";
+
+btnMiniRestaurar.innerHTML =
+    "⛶";
+
+btnMiniRestaurar.title =
+    "Mostrar reproductor completo";
+
+btnMiniRestaurar.style.width =
+    "30px";
+
+btnMiniRestaurar.style.height =
+    "30px";
+
+btnMiniRestaurar.style.padding =
+    "0";
+
+btnMiniRestaurar.style.borderRadius =
+    "50%";
+
+btnMiniRestaurar.style.border =
+    "1px solid #00f0ff";
+
+btnMiniRestaurar.style.background =
+    "rgba(0,240,255,.12)";
+
+btnMiniRestaurar.style.color =
+    "#00f0ff";
+
+btnMiniRestaurar.style.cursor =
+    "pointer";
+
+btnMiniRestaurar.style.flexShrink =
+    "0";
+
+btnMiniRestaurar.style.fontSize =
+    "14px";
+
+
+/* BOTÓN CERRAR */
+
+const btnMiniCerrar =
+    document.createElement("button");
+
+btnMiniCerrar.type =
+    "button";
+
+btnMiniCerrar.innerHTML =
+    "✕";
+
+btnMiniCerrar.title =
+    "Cerrar radio";
+
+btnMiniCerrar.style.width =
+    "30px";
+
+btnMiniCerrar.style.height =
+    "30px";
+
+btnMiniCerrar.style.padding =
+    "0";
+
+btnMiniCerrar.style.borderRadius =
+    "50%";
+
+btnMiniCerrar.style.border =
+    "1px solid #ff0055";
+
+btnMiniCerrar.style.background =
+    "rgba(255,0,85,.15)";
+
+btnMiniCerrar.style.color =
+    "#ff0055";
+
+btnMiniCerrar.style.cursor =
+    "pointer";
+
+btnMiniCerrar.style.flexShrink =
+    "0";
+
+btnMiniCerrar.style.fontSize =
+    "11px";
+
+
+/* ARMAR BARRA */
+
+barraMini.appendChild(
+    btnMiniPlay
+);
+
+barraMini.appendChild(
+    textoMini
+);
+
+barraMini.appendChild(
+    btnMiniRestaurar
+);
+
+barraMini.appendChild(
+    btnMiniCerrar
+);
+
+
+/* AGREGAR AL DOCUMENTO */
+
+document.body.appendChild(
+    barraMini
+);
+
+
+/* FUNCIONES DE LOS BOTONES */
+
+btnMiniPlay.onclick =
+    function(){
+
+        btnPlayPause.click();
+
+    };
+
+
+btnMiniRestaurar.onclick =
+    function(){
+
+        botonMinimizar.click();
+
+    };
+
+
+btnMiniCerrar.onclick =
+    function(){
+
+        botonCerrar.click();
+
+        barraMini.remove();
+
+    };
+
+
+/* =====================================================
+   ARRASTRE DE LA BARRA MINI
+   ===================================================== */
+
+let moviendoBarraMini =
+    false;
+
+let offsetMiniX =
+    0;
+
+let offsetMiniY =
+    0;
+
+
+barraMini.style.touchAction =
+    "none";
+
+
+barraMini.addEventListener(
+    "pointerdown",
+    function(e){
+
+        /* Los botones no arrastran */
+        if(
+            e.target.closest("button")
+        ){
+            return;
+        }
+
+        e.preventDefault();
+
+        moviendoBarraMini =
+            true;
+
+        const rect =
+            barraMini.getBoundingClientRect();
+
+        offsetMiniX =
+            e.clientX -
+            rect.left;
+
+        offsetMiniY =
+            e.clientY -
+            rect.top;
+
+        barraMini.style.bottom =
+            "auto";
+
+        barraMini.style.left =
+            rect.left + "px";
+
+        barraMini.style.top =
+            rect.top + "px";
+
+        barraMini.style.transform =
+            "none";
+
+        barraMini.setPointerCapture(
+            e.pointerId
+        );
+
+    }
+);
+
+
+barraMini.addEventListener(
+    "pointermove",
+    function(e){
+
+        if(!moviendoBarraMini){
+            return;
+        }
+
+        e.preventDefault();
+
+        barraMini.style.left =
+            (e.clientX - offsetMiniX) +
+            "px";
+
+        barraMini.style.top =
+            (e.clientY - offsetMiniY) +
+            "px";
+
+    }
+);
+
+
+barraMini.addEventListener(
+    "pointerup",
+    function(e){
+
+        moviendoBarraMini =
+            false;
+
+        if(
+            barraMini.hasPointerCapture(
+                e.pointerId
+            )
+        ){
+
+            barraMini.releasePointerCapture(
+                e.pointerId
+            );
+
+        }
+
+    }
+);
+
+
+barraMini.addEventListener(
+    "pointercancel",
+    function(){
+
+        moviendoBarraMini =
+            false;
+
+    }
+);
+
+
 botonMinimizar.onclick =
     function(){
 
         const minimizado =
             contenedorReproductor.dataset.minimizado === "true";
 
+
         if(!minimizado){
+
+            /* =========================================
+               MINIMIZAR
+               ========================================= */
 
             contenedorReproductor.dataset.minimizado =
                 "true";
 
-            panelInferior.style.display =
-            "none";
-           
-  	
-         botonMinimizar.innerHTML =
-           "⛶";
+            /* Guardar display original */
+            contenedorReproductor.dataset.displayOriginal =
+                contenedorReproductor.style.display;
 
-         }else{
+            contenedorReproductor.style.display =
+                "none";
+
+            barraMini.style.display =
+                "flex";
+
+        }else{
+
+            /* =========================================
+               RESTAURAR
+               ========================================= */
 
             contenedorReproductor.dataset.minimizado =
                 "false";
 
-           panelInferior.style.display =
-           "grid";
+            barraMini.style.display =
+                "none";
 
-            botonMinimizar.innerHTML =
-                "−";
+            contenedorReproductor.style.display =
+                contenedorReproductor.dataset.displayOriginal || "block";
 
         }
 
     };
-
-
-
 
     /* =====================================================
        PANEL INFERIOR
