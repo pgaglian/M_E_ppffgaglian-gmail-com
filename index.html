@@ -10822,115 +10822,71 @@ cajaControles.appendChild(
 
     /* ===== VOLUMEN ===== */
 
- const boxVolumen =
-    document.createElement("div");
+    const boxVolumen =
+        document.createElement("div");
 
-boxVolumen.style.display =
-    "flex";
+    boxVolumen.style.display =
+        "flex";
 
-boxVolumen.style.alignItems =
-    "center";
+    boxVolumen.style.alignItems =
+        "center";
 
-boxVolumen.style.gap =
-    "5px";
+    boxVolumen.style.gap =
+        "5px";
 
-boxVolumen.style.transform =
+    boxVolumen.style.transform =
     "translateX(15px)";
-
-
-/* =====================================================
-   VOLUMEN — CELULAR
-   ===================================================== */
 
 if(window.innerWidth <= 600){
 
     boxVolumen.style.transform =
-        "none";
+        "translateX(15px)";
 
 }
 
+    const iconoVolumen =
+        document.createElement("span");
 
-/* =====================================================
-   ICONO DE AUDIO
-   ===================================================== */
+    iconoVolumen.innerHTML =
+        "🔊";
 
-const iconoVolumen =
-    document.createElement("span");
-
-iconoVolumen.innerHTML =
-    "🔊";
-
-iconoVolumen.style.fontSize =
-    "11px";
-
-iconoVolumen.title =
-    "Volumen del dispositivo";
+    iconoVolumen.style.fontSize =
+        "11px";
 
 
-/* =====================================================
-   BARRA DE VOLUMEN
-   ===================================================== */
+    const sliderVolumen =
+        document.createElement("input");
 
-const sliderVolumen =
-    document.createElement("input");
+    sliderVolumen.type =
+        "range";
 
-sliderVolumen.type =
-    "range";
+    sliderVolumen.min =
+        "0";
 
-sliderVolumen.min =
-    "0";
+    sliderVolumen.max =
+        "1";
 
-sliderVolumen.max =
-    "1";
+    sliderVolumen.step =
+        "0.01";
 
-sliderVolumen.step =
-    "0.01";
+    sliderVolumen.value =
+        "0.8";
 
-sliderVolumen.value =
-    "0.8";
+    sliderVolumen.style.width =
+        "65px";
 
-sliderVolumen.style.width =
-    "65px";
-
-sliderVolumen.style.accentColor =
-    "#00f0ff";
+    sliderVolumen.style.accentColor =
+        "#00f0ff";
 
 
-/* =====================================================
-   EN CELULAR:
-   OCULTAMOS SLIDER Y DEJAMOS SOLO INDICADOR
-   ===================================================== */
+    boxVolumen.appendChild(
+        iconoVolumen
+    );
 
-if(window.innerWidth <= 600){
+    boxVolumen.appendChild(
+        sliderVolumen
+    );
 
-    sliderVolumen.style.display =
-        "none";
-
-}
-
-
-/* =====================================================
-   CAMBIO DEL VOLUMEN DEL REPRODUCTOR
-   ===================================================== */
-
-sliderVolumen.oninput =
-    function(){
-
-        audioNuevo.volume =
-            parseFloat(
-                sliderVolumen.value
-            );
-
-    };
-
-
-boxVolumen.appendChild(
-    iconoVolumen
-);
-
-boxVolumen.appendChild(
-    sliderVolumen
-);
 cajaControles.appendChild(
     boxVolumen
 );
@@ -11124,322 +11080,36 @@ botonMinimizar.onclick =
         const minimizado =
             contenedorReproductor.dataset.minimizado === "true";
 
-
-        /* =================================================
-           MINIMIZAR
-           ================================================= */
-
         if(!minimizado){
 
             contenedorReproductor.dataset.minimizado =
                 "true";
 
-
-            /* OCULTAR PANEL INFERIOR */
-
             panelInferior.style.display =
-                "none";
+            "none";
+           
+  	
+         botonMinimizar.innerHTML =
+           "⛶";
 
-
-            /* CONTENEDOR */
-
-            contenedorReproductor.style.padding =
-                "0";
-
-            contenedorReproductor.style.borderRadius =
-                "12px";
-
-
-            /* CUERPO */
-
-            cuerpo.style.gap =
-                "0";
-
-
-            /* OCULTAR ASA SUPERIOR */
-
-            asaArrastre.style.display =
-                "none";
-
-
-            /* PANEL SUPERIOR */
-
-            panelSuperior.style.height =
-                "50px";
-
-            panelSuperior.style.padding =
-                "5px 10px";
-
-            panelSuperior.style.borderRadius =
-                "10px";
-
-            panelSuperior.style.gap =
-                "6px";
-
-            panelSuperior.style.overflow =
-                "hidden";
-
-
-            /* EMISORA */
-
-            boxEmisora.style.gap =
-                "6px";
-
-
-            logo.style.width =
-                "28px";
-
-            logo.style.height =
-                "28px";
-
-            logo.style.borderRadius =
-                "6px";
-
-
-            /* VU */
-
-            zonaVU.style.height =
-                "22px";
-
-            zonaVU.style.width =
-                window.innerWidth <= 600
-                    ? "70px"
-                    : "100px";
-
-            zonaVU.style.gap =
-                window.innerWidth <= 600
-                    ? "1px"
-                    : "2px";
-
-            zonaVU.style.margin =
-                "0";
-
-            zonaVU.style.transform =
-                "none";
-
-            zonaVU.style.padding =
-                "2px 3px";
-
-
-            barrasVU.forEach(
-                function(barra){
-
-                    barra.style.width =
-                        window.innerWidth <= 600
-                            ? "2px"
-                            : "3px";
-
-                }
-            );
-
-
-            /* PLAY */
-
-            bloquePlay.style.gap =
-                "0";
-
-            indicadorEnVivo.style.display =
-                "none";
-
-            btnPlayPause.style.width =
-                "28px";
-
-            btnPlayPause.style.height =
-                "28px";
-
-            btnPlayPause.style.fontSize =
-                "10px";
-
-            btnPlayPause.style.transform =
-                "none";
-
-
-            /* CONTROLES */
-
-            cajaControles.style.gap =
-                "6px";
-
-
-            /* VOLUMEN */
-
-            boxVolumen.style.gap =
-                "3px";
-
-            boxVolumen.style.transform =
-                "none";
-
-            sliderVolumen.style.width =
-                "50px";
-
-
-            /* BOTÓN RESTAURAR */
-
-            botonMinimizar.innerHTML =
-                "⛶";
-
-            botonMinimizar.title =
-                "Restaurar reproductor";
-
-
-        }else{
-
-
-            /* =================================================
-               RESTAURAR
-               ================================================= */
+         }else{
 
             contenedorReproductor.dataset.minimizado =
                 "false";
 
-
-            /* PANEL INFERIOR */
-
-            panelInferior.style.display =
-                "grid";
-
-
-            /* CONTENEDOR */
-
-            contenedorReproductor.style.padding =
-                "10px 16px 16px 16px";
-
-            contenedorReproductor.style.borderRadius =
-                "20px";
-
-
-            /* CUERPO */
-
-            cuerpo.style.gap =
-                "12px";
-
-
-            /* ASA */
-
-            asaArrastre.style.display =
-                "";
-
-
-            /* PANEL SUPERIOR */
-
-            panelSuperior.style.height =
-                "";
-
-            panelSuperior.style.padding =
-                "10px 30px";
-
-            panelSuperior.style.borderRadius =
-                "14px";
-
-            panelSuperior.style.gap =
-                "12px";
-
-            panelSuperior.style.overflow =
-                "";
-
-
-            /* EMISORA */
-
-            boxEmisora.style.gap =
-                "10px";
-
-
-            logo.style.width =
-                "46px";
-
-            logo.style.height =
-                "46px";
-
-            logo.style.borderRadius =
-                "10px";
-
-
-            /* VU */
-
-            zonaVU.style.height =
-                "30px";
-
-            zonaVU.style.width =
-                window.innerWidth <= 600
-                    ? "95px"
-                    : "150px";
-
-            zonaVU.style.gap =
-                window.innerWidth <= 600
-                    ? "1px"
-                    : "4px";
-
-            zonaVU.style.margin =
-                "0 5px";
-
-            zonaVU.style.transform =
-                "translateX(18px)";
-
-            zonaVU.style.padding =
-                "3px 4px";
-
-
-            barrasVU.forEach(
-                function(barra){
-
-                    barra.style.width =
-                        window.innerWidth <= 600
-                            ? "2px"
-                            : "5px";
-
-                }
-            );
-
-
-            /* PLAY */
-
-            bloquePlay.style.gap =
-                "5px";
-
-            indicadorEnVivo.style.display =
-                "";
-
-            btnPlayPause.style.width =
-                "36px";
-
-            btnPlayPause.style.height =
-                "36px";
-
-            btnPlayPause.style.fontSize =
-                "12px";
-
-            btnPlayPause.style.transform =
-                "translateX(20px)";
-
-
-            /* CONTROLES */
-
-            cajaControles.style.gap =
-                "10px";
-
-
-            /* VOLUMEN */
-
-            boxVolumen.style.gap =
-                "5px";
-
-            boxVolumen.style.transform =
-                "translateX(15px)";
-
-            sliderVolumen.style.width =
-                "65px";
-
-
-            /* BOTÓN MINIMIZAR */
+           panelInferior.style.display =
+           "grid";
 
             botonMinimizar.innerHTML =
                 "−";
 
-            botonMinimizar.title =
-                "Minimizar reproductor";
-
         }
 
     };
+
+
+
+
     /* =====================================================
        PANEL INFERIOR
        ===================================================== */
