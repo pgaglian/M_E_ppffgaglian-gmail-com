@@ -10822,71 +10822,115 @@ cajaControles.appendChild(
 
     /* ===== VOLUMEN ===== */
 
-    const boxVolumen =
-        document.createElement("div");
+ const boxVolumen =
+    document.createElement("div");
 
-    boxVolumen.style.display =
-        "flex";
+boxVolumen.style.display =
+    "flex";
 
-    boxVolumen.style.alignItems =
-        "center";
+boxVolumen.style.alignItems =
+    "center";
 
-    boxVolumen.style.gap =
-        "5px";
+boxVolumen.style.gap =
+    "5px";
 
-    boxVolumen.style.transform =
+boxVolumen.style.transform =
     "translateX(15px)";
+
+
+/* =====================================================
+   VOLUMEN — CELULAR
+   ===================================================== */
 
 if(window.innerWidth <= 600){
 
     boxVolumen.style.transform =
-        "translateX(15px)";
+        "none";
 
 }
 
-    const iconoVolumen =
-        document.createElement("span");
 
-    iconoVolumen.innerHTML =
-        "🔊";
+/* =====================================================
+   ICONO DE AUDIO
+   ===================================================== */
 
-    iconoVolumen.style.fontSize =
-        "11px";
+const iconoVolumen =
+    document.createElement("span");
 
+iconoVolumen.innerHTML =
+    "🔊";
 
-    const sliderVolumen =
-        document.createElement("input");
+iconoVolumen.style.fontSize =
+    "11px";
 
-    sliderVolumen.type =
-        "range";
-
-    sliderVolumen.min =
-        "0";
-
-    sliderVolumen.max =
-        "1";
-
-    sliderVolumen.step =
-        "0.01";
-
-    sliderVolumen.value =
-        "0.8";
-
-    sliderVolumen.style.width =
-        "65px";
-
-    sliderVolumen.style.accentColor =
-        "#00f0ff";
+iconoVolumen.title =
+    "Volumen del dispositivo";
 
 
-    boxVolumen.appendChild(
-        iconoVolumen
-    );
+/* =====================================================
+   BARRA DE VOLUMEN
+   ===================================================== */
 
-    boxVolumen.appendChild(
-        sliderVolumen
-    );
+const sliderVolumen =
+    document.createElement("input");
 
+sliderVolumen.type =
+    "range";
+
+sliderVolumen.min =
+    "0";
+
+sliderVolumen.max =
+    "1";
+
+sliderVolumen.step =
+    "0.01";
+
+sliderVolumen.value =
+    "0.8";
+
+sliderVolumen.style.width =
+    "65px";
+
+sliderVolumen.style.accentColor =
+    "#00f0ff";
+
+
+/* =====================================================
+   EN CELULAR:
+   OCULTAMOS SLIDER Y DEJAMOS SOLO INDICADOR
+   ===================================================== */
+
+if(window.innerWidth <= 600){
+
+    sliderVolumen.style.display =
+        "none";
+
+}
+
+
+/* =====================================================
+   CAMBIO DEL VOLUMEN DEL REPRODUCTOR
+   ===================================================== */
+
+sliderVolumen.oninput =
+    function(){
+
+        audioNuevo.volume =
+            parseFloat(
+                sliderVolumen.value
+            );
+
+    };
+
+
+boxVolumen.appendChild(
+    iconoVolumen
+);
+
+boxVolumen.appendChild(
+    sliderVolumen
+);
 cajaControles.appendChild(
     boxVolumen
 );
