@@ -6148,8 +6148,10 @@ function cambiarTiempoPerfilEntrenamiento(tipo, cambio){
         total = 0;
     }
 
-    campo.textContent =
+        campo.textContent =
         formatearTiempoEntrenamiento(total);
+
+    actualizarTiempoTotalPerfilEntrenamiento();
 
 }
 
@@ -6201,9 +6203,11 @@ function editarTiempoPerfilEntrenamiento(tipo){
         segundos = 59;
     }
 
-    campo.textContent =
+        campo.textContent =
         String(minutos).padStart(2,"0") + ":" +
         String(segundos).padStart(2,"0");
+
+    actualizarTiempoTotalPerfilEntrenamiento();
 
 }
 
@@ -6224,7 +6228,9 @@ function cambiarCiclosPerfilEntrenamiento(cambio){
         ciclos = 1;
     }
 
-    campo.textContent = ciclos;
+      campo.textContent = ciclos;
+
+    actualizarTiempoTotalPerfilEntrenamiento();
 
 }
 
@@ -6244,7 +6250,120 @@ function cambiarBloquesPerfilEntrenamiento(cambio){
         bloques = 1;
     }
 
-    campo.textContent = bloques;
+        campo.textContent = bloques;
+
+    actualizarTiempoTotalPerfilEntrenamiento();
+
+}
+
+// =====================================================
+// ACTUALIZAR TIEMPO TOTAL DEL PERFIL
+// =====================================================
+
+function actualizarTiempoTotalPerfilEntrenamiento(){
+
+    const campoPreparacion =
+        document.getElementById("editarTiempoPreparacion");
+
+    const campoTrabajo =
+        document.getElementById("editarTiempoTrabajo");
+
+    const campoDescanso =
+        document.getElementById("editarTiempoDescanso");
+
+    const campoDescansoBloque =
+        document.getElementById("editarTiempoDescansoBloque");
+
+    const campoCiclos =
+        document.getElementById("editarCantidadCiclos");
+
+    const campoBloques =
+        document.getElementById("editarCantidadBloques");
+
+    if(
+        !campoPreparacion ||
+        !campoTrabajo ||
+        !campoDescanso ||
+        !campoDescansoBloque ||
+        !campoCiclos ||
+        !campoBloques
+    ){
+        return;
+    }
+
+    function convertirTiempo(texto){
+
+        let valor =
+            (texto || "00:00").replace(/\D/g,"");
+
+        valor =
+            valor.padStart(4,"0");
+
+        let minutos =
+            parseInt(valor.substring(0,2)) || 0;
+
+        let segundos =
+            parseInt(valor.substring(2,4)) || 0;
+
+        return (minutos * 60) + segundos;
+    }
+
+    const tiempoPreparacion =
+        convertirTiempo(campoPreparacion.textContent);
+
+    const tiempoTrabajo =
+        convertirTiempo(campoTrabajo.textContent);
+
+    const tiempoDescanso =
+        convertirTiempo(campoDescanso.textContent);
+
+    const tiempoDescansoBloque =
+        convertirTiempo(campoDescansoBloque.textContent);
+
+    const ciclos =
+        parseInt(campoCiclos.textContent) || 1;
+
+    const bloques =
+        parseInt(campoBloques.textContent) || 1;
+
+    const tiempoPorBloque =
+        (tiempoTrabajo * ciclos) +
+        (tiempoDescanso * (ciclos - 1));
+
+    const tiempoTotal =
+        tiempoPreparacion +
+        (tiempoPorBloque * bloques) +
+        (tiempoDescansoBloque * (bloques - 1));
+
+    const campoTotal =
+        document.getElementById(
+            "editarTiempoTotalEntrenamiento"
+        );
+
+    if(campoTotal){
+
+        campoTotal.textContent =
+            formatearTiempoEntrenamiento(tiempoTotal);
+
+    }
+
+}
+
+function convertirTiempoPerfilEntrenamiento(texto){
+
+    let valor =
+        (texto || "00:00").replace(/\D/g,"");
+
+    valor =
+        valor.padStart(4,"0");
+
+    let minutos =
+        parseInt(valor.substring(0,2)) || 0;
+
+    let segundos =
+        parseInt(valor.substring(2,4)) || 0;
+
+    return (minutos * 60) + segundos;
 
 }
 
@@ -6622,6 +6741,10 @@ function guardarConfiguracionEntrenamiento(){
             "mensajeNuevoPerfilEntrenamiento"
         );
 
+
+
+
+
     if(popup){
 
         popup.style.display = "flex";
@@ -6647,16 +6770,28 @@ function guardarConfiguracionEntrenamiento(){
 // ABRIR POPUP
 // =====================================================
 
-    const popup =
-        document.getElementById(
-            "popupConfirmarPerfilEntrenamiento"
-        );
+const popup =
+    document.getElementById(
+        "popupConfirmarPerfilEntrenamiento"
+    );
 
-    if(popup){
+const mensajePopup =
+    document.getElementById(
+        "mensajeNuevoPerfilEntrenamiento"
+    );
 
-        popup.style.display = "flex";
+if(mensajePopup){
 
-    }
+    mensajePopup.textContent = "";
+    mensajePopup.style.display = "none";
+
+}
+
+if(popup){
+
+    popup.style.display = "flex";
+
+}
 
 }
 
@@ -7121,40 +7256,7 @@ function abrirPerfilesEntrenamiento(){
         );
 
 
-    // =====================================================
-    // ELIMINAR DUPLICADOS
-    // =====================================================
-
-    const perfilesUnicos = [];
-
-    perfiles.forEach(function(perfil){
-
-        const existe =
-            perfilesUnicos.some(function(p){
-
-                return JSON.stringify(p.configuracion) ===
-                       JSON.stringify(perfil.configuracion);
-
-            });
-
-        if(!existe){
-
-            perfilesUnicos.push(perfil);
-
-        }
-
-    });
-
-    perfiles = perfilesUnicos;
-
-
-    // Guardar la lista limpia
-
-    localStorage.setItem(
-        "perfilesEntrenamiento",
-        JSON.stringify(perfiles)
-    );
-
+    
 
     // =====================================================
     // MOSTRAR PERFILES
@@ -7295,7 +7397,107 @@ function abrirPerfilesEntrenamiento(){
 
 }
 
+// =====================================================
+// SELECCIONAR PERFIL DE ENTRENAMIENTO
+// =====================================================
 
+function seleccionarPerfilEntrenamiento(indice){
+
+    const perfiles =
+        JSON.parse(
+            localStorage.getItem("perfilesEntrenamiento") || "[]"
+        );
+
+    if(!perfiles[indice]){
+        return;
+    }
+
+    const perfil =
+        perfiles[indice];
+
+    const configuracion =
+        perfil.configuracion || {};
+
+
+    // =====================================================
+    // TIEMPOS
+    // =====================================================
+
+    tiempoPreparacionEntrenamiento =
+        parseInt(configuracion.preparacion) || 0;
+
+    tiempoTrabajoEntrenamiento =
+        parseInt(configuracion.trabajo) || 0;
+
+    tiempoDescansoEntrenamiento =
+        parseInt(configuracion.descanso) || 0;
+
+    tiempoDescansoBloqueEntrenamiento =
+        parseInt(configuracion.descansoBloque) || 0;
+
+
+    document.getElementById("tiempoPreparacion").textContent =
+        formatearTiempoEntrenamiento(
+            tiempoPreparacionEntrenamiento
+        );
+
+    document.getElementById("tiempoTrabajo").textContent =
+        formatearTiempoEntrenamiento(
+            tiempoTrabajoEntrenamiento
+        );
+
+    document.getElementById("tiempoDescanso").textContent =
+        formatearTiempoEntrenamiento(
+            tiempoDescansoEntrenamiento
+        );
+
+    document.getElementById("tiempoDescansoBloque").textContent =
+        formatearTiempoEntrenamiento(
+            tiempoDescansoBloqueEntrenamiento
+        );
+
+
+    // =====================================================
+    // CICLOS
+    // =====================================================
+
+    document.getElementById("cantidadCiclos").textContent =
+        parseInt(configuracion.ciclos) || 1;
+
+
+    // =====================================================
+    // BLOQUES
+    // =====================================================
+
+    document.getElementById("cantidadBloques").textContent =
+        parseInt(configuracion.bloques) || 1;
+
+// =====================================================
+// SONIDO
+// =====================================================
+
+document.getElementById("sonidoEntrenamiento").value =
+    configuracion.sonido || "";
+
+// =====================================================
+// VOZ
+// =====================================================
+
+document.getElementById("vozEntrenamiento").value =
+    configuracion.voz || "";
+
+
+    // =====================================================
+    // TIEMPO TOTAL
+    // =====================================================
+
+    calcularTiempoTotalEntrenamiento();
+
+    cerrarPerfilesEntrenamiento();
+
+  
+
+}
 // =====================================================
 // CERRAR PERFILES
 // =====================================================
@@ -7581,6 +7783,50 @@ function editarPerfilEntrenamiento(indice){
 
     }
 
+    // =====================================================
+    // TIEMPO TOTAL DEL PERFIL
+    // =====================================================
+
+    const tiempoPreparacion =
+        parseInt(configuracion.preparacion) || 0;
+
+    const tiempoTrabajo =
+        parseInt(configuracion.trabajo) || 0;
+
+    const tiempoDescanso =
+        parseInt(configuracion.descanso) || 0;
+
+    const tiempoDescansoBloque =
+        parseInt(configuracion.descansoBloque) || 0;
+
+    const cantidadCiclos =
+        parseInt(configuracion.ciclos) || 1;
+
+    const cantidadBloques =
+        parseInt(configuracion.bloques) || 1;
+
+    const tiempoPorBloque =
+        (tiempoTrabajo * cantidadCiclos) +
+        (tiempoDescanso * (cantidadCiclos - 1));
+
+    const tiempoTotal =
+        tiempoPreparacion +
+        (tiempoPorBloque * cantidadBloques) +
+        (tiempoDescansoBloque * (cantidadBloques - 1));
+
+    const campoTiempoTotal =
+        document.getElementById(
+            "editarTiempoTotalEntrenamiento"
+        );
+
+    if(campoTiempoTotal){
+
+        campoTiempoTotal.textContent =
+            formatearTiempoEntrenamiento(tiempoTotal);
+
+    }
+
+
 // =====================================================
 // SONIDO
 // =====================================================
@@ -7667,6 +7913,19 @@ if(campoVoz){
     // ABRIR POPUP
     // =====================================================
 
+    const mensaje =
+    document.getElementById(
+        "mensajeEditarPerfilEntrenamiento"
+    );
+
+if(mensaje){
+
+    mensaje.style.display = "none";
+    mensaje.textContent = "";
+
+}
+    
+    
     const popup =
         document.getElementById(
             "popupEditarPerfilEntrenamiento"
@@ -7680,6 +7939,55 @@ if(campoVoz){
     }
 
 }
+
+function resetearEdicionPerfilEntrenamiento(){
+
+    if(indicePerfilEditar === null){
+        return;
+    }
+
+    const perfiles =
+        JSON.parse(
+            localStorage.getItem("perfilesEntrenamiento") || "[]"
+        );
+
+    if(!perfiles[indicePerfilEditar]){
+        return;
+    }
+
+    const configuracion =
+        perfiles[indicePerfilEditar].configuracion || {};
+
+    document.getElementById("editarTiempoPreparacion").textContent =
+        formatearTiempoEntrenamiento(
+            parseInt(configuracion.preparacion) || 0
+        );
+
+    document.getElementById("editarTiempoTrabajo").textContent =
+        formatearTiempoEntrenamiento(
+            parseInt(configuracion.trabajo) || 0
+        );
+
+    document.getElementById("editarTiempoDescanso").textContent =
+        formatearTiempoEntrenamiento(
+            parseInt(configuracion.descanso) || 0
+        );
+
+    document.getElementById("editarTiempoDescansoBloque").textContent =
+        formatearTiempoEntrenamiento(
+            parseInt(configuracion.descansoBloque) || 0
+        );
+
+    document.getElementById("editarCantidadCiclos").textContent =
+        parseInt(configuracion.ciclos) || 1;
+
+    document.getElementById("editarCantidadBloques").textContent =
+        parseInt(configuracion.bloques) || 1;
+
+    actualizarTiempoTotalPerfilEntrenamiento();
+
+}
+
 
 
 // =====================================================
@@ -7709,58 +8017,409 @@ function cerrarEditarPerfilEntrenamiento(){
 // GUARDAR CAMBIO DE NOMBRE DEL PERFIL
 // =====================================================
 
+// =====================================================
+// GUARDAR CAMBIOS DEL PERFIL
+// =====================================================
+
 function guardarEdicionPerfilEntrenamiento(){
 
     if(indicePerfilEditar === null){
         return;
     }
 
-
     const campo =
         document.getElementById(
             "nombreEditarPerfilEntrenamiento"
         );
 
-
     if(!campo){
         return;
     }
 
-
     const nuevoNombre =
         campo.value.trim();
-
 
     if(nuevoNombre === ""){
         return;
     }
-
 
     const perfiles =
         JSON.parse(
             localStorage.getItem("perfilesEntrenamiento") || "[]"
         );
 
-
     if(!perfiles[indicePerfilEditar]){
         return;
     }
 
+    const perfil =
+        perfiles[indicePerfilEditar];
 
-    perfiles[indicePerfilEditar].nombre =
+    const nuevaConfiguracion = {
+
+        preparacion:
+            convertirTiempoPerfilEntrenamiento(
+                document.getElementById(
+                    "editarTiempoPreparacion"
+                ).textContent
+            ),
+
+        trabajo:
+            convertirTiempoPerfilEntrenamiento(
+                document.getElementById(
+                    "editarTiempoTrabajo"
+                ).textContent
+            ),
+
+        descanso:
+            convertirTiempoPerfilEntrenamiento(
+                document.getElementById(
+                    "editarTiempoDescanso"
+                ).textContent
+            ),
+
+        descansoBloque:
+            convertirTiempoPerfilEntrenamiento(
+                document.getElementById(
+                    "editarTiempoDescansoBloque"
+                ).textContent
+            ),
+
+        ciclos:
+            parseInt(
+                document.getElementById(
+                    "editarCantidadCiclos"
+                ).textContent
+            ) || 1,
+
+          bloques:
+            parseInt(
+                document.getElementById(
+                    "editarCantidadBloques"
+                ).textContent
+            ) || 1,
+
+        sonido:
+            document.getElementById(
+                "editarSonidoEntrenamiento"
+            ).value,
+
+        voz:
+            document.getElementById(
+                "editarVozEntrenamiento"
+            ).value
+
+    };
+
+    const nombreCambio =
+        (perfil.nombre || "") !== nuevoNombre;
+
+
+ const configuracionGuardada =
+    perfil.configuracion || {};
+
+const configuracionCambio =
+    (parseInt(configuracionGuardada.preparacion) || 0) !==
+    (parseInt(nuevaConfiguracion.preparacion) || 0) ||
+
+    (parseInt(configuracionGuardada.trabajo) || 0) !==
+    (parseInt(nuevaConfiguracion.trabajo) || 0) ||
+
+    (parseInt(configuracionGuardada.descanso) || 0) !==
+    (parseInt(nuevaConfiguracion.descanso) || 0) ||
+
+    (parseInt(configuracionGuardada.descansoBloque) || 0) !==
+    (parseInt(nuevaConfiguracion.descansoBloque) || 0) ||
+
+    (parseInt(configuracionGuardada.ciclos) || 1) !==
+    (parseInt(nuevaConfiguracion.ciclos) || 1) ||
+
+    (parseInt(configuracionGuardada.bloques) || 1) !==
+    (parseInt(nuevaConfiguracion.bloques) || 1) ||
+
+    (configuracionGuardada.sonido || "") !==
+    (nuevaConfiguracion.sonido || "") ||
+
+    (configuracionGuardada.voz || "") !==
+    (nuevaConfiguracion.voz || "");
+
+
+
+    // =================================================
+    // VERIFICAR SI HAY CAMBIOS
+    // =================================================
+
+    if(
+        !nombreCambio &&
+        !configuracionCambio
+    ){
+
+        const mensaje =
+            document.getElementById(
+                "mensajeEditarPerfilEntrenamiento"
+            );
+
+        if(mensaje){
+
+            mensaje.textContent =
+                "⚠️ No hay cambios para guardar";
+
+            mensaje.style.color = "#FFD700";
+            mensaje.style.display = "block";
+
+        }
+
+        return;
+    }
+
+    // =================================================
+    // GUARDAR CAMBIOS
+    // =================================================
+
+    perfil.nombre =
         nuevoNombre.substring(0,20);
 
+    perfil.configuracion =
+        nuevaConfiguracion;
 
     localStorage.setItem(
         "perfilesEntrenamiento",
         JSON.stringify(perfiles)
     );
 
+    const mensaje =
+        document.getElementById(
+            "mensajeEditarPerfilEntrenamiento"
+        );
 
-    cerrarEditarPerfilEntrenamiento();
+    if(mensaje){
+
+        mensaje.textContent =
+            "✔ Configuración guardada";
+
+        mensaje.style.color = "#7CFC00";
+
+        mensaje.style.display = "block";
+
+        setTimeout(function(){
+
+            mensaje.style.display = "none";
+
+            cerrarEditarPerfilEntrenamiento();
+
+            abrirPerfilesEntrenamiento();
+
+        },1200);
+
+    }
+
+}
+
+// =====================================================
+// GUARDAR COMO PERFIL DE ENTRENAMIENTO
+// =====================================================
+
+function guardarComoPerfilEntrenamiento(){
 
 
-    abrirPerfilesEntrenamiento();
+if(indicePerfilEditar === null){
+    return;
+}
+
+const popupEditar =
+    document.getElementById(
+        "popupEditarPerfilEntrenamiento"
+    );
+
+if(popupEditar){
+    popupEditar.style.display = "none";
+}
+
+const popup =
+    document.getElementById(
+        "popupConfirmarPerfilEntrenamiento"
+    );
+
+const campoNombre =
+    document.getElementById(
+        "nombreNuevoPerfilEntrenamiento"
+    );
+
+const campoNombreEditar =
+    document.getElementById(
+        "nombreEditarPerfilEntrenamiento"
+    );
+
+if(campoNombre && campoNombreEditar){
+
+    campoNombre.value =
+        campoNombreEditar.value.trim();
+
+}
+
+const mensajePopup =
+    document.getElementById(
+        "mensajeNuevoPerfilEntrenamiento"
+    );
+
+if(mensajePopup){
+
+    mensajePopup.textContent = "";
+    mensajePopup.style.display = "none";
+
+}
+
+if(popup){
+    popup.style.display = "flex";
+}
+
+return;
+
+    const perfiles =
+        JSON.parse(
+            localStorage.getItem("perfilesEntrenamiento") || "[]"
+        );
+
+   if(perfiles.length >= 10){
+
+    const mensaje =
+        document.getElementById(
+            "mensajeNuevoPerfilEntrenamiento"
+        );
+
+    if(mensaje){
+
+        mensaje.textContent =
+            "⚠️ Ya tenés 10 perfiles guardados. Eliminá uno para poder crear otro.";
+
+        mensaje.style.color = "#FFD700";
+        mensaje.style.display = "block";
+
+    }
+
+    return;
+}
+
+    const nombreRepetido =
+        perfiles.some(function(perfil){
+
+            return (
+                (perfil.nombre || "")
+                .trim()
+                .toLowerCase()
+            ) === nombre.toLowerCase();
+
+        });
+
+    if(nombreRepetido){
+
+        const mensaje =
+            document.getElementById(
+                "mensajeEditarPerfilEntrenamiento"
+            );
+
+        if(mensaje){
+
+            mensaje.textContent =
+                "⚠️ Ya existe un perfil con ese nombre";
+
+            mensaje.style.color = "#FFD700";
+            mensaje.style.display = "block";
+
+        }
+
+        return;
+    }
+
+    const configuracion = {
+
+        preparacion:
+            convertirTiempoPerfilEntrenamiento(
+                document.getElementById(
+                    "editarTiempoPreparacion"
+                ).textContent
+            ),
+
+        trabajo:
+            convertirTiempoPerfilEntrenamiento(
+                document.getElementById(
+                    "editarTiempoTrabajo"
+                ).textContent
+            ),
+
+        descanso:
+            convertirTiempoPerfilEntrenamiento(
+                document.getElementById(
+                    "editarTiempoDescanso"
+                ).textContent
+            ),
+
+        descansoBloque:
+            convertirTiempoPerfilEntrenamiento(
+                document.getElementById(
+                    "editarTiempoDescansoBloque"
+                ).textContent
+            ),
+
+        ciclos:
+            parseInt(
+                document.getElementById(
+                    "editarCantidadCiclos"
+                ).textContent
+            ) || 1,
+
+        bloques:
+            parseInt(
+                document.getElementById(
+                    "editarCantidadBloques"
+                ).textContent
+            ) || 1
+
+    };
+
+    const nuevoPerfil = {
+
+        nombre: nombre,
+
+        configuracion: configuracion
+
+    };
+
+    perfiles.push(nuevoPerfil);
+
+    localStorage.setItem(
+        "perfilesEntrenamiento",
+        JSON.stringify(perfiles)
+    );
+
+    const mensaje =
+        document.getElementById(
+            "mensajeEditarPerfilEntrenamiento"
+        );
+
+    if(mensaje){
+
+        mensaje.textContent =
+            "✅ Perfil guardado correctamente";
+
+        mensaje.style.color = "#7CFC00";
+        mensaje.style.display = "block";
+
+    }
+
+    setTimeout(function(){
+
+        if(mensaje){
+
+            mensaje.style.display = "none";
+
+        }
+
+        cerrarEditarPerfilEntrenamiento();
+
+        abrirPerfilesEntrenamiento();
+
+    },1200);
 
 }
 
@@ -7814,13 +8473,14 @@ function guardarNuevoPerfilEntrenamiento(){
 
 
     const nombre =
-        campo.value.trim();
+    campo.value.trim();
 
 
-    if(nombre === ""){
+if(nombre === ""){
 
-        return;
-    }
+    return;
+}
+
 
 
     if(nombre.length > 20){
@@ -7837,8 +8497,55 @@ function guardarNuevoPerfilEntrenamiento(){
 
     if(perfiles.length >= 10){
 
+    const mensaje =
+        document.getElementById(
+            "mensajeNuevoPerfilEntrenamiento"
+        );
+
+    if(mensaje){
+
+        mensaje.textContent =
+            "⚠️ Ya tenés 10 perfiles guardados. Eliminá uno para poder crear otro.";
+
+        mensaje.style.color = "#FFD700";
+        mensaje.style.display = "block";
+
+    }
+
+    return;
+}
+
+// =====================================================
+// VERIFICAR SI EL NOMBRE ES EL MISMO DEL PERFIL ORIGINAL
+// =====================================================
+
+if(indicePerfilEditar !== null && perfiles[indicePerfilEditar]){
+
+    const nombreOriginal =
+        (perfiles[indicePerfilEditar].nombre || "")
+        .trim()
+        .toLowerCase();
+
+    if(nombre.toLowerCase() === nombreOriginal){
+
+        const mensaje =
+            document.getElementById(
+                "mensajeNuevoPerfilEntrenamiento"
+            );
+
+        if(mensaje){
+
+            mensaje.textContent =
+                "⚠️ El nombre no cambió. Modificá el nombre para crear un perfil nuevo o usá 💾 Guardar para actualizar el perfil actual.";
+
+            mensaje.style.color = "#FFD700";
+            mensaje.style.display = "block";
+
+        }
+
         return;
     }
+}
 
 
     const nombreRepetido =
@@ -7931,24 +8638,25 @@ function guardarNuevoPerfilEntrenamiento(){
     // CERRAR POPUP DESPUÉS DEL MENSAJE
     // =================================================
 
-    setTimeout(function(){
+   setTimeout(function(){
 
-        if(mensaje){
+    if(mensaje){
 
-            mensaje.style.display = "none";
+        mensaje.style.display = "none";
 
-        }
+    }
 
-        if(popup){
+    if(popup){
 
-            popup.style.display = "none";
+        popup.style.display = "none";
 
-        }
+    }
 
-        campo.value = "";
+    campo.value = "";
 
-    },1200);
+    abrirPerfilesEntrenamiento();
 
+},1200);
 
 
 }
@@ -10264,6 +10972,17 @@ if(reproductorRadio){
 
 }
 
+const barraMiniAnterior =
+    document.querySelector(
+        'body > div[data-radio-mini="true"]'
+    );
+
+if(barraMiniAnterior){
+
+    barraMiniAnterior.remove();
+
+}
+
 
 let audioNuevo = null;
 
@@ -11074,12 +11793,33 @@ contenedorReproductor.appendChild(
     controlesSuperiores
 );
 
+
+/* =====================================================
+   ELIMINAR BARRA MINI ANTERIOR
+   ===================================================== */
+
+const barraMiniAnterior =
+    document.getElementById(
+        "barraMiniRadio"
+    );
+
+if(barraMiniAnterior){
+
+    barraMiniAnterior.remove();
+
+}
+
+
 /* =====================================================
    BARRA MINI DEL REPRODUCTOR
    ===================================================== */
 
 const barraMini =
     document.createElement("div");
+
+barraMini.dataset.radioMini =
+    "true";
+
 
 barraMini.style.position =
     "fixed";
@@ -11297,20 +12037,107 @@ btnMiniCerrar.style.flexShrink =
 btnMiniCerrar.style.fontSize =
     "11px";
 
+/* =====================================================
+   VU HORIZONTAL DE LA BARRA MINI
+   ===================================================== */
 
-/* ARMAR BARRA */
+const miniVU =
+    document.createElement("div");
 
-barraMini.appendChild(
-    btnMiniPlay
-);
+miniVU.style.display =
+    "flex";
+
+miniVU.style.alignItems =
+    "center";
+
+miniVU.style.gap =
+    "2px";
+
+miniVU.style.height =
+    "24px";
+
+miniVU.style.flex =
+    "1";
+
+miniVU.style.minWidth =
+    "45px";
+
+miniVU.style.maxWidth =
+    "90px";
+
+miniVU.style.overflow =
+    "hidden";
+
+
+const barrasMiniVU = [];
+
+
+for(
+    let i = 0;
+    i < 12;
+    i++
+){
+
+    const barra =
+        document.createElement("div");
+
+    barra.style.width =
+        "4px";
+
+    barra.style.height =
+        "5px";
+
+    barra.style.borderRadius =
+        "2px";
+
+    barra.style.background =
+        "linear-gradient(" +
+        "180deg," +
+        "#ff3300 0%," +
+        "#00f0ff 45%," +
+        "#00ff66 100%" +
+        ")";
+
+    barra.style.boxShadow =
+        "0 0 4px rgba(0,240,255,.7)";
+
+    barra.style.opacity =
+        "0.35";
+
+    barra.style.transition =
+        "height .08s linear";
+
+    miniVU.appendChild(
+        barra
+    );
+
+    barrasMiniVU.push(
+        barra
+    );
+
+}
+
+
 
 barraMini.appendChild(
     textoMini
 );
 
+
+barraMini.appendChild(
+    miniVU
+);
+
+
+barraMini.appendChild(
+    btnMiniPlay
+);
+
+
 barraMini.appendChild(
     btnMiniRestaurar
 );
+
 
 barraMini.appendChild(
     btnMiniCerrar
@@ -12018,10 +12845,16 @@ const datosVU =
 
           
 
-            contenedorReproductor.remove();
+          contenedorReproductor.remove();
 
-            reproductorRadio =
-                null;
+if(barraMini){
+
+    barraMini.remove();
+
+}
+
+reproductorRadio =
+    null;
 
         };
 
