@@ -14594,20 +14594,34 @@ function abrirPlataformaCine(datosPlataforma){
             Estás saliendo de Mi Espacio
         </h3>
 
-        <p>
-            Vas a ingresar al sitio oficial de
-            <strong>${datosPlataforma.nombre}</strong>.
-        </p>
+     
+<p>
+    Vas a salir de Mi Espacio para ingresar a
+    <strong>${datosPlataforma.nombre}</strong>.
+</p>
 
-        <p style="
-            font-size:13px;
-            line-height:19px;
-            opacity:.85;
-        ">
-            Mi Espacio no administra tu cuenta,
-            contraseña, suscripción, pagos ni
-            las condiciones del servicio.
-        </p>
+<p style="
+    font-size:13px;
+    line-height:19px;
+    opacity:.85;
+">
+    Mi Espacio no administra tu cuenta,
+    contraseña, suscripción, pagos ni
+    las condiciones del servicio.
+</p>
+
+<p style="
+    font-size:13px;
+    line-height:19px;
+    opacity:.85;
+">
+    Es responsabilidad del usuario verificar
+    que esté accediendo al sitio o aplicación
+    oficial del proveedor antes de ingresar
+    datos personales o realizar cualquier operación.
+</p>
+
+
 
         <div style="
             display:flex;
@@ -15393,6 +15407,14 @@ function mostrarPromocionesBilleteras(){
 
             });
 
+    const datosBilletera =
+        configuracionBilleteras.find(function(billetera){
+
+            return billetera.nombre === nombreBilletera;
+
+        });
+
+
         if(!promocion){
             return;
         }
@@ -15506,6 +15528,24 @@ seccion.style.display = "block";
     tarjeta.style.textAlign = "center";
 
     tarjeta.innerHTML = `
+
+<button
+    type="button"
+    onclick="abrirBilletera('${nombreBilletera.replace(/'/g, "\\'")}')"
+    style="
+    width:100%;
+    margin-bottom:15px;
+    padding:11px 18px;
+    background:#FFD700;
+    color:#000;
+    border:none;
+    border-radius:10px;
+    font-weight:bold;
+    cursor:pointer;
+    "
+>
+    🔐 Acceder a ${nombreBilletera}
+</button>
 
         <h3>
             💳 Promociones de ${promocion.nombre}
