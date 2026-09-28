@@ -14367,12 +14367,24 @@ function mostrarPlataformasCineSeleccionadas(){
         tarjeta.style.padding = "12px";
         tarjeta.style.borderRadius = "16px";
 
-        const boton =
-            document.createElement("button");
+const boton =
+    document.createElement("button");
 
-        boton.type = "button";
+boton.type = "button";
 
-        boton.style.width = "100%";
+boton.onclick =
+    function(){
+
+        abrirPlataformaCine(
+            datosPlataforma
+        );
+
+    };
+
+boton.style.width = "100%";
+
+
+
         boton.style.background = "none";
         boton.style.border = "none";
         boton.style.color = "inherit";
@@ -14439,6 +14451,252 @@ function mostrarPlataformasCineSeleccionadas(){
         contenedor.appendChild(tarjeta);
 
     });
+
+}
+
+// ========================
+// SALIDA A PLATAFORMA CINE
+// ========================
+
+function abrirPlataformaCine(datosPlataforma){
+
+    if(!datosPlataforma){
+        return;
+    }
+
+    // ========================
+    // DETECTAR DISPOSITIVO
+    // ========================
+
+    const userAgent =
+        navigator.userAgent ||
+        navigator.vendor ||
+        window.opera;
+
+    let destino =
+        datosPlataforma.sitioOficial;
+
+    // Android
+    if(/android/i.test(userAgent)){
+
+        if(datosPlataforma.android){
+
+            destino =
+                datosPlataforma.android;
+
+        }
+
+    }
+
+    // iPhone / iPad
+    else if(
+        /iPad|iPhone|iPod/i.test(userAgent) ||
+        (
+            navigator.platform === "MacIntel" &&
+            navigator.maxTouchPoints > 1
+        )
+    ){
+
+        if(datosPlataforma.ios){
+
+            destino =
+                datosPlataforma.ios;
+
+        }
+
+    }
+
+    // PC
+    else{
+
+        destino =
+            datosPlataforma.sitioOficial;
+
+    }
+
+
+    // ========================
+    // POPUP LEGAL
+    // ========================
+
+    const fondo =
+        document.createElement("div");
+
+    fondo.id =
+        "popupSalidaCine";
+
+    fondo.style.position =
+        "fixed";
+
+    fondo.style.top =
+        "0";
+
+    fondo.style.left =
+        "0";
+
+    fondo.style.width =
+        "100%";
+
+    fondo.style.height =
+        "100%";
+
+    fondo.style.background =
+        "rgba(0,0,0,0.75)";
+
+    fondo.style.display =
+        "flex";
+
+    fondo.style.alignItems =
+        "center";
+
+    fondo.style.justifyContent =
+        "center";
+
+    fondo.style.zIndex =
+        "99999";
+
+    fondo.style.padding =
+        "20px";
+
+    fondo.style.boxSizing =
+        "border-box";
+
+
+    const ventana =
+        document.createElement("div");
+
+    ventana.className =
+        "card";
+
+    ventana.style.width =
+        "min(92%,450px)";
+
+    ventana.style.padding =
+        "25px";
+
+    ventana.style.borderRadius =
+        "20px";
+
+    ventana.style.textAlign =
+        "center";
+
+
+    ventana.innerHTML = `
+
+        <div style="
+            font-size:36px;
+            margin-bottom:10px;
+        ">
+            🎬
+        </div>
+
+        <h3>
+            Estás saliendo de Mi Espacio
+        </h3>
+
+        <p>
+            Vas a ingresar al sitio oficial de
+            <strong>${datosPlataforma.nombre}</strong>.
+        </p>
+
+        <p style="
+            font-size:13px;
+            line-height:19px;
+            opacity:.85;
+        ">
+            Mi Espacio no administra tu cuenta,
+            contraseña, suscripción, pagos ni
+            las condiciones del servicio.
+        </p>
+
+        <div style="
+            display:flex;
+            justify-content:center;
+            gap:12px;
+            margin-top:20px;
+            flex-wrap:wrap;
+        ">
+
+            <button
+                type="button"
+                id="cancelarSalidaCine"
+                style="
+                padding:11px 18px;
+                border:none;
+                border-radius:10px;
+                cursor:pointer;
+                font-weight:bold;
+                "
+            >
+                Cancelar
+            </button>
+
+            <button
+                type="button"
+                id="continuarSalidaCine"
+                style="
+                padding:11px 18px;
+                background:#FFD700;
+                color:#000;
+                border:none;
+                border-radius:10px;
+                cursor:pointer;
+                font-weight:bold;
+                "
+            >
+                Continuar →
+            </button>
+
+        </div>
+
+    `;
+
+
+    fondo.appendChild(
+        ventana
+    );
+
+    document.body.appendChild(
+        fondo
+    );
+
+
+    // ========================
+    // CANCELAR
+    // ========================
+
+    document
+        .getElementById(
+            "cancelarSalidaCine"
+        )
+        .onclick =
+        function(){
+
+            fondo.remove();
+
+        };
+
+
+    // ========================
+    // CONTINUAR
+    // ========================
+
+    document
+        .getElementById(
+            "continuarSalidaCine"
+        )
+        .onclick =
+        function(){
+
+            fondo.remove();
+
+            window.open(
+                destino,
+                "_blank",
+                "noopener,noreferrer"
+            );
+
+        };
 
 }
 
