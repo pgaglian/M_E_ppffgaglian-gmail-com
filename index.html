@@ -11227,6 +11227,49 @@ function guardarConfiguracionCine(){
 
 }
 
+// ========================
+// GUARDAR PLATAFORMA CINE PERSONALIZADA
+// ========================
+
+function guardarPlataformaCinePersonalizada(nombre, url){
+
+    if(!nombre || !url){
+        return;
+    }
+
+    const guardadas =
+        JSON.parse(
+            localStorage.getItem(
+                "PlataformasCinePersonalizadas"
+            )
+        ) || [];
+
+    const existe =
+        guardadas.some(function(plataforma){
+
+            return plataforma.nombre.toLowerCase() ===
+                   nombre.toLowerCase();
+
+        });
+
+    if(existe){
+        return;
+    }
+
+    guardadas.push({
+
+        nombre: nombre,
+        url: url
+
+    });
+
+    localStorage.setItem(
+        "PlataformasCinePersonalizadas",
+        JSON.stringify(guardadas)
+    );
+
+}
+
 let dispositivoBusquedaCine = "";
 
 // ========================
@@ -11261,6 +11304,8 @@ popup.style.display = "flex";
 
 
 }
+
+
 
 // ========================
 // BUSCAR PLATAFORMA CINE EN GOOGLE
@@ -14503,6 +14548,82 @@ boton.style.width = "100%";
         contenedor.appendChild(tarjeta);
 
     });
+
+// ========================
+// MOSTRAR PLATAFORMAS CINE PERSONALIZADAS
+// ========================
+
+    const personalizadas =
+        JSON.parse(
+            localStorage.getItem(
+                "PlataformasCinePersonalizadas"
+            )
+        ) || [];
+
+    personalizadas.forEach(function(plataforma){
+
+        const tarjeta =
+            document.createElement("div");
+
+        tarjeta.className = "card";
+
+        tarjeta.style.padding = "12px";
+        tarjeta.style.borderRadius = "16px";
+
+        const boton =
+            document.createElement("button");
+
+        boton.type = "button";
+
+        boton.onclick =
+            function(){
+
+                window.open(
+                    plataforma.url,
+                    "_blank"
+                );
+
+            };
+
+        boton.style.width = "100%";
+        boton.style.background = "none";
+        boton.style.border = "none";
+        boton.style.color = "inherit";
+        boton.style.font = "inherit";
+        boton.style.cursor = "pointer";
+
+        boton.style.display = "flex";
+        boton.style.alignItems = "center";
+        boton.style.justifyContent = "center";
+        boton.style.gap = "10px";
+
+        const respaldo =
+            document.createElement("span");
+
+        respaldo.textContent = "🎬";
+
+        respaldo.style.fontSize = "38px";
+
+        boton.appendChild(respaldo);
+
+        const nombre =
+            document.createElement("span");
+
+        nombre.textContent =
+            plataforma.nombre;
+
+        nombre.style.fontWeight = "bold";
+        nombre.style.fontSize = "16px";
+
+        boton.appendChild(nombre);
+
+        tarjeta.appendChild(boton);
+
+        contenedor.appendChild(tarjeta);
+
+    });
+
+
 
 }
 
