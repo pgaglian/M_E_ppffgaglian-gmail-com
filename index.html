@@ -3530,76 +3530,43 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 
         </div>
 
-        <!-- ===== BUSQUEDA ===== -->
+  
+<!-- ===== BUSQUEDA ===== -->
 
-        <div style="
-            margin-top:25px;
-            padding-top:20px;
-            border-top:1px solid #555;
-            text-align:center;
+<div style="
+    margin-top:25px;
+    padding-top:20px;
+    border-top:1px solid #555;
+    text-align:center;
+">
+
+    <h3 style="
+        margin-top:0;
+        color:#FFD700;
+    ">
+        🔎 ¿No encontrás la que buscás?
+    </h3>
+
+    <button
+        type="button"
+        onclick="abrirBusquedaPlataformaCine()"
+        style="
+        display:block;
+        width:100%;
+        margin:8px 0;
+        padding:10px;
+        font-size:16px;
+        font-weight:bold;
+        border-radius:10px;
         ">
-
-            <h3 style="
-                margin-top:0;
-                color:#FFD700;
-            ">
-                🔎 ¿No encontrás la que buscás?
-            </h3>
-
-            <button
-                type="button"
-                onclick="abrirBusquedaPlataformaCine()"
-                style="
-                display:block;
-                width:100%;
-                margin:8px 0;
-                padding:10px;
-                font-size:16px;
-                font-weight:bold;
-                border-radius:10px;
-                ">
-                🌐 Buscar en la web
-            </button>
-
-            <button
-                type="button"
-                onclick="buscarPlataformaCineGooglePlay()"
-                style="
-                display:block;
-                width:100%;
-                margin:8px 0;
-                padding:10px;
-                font-size:16px;
-                font-weight:bold;
-                border-radius:10px;
-                ">
-                ▶️ Buscar en Google Play
-            </button>
-
-            <button
-                type="button"
-                onclick="buscarPlataformaCineAppStore()"
-                style="
-                display:block;
-                width:100%;
-                margin:8px 0;
-                padding:10px;
-                font-size:16px;
-                font-weight:bold;
-                border-radius:10px;
-                ">
-                 Buscar en App Store
-            </button>
-
-        </div>
-
-    </div>
+        🔎 Buscar otra plataforma
+    </button>
 
 </div>
 
 
-
 <!-- ===== FIN CONFIGURACION CINE ===== -->
+
 
 
 <!-- ===== BUSQUEDA DE PLATAFORMAS CINE ===== -->
@@ -3632,12 +3599,12 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
             margin-bottom:15px;
             ">
 
-            <h2 style="
-                margin:0;
-                color:#FFD700;
-            ">
-                🔎 Buscar plataforma
-            </h2>
+        <h2 style="
+           margin:0;
+          color:#FFD700;
+        ">
+         🔎 ¿No encontrás la que buscás?
+        </h2>
 
             <button onclick="cerrarBusquedaPlataformaCine()">
                 ✖
@@ -3646,14 +3613,17 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
         </div>
 
         <p style="
-            text-align:center;
-            color:#ccc;
-            ">
-            Escribí el nombre de la plataforma que buscás.
-        </p>
+   	 text-align:center;
+    	 color:#ccc;
+  	 line-height:1.5;
+	 ">
+    	 ✏️ Escribí el nombre de la plataforma:
+	</p>
+
 
         <input
             id="nombreBusquedaPlataformaCine"
+
             type="text"
             placeholder="Ejemplo: Netflix"
             maxlength="100"
@@ -3667,9 +3637,17 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
             margin-bottom:15px;
             ">
 
+	<p style="
+          text-align:center;
+          color:#ccc;
+          margin:5px 0 15px 0;
+          ">
+         👇 Elegí dónde querés buscarla:
+        </p>
+
         <button
             type="button"
-            onclick="buscarPlataformaCineWeb()"
+            onclick="dispositivoBusquedaCine='pc'; 			    buscarPlataformaCineWeb()"
             style="
             display:block;
             width:100%;
@@ -3684,7 +3662,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 
         <button
             type="button"
-            onclick="buscarPlataformaCineGooglePlay()"
+            onclick="dispositivoBusquedaCine='android';     	  	    buscarPlataformaCineGooglePlay()"
             style="
             display:block;
             width:100%;
@@ -3699,7 +3677,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 
         <button
             type="button"
-            onclick="buscarPlataformaCineAppStore()"
+            onclick="dispositivoBusquedaCine='ios';   		   	    buscarPlataformaCineAppStore()"
             style="
             display:block;
             width:100%;
@@ -11246,11 +11224,15 @@ function guardarConfiguracionCine(){
 
 }
 
+let dispositivoBusquedaCine = "";
+
 // ========================
 // ABRIR BUSQUEDA DE PLATAFORMA CINE
 // ========================
 
 function abrirBusquedaPlataformaCine(){
+
+
 
     const popup =
         document.getElementById(
@@ -11299,8 +11281,77 @@ function buscarPlataformaCineWeb(){
         return;
     }
 
+const url =
+    "https://www.google.com/search?q=" +
+    encodeURIComponent(nombre + " sitio oficial");
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+}
+
+// ========================
+// BUSCAR PLATAFORMA CINE EN GOOGLE PLAY STORE
+// ========================
+
+function buscarPlataformaCineGooglePlay(){
+
+    const campo =
+        document.getElementById(
+            "nombreBusquedaPlataformaCine"
+        );
+
+    if(!campo){
+        return;
+    }
+
+    const nombre =
+        campo.value.trim();
+
+    if(!nombre){
+        return;
+    }
+
     const url =
-        "https://www.google.com/search?q=" +
+        "https://play.google.com/store/search?q=" +
+        encodeURIComponent(nombre) +
+        "&c=apps";
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+}
+
+
+// ========================
+// BUSCAR PLATAFORMA CINE EN APP STORE
+// ========================
+
+function buscarPlataformaCineAppStore(){
+
+    const campo =
+        document.getElementById(
+            "nombreBusquedaPlataformaCine"
+        );
+
+    if(!campo){
+        return;
+    }
+
+    const nombre =
+        campo.value.trim();
+
+    if(!nombre){
+        return;
+    }
+
+    const url =
+        "https://www.apple.com/la/search/" +
+        "?q=" +
         encodeURIComponent(nombre);
 
     window.open(
@@ -11311,6 +11362,18 @@ function buscarPlataformaCineWeb(){
 }
 
 
+
+// ========================
+// CERRAR BUSQUEDA DE PLATAFORMA CINE
+// ========================
+
+function cerrarBusquedaPlataformaCine(){
+
+    document.getElementById(
+        "popupBusquedaPlataformaCine"
+    ).style.display = "none";
+
+}
 
 // ========================
 // CERRAR CONFIGURACION DE BILLETERAS
