@@ -11776,7 +11776,6 @@ function guardarNuevaPlataformaCine(){
 
 }
 
-
 // ========================
 // ABRIR AGREGAR PLATAFORMA CINE
 // ========================
@@ -11794,25 +11793,31 @@ function abrirAgregarPlataformaCine(){
 
     popup.style.display = "flex";
 
-const nombreRecibido =
-    localStorage.getItem(
-        "appCompartidaTitulo"
-    );
+    const nombreRecibido =
+        localStorage.getItem(
+            "appCompartidaTitulo"
+        );
 
-const campo =
-    document.getElementById(
-        "nombreAgregarPlataformaCine"
-    );
+    const nombrePlataforma =
+        nombreRecibido.replace(
+            /^Echale un vistazo a\s+/i,
+            ""
+        );
 
-if(
-    campo &&
-    nombreRecibido
-){
+    const campo =
+        document.getElementById(
+            "nombreAgregarPlataformaCine"
+        );
 
-    campo.value =
-        nombreRecibido;
+    if(
+        campo &&
+        nombrePlataforma
+    ){
 
-  }
+        campo.value =
+            nombrePlataforma;
+
+    }
 
 }
 
