@@ -15193,19 +15193,16 @@ personalizadas.forEach(function(plataforma){
 
         boton.type = "button";
 
-        boton.onclick =
+       boton.onclick =
     function(){
 
-        const url =
-            "https://play.google.com/store/search?q=" +
-            encodeURIComponent(
-                plataforma.nombre
-            ) +
-            "&c=apps";
-
-        window.open(
-            url,
-            "_blank"
+        abrirPlataformaCine(
+            {
+                nombre: plataforma.nombre,
+                sitioOficial: plataforma.url,
+                android: plataforma.url,
+                ios: plataforma.url
+            }
         );
 
     };
