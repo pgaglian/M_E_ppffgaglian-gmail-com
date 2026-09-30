@@ -3498,6 +3498,42 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
              ">
         </div>
 
+
+        <!-- ===== MIS PLATAFORMAS PERSONALIZADAS ===== -->
+
+        <p style="
+            text-align:center;
+            color:#ccc;
+            ">
+            👤 Mis plataformas personalizadas
+        </p>
+
+        <div id="plataformasCinePersonalizadasConfiguracion"
+             style="
+             display:grid;
+             grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+             gap:10px;
+             max-height:35vh;
+             overflow-y:auto;
+             padding-right:5px;
+             ">
+        </div>
+
+              <button
+            type="button"
+            onclick="abrirAgregarPlataformaCine()"
+            style="
+            display:block;
+            width:100%;
+            margin:12px 0;
+            padding:10px;
+            font-size:16px;
+            font-weight:bold;
+            border-radius:10px;
+            ">
+            👤 Agregar plataforma
+        </button>
+
         <!-- ===== GUARDAR ===== -->
 
         <div style="
@@ -3531,38 +3567,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
         </div>
 
   
-<!-- ===== BUSQUEDA ===== -->
 
-<div style="
-    margin-top:25px;
-    padding-top:20px;
-    border-top:1px solid #555;
-    text-align:center;
-">
-
-    <h3 style="
-        margin-top:0;
-        color:#FFD700;
-    ">
-        🔎 ¿No encontrás la que buscás?
-    </h3>
-
-    <button
-        type="button"
-        onclick="abrirBusquedaPlataformaCine()"
-        style="
-        display:block;
-        width:100%;
-        margin:8px 0;
-        padding:10px;
-        font-size:16px;
-        font-weight:bold;
-        border-radius:10px;
-        ">
-        🔎 Buscar otra plataforma
-    </button>
-
-</div>
 
 </div>
 
@@ -3570,24 +3575,22 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 
 <!-- ===== FIN CONFIGURACION CINE ===== -->
 
+<!-- ===== AGREGAR PLATAFORMA CINE ===== -->
 
-
-<!-- ===== BUSQUEDA DE PLATAFORMAS CINE ===== -->
-
-<div id="popupBusquedaPlataformaCine"
+<div id="popupAgregarPlataformaCine"
      style="
      display:none;
      position:fixed;
      inset:0;
      background:rgba(0,0,0,.75);
-     z-index:1100;
+     z-index:1200;
      align-items:center;
      justify-content:center;
      padding:20px;
      ">
 
     <div style="
-        width:min(92%,600px);
+        width:min(92%,450px);
         background:#1d1d1d;
         border:1px solid #555;
         border-radius:20px;
@@ -3602,34 +3605,56 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
             margin-bottom:15px;
             ">
 
-        <h2 style="
-           margin:0;
-          color:#FFD700;
-        ">
-         🔎 ¿No encontrás la que buscás?
-        </h2>
+            <h2 style="
+                margin:0;
+                color:#FFD700;
+            ">
+                👤 Agregar plataforma
+            </h2>
 
-            <button onclick="cerrarBusquedaPlataformaCine()">
+            <button onclick="cerrarAgregarPlataformaCine()">
                 ✖
             </button>
 
         </div>
 
-        <p style="
-   	 text-align:center;
-    	 color:#ccc;
-  	 line-height:1.5;
-	 ">
-    	 ✏️ Escribí el nombre de la plataforma:
-	</p>
+       <p style="
+    text-align:center;
+    color:#ccc;
+    line-height:1.5;
+">
+    ✏️ <strong>Escribí el nombre exacto de la aplicación</strong>
+    tal como aparece en tu dispositivo.
+    <br><br>
 
+    ⚠️ Vas a salir de Mi Espacio para comprobar
+    la aplicación en Google Play.
+    <br><br>
+
+    📱 Si está instalada, tocá <strong>Abrir</strong>.
+    <br>
+    📲 Si no está instalada, tocá <strong>Instalar</strong>
+    y después <strong>Abrir</strong>.
+    <br>
+    🔎 Si no la encontrás, revisá el nombre
+    y volvé a intentarlo.
+    <br><br>
+
+    ↩️ <strong>Después volvé a Mi Espacio para confirmar.</strong>
+    <br><br>
+
+    ❗ <strong>Si no volvés a Mi Espacio,
+    la plataforma no se guardará.</strong>
+    <br><br>
+
+    🔐 <strong>Esta comprobación se hace una sola vez.</strong>
+</p>
 
         <input
-            id="nombreBusquedaPlataformaCine"
-
+            id="nombreAgregarPlataformaCine"
             type="text"
-            placeholder="Ejemplo: Netflix"
             maxlength="100"
+            placeholder="Nombre exacto de la aplicación"
             style="
             width:100%;
             box-sizing:border-box;
@@ -3640,17 +3665,9 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
             margin-bottom:15px;
             ">
 
-	<p style="
-          text-align:center;
-          color:#ccc;
-          margin:5px 0 15px 0;
-          ">
-         👇 Elegí dónde querés buscarla:
-        </p>
-
         <button
             type="button"
-            onclick="dispositivoBusquedaCine='pc'; 			    buscarPlataformaCineWeb()"
+            onclick="validarNuevaPlataformaCine()"
             style="
             display:block;
             width:100%;
@@ -3660,12 +3677,12 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
             font-weight:bold;
             border-radius:10px;
             ">
-            🌐 Buscar en la web
+            🔎 Validar plataforma
         </button>
 
         <button
             type="button"
-            onclick="dispositivoBusquedaCine='android';     	  	    buscarPlataformaCineGooglePlay()"
+            onclick="cerrarAgregarPlataformaCine()"
             style="
             display:block;
             width:100%;
@@ -3675,29 +3692,14 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
             font-weight:bold;
             border-radius:10px;
             ">
-            ▶️ Buscar en Google Play
-        </button>
-
-        <button
-            type="button"
-            onclick="dispositivoBusquedaCine='ios';   		   	    buscarPlataformaCineAppStore()"
-            style="
-            display:block;
-            width:100%;
-            margin:8px 0;
-            padding:10px;
-            font-size:16px;
-            font-weight:bold;
-            border-radius:10px;
-            ">
-             Buscar en App Store
+            Cancelar
         </button>
 
     </div>
 
 </div>
 
-<!-- ===== FIN BUSQUEDA DE PLATAFORMAS CINE ===== -->
+<!-- ===== FIN AGREGAR PLATAFORMA CINE ===== -->
 
 
 <!-- ===== MODULO RADIOS ===== -->
@@ -11227,13 +11229,108 @@ function guardarConfiguracionCine(){
 
 }
 
+
 // ========================
-// GUARDAR PLATAFORMA CINE PERSONALIZADA
+// VALIDAR NUEVA PLATAFORMA CINE
 // ========================
 
-function guardarPlataformaCinePersonalizada(nombre, url){
+function validarNuevaPlataformaCine(){
 
-    if(!nombre || !url){
+    const campo =
+        document.getElementById(
+            "nombreAgregarPlataformaCine"
+        );
+
+    if(!campo){
+        return;
+    }
+
+    const nombre =
+        campo.value.trim();
+
+    if(!nombre){
+        return;
+    }
+
+   localStorage.setItem(
+    "nombrePlataformaCinePendiente",
+    nombre
+);
+
+localStorage.setItem(
+    "validacionPlataformaCineActiva",
+    "true"
+);
+
+const url =
+        "https://play.google.com/store/search?q=" +
+        encodeURIComponent(nombre) +
+        "&c=apps";
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+}
+
+// ========================
+// DETECTAR REGRESO DE GOOGLE PLAY
+// ========================
+
+document.addEventListener(
+    "visibilitychange",
+    function(){
+
+        if(
+            document.visibilityState !== "visible"
+        ){
+            return;
+        }
+
+        const pendiente =
+            localStorage.getItem(
+                "nombrePlataformaCinePendiente"
+            );
+
+        const activa =
+            localStorage.getItem(
+                "validacionPlataformaCineActiva"
+            );
+
+        if(
+            !pendiente ||
+            activa !== "true"
+        ){
+            return;
+        }
+
+        alert(
+            "✅ ¿La aplicación que comprobaste en Google Play es la correcta?"
+        );
+
+    }
+);
+
+// ========================
+// GUARDAR NUEVA PLATAFORMA CINE
+// ========================
+
+function guardarNuevaPlataformaCine(){
+
+    const campo =
+        document.getElementById(
+            "nombreAgregarPlataformaCine"
+        );
+
+    if(!campo){
+        return;
+    }
+
+    const nombre =
+        campo.value.trim();
+
+    if(!nombre){
         return;
     }
 
@@ -11258,8 +11355,7 @@ function guardarPlataformaCinePersonalizada(nombre, url){
 
     guardadas.push({
 
-        nombre: nombre,
-        url: url
+        nombre: nombre
 
     });
 
@@ -11268,158 +11364,48 @@ function guardarPlataformaCinePersonalizada(nombre, url){
         JSON.stringify(guardadas)
     );
 
+    cerrarAgregarPlataformaCine();
+
+    mostrarPlataformasCineSeleccionadas();
+
 }
 
-let dispositivoBusquedaCine = "";
 
 // ========================
-// ABRIR BUSQUEDA DE PLATAFORMA CINE
+// ABRIR AGREGAR PLATAFORMA CINE
 // ========================
 
-function abrirBusquedaPlataformaCine(){
-
-
+function abrirAgregarPlataformaCine(){
 
     const popup =
         document.getElementById(
-            "popupBusquedaPlataformaCine"
+            "popupAgregarPlataformaCine"
         );
-
-           
 
     if(!popup){
         return;
     }
 
-    const campo =
-        document.getElementById(
-            "nombreBusquedaPlataformaCine"
-        );
-
-    if(campo){
-        campo.value = "";
-    }
-
-popup.style.display = "flex";
-
-
-}
-
-
-
-// ========================
-// BUSCAR PLATAFORMA CINE EN GOOGLE
-// ========================
-
-function buscarPlataformaCineWeb(){
-
-    const campo =
-        document.getElementById(
-            "nombreBusquedaPlataformaCine"
-        );
-
-    if(!campo){
-        return;
-    }
-
-    const nombre =
-        campo.value.trim();
-
-    if(!nombre){
-        return;
-    }
-
-const url =
-    "https://www.google.com/search?q=" +
-    encodeURIComponent(nombre + " sitio oficial");
-
-    window.open(
-        url,
-        "_blank"
-    );
+    popup.style.display = "flex";
 
 }
 
 // ========================
-// BUSCAR PLATAFORMA CINE EN GOOGLE PLAY STORE
+// CERRAR AGREGAR PLATAFORMA CINE
 // ========================
 
-function buscarPlataformaCineGooglePlay(){
+function cerrarAgregarPlataformaCine(){
 
-    const campo =
+    const popup =
         document.getElementById(
-            "nombreBusquedaPlataformaCine"
+            "popupAgregarPlataformaCine"
         );
 
-    if(!campo){
+    if(!popup){
         return;
     }
 
-    const nombre =
-        campo.value.trim();
-
-    if(!nombre){
-        return;
-    }
-
-    const url =
-        "https://play.google.com/store/search?q=" +
-        encodeURIComponent(nombre) +
-        "&c=apps";
-
-    window.open(
-        url,
-        "_blank"
-    );
-
-}
-
-
-// ========================
-// BUSCAR PLATAFORMA CINE EN APP STORE
-// ========================
-
-function buscarPlataformaCineAppStore(){
-
-    const campo =
-        document.getElementById(
-            "nombreBusquedaPlataformaCine"
-        );
-
-    if(!campo){
-        return;
-    }
-
-    const nombre =
-        campo.value.trim();
-
-    if(!nombre){
-        return;
-    }
-
-    const url =
-        "https://www.apple.com/la/search/" +
-        "?q=" +
-        encodeURIComponent(nombre);
-
-    window.open(
-        url,
-        "_blank"
-    );
-
-}
-
-
-
-// ========================
-// CERRAR BUSQUEDA DE PLATAFORMA CINE
-// ========================
-
-function cerrarBusquedaPlataformaCine(){
-
-    document.getElementById(
-        "popupBusquedaPlataformaCine"
-    ).style.display = "none";
+    popup.style.display = "none";
 
 }
 
@@ -14576,14 +14562,21 @@ boton.style.width = "100%";
         boton.type = "button";
 
         boton.onclick =
-            function(){
+    function(){
 
-                window.open(
-                    plataforma.url,
-                    "_blank"
-                );
+        const url =
+            "https://play.google.com/store/search?q=" +
+            encodeURIComponent(
+                plataforma.nombre
+            ) +
+            "&c=apps";
 
-            };
+        window.open(
+            url,
+            "_blank"
+        );
+
+    };
 
         boton.style.width = "100%";
         boton.style.background = "none";
