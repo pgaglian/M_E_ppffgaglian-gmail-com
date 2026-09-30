@@ -21093,10 +21093,49 @@ function recibirAppCompartida(){
         texto
     );
 
-    localStorage.setItem(
-        "appCompartidaUrl",
-        url
+  localStorage.setItem(
+    "appCompartidaUrl",
+    url
+);
+
+localStorage.setItem(
+    "nombrePlataformaCinePendiente",
+    titulo.replace(
+        /^[ÉE]chale un vistazo a\s+/i,
+        ""
+    )
+);
+
+localStorage.setItem(
+    "validacionPlataformaCineActiva",
+    "true"
+);
+
+const popupConfirmacion =
+    document.getElementById(
+        "popupConfirmarPlataformaCine"
     );
+
+const mensajeConfirmacion =
+    document.getElementById(
+        "mensajeConfirmarPlataformaCine"
+    );
+
+if(
+    popupConfirmacion &&
+    mensajeConfirmacion
+){
+
+    mensajeConfirmacion.innerHTML =
+        "¿La aplicación que compartiste desde Google Play es la correcta?";
+
+    mensajeConfirmacion.style.color =
+        "";
+
+    popupConfirmacion.style.display =
+        "flex";
+
+}
 
 const campo =
     document.getElementById(
