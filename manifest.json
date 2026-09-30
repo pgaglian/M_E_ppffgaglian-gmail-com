@@ -3,6 +3,17 @@
 "short_name": "Mi Espacio",
 "start_url": "/M_E_ppffgaglian-gmail-com/",
 "scope": "/M_E_ppffgaglian-gmail-com/",
+
+"share_target": {
+    "action": "/M_E_ppffgaglian-gmail-com/",
+    "method": "GET",
+    "params": {
+        "title": "title",
+        "text": "text",
+        "url": "url"
+    }
+},
+
 "display": "standalone",
 "background_color": "#111111",
 "theme_color": "#111111",
