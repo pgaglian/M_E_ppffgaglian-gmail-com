@@ -11759,11 +11759,17 @@ function guardarNuevaPlataformaCine(){
         return;
     }
 
-    guardadas.push({
+ const urlRecibida =
+    localStorage.getItem(
+        "appCompartidaUrl"
+    ) || "";
 
-        nombre: nombre
+guardadas.push({
 
-    });
+    nombre: nombre,
+    url: urlRecibida
+
+});
 
     localStorage.setItem(
         "PlataformasCinePersonalizadas",
