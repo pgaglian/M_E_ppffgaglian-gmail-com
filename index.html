@@ -21004,14 +21004,47 @@ function recibirAppCompartida(){
     const url =
         parametros.get("url") || "";
 
+    if(
+        !titulo &&
+        !texto &&
+        !url
+    ){
+        return;
+    }
+
+    localStorage.setItem(
+        "appCompartidaTitulo",
+        titulo
+    );
+
+    localStorage.setItem(
+        "appCompartidaTexto",
+        texto
+    );
+
+    localStorage.setItem(
+        "appCompartidaUrl",
+        url
+    );
+
     console.log(
-        "APP COMPARTIDA:",
-        titulo,
-        texto,
+        "APP COMPARTIDA - TITULO:",
+        titulo
+    );
+
+    console.log(
+        "APP COMPARTIDA - TEXTO:",
+        texto
+    );
+
+    console.log(
+        "APP COMPARTIDA - URL:",
         url
     );
 
 }
+
+recibirAppCompartida();
 
 </script>
 
