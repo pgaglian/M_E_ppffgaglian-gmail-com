@@ -11794,6 +11794,26 @@ function abrirAgregarPlataformaCine(){
 
     popup.style.display = "flex";
 
+const nombreRecibido =
+    localStorage.getItem(
+        "appCompartidaTitulo"
+    );
+
+const campo =
+    document.getElementById(
+        "nombreAgregarPlataformaCine"
+    );
+
+if(
+    campo &&
+    nombreRecibido
+){
+
+    campo.value =
+        nombreRecibido;
+
+  }
+
 }
 
 // ========================
