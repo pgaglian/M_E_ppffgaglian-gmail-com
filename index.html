@@ -11796,6 +11796,14 @@ mostrarPlataformasCineSeleccionadas();
 
 setTimeout(function(){
 
+    localStorage.removeItem(
+        "validacionPlataformaCineActiva"
+    );
+
+    localStorage.removeItem(
+        "nombrePlataformaCinePendiente"
+    );
+
     const popupConfirmacion =
         document.getElementById(
             "popupConfirmarPlataformaCine"
