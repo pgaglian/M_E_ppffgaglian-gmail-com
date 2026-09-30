@@ -3699,6 +3699,79 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 
 </div>
 
+<!-- ===== POPUP CONFIRMAR PLATAFORMA CINE ===== -->
+
+<div id="popupConfirmarPlataformaCine"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1300;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,450px);
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:20px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        ">
+
+        <h2 style="
+            margin-top:0;
+            text-align:center;
+            color:#FFD700;
+        ">
+            🎬 Confirmar plataforma
+        </h2>
+
+        <p id="mensajeConfirmarPlataformaCine"
+           style="
+           text-align:center;
+           color:#ccc;
+           line-height:1.5;
+           ">
+        </p>
+
+        <button
+            type="button"
+            onclick="confirmarPlataformaCine()"
+            style="
+            display:block;
+            width:100%;
+            margin:10px 0;
+            padding:12px;
+            font-size:16px;
+            font-weight:bold;
+            border-radius:10px;
+            ">
+            ✅ Sí, guardar
+        </button>
+
+        <button
+            type="button"
+            onclick="cancelarConfirmacionPlataformaCine()"
+            style="
+            display:block;
+            width:100%;
+            margin:10px 0;
+            padding:12px;
+            font-size:16px;
+            font-weight:bold;
+            border-radius:10px;
+            ">
+            ↩️ No, volver a intentar
+        </button>
+
+    </div>
+
+</div>
+
 <!-- ===== FIN AGREGAR PLATAFORMA CINE ===== -->
 
 
@@ -9981,6 +10054,59 @@ function cargarConfiguracionCine(){
         }
     );
 
+    // ========================
+    // MOSTRAR PLATAFORMAS PERSONALIZADAS
+    // ========================
+
+    const contenedorPersonalizadas =
+        document.getElementById(
+            "plataformasCinePersonalizadasConfiguracion"
+        );
+
+    if(!contenedorPersonalizadas){
+        return;
+    }
+
+    contenedorPersonalizadas.innerHTML = "";
+
+    const personalizadas =
+        JSON.parse(
+            localStorage.getItem(
+                "PlataformasCinePersonalizadas"
+            )
+        ) || [];
+
+    personalizadas.forEach(
+        function(plataforma){
+
+            const label =
+                document.createElement("label");
+
+            label.style.display = "flex";
+            label.style.alignItems = "center";
+            label.style.gap = "8px";
+
+            const icono =
+                document.createElement("span");
+
+            icono.textContent = "🎬";
+
+            const nombre =
+                document.createElement("span");
+
+            nombre.textContent =
+                plataforma.nombre;
+
+            label.appendChild(icono);
+            label.appendChild(nombre);
+
+            contenedorPersonalizadas.appendChild(
+                label
+            );
+
+        }
+    );
+
 }
 
 
@@ -11305,12 +11431,52 @@ document.addEventListener(
             return;
         }
 
-        alert(
-            "✅ ¿La aplicación que comprobaste en Google Play es la correcta?"
-        );
+        const popup =
+    document.getElementById(
+        "popupConfirmarPlataformaCine"
+    );
+
+const mensaje =
+    document.getElementById(
+        "mensajeConfirmarPlataformaCine"
+    );
+
+if(popup && mensaje){
+
+    mensaje.innerHTML =
+        "¿La aplicación que comprobaste en Google Play es la correcta?";
+
+    popup.style.display = "flex";
+
+}
 
     }
 );
+
+function confirmarPlataformaCine(){
+
+    const pendiente =
+        localStorage.getItem(
+            "nombrePlataformaCinePendiente"
+        );
+
+    if(!pendiente){
+        return;
+    }
+
+    const campo =
+        document.getElementById(
+            "nombreAgregarPlataformaCine"
+        );
+
+    if(campo){
+        campo.value = pendiente;
+    }
+
+    guardarNuevaPlataformaCine();
+
+}
+
 
 // ========================
 // GUARDAR NUEVA PLATAFORMA CINE
