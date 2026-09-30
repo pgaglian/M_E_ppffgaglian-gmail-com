@@ -11798,11 +11798,11 @@ function abrirAgregarPlataformaCine(){
             "appCompartidaTitulo"
         );
 
-    const nombrePlataforma =
-        nombreRecibido.replace(
-            /^Echale un vistazo a\s+/i,
-            ""
-        );
+   const nombrePlataforma =
+    nombreRecibido.replace(
+        /^[ÉE]chale un vistazo a\s+/i,
+        ""
+    );
 
     const campo =
         document.getElementById(
