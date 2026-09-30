@@ -11641,7 +11641,8 @@ const url =
 // ========================
 // DETECTAR REGRESO DE GOOGLE PLAY
 // ========================
-/*
+
+
 document.addEventListener(
     "visibilitychange",
     function(){
@@ -11691,7 +11692,7 @@ if(popup && mensaje){
     }
 );
 
-*/
+
 
 function confirmarPlataformaCine(){
 
@@ -11776,9 +11777,40 @@ guardadas.push({
         JSON.stringify(guardadas)
     );
 
+  const mensajeConfirmacion =
+    document.getElementById(
+        "mensajeConfirmarPlataformaCine"
+    );
+
+if(mensajeConfirmacion){
+
+    mensajeConfirmacion.innerHTML =
+        "✔ Plataforma guardada";
+
+    mensajeConfirmacion.style.color =
+        "#32CD32";
+
+}
+
+mostrarPlataformasCineSeleccionadas();
+
+setTimeout(function(){
+
+    const popupConfirmacion =
+        document.getElementById(
+            "popupConfirmarPlataformaCine"
+        );
+
+    if(popupConfirmacion){
+
+        popupConfirmacion.style.display =
+            "none";
+
+    }
+
     cerrarAgregarPlataformaCine();
 
-    mostrarPlataformasCineSeleccionadas();
+},1000);
 
 }
 
