@@ -11765,12 +11765,6 @@ function guardarNuevaPlataformaCine(){
         "appCompartidaUrl"
     ) || "";
 
-alert(
-    "URL que se va a guardar:\n" +
-    urlRecibida
-);
-
-
 guardadas.push({
 
     nombre: nombre,
@@ -15202,11 +15196,6 @@ personalizadas.forEach(function(plataforma){
        boton.onclick =
     function(){
 
-        alert(
-            "URL guardada:\n" +
-            plataforma.url
-        );
-
         abrirPlataformaCine(
             {
                 nombre: plataforma.nombre,
@@ -15217,6 +15206,7 @@ personalizadas.forEach(function(plataforma){
         );
 
     };
+
         boton.style.width = "100%";
         boton.style.background = "none";
         boton.style.border = "none";
@@ -15258,6 +15248,8 @@ personalizadas.forEach(function(plataforma){
 
 
 }
+
+
 
 // ========================
 // SALIDA A PLATAFORMA CINE
@@ -21085,13 +21077,6 @@ function recibirAppCompartida(){
 
     const url =
         parametros.get("url") || "";
-
-alert(
-    "URL recibida:\n" +
-    url +
-    "\n\nTEXTO recibido:\n" +
-    texto
-);
 
     if(
         !titulo &&
