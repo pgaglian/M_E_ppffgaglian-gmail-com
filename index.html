@@ -15196,6 +15196,11 @@ personalizadas.forEach(function(plataforma){
        boton.onclick =
     function(){
 
+        alert(
+            "URL guardada:\n" +
+            plataforma.url
+        );
+
         abrirPlataformaCine(
             {
                 nombre: plataforma.nombre,
@@ -15206,7 +15211,6 @@ personalizadas.forEach(function(plataforma){
         );
 
     };
-
         boton.style.width = "100%";
         boton.style.background = "none";
         boton.style.border = "none";
