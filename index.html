@@ -10316,7 +10316,7 @@ function eliminarPlataformaCinePersonalizada(nombre){
         )
     );
 
-  mostrarPlataformasCineSeleccionadas();
+cargarConfiguracionCine();
 
 }
 
@@ -21075,6 +21075,13 @@ function recibirAppCompartida(){
 
     const url =
         parametros.get("url") || "";
+
+alert(
+    "URL recibida:\n" +
+    url +
+    "\n\nTEXTO recibido:\n" +
+    texto
+);
 
     if(
         !titulo &&
