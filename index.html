@@ -15513,17 +15513,26 @@ document
 
         fondo.remove();
 
-        // Android
-        if(/android/i.test(userAgent)){
+        // ========================
+        // PRUEBA NETFLIX EN ANDROID
+        // ========================
+
+        if(
+            /android/i.test(userAgent) &&
+            datosPlataforma.id === "netflix"
+        ){
 
             window.location.href =
-                destino;
+                "nflx://";
 
             return;
 
         }
 
-        // PC / iPhone / iPad
+        // ========================
+        // RESTO DE LAS PLATAFORMAS
+        // ========================
+
         window.open(
             destino,
             "_blank",
