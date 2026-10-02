@@ -15513,28 +15513,17 @@ document
 
         fondo.remove();
 
-        if(
-            /android/i.test(userAgent) &&
-            datosPlataforma.id === "netflix"
-        ){
-
-            const intentUrl =
-                "intent://#Intent;" +
-                "scheme=nflx;" +
-                "package=com.netflix.mediaclient;" +
-                "S.browser_fallback_url=" +
-                encodeURIComponent(
-                    "https://www.netflix.com/ar/"
-                ) +
-                ";end";
+        // Android
+        if(/android/i.test(userAgent)){
 
             window.location.href =
-                intentUrl;
+                destino;
 
             return;
 
         }
 
+        // PC / iPhone / iPad
         window.open(
             destino,
             "_blank",
@@ -15542,6 +15531,8 @@ document
         );
 
     };
+
+}
 
 
 // ========================
