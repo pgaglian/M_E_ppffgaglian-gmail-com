@@ -15504,42 +15504,23 @@ function abrirPlataformaCine(datosPlataforma){
     // CONTINUAR
     // ========================
 
-document
-    .getElementById(
-        "continuarSalidaCine"
-    )
-    .onclick =
-    function(){
+    document
+        .getElementById(
+            "continuarSalidaCine"
+        )
+        .onclick =
+        function(){
 
-        fondo.remove();
+            fondo.remove();
 
-        // ========================
-        // PRUEBA NETFLIX EN ANDROID
-        // ========================
 
-        if(
-            /android/i.test(userAgent) &&
-            datosPlataforma.id === "netflix"
-        ){
+            window.open(
+                destino,
+                "_blank",
+                "noopener,noreferrer"
+            );
 
-            window.location.href =
-                "nflx://";
-
-            return;
-
-        }
-
-        // ========================
-        // RESTO DE LAS PLATAFORMAS
-        // ========================
-
-        window.open(
-            destino,
-            "_blank",
-            "noopener,noreferrer"
-        );
-
-    };
+        };
 
 }
 
