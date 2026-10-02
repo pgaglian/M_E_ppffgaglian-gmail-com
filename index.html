@@ -15504,24 +15504,44 @@ function abrirPlataformaCine(datosPlataforma){
     // CONTINUAR
     // ========================
 
-    document
-        .getElementById(
-            "continuarSalidaCine"
-        )
-        .onclick =
-        function(){
+document
+    .getElementById(
+        "continuarSalidaCine"
+    )
+    .onclick =
+    function(){
 
-            fondo.remove();
+        fondo.remove();
 
-            window.open(
-                destino,
-                "_blank",
-                "noopener,noreferrer"
-            );
+        if(
+            /android/i.test(userAgent) &&
+            datosPlataforma.id === "netflix"
+        ){
 
-        };
+            const intentUrl =
+                "intent://#Intent;" +
+                "scheme=nflx;" +
+                "package=com.netflix.mediaclient;" +
+                "S.browser_fallback_url=" +
+                encodeURIComponent(
+                    "https://www.netflix.com/ar/"
+                ) +
+                ";end";
 
-}
+            window.location.href =
+                intentUrl;
+
+            return;
+
+        }
+
+        window.open(
+            destino,
+            "_blank",
+            "noopener,noreferrer"
+        );
+
+    };
 
 
 // ========================
