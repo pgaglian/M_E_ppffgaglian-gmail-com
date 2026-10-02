@@ -10092,10 +10092,22 @@ function cargarConfiguracionCine(){
 
             checkbox.type = "checkbox";
 
-            checkbox.value =
-               plataforma.id; 
+checkbox.value =
+   plataforma.id;
 
-            label.appendChild(checkbox);
+const plataformasSeleccionadas =
+    JSON.parse(
+        localStorage.getItem(
+            "PlataformasCineSeleccionadas"
+        )
+    ) || [];
+
+checkbox.checked =
+    plataformasSeleccionadas.includes(
+        plataforma.id
+    );
+
+label.appendChild(checkbox);
 
            if(plataforma.logo){
 
@@ -21079,12 +21091,6 @@ function recibirAppCompartida(){
     parametros.get("url") ||
     parametros.get("text") ||
     "";
-
-console.log("=== DATOS COMPARTIDOS ===");
-console.log("TITLE:", titulo);
-console.log("TEXT:", texto);
-console.log("URL:", url);
-console.log("QUERY COMPLETA:", window.location.search);
 
     if(
         !titulo &&
