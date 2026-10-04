@@ -11730,7 +11730,7 @@ function confirmarPlataformaCine(){
 
 }
 
-// ========================
+/// ========================
 // CANCELAR CONFIRMACION PLATAFORMA CINE
 // ========================
 
@@ -11756,6 +11756,27 @@ function cancelarConfirmacionPlataformaCine(){
         "appCompartidaUrl"
     );
 
+    const campo =
+        document.getElementById(
+            "nombreAgregarPlataformaCine"
+        );
+
+    if(campo){
+
+        campo.value = "";
+
+    }
+
+    const urlLimpia =
+        window.location.pathname +
+        window.location.hash;
+
+    window.history.replaceState(
+        {},
+        document.title,
+        urlLimpia
+    );
+
     const popupConfirmacion =
         document.getElementById(
             "popupConfirmarPlataformaCine"
@@ -11769,8 +11790,6 @@ function cancelarConfirmacionPlataformaCine(){
     }
 
 }
-
-
 // ========================
 // GUARDAR NUEVA PLATAFORMA CINE
 // ========================
