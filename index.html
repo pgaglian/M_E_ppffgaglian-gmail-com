@@ -11889,6 +11889,17 @@ localStorage.removeItem(
     "appCompartidaUrl"
 );
 
+    campo.value = "";
+
+    const urlLimpia =
+        window.location.pathname +
+        window.location.hash;
+
+    window.history.replaceState(
+        {},
+        document.title,
+        urlLimpia
+    );
 
     const popupConfirmacion =
         document.getElementById(
