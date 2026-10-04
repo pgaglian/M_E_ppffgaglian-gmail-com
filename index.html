@@ -11730,6 +11730,46 @@ function confirmarPlataformaCine(){
 
 }
 
+// ========================
+// CANCELAR CONFIRMACION PLATAFORMA CINE
+// ========================
+
+function cancelarConfirmacionPlataformaCine(){
+
+    localStorage.removeItem(
+        "validacionPlataformaCineActiva"
+    );
+
+    localStorage.removeItem(
+        "nombrePlataformaCinePendiente"
+    );
+
+    localStorage.removeItem(
+        "appCompartidaTitulo"
+    );
+
+    localStorage.removeItem(
+        "appCompartidaTexto"
+    );
+
+    localStorage.removeItem(
+        "appCompartidaUrl"
+    );
+
+    const popupConfirmacion =
+        document.getElementById(
+            "popupConfirmarPlataformaCine"
+        );
+
+    if(popupConfirmacion){
+
+        popupConfirmacion.style.display =
+            "none";
+
+    }
+
+}
+
 
 // ========================
 // GUARDAR NUEVA PLATAFORMA CINE
