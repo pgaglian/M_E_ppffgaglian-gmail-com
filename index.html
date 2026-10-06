@@ -13669,10 +13669,14 @@ document.body.appendChild(
 
 /* FUNCIONES DE LOS BOTONES */
 
+
 btnMiniPlay.onclick =
     function(){
 
         btnPlayPause.click();
+
+        btnMiniPlay.innerHTML =
+            audioNuevo.paused ? "▶" : "❚❚";
 
     };
 
@@ -13841,6 +13845,9 @@ botonMinimizar.onclick =
 
             barraMini.style.display =
                 "flex";
+
+     	    btnMiniPlay.innerHTML =
+    	    audioNuevo.paused ? "▶" : "❚❚";
 
         }else{
 
@@ -14694,6 +14701,73 @@ if(tipoRadio.includes("AM")){
     let animacionVU =
         null;
 
+function moverMiniVU(){
+
+    if(
+        audioNuevo.paused ||
+        audioNuevo.ended ||
+        audioNuevo.__radioCerrada
+    ){
+
+        barrasMiniVU.forEach(
+            function(barra){
+
+                barra.style.opacity =
+                    "0.35";
+
+                barra.style.height =
+                    "5px";
+
+            }
+        );
+
+        return;
+
+    }
+
+    analizadorAudio.getByteFrequencyData(
+        datosVU
+    );
+
+        barrasMiniVU.forEach(
+            function(barra,index){
+
+                const nivel =
+                    datosVU[
+                        Math.min(
+                            datosVU.length - 1,
+                            Math.floor(
+                                index *
+                                (datosVU.length * 0.65) /
+                                (barrasMiniVU.length - 1)
+                            )
+                        )
+                    ] / 255;
+
+                const altura =
+                    Math.max(
+                        0.15,
+                        nivel
+                    );
+
+                barra.style.height =
+                    (altura * 24) + "px";
+
+                barra.style.opacity =
+                    Math.max(
+                        0.45,
+                        altura
+                    );
+
+            }
+        );
+
+        requestAnimationFrame(
+            moverMiniVU
+        );
+
+}
+
 function moverVU(){
 
     if(
@@ -14778,24 +14852,25 @@ barra.style.opacity =
 
 }
 
-    audioNuevo.addEventListener(
-        "play",
-        function(){
+audioNuevo.addEventListener(
+    "play",
+    function(){
 
-            btnPlayPause.innerHTML =
-                "❚❚";
+        btnPlayPause.innerHTML =
+            "❚❚";
 
+        if(
+            animacionVU === null
+        ){
 
-            if(
-                animacionVU === null
-            ){
-
-                moverVU();
-
-            }
+            moverVU();
 
         }
-    );
+
+        moverMiniVU();
+
+    }
+);
 
 
     audioNuevo.addEventListener(
@@ -21267,6 +21342,27 @@ if(campo && titulo){
 }
 
 recibirAppCompartida();
+
+
+/* =====================================================
+   CERRAR RADIO AL SALIR DE LA APLICACIÓN
+   ===================================================== */
+
+window.addEventListener(
+    "pagehide",
+    function(){
+
+        if(
+            reproductorRadio &&
+            typeof botonCerrar !== "undefined"
+        ){
+
+            botonCerrar.click();
+
+        }
+
+    }
+);
 
 </script>
 
