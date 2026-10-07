@@ -10086,13 +10086,14 @@ function cargarConfiguracionCine(){
 fila.className = "itemConfiguracionCine";
 
 fila.style.display = "flex";
-fila.style.justifyContent = "space-between";
+fila.style.justifyContent = "flex-start";
 fila.style.alignItems = "center";
+fila.style.gap = "10px";
 fila.style.padding = "10px";
 fila.style.margin = "8px 0";
 fila.style.background = "#333";
 fila.style.borderRadius = "10px";
-fila.style.cursor = "move";
+
 
 
             const checkbox =
@@ -10164,23 +10165,11 @@ fila.appendChild(checkbox);
     )
 );
 
-const iconoDrag =
-    document.createElement("span");
-
-iconoDrag.textContent = "☰";
-iconoDrag.className = "iconoDragCine";
-iconoDrag.style.marginLeft = "auto";
-iconoDrag.style.cursor = "grab";
-
-fila.appendChild(iconoDrag);
-
-
            contenedor.appendChild(fila);
 
         }
     );
 
-activarDragConfiguracionCine();
 
 // ========================
 // MOSTRAR PLATAFORMAS PERSONALIZADAS
