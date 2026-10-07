@@ -3428,9 +3428,6 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
      display:grid;
      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
      gap:12px;
-     max-height:60vh;
-     overflow-y:auto;
-     padding-right:5px;
      ">
 </div>
 
@@ -15434,21 +15431,7 @@ personalizadas.forEach(function(plataforma){
 
     });
 
-    if(sortablePlataformasCine){
-        sortablePlataformasCine.destroy();
-    }
-
-    sortablePlataformasCine =
-        new Sortable(
-            contenedor,
-            {
-                animation:150,
-                ghostClass:"dragGhost"
-            }
-        );
-
 }
-
 
 
 // ========================
@@ -17999,7 +17982,6 @@ document.getElementById("mensajeConfiguracion");
 //========================
 
 let sortableConfiguracion = null;
-let sortablePlataformasCine = null;
 
 function activarDragConfiguracion(tipo){
 
