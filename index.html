@@ -21211,12 +21211,14 @@ window.addEventListener("popstate", function(event){
 
     }
 
-    if(event.state && event.state.pantalla === "ambientes"){
+  if(event.state && event.state.pantalla === "ambientes"){
 
-        mostrarMenuAndroid("ambientes", false);
-        return;
+    document.getElementById("Cine").style.display="none";
 
-    }
+    mostrarMenuAndroid("ambientes", false);
+    return;
+
+}
 
     if(event.state && event.state.pantalla === "Entrenamiento"){
 
@@ -21353,23 +21355,6 @@ window.addEventListener(
     function(){
 
         if(
-            reproductorRadio &&
-            typeof botonCerrar !== "undefined"
-        ){
-
-            botonCerrar.click();
-
-        }
-
-    }
-);
-
-window.addEventListener(
-    "visibilitychange",
-    function(){
-
-        if(
-            document.visibilityState === "hidden" &&
             reproductorRadio &&
             typeof botonCerrar !== "undefined"
         ){
