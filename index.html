@@ -10079,13 +10079,20 @@ function cargarConfiguracionCine(){
     configuracionCine.forEach(
         function(plataforma){
 
-            const label =
-                document.createElement("label");
+            const fila =
+    document.createElement("div");
 
-            label.style.display = "flex";
-            label.style.alignItems = "center";
-            label.style.gap = "8px";
-            label.style.cursor = "pointer";
+fila.className = "itemConfiguracionCine";
+
+fila.style.display = "flex";
+fila.style.justifyContent = "space-between";
+fila.style.alignItems = "center";
+fila.style.padding = "10px";
+fila.style.margin = "8px 0";
+fila.style.background = "#333";
+fila.style.borderRadius = "10px";
+fila.style.cursor = "move";
+
 
             const checkbox =
                 document.createElement("input");
@@ -10107,7 +10114,7 @@ checkbox.checked =
         plataforma.id
     );
 
-label.appendChild(checkbox);
+fila.appendChild(checkbox);
 
            if(plataforma.logo){
 
@@ -10130,10 +10137,10 @@ label.appendChild(checkbox);
 
                 imagen.src = url;
 
-                label.insertBefore(
-                    imagen,
-                    label.lastChild
-                );
+          fila.insertBefore(
+          imagen,
+          fila.lastChild
+);
 
             }
 
@@ -10146,20 +10153,22 @@ label.appendChild(checkbox);
 
                 respaldo.textContent = "🎬";
 
-                label.appendChild(respaldo);
+                fila.appendChild(respaldo);
 
             }
 
-            label.appendChild(
-                document.createTextNode(
-                    plataforma.nombre
-                )
-            );
+           fila.appendChild(
+    document.createTextNode(
+        plataforma.nombre
+    )
+);
 
-            contenedor.appendChild(label);
+           contenedor.appendChild(fila);
 
         }
     );
+
+activarDragConfiguracionCine();
 
 // ========================
 // MOSTRAR PLATAFORMAS PERSONALIZADAS
@@ -10223,9 +10232,7 @@ personalizadas.forEach(
                 plataforma.nombre
             );
 
-        label.appendChild(
-            checkbox
-        );
+      fila.appendChild(checkbox);
 
         const icono =
             document.createElement("span");
@@ -10332,6 +10339,35 @@ cargarConfiguracionCine();
 
 }
 
+// ========================
+// ACTIVAR DRAG CINE
+// ========================
+
+function activarDragConfiguracionCine(){
+
+    const contenedor =
+        document.getElementById(
+            "configuracionCine"
+        );
+
+    if(!contenedor){
+        return;
+    }
+
+    if(sortableConfiguracionCine){
+        sortableConfiguracionCine.destroy();
+    }
+
+    sortableConfiguracionCine =
+        new Sortable(
+            contenedor,
+            {
+                animation:150,
+              ghostClass:"dragGhost"
+
+            }
+        );
+}
 
 function mostrar(id){
 
@@ -11457,6 +11493,8 @@ function abrirConfiguracionBilleteras(){
 // ========================
 // CONFIGURACION CINE
 // ========================
+
+let sortableConfiguracionCine = null;
 
 function abrirConfiguracionCine(){
 
