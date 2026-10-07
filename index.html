@@ -10340,35 +10340,6 @@ cargarConfiguracionCine();
 
 }
 
-// ========================
-// ACTIVAR DRAG CINE
-// ========================
-
-function activarDragConfiguracionCine(){
-
-    const contenedor =
-        document.getElementById(
-            "configuracionCine"
-        );
-
-    if(!contenedor){
-        return;
-    }
-
-    if(sortableConfiguracionCine){
-        sortableConfiguracionCine.destroy();
-    }
-
- sortableConfiguracionCine =
-    new Sortable(
-        contenedor,
-        {
-            animation:150,
-            handle:".iconoDragCine",
-            ghostClass:"dragGhost"
-        }
-    );
-}
 
 function mostrar(id){
 
@@ -15273,6 +15244,9 @@ function mostrarPlataformasCineSeleccionadas(){
 
         tarjeta.className = "card";
 
+	tarjeta.dataset.id =
+    	"oficial-" + datosPlataforma.id;
+
         tarjeta.style.padding = "12px";
         tarjeta.style.borderRadius = "16px";
 
@@ -15394,6 +15368,9 @@ personalizadas.forEach(function(plataforma){
 
         tarjeta.className = "card";
 
+	tarjeta.dataset.id =
+        "personalizada-" + plataforma.nombre;
+
         tarjeta.style.padding = "12px";
         tarjeta.style.borderRadius = "16px";
 
@@ -15454,7 +15431,18 @@ personalizadas.forEach(function(plataforma){
 
     });
 
+    if(sortablePlataformasCine){
+        sortablePlataformasCine.destroy();
+    }
 
+    sortablePlataformasCine =
+        new Sortable(
+            contenedor,
+            {
+                animation:150,
+                ghostClass:"dragGhost"
+            }
+        );
 
 }
 
@@ -18008,6 +17996,7 @@ document.getElementById("mensajeConfiguracion");
 //========================
 
 let sortableConfiguracion = null;
+let sortablePlataformasCine = null;
 
 function activarDragConfiguracion(tipo){
 
