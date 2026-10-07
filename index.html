@@ -3490,6 +3490,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
         <div id="configuracionCine"
              style="
              display:grid;
+            position:relative;
             grid-template-columns:1fr;
              gap:10px;
              max-height:35vh;
@@ -10170,6 +10171,32 @@ fila.appendChild(checkbox);
 
         }
     );
+
+// INDICADOR DE SCROLL - MÁS UTILIZADAS
+const indicadorScrollOficial =
+    document.createElement("div");
+
+indicadorScrollOficial.textContent = "👇";
+
+indicadorScrollOficial.style.position = "absolute";
+indicadorScrollOficial.style.bottom = "2px";
+indicadorScrollOficial.style.left = "50%";
+indicadorScrollOficial.style.transform =
+    "translateX(-50%)";
+indicadorScrollOficial.style.fontSize = "22px";
+indicadorScrollOficial.style.pointerEvents = "none";
+indicadorScrollOficial.style.display = "none";
+
+if(
+    contenedor.scrollHeight >
+    contenedor.clientHeight
+){
+    indicadorScrollOficial.style.display = "block";
+}
+
+contenedor.appendChild(
+    indicadorScrollOficial
+);
 
 
 // ========================
