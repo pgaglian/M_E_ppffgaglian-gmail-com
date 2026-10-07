@@ -3512,6 +3512,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
         <div id="plataformasCinePersonalizadasConfiguracion"
              style="
              display:grid;
+             position:relative;
              grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
              gap:10px;
              max-height:120px;
@@ -10285,8 +10286,54 @@ personalizadas.forEach(
        }
     );
 
+// INDICADOR DE SCROLL
+const indicadorScroll =
+    document.createElement("div");
+
+indicadorScroll.textContent = "👇";
+
+indicadorScroll.style.position = "absolute";
+indicadorScroll.style.bottom = "2px";
+indicadorScroll.style.left = "50%";
+indicadorScroll.style.transform =
+    "translateX(-50%)";
+indicadorScroll.style.fontSize = "22px";
+indicadorScroll.style.pointerEvents = "none";
+indicadorScroll.style.display = "none";
+
+if(
+    contenedorPersonalizadas.scrollHeight >
+    contenedorPersonalizadas.clientHeight
+){
+    indicadorScroll.style.display = "block";
 }
 
+contenedorPersonalizadas.appendChild(
+    indicadorScroll
+);
+
+contenedorPersonalizadas.addEventListener(
+    "scroll",
+    function(){
+
+        const llegoAlFinal =
+            contenedorPersonalizadas.scrollTop +
+            contenedorPersonalizadas.clientHeight >=
+            contenedorPersonalizadas.scrollHeight - 2;
+
+        if(llegoAlFinal){
+            indicadorScroll.style.display = "none";
+        }else if(
+            contenedorPersonalizadas.scrollHeight >
+            contenedorPersonalizadas.clientHeight
+        ){
+            indicadorScroll.style.display = "block";
+        }
+
+    }
+);
+
+}
 
 function eliminarPlataformaCinePersonalizada(nombre){
 
