@@ -10164,6 +10164,17 @@ fila.appendChild(checkbox);
     )
 );
 
+const iconoDrag =
+    document.createElement("span");
+
+iconoDrag.textContent = "☰";
+iconoDrag.className = "iconoDragCine";
+iconoDrag.style.marginLeft = "auto";
+iconoDrag.style.cursor = "grab";
+
+fila.appendChild(iconoDrag);
+
+
            contenedor.appendChild(fila);
 
         }
@@ -10359,15 +10370,15 @@ function activarDragConfiguracionCine(){
         sortableConfiguracionCine.destroy();
     }
 
-    sortableConfiguracionCine =
-        new Sortable(
-            contenedor,
-            {
-                animation:150,
-              ghostClass:"dragGhost"
-
-            }
-        );
+ sortableConfiguracionCine =
+    new Sortable(
+        contenedor,
+        {
+            animation:150,
+            handle:".iconoDragCine",
+            ghostClass:"dragGhost"
+        }
+    );
 }
 
 function mostrar(id){
