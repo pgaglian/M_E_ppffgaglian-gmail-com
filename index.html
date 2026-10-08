@@ -9581,206 +9581,246 @@ function mostrarPantallaEntrenamiento(
 
         pantalla.id = "pantallaEntrenamiento";
 
-pantalla.style.cssText = `
-    position:fixed;
-    inset:0;
-    z-index:9999;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:flex-start;
-    text-align:center;
-    background:${colorFase};
-    color:#111;
-    padding:20px 20px 15px 20px;
-    box-sizing:border-box;
-    overflow:hidden;
-`;
-
-pantalla.innerHTML = `
-
-    <!-- CABECERA FIJA -->
-    <div
-        style="
-            width:100%;
-            max-width:500px;
-            flex-shrink:0;
-            text-align:center;
-        "
-    >
-
-        <div id="faseActualEntrenamiento"
-            style="
-                font-size:32px;
-                font-weight:bold;
-                margin-bottom:4px;
-            ">
-        </div>
-
-        <div id="contadorEntrenamiento"
-            style="
-                font-size:120px;
-                font-weight:bold;
-                line-height:1;
-                margin:8px 0 10px 0;
-            ">
-        </div>
-
-        <div id="cicloActualEntrenamiento"
-            style="
-                font-size:24px;
-                font-weight:bold;
-                margin:2px;
-            ">
-        </div>
-
-        <div id="bloqueActualEntrenamiento"
-            style="
-                font-size:20px;
-                font-weight:bold;
-                margin:2px 0 8px 0;
-            ">
-        </div>
-
-    </div>
-
-
-    <!-- ZONA DE PROGRESO CON SCROLL -->
-    <div
-        style="
-            width:100%;
-            max-width:500px;
-            flex:1;
-            min-height:0;
+        pantalla.style.cssText = `
+            position:fixed;
+            inset:0;
+            z-index:9999;
             display:flex;
             flex-direction:column;
-            margin:8px 0 10px 0;
-        "
-    >
+            align-items:center;
+            justify-content:flex-start;
+            text-align:center;
+            background:${colorFase};
+            color:#111;
+            padding:20px 20px 15px 20px;
+            box-sizing:border-box;
+            overflow:hidden;
+        `;
 
-        <div
-            style="
-                flex-shrink:0;
-                font-size:18px;
-                font-weight:bold;
-                text-align:left;
-                margin-bottom:6px;
-            "
-        >
-            PRÓXIMOS EVENTOS
-        </div>
+        pantalla.innerHTML = `
 
-        <div
-            style="
-                flex:1;
-                min-height:0;
-                overflow-y:auto;
-                overflow-x:hidden;
-                border-top:2px solid rgba(0,0,0,0.25);
-                border-bottom:2px solid rgba(0,0,0,0.25);
-                padding:10px 5px 10px 0;
-                box-sizing:border-box;
-            "
-        >
-
+            <!-- CABECERA FIJA -->
             <div
-                id="listaEventosEntrenamiento"
                 style="
-                    display:flex;
-                    flex-direction:column;
-                    gap:6px;
-                    text-align:left;
-                    font-size:17px;
-                    font-weight:bold;
+                    width:100%;
+                    max-width:500px;
+                    flex-shrink:0;
+                    text-align:center;
                 "
             >
+
+                <div id="faseActualEntrenamiento"
+                    style="
+                        font-size:32px;
+                        font-weight:bold;
+                        margin-bottom:4px;
+                    ">
+                </div>
+
+                <div id="contadorEntrenamiento"
+                    style="
+                        font-size:120px;
+                        font-weight:bold;
+                        line-height:1;
+                        margin:8px 0 10px 0;
+                    ">
+                </div>
+
+                <div id="cicloActualEntrenamiento"
+                    style="
+                        font-size:24px;
+                        font-weight:bold;
+                        margin:2px;
+                    ">
+                </div>
+
+                <div id="bloqueActualEntrenamiento"
+                    style="
+                        font-size:20px;
+                        font-weight:bold;
+                        margin:2px 0 8px 0;
+                    ">
+                </div>
+
             </div>
 
-        </div>
 
-    </div>
+            <!-- ZONA DE PROGRESO -->
+            <div
+                style="
+                    width:100%;
+                    max-width:500px;
+                    flex:1;
+                    min-height:0;
+                    display:flex;
+                    flex-direction:column;
+                    margin:8px 0 10px 0;
+                "
+            >
+
+                <div
+                    style="
+                        flex-shrink:0;
+                        font-size:18px;
+                        font-weight:bold;
+                        text-align:left;
+                        margin-bottom:6px;
+                    "
+                >
+                    PRÓXIMOS EVENTOS
+                </div>
+
+                <div
+                    style="
+                        flex:1;
+                        min-height:0;
+                        overflow-y:auto;
+                        overflow-x:hidden;
+                        border-top:2px solid rgba(0,0,0,0.25);
+                        border-bottom:2px solid rgba(0,0,0,0.25);
+                        padding:10px 5px 10px 0;
+                        box-sizing:border-box;
+                    "
+                >
+
+                    <div
+                        id="listaEventosEntrenamiento"
+                        style="
+                            display:flex;
+                            flex-direction:column;
+                            gap:6px;
+                            text-align:left;
+                            font-size:17px;
+                            font-weight:bold;
+                        "
+                    >
+                    </div>
+
+                </div>
+
+            </div>
 
 
-    <!-- CONTROLES FIJOS -->
-    <div
-        style="
-            width:100%;
-            max-width:500px;
-            flex-shrink:0;
-            display:grid;
-            grid-template-columns:1fr 1fr;
-            gap:8px;
-            margin-top:5px;
-        "
-    >
+            <!-- TIEMPO TOTAL RESTANTE -->
+            <div
+                style="
+                    width:100%;
+                    max-width:500px;
+                    flex-shrink:0;
+                    text-align:center;
+                    margin:2px 0 8px 0;
+                "
+            >
 
-        <button
-            id="btnRetrocederEntrenamiento"
-            type="button"
-            onclick="retrocederEntrenamiento()"
-            style="
-                padding:12px 8px;
-                font-size:17px;
-                font-weight:bold;
-                border:none;
-                border-radius:10px;
-                cursor:pointer;
-            "
-        >
-            ◀ Retroceder
-        </button>
+                <div
+                    style="
+                        font-size:15px;
+                        font-weight:bold;
+                        margin-bottom:2px;
+                    "
+                >
+                    TIEMPO RESTANTE
+                </div>
 
-        <button
-            id="btnAdelantarEntrenamiento"
-            type="button"
-            onclick="adelantarEntrenamiento()"
-            style="
-                padding:12px 8px;
-                font-size:17px;
-                font-weight:bold;
-                border:none;
-                border-radius:10px;
-                cursor:pointer;
-            "
-        >
-            Adelantar ▶
-        </button>
+                <div
+                    id="tiempoRestanteEntrenamiento"
+                    style="
+                        font-size:42px;
+                        font-weight:bold;
+                        line-height:1;
+                    "
+                >
+                    00:00
+                </div>
 
-        <button
-            id="btnCancelarEntrenamiento"
-            type="button"
-            onclick="cancelarEntrenamiento()"
-            style="
-                padding:12px 8px;
-                font-size:17px;
-                font-weight:bold;
-                border:none;
-                border-radius:10px;
-                cursor:pointer;
-            "
-        >
-            ❌ Cancelar
-        </button>
+            </div>
 
-        <button
-            id="btnPausarEntrenamiento"
-            type="button"
-            onclick="pausarEntrenamiento()"
-            style="
-                padding:12px 8px;
-                font-size:17px;
-                font-weight:bold;
-                border:none;
-                border-radius:10px;
-                cursor:pointer;
-            "
-        >
-            ⏸ Pausar
-        </button>
 
-    </div>
+            <!-- CONTROLES FIJOS -->
+            <div
+                style="
+                    width:100%;
+                    max-width:500px;
+                    flex-shrink:0;
+                    display:grid;
+                    grid-template-columns:1fr 1fr;
+                    gap:8px;
+                    margin-top:3px;
+                "
+            >
 
-`;
+                <button
+                    id="btnRetrocederEntrenamiento"
+                    type="button"
+                    onclick="retrocederEntrenamiento()"
+                    title="Retroceder"
+                    style="
+                        padding:8px;
+                        font-size:32px;
+                        font-weight:bold;
+                        border:none;
+                        border-radius:10px;
+                        cursor:pointer;
+                    "
+                >
+                    ◀
+                </button>
+
+                <button
+                    id="btnAdelantarEntrenamiento"
+                    type="button"
+                    onclick="adelantarEntrenamiento()"
+                    title="Adelantar"
+                    style="
+                        padding:8px;
+                        font-size:32px;
+                        font-weight:bold;
+                        border:none;
+                        border-radius:10px;
+                        cursor:pointer;
+                    "
+                >
+                    ▶
+                </button>
+
+                <button
+                    id="btnCancelarEntrenamiento"
+                    type="button"
+                    onclick="cancelarEntrenamiento()"
+                    title="Cancelar"
+                    style="
+                        padding:8px;
+                        font-size:32px;
+                        font-weight:bold;
+                        border:none;
+                        border-radius:10px;
+                        cursor:pointer;
+                    "
+                >
+                    ❌
+                </button>
+
+                <button
+                    id="btnPausarEntrenamiento"
+                    type="button"
+                    onclick="pausarEntrenamiento()"
+                    title="Pausar"
+                    style="
+                        padding:8px;
+                        font-size:32px;
+                        font-weight:bold;
+                        border:none;
+                        border-radius:10px;
+                        cursor:pointer;
+                    "
+                >
+                    ⏸
+                </button>
+
+            </div>
+
+        `;
+
         document.body.appendChild(pantalla);
     }
 
@@ -9790,9 +9830,7 @@ pantalla.innerHTML = `
         "faseActualEntrenamiento"
     ).textContent = nombreFase;
 
-   
 }
-
 
 // ===== LISTA DE EVENTOS ENTRENAMIENTO =====
 
