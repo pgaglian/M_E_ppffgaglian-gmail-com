@@ -364,14 +364,15 @@ box-shadow:0 10px 24px rgba(0,0,0,.60);
 
 #menu .card{
 
-min-height:170px;
-height:auto;
+    height:auto;
+  
+    min-height:170px;
 
     display:flex;
 
     flex-direction:column;
 
-    justify-content:space-evenly;
+    justify-content:center;
 
     align-items:center;
 
@@ -396,8 +397,8 @@ height:auto;
     justify-content:center;
 
     text-align:center;
-
 }
+
 
 #menu .card p{
 
@@ -2624,7 +2625,7 @@ onclick="mostrar('Radios')">
 <div class="card" id="ambienteEntrenamiento" data-titulo="🏋️ Entrenamiento"
 onclick="mostrar('Entrenamiento')">
 
-<h2>🏋️ Entrenamiento</h2>
+<h2>🏋️ Fitness</h2>
 <p>Entrenamiento por intervalos</p>
 </div>
 
@@ -2683,7 +2684,7 @@ onclick="mostrar('Redes')">
         <div>🌎 AMBIENTES</div>
 
         <div style="font-size:24px;margin-top:10px;">
-            📚 🎵 📻 🎬 📸 ▶️ 🌐
+            📚 🎵 📻 🏋️ 🎬 📸 ▶️ 🌐
         </div>
 
     </button>
@@ -9279,7 +9280,7 @@ function pausarEntrenamiento(){
 
         document.getElementById(
             "btnPausarEntrenamiento"
-        ).textContent = "⏸ Pausar";
+        ).textContent = "⏸";
 
     }else{
 
@@ -9287,7 +9288,7 @@ function pausarEntrenamiento(){
 
         document.getElementById(
             "btnPausarEntrenamiento"
-        ).textContent = "▶ Reanudar";
+        ).textContent = "▶";
     }
 }
 
@@ -9465,6 +9466,77 @@ function actualizarPantallaEntrenamiento(){
     document.getElementById(
         "contadorEntrenamiento"
     ).textContent = tiempo;
+
+    // ===== TIEMPO TOTAL RESTANTE =====
+
+    let tiempoTotalRestante = 0;
+
+    let eventosRestantes =
+        obtenerEventosEntrenamiento();
+
+    let indiceTiempoActual = 0;
+
+    for(
+        let i = 0;
+        i < eventosRestantes.length;
+        i++
+    ){
+
+        let evento = eventosRestantes[i];
+
+        if(
+            (
+                faseEntrenamiento === "trabajo" &&
+                evento.fase === "💪 TRABAJO" &&
+                evento.ciclo === cicloActualEntrenamiento &&
+                evento.bloque === bloqueActualEntrenamiento
+            ) ||
+            (
+                faseEntrenamiento === "descanso" &&
+                evento.fase === "😮‍💨 DESCANSO" &&
+                evento.ciclo === cicloActualEntrenamiento &&
+                evento.bloque === bloqueActualEntrenamiento
+            ) ||
+            (
+                faseEntrenamiento === "descansoBloque" &&
+                evento.fase === "🛌 DESCANSO BLOQUE" &&
+                evento.bloque === bloqueActualEntrenamiento
+            )
+        ){
+            indiceTiempoActual = i;
+            break;
+        }
+    }
+
+    tiempoTotalRestante =
+        Math.max(
+            0,
+            segundosRestantesEntrenamiento
+        );
+
+    for(
+        let i = indiceTiempoActual + 1;
+        i < eventosRestantes.length;
+        i++
+    ){
+
+        tiempoTotalRestante +=
+            eventosRestantes[i].tiempo;
+    }
+
+    let pantallaTiempoRestante =
+        document.getElementById(
+            "tiempoRestanteEntrenamiento"
+        );
+
+    if(pantallaTiempoRestante){
+
+        pantallaTiempoRestante.textContent =
+            formatearTiempoEntrenamiento(
+                tiempoTotalRestante
+            );
+    }
+
 
     document.getElementById(
         "cicloActualEntrenamiento"
@@ -9725,7 +9797,7 @@ function mostrarPantallaEntrenamiento(
                 <div
                     id="tiempoRestanteEntrenamiento"
                     style="
-                        font-size:42px;
+                        font-size:120px;
                         font-weight:bold;
                         line-height:1;
                     "
