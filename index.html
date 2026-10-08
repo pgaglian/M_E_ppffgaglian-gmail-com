@@ -3741,6 +3741,97 @@ y la revisamos. 🛠️🔧
 
 </div>
 
+
+<!-- ===== POPUP INGRESAR LINK PLATAFORMA CINE ===== -->
+
+<div id="popupLinkPlataformaCine"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1300;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,450px);
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:20px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        ">
+
+        <h2 style="
+            margin-top:0;
+            text-align:center;
+            color:#FFD700;
+        ">
+            🔗 Ingresar enlace
+        </h2>
+
+        <p style="
+            text-align:center;
+            color:#ccc;
+            line-height:1.5;
+        ">
+            Pegá aquí el enlace de la plataforma
+            que copiaste del navegador.
+        </p>
+
+        <input
+            id="urlAgregarPlataformaCine"
+            type="url"
+            placeholder="https://..."
+            style="
+            width:100%;
+            box-sizing:border-box;
+            padding:12px;
+            font-size:16px;
+            border-radius:10px;
+            border:1px solid #666;
+            margin-bottom:15px;
+            ">
+
+        <button
+            type="button"
+            onclick="guardarLinkPlataformaCine()"
+            style="
+            display:block;
+            width:100%;
+            margin:8px 0;
+            padding:12px;
+            font-size:16px;
+            font-weight:bold;
+            border-radius:10px;
+            ">
+            ✅ Guardar enlace
+        </button>
+
+        <button
+            type="button"
+            onclick="cerrarLinkPlataformaCine()"
+            style="
+            display:block;
+            width:100%;
+            margin:8px 0;
+            padding:12px;
+            font-size:16px;
+            font-weight:bold;
+            border-radius:10px;
+            ">
+            ↩️ Cancelar
+        </button>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN POPUP INGRESAR LINK ===== -->
+
 <!-- ===== POPUP CONFIRMAR PLATAFORMA CINE ===== -->
 
 <div id="popupConfirmarPlataformaCine"
@@ -11691,6 +11782,152 @@ localStorage.setItem(
 
 
 // ========================
+// POPUP INGRESAR LINK PLATAFORMA CINE
+// ========================
+
+function abrirLinkPlataformaCine(){
+
+    const popup =
+        document.getElementById(
+            "popupLinkPlataformaCine"
+        );
+
+    if(!popup){
+        return;
+    }
+
+    const campo =
+        document.getElementById(
+            "urlAgregarPlataformaCine"
+        );
+
+    if(campo){
+        campo.value = "";
+    }
+
+    popup.style.display = "flex";
+
+}
+
+function cerrarLinkPlataformaCine(){
+
+    const popup =
+        document.getElementById(
+            "popupLinkPlataformaCine"
+        );
+
+    if(!popup){
+        return;
+    }
+
+    popup.style.display = "none";
+
+}
+
+function guardarLinkPlataformaCine(){
+
+    const campoUrl =
+        document.getElementById(
+            "urlAgregarPlataformaCine"
+        );
+
+    if(!campoUrl){
+        return;
+    }
+
+    const url =
+        campoUrl.value.trim();
+
+    if(!url){
+        return;
+    }
+
+    const nombre =
+        localStorage.getItem(
+            "nombrePlataformaCinePendiente"
+        ) || "";
+
+    if(!nombre){
+        return;
+    }
+
+    const guardadas =
+        JSON.parse(
+            localStorage.getItem(
+                "PlataformasCinePersonalizadas"
+            )
+        ) || [];
+
+    const existe =
+        guardadas.some(function(plataforma){
+
+            return plataforma.nombre.toLowerCase() ===
+                   nombre.toLowerCase();
+
+        });
+
+    if(existe){
+        return;
+    }
+
+    guardadas.push({
+
+        nombre: nombre,
+        url: url
+
+    });
+
+    localStorage.setItem(
+        "PlataformasCinePersonalizadas",
+        JSON.stringify(guardadas)
+    );
+
+    cargarConfiguracionCine();
+
+    mostrarPlataformasCineSeleccionadas();
+
+
+    localStorage.removeItem(
+        "validacionPlataformaCineActiva"
+    );
+
+    localStorage.removeItem(
+        "nombrePlataformaCinePendiente"
+    );
+
+    localStorage.removeItem(
+        "appCompartidaTitulo"
+    );
+
+    localStorage.removeItem(
+        "appCompartidaTexto"
+    );
+
+    localStorage.removeItem(
+        "appCompartidaUrl"
+    );
+
+    campoUrl.value = "";
+
+    const urlLimpia =
+        window.location.pathname +
+        window.location.hash;
+
+    window.history.replaceState(
+        {},
+        document.title,
+        urlLimpia
+    );
+
+    cerrarLinkPlataformaCine();
+
+    cerrarAgregarPlataformaCine();
+
+    abrirConfiguracionCine();
+
+}
+
+// ========================
 // VALIDAR NUEVA PLATAFORMA CINE
 // ========================
 
@@ -11783,6 +12020,14 @@ document.addEventListener(
         ){
             return;
         }
+
+if(!esMovil){
+
+    abrirLinkPlataformaCine();
+
+    return;
+
+}
 
         const popup =
     document.getElementById(
@@ -12039,6 +12284,61 @@ function abrirAgregarPlataformaCine(){
     }
 
     popup.style.display = "flex";
+
+    const textoAgregarPlataforma =
+        document.querySelector(
+            "#popupAgregarPlataformaCine p"
+        );
+
+    if(textoAgregarPlataforma){
+
+        if(!esMovil){
+
+            textoAgregarPlataforma.innerHTML =
+                "✏️ <strong>Escribí el nombre exacto de la aplicación</strong>" +
+                " tal como aparece en tu dispositivo." +
+                "<br><br>" +
+
+                "⚠️ Vas a salir de Mi Espacio para comprobar la aplicación." +
+                "<br><br>" +
+
+                "🖥️ <strong>En PC:</strong> cuando encuentres la página correcta," +
+                " copiá el enlace de la barra de direcciones." +
+                "<br><br>" +
+
+                "↩️ Después volvé a Mi Espacio y pegá el enlace cuando te lo solicitemos." +
+                "<br><br>" +
+
+                "❗ <strong>Si no copiás el enlace, no podremos guardar la plataforma.</strong>";
+
+        }else{
+
+            textoAgregarPlataforma.innerHTML =
+                "✏️ <strong>Escribí el nombre exacto de la aplicación</strong>" +
+                " tal como aparece en tu dispositivo." +
+                "<br><br>" +
+
+                "⚠️ Vas a salir de Mi Espacio para comprobar" +
+                " la aplicación en Google Play o App Store y poder compartirla con Mi Espacio." +
+                "<br><br>" +
+
+                "📖 <strong>¿No sabés cómo compartirla?</strong>" +
+                "<br>" +
+                "👉 <button type='button' onclick='abrirInstructivoCompartirApp()' " +
+                "style='border:none;background:none;color:#FFD700;font-size:16px;font-weight:bold;cursor:pointer;padding:0;'>" +
+                "Ver instructivo</button>" +
+                "<br><br>" +
+
+                "↩️ <strong>Después volvé a Mi Espacio para confirmar.</strong>" +
+                "<br><br>" +
+
+                "❗ <strong>Si no volvés a Mi Espacio, la aplicación no se guardará.</strong>" +
+                "<br><br>" +
+
+                "🔐 <strong>Esta comprobación se hace una sola vez.</strong>";
+        }
+
+    }
 
     const nombreRecibido =
         localStorage.getItem(
