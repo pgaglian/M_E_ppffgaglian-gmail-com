@@ -11712,20 +11712,38 @@ function validarNuevaPlataformaCine(){
         return;
     }
 
-   localStorage.setItem(
-    "nombrePlataformaCinePendiente",
-    nombre
-);
+    localStorage.setItem(
+        "nombrePlataformaCinePendiente",
+        nombre
+    );
 
-localStorage.setItem(
-    "validacionPlataformaCineActiva",
-    "true"
-);
+    localStorage.setItem(
+        "validacionPlataformaCineActiva",
+        "true"
+    );
 
-const url =
-        "https://play.google.com/store/search?q=" +
-        encodeURIComponent(nombre) +
-        "&c=apps";
+    let url;
+
+    if(esAndroid){
+
+        url =
+            "https://play.google.com/store/search?q=" +
+            encodeURIComponent(nombre) +
+            "&c=apps";
+
+    }else if(esAppleMobile){
+
+        url =
+            "https://apps.apple.com/us/search?term=" +
+            encodeURIComponent(nombre);
+
+    }else{
+
+        url =
+            "https://www.google.com/search?q=" +
+            encodeURIComponent(nombre);
+
+    }
 
     window.open(
         url,
