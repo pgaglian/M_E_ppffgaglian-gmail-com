@@ -11921,9 +11921,28 @@ function guardarLinkPlataformaCine(){
 
     cerrarLinkPlataformaCine();
 
-    cerrarAgregarPlataformaCine();
+cerrarAgregarPlataformaCine();
 
-    abrirConfiguracionCine();
+abrirConfiguracionCine();
+
+const mensaje =
+    document.getElementById(
+        "mensajeCine"
+    );
+
+if(mensaje){
+
+    mensaje.style.display =
+        "block";
+
+    setTimeout(function(){
+
+        mensaje.style.display =
+            "none";
+
+    },1000);
+
+}
 
 }
 
