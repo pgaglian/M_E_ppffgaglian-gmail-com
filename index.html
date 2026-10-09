@@ -16731,55 +16731,9 @@ function mostrarPromocionesBanco(nombreBanco){
 
     /* ===== TITULO ===== */
 
-    if(titulo){
-
+        if(titulo){
         titulo.innerHTML = "";
-
-        titulo.style.display = "flex";
-        titulo.style.alignItems = "center";
-        titulo.style.justifyContent = "center";
-        titulo.style.gap = "10px";
-
-        if(datosBanco && datosBanco.logo){
-
-            const imagen =
-                document.createElement("img");
-
-            imagen.src =
-                "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Bancosimg/" +
-                datosBanco.logo;
-
-            imagen.alt =
-                nombreBanco;
-
-            imagen.style.width = "42px";
-            imagen.style.height = "42px";
-            imagen.style.objectFit = "contain";
-            imagen.style.borderRadius = "8px";
-
-            titulo.appendChild(imagen);
-
-        }else{
-
-            const respaldo =
-                document.createElement("span");
-
-            respaldo.textContent = "🏦";
-
-            titulo.appendChild(respaldo);
-
-        }
-
-        const texto =
-            document.createElement("span");
-
-        texto.textContent =
-            "🔥 Promociones para vos";
-
-        titulo.appendChild(texto);
-
     }
-
 
     /* ===== CARGANDO ===== */
 
@@ -16867,32 +16821,45 @@ function mostrarPromocionesBanco(nombreBanco){
         tarjeta.style.textAlign = "center";
 
 
-        tarjeta.innerHTML = `
+                tarjeta.innerHTML = `
 
-            <h3>
-                🏦 Promociones de ${nombreBanco}
-            </h3>
-
-            
-            <button
-                type="button"
-                onclick="abrirBanco('${nombreBanco.replace(/'/g, "\\'")}')"
+        ${datosBanco && datosBanco.logo ? `
+            <img
+                src="https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Bancosimg/${datosBanco.logo}"
+                alt="${datosBanco.nombre}"
                 style="
-                width:100%;
-                margin-bottom:15px;
-                padding:11px 18px;
-                background:#FFD700;
-                color:#000;
-                border:none;
-                border-radius:10px;
-                font-weight:bold;
-                cursor:pointer;
+                width:60px;
+                height:60px;
+                object-fit:contain;
+                border-radius:12px;
+                margin-bottom:12px;
                 "
             >
-                🔐 Acceder a ${nombreBanco}
-            </button>
+        ` : ""}
 
+        <button
+            type="button"
+            onclick="abrirBanco('${nombreBanco.replace(/'/g, "\\'")}')"
+            style="
+            width:100%;
+            margin-bottom:15px;
+            padding:11px 18px;
+            background:#FFD700;
+            color:#000;
+            border:none;
+            border-radius:10px;
+            font-weight:bold;
+            cursor:pointer;
+            "
+        >
+            🔐 Acceder a ${nombreBanco}
+        </button>
 
+        <h3>
+            🏦 Promociones de ${nombreBanco}
+        </h3>
+            
+       
             <p>
                 Consultá las promociones y beneficios
                 disponibles en el sitio oficial.
@@ -16967,6 +16934,7 @@ function mostrarPromocionesBanco(nombreBanco){
     });
 
 }
+
 function confirmarSalidaPromocion(nombreBanco, url){
 
     const fondo =
