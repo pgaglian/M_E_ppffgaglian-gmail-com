@@ -16459,6 +16459,250 @@ function abrirBilletera(nombreBilletera){
 
 }
 
+
+// ========================
+// SALIDA A BANCO
+// ========================
+
+function abrirBanco(nombreBanco){
+
+    const datosBanco =
+        configuracionBancos.find(function(banco){
+
+            return banco.nombre === nombreBanco;
+
+        });
+
+    if(!datosBanco){
+        return;
+    }
+
+    // ========================
+    // DETECTAR DISPOSITIVO
+    // ========================
+
+    const userAgent =
+        navigator.userAgent ||
+        navigator.vendor ||
+        window.opera;
+
+    let destino =
+        datosBanco.sitioOficial;
+
+    // Android
+    if(/android/i.test(userAgent)){
+
+        if(datosBanco.android){
+
+            destino =
+                datosBanco.android;
+
+        }
+
+    }
+
+    // iPhone / iPad
+    else if(
+        /iPad|iPhone|iPod/i.test(userAgent) ||
+        (
+            navigator.platform === "MacIntel" &&
+            navigator.maxTouchPoints > 1
+        )
+    ){
+
+        if(datosBanco.ios){
+
+            destino =
+                datosBanco.ios;
+
+        }
+
+    }
+
+    // PC
+    else{
+
+        destino =
+            datosBanco.sitioOficial;
+
+    }
+
+    // ========================
+    // POPUP LEGAL
+    // ========================
+
+    const fondo =
+        document.createElement("div");
+
+    fondo.id =
+        "popupSalidaBanco";
+
+    fondo.style.position =
+        "fixed";
+
+    fondo.style.top =
+        "0";
+
+    fondo.style.left =
+        "0";
+
+    fondo.style.width =
+        "100%";
+
+    fondo.style.height =
+        "100%";
+
+    fondo.style.background =
+        "rgba(0,0,0,0.75)";
+
+    fondo.style.display =
+        "flex";
+
+    fondo.style.alignItems =
+        "center";
+
+    fondo.style.justifyContent =
+        "center";
+
+    fondo.style.zIndex =
+        "99999";
+
+    fondo.style.padding =
+        "20px";
+
+    fondo.style.boxSizing =
+        "border-box";
+
+    const ventana =
+        document.createElement("div");
+
+    ventana.className =
+        "card";
+
+    ventana.style.width =
+        "min(92%,450px)";
+
+    ventana.style.padding =
+        "25px";
+
+    ventana.style.borderRadius =
+        "20px";
+
+    ventana.style.textAlign =
+        "center";
+
+    ventana.innerHTML = `
+
+        <div style="
+            font-size:36px;
+            margin-bottom:10px;
+        ">
+            🏦
+        </div>
+
+        <h3>
+            Estás saliendo de Mi Espacio
+        </h3>
+
+        <p>
+            Vas a salir de Mi Espacio para ingresar a
+            <strong>${datosBanco.nombre}</strong>.
+        </p>
+
+        <p style="
+            font-size:13px;
+            line-height:19px;
+            opacity:.85;
+        ">
+            Mi Espacio no administra tu cuenta,
+            contraseña, pagos ni las condiciones
+            del servicio.
+        </p>
+
+        <p style="
+            font-size:13px;
+            line-height:19px;
+            opacity:.85;
+        ">
+            Es responsabilidad del usuario verificar
+            que esté accediendo al sitio o aplicación
+            oficial del proveedor antes de ingresar
+            datos personales o realizar cualquier operación.
+        </p>
+
+        <div style="
+            display:flex;
+            justify-content:center;
+            gap:12px;
+            margin-top:20px;
+            flex-wrap:wrap;
+        ">
+
+            <button
+                type="button"
+                id="cancelarSalidaBanco"
+                style="
+                padding:11px 18px;
+                border:none;
+                border-radius:10px;
+                cursor:pointer;
+                font-weight:bold;
+                "
+            >
+                Cancelar
+            </button>
+
+            <button
+                type="button"
+                id="continuarSalidaBanco"
+                style="
+                padding:11px 18px;
+                background:#FFD700;
+                color:#000;
+                border:none;
+                border-radius:10px;
+                cursor:pointer;
+                font-weight:bold;
+                "
+            >
+                Continuar →
+            </button>
+
+        </div>
+
+    `;
+
+    fondo.appendChild(ventana);
+
+    document.body.appendChild(fondo);
+
+    document
+        .getElementById("cancelarSalidaBanco")
+        .onclick =
+        function(){
+
+            fondo.remove();
+
+        };
+
+    document
+        .getElementById("continuarSalidaBanco")
+        .onclick =
+        function(){
+
+            fondo.remove();
+
+            window.open(
+                destino,
+                "_blank",
+                "noopener,noreferrer"
+            );
+
+        };
+
+}
+
+
 // =================================
 // MOSTRAR PROMOCIONES DE UN BANCO
 // =================================
@@ -16628,6 +16872,26 @@ function mostrarPromocionesBanco(nombreBanco){
             <h3>
                 🏦 Promociones de ${nombreBanco}
             </h3>
+
+            
+            <button
+                type="button"
+                onclick="abrirBanco('${nombreBanco.replace(/'/g, "\\'")}')"
+                style="
+                width:100%;
+                margin-bottom:15px;
+                padding:11px 18px;
+                background:#FFD700;
+                color:#000;
+                border:none;
+                border-radius:10px;
+                font-weight:bold;
+                cursor:pointer;
+                "
+            >
+                🔐 Acceder a ${nombreBanco}
+            </button>
+
 
             <p>
                 Consultá las promociones y beneficios
