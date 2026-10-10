@@ -12340,9 +12340,28 @@ function guardarNuevaPlataformaCine(){
 
         });
 
-    if(existe){
+   
+    if(existe || guardadas.length >= 10){
+
+        const mensajeConfirmacion =
+            document.getElementById(
+                "mensajeConfirmarPlataformaCine"
+            );
+
+        if(mensajeConfirmacion){
+
+            mensajeConfirmacion.innerHTML = existe
+                ? "⚠ Esa plataforma ya está guardada."
+                : "⚠ Alcanzaste el máximo de 10 plataformas personalizadas. Eliminá una para agregar otra.";
+
+            mensajeConfirmacion.style.color =
+                "#FF4444";
+
+        }
+
         return;
     }
+
 
  const urlRecibida =
     localStorage.getItem(
