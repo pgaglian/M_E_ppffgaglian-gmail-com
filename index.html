@@ -10373,6 +10373,32 @@ fila.appendChild(checkbox);
         }
     );
 
+// INDICADOR DE SCROLL - MÁS UTILIZADAS //
+
+const indicadorScrollOficial =
+    document.createElement("div");
+
+indicadorScrollOficial.textContent = "👇";
+
+indicadorScrollOficial.style.position = "absolute";
+indicadorScrollOficial.style.bottom = "2px";
+indicadorScrollOficial.style.left = "50%";
+indicadorScrollOficial.style.transform =
+    "translateX(-50%)";
+indicadorScrollOficial.style.fontSize = "22px";
+indicadorScrollOficial.style.pointerEvents = "none";
+indicadorScrollOficial.style.display = "none";
+
+if(
+    contenedor.scrollHeight >
+    contenedor.clientHeight
+){
+    indicadorScrollOficial.style.display = "block";
+}
+
+contenedor.appendChild(
+    indicadorScrollOficial
+);
 
 
 // ========================
@@ -10489,7 +10515,8 @@ personalizadas.forEach(
        }
     );
 
-// INDICADOR DE SCROLL
+// INDICADOR DE SCROLL //
+
 const indicadorScroll =
     document.createElement("div");
 
@@ -12195,7 +12222,77 @@ if(!esMovil){
 
 }
 
-        const popup =
+   
+const pendiente =
+    localStorage.getItem(
+        "nombrePlataformaCinePendiente"
+    ) || "";
+
+const guardadas =
+    JSON.parse(
+        localStorage.getItem(
+            "PlataformasCinePersonalizadas"
+        )
+    ) || [];
+
+const existe =
+    guardadas.some(function(plataforma){
+        return (plataforma.nombre || "").toLowerCase() ===
+               pendiente.toLowerCase();
+    });
+
+if(existe || guardadas.length >= 10){
+
+    localStorage.removeItem(
+        "validacionPlataformaCineActiva"
+    );
+
+    const popupLink =
+        document.getElementById(
+            "popupLinkPlataformaCine"
+        );
+
+    const campoUrl =
+        document.getElementById(
+            "urlAgregarPlataformaCine"
+        );
+
+    let aviso =
+        document.getElementById(
+            "avisoLinkPlataformaCine"
+        );
+
+    if(!aviso && campoUrl){
+
+        aviso = document.createElement("p");
+        aviso.id = "avisoLinkPlataformaCine";
+        aviso.style.textAlign = "center";
+        aviso.style.color = "#FF4444";
+        aviso.style.lineHeight = "1.5";
+
+        campoUrl.parentNode.insertBefore(
+            aviso,
+            campoUrl.nextSibling
+        );
+    }
+
+    if(aviso){
+
+        aviso.textContent = existe
+            ? "⚠ Esa plataforma ya está guardada."
+            : "⚠ Alcanzaste el máximo de 10 plataformas personalizadas. Eliminá una para agregar otra.";
+
+        aviso.style.display = "block";
+    }
+
+    if(popupLink){
+        popupLink.style.display = "flex";
+    }
+
+    return;
+}
+
+const popup =
     document.getElementById(
         "popupConfirmarPlataformaCine"
     );
@@ -12210,9 +12307,11 @@ if(popup && mensaje){
     mensaje.innerHTML =
         "¿La aplicación que comprobaste en Google Play es la correcta?";
 
+    mensaje.style.color = "";
     popup.style.display = "flex";
 
 }
+
 
     }
 );
@@ -12303,8 +12402,6 @@ function cancelarConfirmacionPlataformaCine(){
     }
 
 }
-
-
 // ========================
 // GUARDAR NUEVA PLATAFORMA CINE
 // ========================
@@ -12334,11 +12431,6 @@ function guardarNuevaPlataformaCine(){
             )
         ) || [];
 
-    const mensajeConfirmacion =
-        document.getElementById(
-            "mensajeConfirmarPlataformaCine"
-        );
-
     const existe =
         guardadas.some(function(plataforma){
 
@@ -12347,122 +12439,97 @@ function guardarNuevaPlataformaCine(){
 
         });
 
-    // EVITAR PLATAFORMAS DUPLICADAS
-
     if(existe){
-
-        if(mensajeConfirmacion){
-
-            mensajeConfirmacion.innerHTML =
-                "⚠ Esa plataforma ya está guardada.";
-
-            mensajeConfirmacion.style.color =
-                "#FFD700";
-
-        }
-
         return;
     }
 
-    // LÍMITE DE 10 PLATAFORMAS PERSONALIZADAS
+ const urlRecibida =
+    localStorage.getItem(
+        "appCompartidaUrl"
+    ) || "";
 
-    if(guardadas.length >= 10){
+guardadas.push({
 
-        if(mensajeConfirmacion){
+    nombre: nombre,
+    url: urlRecibida
 
-            mensajeConfirmacion.innerHTML =
-                "⚠ Alcanzaste el límite de 10 plataformas personalizadas.";
-
-            mensajeConfirmacion.style.color =
-                "#FFD700";
-
-        }
-
-        return;
-    }
-
-    const urlRecibida =
-        localStorage.getItem(
-            "appCompartidaUrl"
-        ) || "";
-
-    guardadas.push({
-
-        nombre: nombre,
-        url: urlRecibida
-
-    });
+});
 
     localStorage.setItem(
         "PlataformasCinePersonalizadas",
         JSON.stringify(guardadas)
     );
 
-    cargarConfiguracionCine();
+cargarConfiguracionCine();
 
-    if(mensajeConfirmacion){
+  const mensajeConfirmacion =
+    document.getElementById(
+        "mensajeConfirmarPlataformaCine"
+    );
 
-        mensajeConfirmacion.innerHTML =
-            "✔ Plataforma guardada";
+if(mensajeConfirmacion){
 
-        mensajeConfirmacion.style.color =
-            "#32CD32";
+    mensajeConfirmacion.innerHTML =
+        "✔ Plataforma guardada";
+
+    mensajeConfirmacion.style.color =
+        "#32CD32";
+
+}
+
+mostrarPlataformasCineSeleccionadas();
+
+setTimeout(function(){
+
+    localStorage.removeItem(
+        "validacionPlataformaCineActiva"
+    );
+
+    localStorage.removeItem(
+        "nombrePlataformaCinePendiente"
+    );
+
+localStorage.removeItem(
+    "appCompartidaTitulo"
+);
+
+localStorage.removeItem(
+    "appCompartidaTexto"
+);
+
+localStorage.removeItem(
+    "appCompartidaUrl"
+);
+
+    campo.value = "";
+
+    const urlLimpia =
+        window.location.pathname +
+        window.location.hash;
+
+    window.history.replaceState(
+        {},
+        document.title,
+        urlLimpia
+    );
+
+    const popupConfirmacion =
+        document.getElementById(
+            "popupConfirmarPlataformaCine"
+        );
+
+    if(popupConfirmacion){
+
+        popupConfirmacion.style.display =
+            "none";
 
     }
 
-    mostrarPlataformasCineSeleccionadas();
+    cerrarAgregarPlataformaCine();
 
-    setTimeout(function(){
+    abrirConfiguracionCine();
 
-        localStorage.removeItem(
-            "validacionPlataformaCineActiva"
-        );
-
-        localStorage.removeItem(
-            "nombrePlataformaCinePendiente"
-        );
-
-        localStorage.removeItem(
-            "appCompartidaTitulo"
-        );
-
-        localStorage.removeItem(
-            "appCompartidaTexto"
-        );
-
-        localStorage.removeItem(
-            "appCompartidaUrl"
-        );
-
-        campo.value = "";
-
-        const urlLimpia =
-            window.location.pathname +
-            window.location.hash;
-
-        window.history.replaceState(
-            {},
-            document.title,
-            urlLimpia
-        );
-
-        const popupConfirmacion =
-            document.getElementById(
-                "popupConfirmarPlataformaCine"
-            );
-
-        if(popupConfirmacion){
-
-            popupConfirmacion.style.display =
-                "none";
-
-        }
-
-        cerrarAgregarPlataformaCine();
-
-        abrirConfiguracionCine();
-
-    },1000);
+},1000);
 
 }
 
@@ -22070,6 +22137,7 @@ window.addEventListener("popstate", function(event){
 // RECIBIR APP COMPARTIDA
 // ========================
 
+
 function recibirAppCompartida(){
 
     const parametros =
@@ -22083,99 +22151,112 @@ function recibirAppCompartida(){
     const texto =
         parametros.get("text") || "";
 
-   const url =
-    parametros.get("url") ||
-    parametros.get("text") ||
-    "";
+    const url =
+        parametros.get("url") ||
+        parametros.get("text") ||
+        "";
 
-    if(
-        !titulo &&
-        !texto &&
-        !url
-    ){
+    if(!titulo && !texto && !url){
+        return;
+    }
+
+    const nombre =
+        titulo.replace(
+            /^[ÉE]chale un vistazo a\s+/i,
+            ""
+        ).trim();
+
+    const guardadas =
+        JSON.parse(
+            localStorage.getItem(
+                "PlataformasCinePersonalizadas"
+            )
+        ) || [];
+
+    localStorage.setItem("appCompartidaTitulo", titulo);
+    localStorage.setItem("appCompartidaTexto", texto);
+    localStorage.setItem("appCompartidaUrl", url);
+    localStorage.setItem("nombrePlataformaCinePendiente", nombre);
+
+    const popupLink =
+        document.getElementById("popupLinkPlataformaCine");
+
+    const campoUrl =
+        document.getElementById("urlAgregarPlataformaCine");
+
+    let aviso =
+        document.getElementById("avisoLinkPlataformaCine");
+
+    if(!aviso && campoUrl){
+
+        aviso = document.createElement("p");
+        aviso.id = "avisoLinkPlataformaCine";
+        aviso.style.textAlign = "center";
+        aviso.style.color = "#FF4444";
+        aviso.style.lineHeight = "1.5";
+
+        campoUrl.parentNode.insertBefore(
+            aviso,
+            campoUrl.nextSibling
+        );
+    }
+
+    const existe =
+        guardadas.some(function(plataforma){
+            return (plataforma.nombre || "").toLowerCase() ===
+                   nombre.toLowerCase();
+        });
+
+    if(existe || guardadas.length >= 10){
+
+        localStorage.removeItem("validacionPlataformaCineActiva");
+
+        if(aviso){
+
+            aviso.textContent = existe
+                ? "⚠ Esa plataforma ya está guardada."
+                : "⚠ Alcanzaste el máximo de 10 plataformas personalizadas. Eliminá una para agregar otra.";
+
+            aviso.style.display = "block";
+        }
+
+        if(popupLink){
+            popupLink.style.display = "flex";
+        }
+
         return;
     }
 
     localStorage.setItem(
-        "appCompartidaTitulo",
-        titulo
+        "validacionPlataformaCineActiva",
+        "true"
     );
 
-    localStorage.setItem(
-        "appCompartidaTexto",
-        texto
-    );
+    const popupConfirmacion =
+        document.getElementById("popupConfirmarPlataformaCine");
 
-  localStorage.setItem(
-    "appCompartidaUrl",
-    url
-);
+    const mensajeConfirmacion =
+        document.getElementById("mensajeConfirmarPlataformaCine");
 
-localStorage.setItem(
-    "nombrePlataformaCinePendiente",
-    titulo.replace(
-        /^[ÉE]chale un vistazo a\s+/i,
-        ""
-    )
-);
+    if(popupConfirmacion && mensajeConfirmacion){
 
-localStorage.setItem(
-    "validacionPlataformaCineActiva",
-    "true"
-);
+        mensajeConfirmacion.innerHTML =
+            "¿La aplicación que compartiste desde Google Play es la correcta?";
 
-const popupConfirmacion =
-    document.getElementById(
-        "popupConfirmarPlataformaCine"
-    );
+        mensajeConfirmacion.style.color = "";
+        popupConfirmacion.style.display = "flex";
+    }
 
-const mensajeConfirmacion =
-    document.getElementById(
-        "mensajeConfirmarPlataformaCine"
-    );
+    const campo =
+        document.getElementById("nombreAgregarPlataformaCine");
 
-if(
-    popupConfirmacion &&
-    mensajeConfirmacion
-){
+    if(campo && titulo){
+        campo.value = nombre;
+    }
 
-    mensajeConfirmacion.innerHTML =
-        "¿La aplicación que compartiste desde Google Play es la correcta?";
-
-    mensajeConfirmacion.style.color =
-        "";
-
-    popupConfirmacion.style.display =
-        "flex";
-
-}
-
-const campo =
-    document.getElementById(
-        "nombreAgregarPlataformaCine"
-    );
-
-if(campo && titulo){
-
-    campo.value = titulo;
-
-}
-
-    console.log(
-        "APP COMPARTIDA - TITULO:",
-        titulo
-    );
-
-    console.log(
-        "APP COMPARTIDA - TEXTO:",
-        texto
-    );
-
-    console.log(
-        "APP COMPARTIDA - URL:",
-        url
-    );
-
+    console.log("APP COMPARTIDA - TITULO:", titulo);
+    console.log("APP COMPARTIDA - TEXTO:", texto);
+    console.log("APP COMPARTIDA - URL:", url);
 }
 
 recibirAppCompartida();
