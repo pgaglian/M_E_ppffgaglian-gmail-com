@@ -12152,7 +12152,19 @@ document.addEventListener(
 
 if(!esMovil){
 
-    abrirLinkPlataformaCine();
+    const popupAgregar =
+        document.getElementById(
+            "popupAgregarPlataformaCine"
+        );
+
+    if(
+        popupAgregar &&
+        popupAgregar.style.display === "flex"
+    ){
+
+        abrirLinkPlataformaCine();
+
+    }
 
     return;
 
