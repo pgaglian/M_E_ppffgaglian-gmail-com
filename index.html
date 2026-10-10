@@ -10373,31 +10373,6 @@ fila.appendChild(checkbox);
         }
     );
 
-// INDICADOR DE SCROLL - MÁS UTILIZADAS
-const indicadorScrollOficial =
-    document.createElement("div");
-
-indicadorScrollOficial.textContent = "👇";
-
-indicadorScrollOficial.style.position = "absolute";
-indicadorScrollOficial.style.bottom = "2px";
-indicadorScrollOficial.style.left = "50%";
-indicadorScrollOficial.style.transform =
-    "translateX(-50%)";
-indicadorScrollOficial.style.fontSize = "22px";
-indicadorScrollOficial.style.pointerEvents = "none";
-indicadorScrollOficial.style.display = "none";
-
-if(
-    contenedor.scrollHeight >
-    contenedor.clientHeight
-){
-    indicadorScrollOficial.style.display = "block";
-}
-
-contenedor.appendChild(
-    indicadorScrollOficial
-);
 
 
 // ========================
@@ -11911,8 +11886,17 @@ function abrirLinkPlataformaCine(){
             "urlAgregarPlataformaCine"
         );
 
-    if(campo){
+        if(campo){
         campo.value = "";
+    }
+
+    const aviso =
+        document.getElementById(
+            "avisoLinkPlataformaCine"
+        );
+
+    if(aviso){
+        aviso.remove();
     }
 
     popup.style.display = "flex";
@@ -11968,6 +11952,7 @@ function guardarLinkPlataformaCine(){
             )
         ) || [];
 
+    
     const existe =
         guardadas.some(function(plataforma){
 
@@ -11976,9 +11961,49 @@ function guardarLinkPlataformaCine(){
 
         });
 
-    if(existe){
-        return;
+    let aviso =
+        document.getElementById(
+            "avisoLinkPlataformaCine"
+        );
+
+    if(!aviso){
+
+        aviso = document.createElement("p");
+        aviso.id = "avisoLinkPlataformaCine";
+        aviso.style.textAlign = "center";
+        aviso.style.color = "#FF4444";
+        aviso.style.lineHeight = "1.5";
+
+        campoUrl.parentNode.insertBefore(
+            aviso,
+            campoUrl.nextSibling
+        );
+
     }
+
+    aviso.style.display = "none";
+    aviso.textContent = "";
+
+    if(existe){
+
+        aviso.textContent =
+            "⚠ Esa plataforma ya está guardada.";
+
+        aviso.style.display = "block";
+        return;
+
+    }
+
+    if(guardadas.length >= 10){
+
+        aviso.textContent =
+            "⚠ Alcanzaste el máximo de 10 plataformas personalizadas. Eliminá una para agregar otra.";
+
+        aviso.style.display = "block";
+        return;
+
+    }
+
 
     guardadas.push({
 
