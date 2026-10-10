@@ -12303,6 +12303,8 @@ function cancelarConfirmacionPlataformaCine(){
     }
 
 }
+
+
 // ========================
 // GUARDAR NUEVA PLATAFORMA CINE
 // ========================
@@ -12332,6 +12334,11 @@ function guardarNuevaPlataformaCine(){
             )
         ) || [];
 
+    const mensajeConfirmacion =
+        document.getElementById(
+            "mensajeConfirmarPlataformaCine"
+        );
+
     const existe =
         guardadas.some(function(plataforma){
 
@@ -12340,97 +12347,122 @@ function guardarNuevaPlataformaCine(){
 
         });
 
+    // EVITAR PLATAFORMAS DUPLICADAS
+
     if(existe){
+
+        if(mensajeConfirmacion){
+
+            mensajeConfirmacion.innerHTML =
+                "⚠ Esa plataforma ya está guardada.";
+
+            mensajeConfirmacion.style.color =
+                "#FFD700";
+
+        }
+
         return;
     }
 
- const urlRecibida =
-    localStorage.getItem(
-        "appCompartidaUrl"
-    ) || "";
+    // LÍMITE DE 10 PLATAFORMAS PERSONALIZADAS
 
-guardadas.push({
+    if(guardadas.length >= 10){
 
-    nombre: nombre,
-    url: urlRecibida
+        if(mensajeConfirmacion){
 
-});
+            mensajeConfirmacion.innerHTML =
+                "⚠ Alcanzaste el límite de 10 plataformas personalizadas.";
+
+            mensajeConfirmacion.style.color =
+                "#FFD700";
+
+        }
+
+        return;
+    }
+
+    const urlRecibida =
+        localStorage.getItem(
+            "appCompartidaUrl"
+        ) || "";
+
+    guardadas.push({
+
+        nombre: nombre,
+        url: urlRecibida
+
+    });
 
     localStorage.setItem(
         "PlataformasCinePersonalizadas",
         JSON.stringify(guardadas)
     );
 
-cargarConfiguracionCine();
+    cargarConfiguracionCine();
 
-  const mensajeConfirmacion =
-    document.getElementById(
-        "mensajeConfirmarPlataformaCine"
-    );
+    if(mensajeConfirmacion){
 
-if(mensajeConfirmacion){
+        mensajeConfirmacion.innerHTML =
+            "✔ Plataforma guardada";
 
-    mensajeConfirmacion.innerHTML =
-        "✔ Plataforma guardada";
-
-    mensajeConfirmacion.style.color =
-        "#32CD32";
-
-}
-
-mostrarPlataformasCineSeleccionadas();
-
-setTimeout(function(){
-
-    localStorage.removeItem(
-        "validacionPlataformaCineActiva"
-    );
-
-    localStorage.removeItem(
-        "nombrePlataformaCinePendiente"
-    );
-
-localStorage.removeItem(
-    "appCompartidaTitulo"
-);
-
-localStorage.removeItem(
-    "appCompartidaTexto"
-);
-
-localStorage.removeItem(
-    "appCompartidaUrl"
-);
-
-    campo.value = "";
-
-    const urlLimpia =
-        window.location.pathname +
-        window.location.hash;
-
-    window.history.replaceState(
-        {},
-        document.title,
-        urlLimpia
-    );
-
-    const popupConfirmacion =
-        document.getElementById(
-            "popupConfirmarPlataformaCine"
-        );
-
-    if(popupConfirmacion){
-
-        popupConfirmacion.style.display =
-            "none";
+        mensajeConfirmacion.style.color =
+            "#32CD32";
 
     }
 
-    cerrarAgregarPlataformaCine();
+    mostrarPlataformasCineSeleccionadas();
 
-    abrirConfiguracionCine();
+    setTimeout(function(){
 
-},1000);
+        localStorage.removeItem(
+            "validacionPlataformaCineActiva"
+        );
+
+        localStorage.removeItem(
+            "nombrePlataformaCinePendiente"
+        );
+
+        localStorage.removeItem(
+            "appCompartidaTitulo"
+        );
+
+        localStorage.removeItem(
+            "appCompartidaTexto"
+        );
+
+        localStorage.removeItem(
+            "appCompartidaUrl"
+        );
+
+        campo.value = "";
+
+        const urlLimpia =
+            window.location.pathname +
+            window.location.hash;
+
+        window.history.replaceState(
+            {},
+            document.title,
+            urlLimpia
+        );
+
+        const popupConfirmacion =
+            document.getElementById(
+                "popupConfirmarPlataformaCine"
+            );
+
+        if(popupConfirmacion){
+
+            popupConfirmacion.style.display =
+                "none";
+
+        }
+
+        cerrarAgregarPlataformaCine();
+
+        abrirConfiguracionCine();
+
+    },1000);
 
 }
 
