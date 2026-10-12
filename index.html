@@ -450,74 +450,6 @@ box-shadow:0 10px 25px rgba(0,0,0,.55);
 
 }
 
-/* ===== REPRODUCTOR V3 ===== */
-
-.containerAlbum{
-    display:flex;
-    gap:20px;
-    padding:20px;
-}
-
-.listaCanciones{
-    width:40%;
-    max-height:70vh;
-    overflow-y:auto;
-}
-
-.cancion{
-    background:#222;
-    margin-bottom:8px;
-    padding:12px;
-    border-radius:8px;
-    cursor:pointer;
-    transition:0.2s;
-}
-
-.cancion:hover{
-    background:#333;
-}
-
-.reproductor{
-    width:60%;
-    text-align:center;
-}
-
-.reproductor img{
-    width:260px;
-    border-radius:12px;
-    margin-bottom:15px;
-}
-
-.reproductor h2{
-    color:#FFD700;
-}
-
-.reproductor audio{
-    width:90%;
-}
-
-#playerPersonal{
-    margin-top:12px;
-    display:flex;
-    justify-content:center;
-    gap:12px;
-}
-
-#playerPersonal button{
-    width:48px;
-    height:48px;
-    border:none;
-    border-radius:50%;
-    background:#FFD700;
-    color:#000;
-    font-size:22px;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-#playerPersonal button:hover{
-    transform:scale(1.08);
-}
 /* ===== PANEL APARIENCIA ===== */
 
 #panelTema{
@@ -6001,52 +5933,6 @@ font-size:18px;
 
 </div>
 
-<div id="album" style="display:none">
-
-    <button onclick="volverMusica()">⬅ Volver</button>
-
-    <h2 style="text-align:center;color:#FFD700">
-        🎵 Lentos
-    </h2>
-
-    <div class="containerAlbum">
-
-        <!-- Lista de canciones -->
-        <div class="listaCanciones" id="listaCanciones">
-        </div>
-
-        <!-- Reproductor -->
-        <div class="reproductor">
-
-            <img
-                id="portadaAlbum"
-                src="Musica/Lentos/Exitos/lentos.jpg"
-                onerror="this.src='Img/logo.png'">
-
-            <h2 id="tituloCancion">
-                Selecciona una canción
-            </h2>
-
-            <audio id="audioPlayer" controls></audio>
-
-<div id="playerPersonal">
-
-    <button id="btnAnterior" onclick="anteriorCancion()">⏮</button>
-
-    <button id="btnPlay" onclick="playPause()">▶</button>
-
-    <button id="btnStop" onclick="detenerMusica()">■</button>
-
-    <button id="btnSiguiente" onclick="siguienteCancion()">⏭</button>
-
-</div>
-	    
-            
-        </div>
-
-    </div>
-
-</div>
 
 <!-- ===== VENTANA SOPORTE ===== -->
 
@@ -6498,13 +6384,6 @@ function copiarDatoColaboracion(dato){
 
     <div>
 
-     <button
-id="btnMusica"
-onclick="playPause()"
-style="display:none;">
-⏸ Pausar música
-</button>
-
         <button onclick="cerrarPDF()">
             ✖ Cerrar
         </button>
@@ -6516,61 +6395,6 @@ style="display:none;">
 </div>
 
 <script>
-
-
-const albums = {
-
-    "Lentos": {
-
-        nombre:"Lentos",
-
-        portada:"Musica/Lentos/Exitos/lentos.jpg",
-
-        carpeta:"Musica/Lentos/Exitos/",
-
-        canciones:[
-"A million miles away",
-"Against all odds",
-"Alone (Acoustic)",
-"Angels",
-"Berlin-Take my breath away",
-"Better man",
-"Every Rose Has Its Thorn (Acoustic)",
-"Have you met Miss Jones",
-"Heart - All I wanna do is make love to you",
-"In the Air Tonight",
-"Love Of My Life",
-"Love Takes Time",
-"My Way [live]",
-"Something Beautiful",
-"Stillness of heart",
-"Sweet sixteen",
-"The Crying Game",
-"The way do the things you do",
-"These Are The Days Of Our Lives",
-"Who Wants To Live Forever",
-"Yesterday is gone"
-]
-
-
-    },
-
-    "Soda Stereo": {
-
-        nombre:"Soda Stereo",
-
-        portada:"Musica/Soda Stereo/Obras Cumbres/Obras Cumbres.jpg",
-
-        carpeta:"Musica/Soda Stereo/Obras Cumbres/",
-
-        canciones:[]
-
-    }
-
-};
-
-
-let albumActual = albums["Lentos"];
 
 const Libros=[
 {titulo:"El Hobbit"},
@@ -6607,12 +6431,6 @@ const vencimiento = "2026-10-20";
 // VARIABLES GENERALES
 //========================
 
-const audio = document.getElementById("audioPlayer");
-
-
-let estabaReproduciendo = false;
-
-let indiceActual = -1;
 
 let horasClima = null;
 
@@ -6639,39 +6457,6 @@ lista.innerHTML+=`
 <button onclick="abrirPDF('Libros/${l.titulo}.pdf','${l.titulo}')">📄 Leer PDF</button>
 </div>`;
 });
-
-function cargarAlbumes(){
-
-    const lista = document.getElementById("listaAlbumes");
-
-    lista.innerHTML = "";
-
-    for(const nombre in albums){
-
-        const album = albums[nombre];
-
-        lista.innerHTML += `
-
-        <div class="card">
-
-            <img src="${album.portada}"
-                 onerror="this.src='Img/logo.png'">
-
-            <h3>🎵 ${album.nombre}</h3>
-
-            <button onclick="abrirAlbum('${nombre}')">
-
-                Abrir álbum
-
-            </button>
-
-        </div>
-
-        `;
-
-    }
-
-}
 
 
 // ===== CONFIGURACION TIEMPOS ENTRENAMIENTO =====
@@ -10619,8 +10404,6 @@ document.getElementById("btnVolverAndroid").style.display="none";
 
     document.getElementById("Calendario").style.display="none";
 
-    document.getElementById("album").style.display="none";
-
     document.getElementById("Clima").style.display="none";
 
     document.getElementById("Bancos").style.display="none";
@@ -10693,11 +10476,6 @@ if(id=="Clima"){
 
 }
 
-if(id=="Musica"){
-
-    cargarAlbumes();
-
-}
 
     // Registrar la pantalla actual en el historial
     history.pushState({ pantalla: id }, "", "#" + id);
@@ -10712,7 +10490,6 @@ function inicio(){
     document.getElementById("Musica").style.display="none";
     document.getElementById("Calendario").style.display="none";
     document.getElementById("Clima").style.display="none";
-    document.getElementById("album").style.display="none";
     document.getElementById("Bancos").style.display="none";
    document.getElementById("Billeteras").style.display="none";
    document.getElementById("Radios").style.display="none";
@@ -10780,9 +10557,7 @@ function abrirPDF(pdf,titulo){
     document.getElementById("tituloPdf").textContent = titulo;
     document.getElementById("pdfFrame").src = pdf;
     document.getElementById("viewer").style.display = "flex";
-
-    actualizarUIReproductor();
-
+   
 }
 
 function cerrarPDF(){
@@ -10792,246 +10567,6 @@ function cerrarPDF(){
 
 }
 
-function actualizarUIReproductor(){
-
-    const btnPlay = document.getElementById("btnPlay");
-    const btnPdf = document.getElementById("btnMusica");
-
-    if(audio.src == ""){
-
-        btnPlay.innerText = "▶";
-        btnPdf.style.display = "none";
-        return;
-
-    }
-
-    btnPdf.style.display = "inline-block";
-
-    if(audio.paused){
-
-        btnPlay.innerText = "▶";
-        btnPdf.innerText = "▶ Reanudar música";
-
-    }else{
-
-        btnPlay.innerText = "⏸";
-        btnPdf.innerText = "⏸ Pausar música";
-
-    }
-
-}
-
-//=====================================
-// REPRODUCTOR DE MÚSICA
-//=====================================
-
-function detenerMusica(){
-
-    audio.pause();
-    audio.currentTime = 0;
-
-    estabaReproduciendo = false;
-
-    actualizarUIReproductor();
-
-}
-
-function playPause(){
-
-    const boton = document.getElementById("btnPlay");
-    const botonPdf = document.getElementById("btnMusica");
-
-    if(audio.src == ""){
-        return;
-    }
-
-    if(audio.paused){
-
-        audio.play();
-
-        estabaReproduciendo = true;
-
-        actualizarUIReproductor();
-
-    }else{
-
-        audio.pause();
-
-        estabaReproduciendo = false;
-
-        actualizarUIReproductor();
-
-    }
-
-}
-
-function siguienteCancion(){
-
-    if(indiceActual < albumActual.canciones.length - 1){
-
-        indiceActual++;
-
-        reproducirCancion(albumActual.canciones[indiceActual]);
-
-    }
-
-}
-
-function anteriorCancion(){
-
-    if(indiceActual > 0){
-
-        indiceActual--;
-
-        reproducirCancion(albumActual.canciones[indiceActual]);
-
-    }
-
-}
-
-function abrirAlbum(nombreAlbum){
-    albumActual = albums[nombreAlbum];
-
-    document.getElementById("Musica").style.display = "none";
-    document.getElementById("album").style.display = "block";
-
-    // Cambiar datos del álbum actual
-    document.querySelector("#album h2").innerText = "🎵 " + albumActual.nombre;
-
-    document.getElementById("portadaAlbum").src = albumActual.portada;
-
-    const lista = document.getElementById("listaCanciones");
-    lista.innerHTML = "";
-
-    albumActual.canciones.forEach(function(cancion, indice){
-
-        lista.innerHTML += `
-        <div
-            class="cancion"
-            id="cancion-${cancion}"
-            onclick="reproducirCancion('${cancion}')">
-            ${indice + 1}. 🎵 ${cancion}
-        </div>`;
-
-    });
-
-
-    // Primera vez que se abre el álbum
-
-    if(indiceActual == -1){
-
-        estabaReproduciendo = true;
-
-        reproducirCancion(albumActual.canciones[0]);
-
-        return;
-
-    }
-
-
-    // Restaurar canción seleccionada
-
-    const nombre = albumActual.canciones[indiceActual];
-
-    document.getElementById("tituloCancion").innerText = nombre;
-
-
-    const item = document.getElementById("cancion-" + nombre);
-
-    if(item){
-
-        item.style.background = "#FFD700";
-        item.style.color = "#000";
-
-    }
-
-
-    actualizarUIReproductor();
-
-}
-
-function volverMusica(){
-
-    document.getElementById("album").style.display="none";
-    document.getElementById("Musica").style.display="block";
-
-}
-
-
-function reproducirCancion(nombre){
-
-    document.getElementById("tituloCancion").innerText = nombre;
-
-
-    // Buscar índice dentro del álbum actual
-
-    indiceActual = albumActual.canciones.indexOf(nombre);
-
-
-    // Limpiar selección anterior
-
-    document.querySelectorAll(".cancion").forEach(function(c){
-
-        c.style.background = "#222";
-        c.style.color = "#fff";
-
-    });
-
-
-    // Marcar canción actual
-
-    const elemento = document.getElementById("cancion-" + nombre);
-
-    if(elemento){
-
-        elemento.style.background = "#FFD700";
-        elemento.style.color = "#000";
-
-    }
-
-
-    // Nueva ruta dinámica
-
-    audio.src =
-        albumActual.carpeta +
-        encodeURIComponent(nombre) +
-        ".mp3";
-
-
-    audio.load();
-
-
-    if(estabaReproduciendo){
-
-        audio.play();
-
-    }
-
-
-    actualizarUIReproductor();
-
-
-    audio.onpause = function(){
-
-        actualizarUIReproductor();
-
-    };
-
-
-    audio.onplay = function(){
-
-        actualizarUIReproductor();
-
-    };
-
-
-    audio.onended = function(){
-
-        siguienteCancion();
-
-    };
-
-}
 //========================
 // SALUDO DINÁMICO
 //========================
@@ -11385,7 +10920,6 @@ function mostrarMenuAndroid(seccion, registrarHistorial = true){
 document.getElementById("Libros").style.display="none";
 document.getElementById("Musica").style.display="none";
 document.getElementById("Calendario").style.display="none";
-document.getElementById("album").style.display="none";
 document.getElementById("Clima").style.display="none";
 document.getElementById("Bancos").style.display="none";
 document.getElementById("Billeteras").style.display="none";
@@ -11409,7 +10943,6 @@ document.getElementById("Entrenamiento").style.display="none";
 document.getElementById("Libros").style.display="none";
 document.getElementById("Musica").style.display="none";
 document.getElementById("Calendario").style.display="none";
-document.getElementById("album").style.display="none";
 document.getElementById("Clima").style.display="none";
 document.getElementById("Bancos").style.display="none";
 document.getElementById("Billeteras").style.display="none";
