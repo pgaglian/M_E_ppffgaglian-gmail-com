@@ -257,6 +257,19 @@ padding:20px
 }
 
 
+/* ===== OPCIONES PRINCIPALES DE MÚSICA ===== */
+
+#opcionesMenuMusica{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+}
+
+@media (max-width:600px){
+    #opcionesMenuMusica{
+        grid-template-columns:1fr;
+    }
+}
+
+
 .card{
 
 background:linear-gradient(180deg,#353535,#1d1d1d);
@@ -5916,9 +5929,6 @@ font-size:18px;
 </div>
 
 
-
-
-
 <div id="Musica" style="display:none">
 
 <button onclick="inicio()">⬅ Volver</button>
@@ -5927,9 +5937,26 @@ font-size:18px;
 🎵 Música
 </h2>
 
-<div class="grid" id="listaAlbumes">
+
+<div class="grid" id="opcionesMenuMusica">
+
+    <div class="card" onclick="mostrarOpcionMusica('plataformas')">
+        <div style="font-size:42px;">🎧</div>
+        <div>Plataformas</div>
+    </div>
+
+    <div class="card" onclick="mostrarOpcionMusica('decadas')">
+        <div style="font-size:42px;">📀</div>
+        <div>Décadas</div>
+    </div>
+
+    <div class="card" onclick="mostrarOpcionMusica('estilos')">
+        <div style="font-size:42px;">🎸</div>
+        <div>Estilos</div>
+    </div>
 
 </div>
+
 
 </div>
 
