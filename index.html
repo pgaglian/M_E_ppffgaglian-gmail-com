@@ -1902,6 +1902,54 @@ body.eclipse header{
 }
 
 
+/* ===== PANEL MI ESPACIO IA ===== */
+
+#panelMiEspacioIA{
+    position:fixed;
+    right:20px;
+    bottom:110px;
+    width:340px;
+    max-width:calc(100vw - 28px);
+    max-height:70vh;
+    overflow-y:auto;
+    box-sizing:border-box;
+    padding:18px;
+    background:linear-gradient(145deg,#252525,#101010);
+    color:#fff;
+    border:1px solid #D4AF37;
+    border-radius:18px;
+    box-shadow:0 8px 30px rgba(0,0,0,.65);
+    z-index:999999;
+    display:none;
+}
+
+#panelMiEspacioIA h2{
+    margin:0 0 12px;
+    color:#D4AF37;
+    font-size:20px;
+    text-align:center;
+}
+
+#panelMiEspacioIA .iaSubtitulo{
+    margin:0 0 14px;
+    color:#ddd;
+    font-size:14px;
+    text-align:center;
+}
+
+@media (max-width:768px){
+    #panelMiEspacioIA{
+        right:12px;
+        bottom:88px;
+        width:340px;
+        max-width:calc(100vw - 24px);
+        max-height:65vh;
+        padding:15px;
+    }
+}
+
+
+
 </style>
 </head>
 
@@ -21913,25 +21961,55 @@ window.addEventListener(
 </button>
 
 
+<div id="panelMiEspacioIA">
+
+    <h2>🐸 Mi Espacio IA</h2>
+
+    <p class="iaSubtitulo">
+        ¿Qué te gustaría hacer?
+    </p>
+
+</div>
+
 <script>
 (function () {
 
     const botonFlotanteIA =
         document.getElementById("btnMiEspacioIA");
 
-    if (!botonFlotanteIA) return;
+    const panelMiEspacioIA =
+        document.getElementById("panelMiEspacioIA");
+
+    if (!botonFlotanteIA || !panelMiEspacioIA) return;
 
     document.body.appendChild(botonFlotanteIA);
 
+    let temporizadorIA = null;
+
     botonFlotanteIA.addEventListener("click", function () {
 
+        // Primer toque: agrandar la ranita
         if (!botonFlotanteIA.classList.contains("agrandada")) {
+
             botonFlotanteIA.classList.add("agrandada");
+
+            clearTimeout(temporizadorIA);
+
+            temporizadorIA = setTimeout(function () {
+
+                if (panelMiEspacioIA.style.display !== "block") {
+                    botonFlotanteIA.classList.remove("agrandada");
+                }
+
+            }, 3000);
+
             return;
         }
 
-        // Próximo paso:
-        // abrir el panel de Mi Espacio IA.
+        // Segundo toque: abrir el panel
+        clearTimeout(temporizadorIA);
+
+        panelMiEspacioIA.style.display = "block";
 
     });
 
