@@ -1878,7 +1878,7 @@ body.eclipse header{
     object-fit:contain;
     border-radius:50%;
 }
-```css
+
 @media (max-width:768px){
     #btnMiEspacioIA{
         right:14px !important;
@@ -1900,7 +1900,6 @@ body.eclipse header{
         min-height:64px !important;
     }
 }
-```
 
 
 </style>
@@ -21915,31 +21914,29 @@ window.addEventListener(
 
 
 <script>
-const botonFlotanteIA =
-    document.getElementById("btnMiEspacioIA");
+(function () {
 
-if (botonFlotanteIA) {
+    const botonFlotanteIA =
+        document.getElementById("btnMiEspacioIA");
+
+    if (!botonFlotanteIA) return;
 
     document.body.appendChild(botonFlotanteIA);
 
-    botonFlotanteIA.addEventListener("click", function (evento) {
+    botonFlotanteIA.addEventListener("click", function () {
 
         if (!botonFlotanteIA.classList.contains("agrandada")) {
-
-            evento.preventDefault();
             botonFlotanteIA.classList.add("agrandada");
-
             return;
         }
 
-        // El segundo toque queda reservado
-        // para abrir el panel de Mi Espacio IA.
+        // Próximo paso:
+        // abrir el panel de Mi Espacio IA.
 
     });
 
-}
+})();
 </script>
-
 
 </body>
 </html>
