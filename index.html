@@ -1878,17 +1878,29 @@ body.eclipse header{
     object-fit:contain;
     border-radius:50%;
 }
-
+```css
 @media (max-width:768px){
     #btnMiEspacioIA{
         right:14px !important;
         bottom:14px !important;
+        width:48px !important;
+        height:48px !important;
+        min-width:48px !important;
+        min-height:48px !important;
+        transition:width .2s ease,
+                   height .2s ease,
+                   min-width .2s ease,
+                   min-height .2s ease;
+    }
+
+    #btnMiEspacioIA.agrandada{
         width:64px !important;
         height:64px !important;
         min-width:64px !important;
         min-height:64px !important;
     }
 }
+```
 
 
 </style>
@@ -21901,13 +21913,33 @@ window.addEventListener(
         alt="Ranita de Mi Espacio IA">
 </button>
 
+
 <script>
-const botonFlotanteIA = document.getElementById("btnMiEspacioIA");
+const botonFlotanteIA =
+    document.getElementById("btnMiEspacioIA");
 
 if (botonFlotanteIA) {
+
     document.body.appendChild(botonFlotanteIA);
+
+    botonFlotanteIA.addEventListener("click", function (evento) {
+
+        if (!botonFlotanteIA.classList.contains("agrandada")) {
+
+            evento.preventDefault();
+            botonFlotanteIA.classList.add("agrandada");
+
+            return;
+        }
+
+        // El segundo toque queda reservado
+        // para abrir el panel de Mi Espacio IA.
+
+    });
+
 }
 </script>
+
 
 </body>
 </html>
