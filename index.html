@@ -5957,9 +5957,38 @@ font-size:18px;
 
 </div>
 
+<div id="contenidoPlataformasMusica" style="display:none;">
+
+       <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding:15px;
+    ">
+
+                <button onclick="
+            document.getElementById('contenidoPlataformasMusica').style.display='none';
+            document.getElementById('opcionesMenuMusica').style.display='grid';
+            document.getElementById('Musica').querySelector('button').style.display='inline-block';
+document.querySelector('#Musica h2').style.display='block';
+        ">
+            ⬅ Volver
+        </button>
+
+        <button onclick="abrirConfiguracionMusica()">
+            ⚙ Configurar
+        </button>
+
+    </div>
+
+    <h3 style="text-align:center;color:#FFD700;">
+        🎧 Plataformas de Música
+    </h3>
+
+    <div id="PlataformasMusicaSeleccionadas" class="grid">
+    </div>
 
 </div>
-
 
 <!-- ===== VENTANA SOPORTE ===== -->
 
@@ -9989,9 +10018,69 @@ botonVolver.style.cssText = `
 
 pantalla.appendChild(botonVolver);
 
+}
 
+
+/* ========================
+   PLATAFORMAS DE MUSICA
+======================== */
+
+let configuracionMusica = [];
+
+
+fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/PlataformasMusica.json")
+    .then(function(res){
+        return res.json();
+    })
+    .then(function(datos){
+        configuracionMusica = datos;
+        console.log("Plataformas de Música cargadas:", configuracionMusica);
+    })
+    .catch(function(err){
+        console.warn("No se pudo cargar PlataformasMusica.json", err);
+    });
+
+
+
+function mostrarOpcionMusica(opcion){
+
+    if(opcion !== "plataformas"){
+        return;
+    }
+
+    const menu = document.getElementById(
+        "opcionesMenuMusica"
+    );
+
+    const contenido = document.getElementById(
+        "contenidoPlataformasMusica"
+    );
+
+    if(!menu || !contenido){
+        return;
+    }
+
+    menu.style.display = "none";
+contenido.style.display = "block";
+
+// Ocultar el título y el Volver de la pantalla Música
+const pantallaMusica = document.getElementById("Musica");
+
+if(pantallaMusica){
+    const titulo = pantallaMusica.querySelector("h2");
+    const volverPrincipal = pantallaMusica.querySelector("button");
+
+    if(titulo){
+        titulo.style.display = "none";
+    }
+
+    if(volverPrincipal){
+        volverPrincipal.style.display = "none";
+    }
+}
 
 }
+
 
 // ========================
 // CARGAR PLATAFORMAS CINE DESDE GITHUB
@@ -10399,8 +10488,8 @@ function eliminarPlataformaCinePersonalizada(nombre){
     );
 
 cargarConfiguracionCine();
-
 }
+ 
 
 
 function mostrar(id){
