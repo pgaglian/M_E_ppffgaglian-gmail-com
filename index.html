@@ -21971,6 +21971,7 @@ window.addEventListener(
 
 </div>
 
+
 <script>
 (function () {
 
@@ -21987,6 +21988,11 @@ window.addEventListener(
     let temporizadorIA = null;
 
     botonFlotanteIA.addEventListener("click", function () {
+
+        // Si el panel ya está abierto, no hacer nada más
+        if (panelMiEspacioIA.style.display === "block") {
+            return;
+        }
 
         // Primer toque: agrandar la ranita
         if (!botonFlotanteIA.classList.contains("agrandada")) {
@@ -22006,7 +22012,7 @@ window.addEventListener(
             return;
         }
 
-        // Segundo toque: abrir el panel
+        // Segundo toque: mostrar el panel
         clearTimeout(temporizadorIA);
 
         panelMiEspacioIA.style.display = "block";
@@ -22015,6 +22021,7 @@ window.addEventListener(
 
 })();
 </script>
+
 
 </body>
 </html>
