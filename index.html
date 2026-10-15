@@ -1879,6 +1879,21 @@ body.eclipse header{
     border-radius:50%;
 }
 
+
+#btnMiEspacioIA{
+    transition:width .2s ease,
+               height .2s ease,
+               min-width .2s ease,
+               min-height .2s ease;
+}
+
+#btnMiEspacioIA.agrandada{
+    width:88px !important;
+    height:88px !important;
+    min-width:88px !important;
+    min-height:88px !important;
+}
+
 @media (max-width:768px){
     #btnMiEspacioIA{
         right:14px !important;
@@ -1887,10 +1902,6 @@ body.eclipse header{
         height:48px !important;
         min-width:48px !important;
         min-height:48px !important;
-        transition:width .2s ease,
-                   height .2s ease,
-                   min-width .2s ease,
-                   min-height .2s ease;
     }
 
     #btnMiEspacioIA.agrandada{
@@ -1900,6 +1911,7 @@ body.eclipse header{
         min-height:64px !important;
     }
 }
+
 
 
 /* ===== PANEL MI ESPACIO IA ===== */
@@ -6417,7 +6429,7 @@ document.querySelector('#Musica h2').style.display='block';
     </button>
 
 </div>
-```
+
 
 </div>
 
@@ -21981,41 +21993,65 @@ window.addEventListener(
     const panelMiEspacioIA =
         document.getElementById("panelMiEspacioIA");
 
-    if (!botonFlotanteIA || !panelMiEspacioIA) return;
+    if (!botonFlotanteIA || !panelMiEspacioIA) {
+        return;
+    }
 
+    // Mantener la ranita flotando sobre la página.
     document.body.appendChild(botonFlotanteIA);
+    document.body.appendChild(panelMiEspacioIA);
 
     let temporizadorIA = null;
+    let esperandoSegundoToque = false;
 
     botonFlotanteIA.addEventListener("click", function () {
 
-        // Si el panel ya está abierto, no hacer nada más
+        // Si el panel está abierto, no hacer nada.
         if (panelMiEspacioIA.style.display === "block") {
             return;
         }
 
-        // Primer toque: agrandar la ranita
-        if (!botonFlotanteIA.classList.contains("agrandada")) {
-
-            botonFlotanteIA.classList.add("agrandada");
+        // SEGUNDO TOQUE: abrir el panel.
+        if (esperandoSegundoToque) {
 
             clearTimeout(temporizadorIA);
+            temporizadorIA = null;
+            esperandoSegundoToque = false;
 
-            temporizadorIA = setTimeout(function () {
+            botonFlotanteIA.classList.remove("agrandada");
 
-                if (panelMiEspacioIA.style.display !== "block") {
-                    botonFlotanteIA.classList.remove("agrandada");
-                }
+            panelMiEspacioIA.style.setProperty(
+                "display", "block", "important"
+            );
 
-            }, 3000);
+            panelMiEspacioIA.style.setProperty(
+                "visibility", "visible", "important"
+            );
+
+            panelMiEspacioIA.style.setProperty(
+                "opacity", "1", "important"
+            );
+
+            panelMiEspacioIA.style.setProperty(
+                "z-index", "1000001", "important"
+            );
 
             return;
         }
 
-        // Segundo toque: mostrar el panel
-        clearTimeout(temporizadorIA);
+        // PRIMER TOQUE: agrandar la ranita.
+        esperandoSegundoToque = true;
+        botonFlotanteIA.classList.add("agrandada");
 
-        panelMiEspacioIA.style.display = "block";
+        temporizadorIA = setTimeout(function () {
+
+            // Si no hubo segundo toque, volver al tamaño normal.
+            botonFlotanteIA.classList.remove("agrandada");
+
+            esperandoSegundoToque = false;
+            temporizadorIA = null;
+
+        }, 3000);
 
     });
 
