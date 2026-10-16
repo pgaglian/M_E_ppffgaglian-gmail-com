@@ -6463,6 +6463,8 @@ document.querySelector('#Musica h2').style.display='block';
 <button id="btnMailto">💻 Programa de correo</button>
 
 <button id="btnCancelarSoporte">❌ Cancelar</button>
+<button id="btnCerrarSoporte">✖ Cerrar</button>
+
 
 </div>
 
@@ -20734,6 +20736,14 @@ document.getElementById("btnCancelarSoporte").onclick = function(){
 };
 
 
+document.getElementById("btnCerrarSoporte").onclick = function(){
+
+    document.getElementById("popupSoporte").style.display = "none";
+
+};
+
+
+
 document.getElementById("btnCancelarOpinion").onclick = function(){
 
     document.getElementById("popupOpinion").style.display = "none";
@@ -20821,16 +20831,11 @@ Escriba aquí su consulta.
 
         "&body=" + encodeURIComponent(cuerpo),
 
-       
         "_blank"
 
     );
 
-    // Cerrar el popup después de abrir Gmail
-    document.getElementById("popupSoporte").style.display = "none";
-
 };
-
 
 document.getElementById("btnOutlook").onclick = function(){
 
