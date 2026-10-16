@@ -12273,6 +12273,8 @@ function cerrarPDF(){
 
 }
 
+
+
 //========================
 // SALUDO DINÁMICO
 //========================
@@ -20808,8 +20810,7 @@ Escriba aquí su consulta.
 
     }
 
-    document.getElementById("popupSoporte").style.display = "none";
-
+  
     window.open(
 
         "https://mail.google.com/mail/?view=cm&fs=1" +
@@ -20820,11 +20821,16 @@ Escriba aquí su consulta.
 
         "&body=" + encodeURIComponent(cuerpo),
 
+       
         "_blank"
 
     );
 
+    // Cerrar el popup después de abrir Gmail
+    document.getElementById("popupSoporte").style.display = "none";
+
 };
+
 
 document.getElementById("btnOutlook").onclick = function(){
 
