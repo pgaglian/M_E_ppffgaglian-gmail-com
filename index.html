@@ -11321,11 +11321,7 @@ function guardarNuevaPlataformaMusica(nombre,url){
         seleccionadas.push(nombre);
     }
 
-    localStorage.setItem(
-        "PlataformasMusicaPersonalizadasSeleccionadas",
-        JSON.stringify(seleccionadas)
-    );
-
+   
     cargarConfiguracionMusica();
     mostrarPlataformasMusicaSeleccionadas();
 
