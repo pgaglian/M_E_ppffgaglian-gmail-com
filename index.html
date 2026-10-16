@@ -11110,32 +11110,109 @@ if(pantallaMusica){
 // AGREGAR PLATAFORMA MUSICA
 // ========================
 
+
 function abrirAgregarPlataformaMusica(){
 
-    const popup = document.getElementById(
-        "popupAgregarPlataformaMusica"
-    );
+    const popup =
+        document.getElementById(
+            "popupAgregarPlataformaMusica"
+        );
 
     if(!popup){
         return;
     }
 
-    const campo = document.getElementById(
-        "nombreAgregarPlataformaMusica"
-    );
+    popup.style.display = "flex";
 
-    const tituloCompartido = localStorage.getItem(
-        "appCompartidaTitulo"
-    ) || "";
+    const textoAgregarPlataforma =
+        document.querySelector(
+            "#popupAgregarPlataformaMusica p"
+        );
 
-    if(campo && tituloCompartido){
-        campo.value = tituloCompartido.replace(
+    if(textoAgregarPlataforma){
+
+        if(!esMovil){
+
+            textoAgregarPlataforma.innerHTML =
+                "✏️ <strong>Escribí el nombre exacto de la aplicación</strong>" +
+                " tal como aparece en tu dispositivo." +
+                "<br><br>" +
+
+                "⚠️ Vas a salir de Mi Espacio para comprobar la aplicación." +
+                "<br><br>" +
+
+                "🖥️ <strong>En PC:</strong> cuando encuentres la página correcta," +
+                " copiá el enlace de la barra de direcciones." +
+                "<br><br>" +
+
+                "↩️ Después volvé a Mi Espacio y pegá el enlace cuando te lo solicitemos." +
+                "<br><br>" +
+
+                "❗ <strong>Si no copiás el enlace, no podremos guardar la plataforma.</strong>";
+
+        }else{
+
+            textoAgregarPlataforma.innerHTML =
+                "✏️ <strong>Escribí el nombre exacto de la aplicación</strong>" +
+                " tal como aparece en tu dispositivo." +
+                "<br><br>" +
+
+                "⚠️ Vas a salir de Mi Espacio para comprobar" +
+                " la aplicación en Google Play o App Store y poder compartirla con Mi Espacio." +
+                "<br><br>" +
+
+                "📖 <strong>¿No sabés cómo compartirla?</strong>" +
+                "<br>" +
+                "👉 <button type='button' onclick='abrirInstructivoCompartirApp()' " +
+                "style='border:none;background:none;color:#FFD700;font-size:16px;font-weight:bold;cursor:pointer;padding:0;'>" +
+                "Ver instructivo</button>" +
+                "<br><br>" +
+
+                "↩️ <strong>Después volvé a Mi Espacio para confirmar.</strong>" +
+                "<br><br>" +
+
+                "❗ <strong>Si no volvés a Mi Espacio, la aplicación no se guardará.</strong>" +
+                "<br><br>" +
+
+                "🔐 <strong>Esta comprobación se hace una sola vez.</strong>" +
+                "<br><br>" +
+
+                "😎 <strong>¿Alguna duda?</strong>" +
+                "<br>" +
+
+                "Enviános un correo a 🛠️ <strong>Soporte:</strong> " +
+
+                "<span onclick=\"document.getElementById('btnSoporte').click();\" " +
+                "style='color:#FFD700;font-weight:bold;cursor:pointer;text-decoration:underline;'>" +
+                "✉️ Enviar consulta</span>" +
+
+                " y la revisamos. 🛠️🔧";
+
+        }
+
+    }
+
+    const nombreRecibido =
+        localStorage.getItem(
+            "appCompartidaTitulo"
+        ) || "";
+
+    const nombrePlataforma =
+        nombreRecibido.replace(
             /^[ÉE]chale un vistazo a\s+/i,
             ""
         );
-    }
 
-    popup.style.display = "flex";
+    const campo =
+        document.getElementById(
+            "nombreAgregarPlataformaMusica"
+        );
+
+    if(campo && nombrePlataforma){
+
+        campo.value = nombrePlataforma;
+
+    }
 
 }
 
@@ -13881,6 +13958,23 @@ function abrirInstructivoCompartirApp(){
     });
 
 }
+
+// ========================
+// CERRAR INSTRUCTIVO COMPARTIR APP
+// ========================
+
+function cerrarInstructivoCompartirApp(){
+
+    const popup = document.getElementById(
+        "popupInstructivoCompartirApp"
+    );
+
+    if(popup){
+        popup.style.display = "none";
+    }
+
+}
+
 
 // ========================
 // CERRAR CONFIGURACION DE BILLETERAS
@@ -20713,6 +20807,8 @@ Escriba aquí su consulta.
 `;
 
     }
+
+    document.getElementById("popupSoporte").style.display = "none";
 
     window.open(
 
