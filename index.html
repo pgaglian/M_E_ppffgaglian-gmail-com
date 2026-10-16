@@ -11180,6 +11180,11 @@ function validarNuevaPlataformaMusica(){
     );
 
     localStorage.setItem(
+    "moduloPlataformaPendiente",
+    "musica"
+);
+
+    localStorage.setItem(
         "validacionPlataformaMusicaActiva",
         "true"
     );
@@ -11421,6 +11426,8 @@ function confirmarPlataformaMusica(){
         "validacionPlataformaMusicaActiva"
     );
 
+    localStorage.removeItem("moduloPlataformaPendiente");
+
     localStorage.removeItem("appCompartidaTitulo");
     localStorage.removeItem("appCompartidaTexto");
     localStorage.removeItem("appCompartidaUrl");
@@ -11452,6 +11459,8 @@ function cancelarConfirmacionPlataformaMusica(){
     localStorage.removeItem(
         "validacionPlataformaMusicaActiva"
     );
+
+    localStorage.removeItem("moduloPlataformaPendiente");
 
     localStorage.removeItem("appCompartidaTitulo");
     localStorage.removeItem("appCompartidaTexto");
@@ -13266,6 +13275,11 @@ function validarNuevaPlataformaCine(){
     );
 
     localStorage.setItem(
+    "moduloPlataformaPendiente",
+    "cine"
+    );
+
+    localStorage.setItem(
         "validacionPlataformaCineActiva",
         "true"
     );
@@ -13409,6 +13423,9 @@ function cancelarConfirmacionPlataformaCine(){
     localStorage.removeItem(
         "validacionPlataformaCineActiva"
     );
+
+    localStorage.removeItem(
+        "moduloPlataformaPendiente");
 
     localStorage.removeItem(
         "nombrePlataformaCinePendiente"
@@ -13560,6 +13577,10 @@ setTimeout(function(){
 
     localStorage.removeItem(
         "validacionPlataformaCineActiva"
+    );
+
+    localStorage.removeItem(
+        "moduloPlataformaPendiente"
     );
 
     localStorage.removeItem(
@@ -23255,27 +23276,63 @@ function recibirAppCompartida(){
     url
 );
 
-localStorage.setItem(
-    "nombrePlataformaCinePendiente",
+const moduloDestino =
+    localStorage.getItem(
+        "moduloPlataformaPendiente"
+    ) || "cine";
+
+const nombreCompartido =
     titulo.replace(
         /^[ÉE]chale un vistazo a\s+/i,
         ""
-    )
-);
+    );
 
-localStorage.setItem(
-    "validacionPlataformaCineActiva",
-    "true"
-);
+if(moduloDestino === "musica"){
+
+    const nombreMusica =
+        localStorage.getItem(
+            "nombrePlataformaMusicaPendiente"
+        ) || nombreCompartido;
+
+    localStorage.setItem(
+        "nombrePlataformaMusicaPendiente",
+        nombreMusica
+    );
+
+    localStorage.setItem(
+        "validacionPlataformaMusicaActiva",
+        "true"
+    );
+
+}else{
+
+    localStorage.setItem(
+        "nombrePlataformaCinePendiente",
+        nombreCompartido
+    );
+
+    localStorage.setItem(
+        "validacionPlataformaCineActiva",
+        "true"
+    );
+
+}
+
+const esMusica =
+    moduloDestino === "musica";
 
 const popupConfirmacion =
     document.getElementById(
-        "popupConfirmarPlataformaCine"
+        esMusica
+            ? "popupConfirmarPlataformaMusica"
+            : "popupConfirmarPlataformaCine"
     );
 
 const mensajeConfirmacion =
     document.getElementById(
-        "mensajeConfirmarPlataformaCine"
+        esMusica
+            ? "mensajeConfirmarPlataformaMusica"
+            : "mensajeConfirmarPlataformaCine"
     );
 
 if(
@@ -23284,24 +23341,26 @@ if(
 ){
 
     mensajeConfirmacion.innerHTML =
-        "¿La aplicación que compartiste desde Google Play es la correcta?";
+        esMusica
+            ? "¿Querés guardar la plataforma de Música que compartiste?"
+            : "¿La aplicación que compartiste desde Google Play es la correcta?";
 
-    mensajeConfirmacion.style.color =
-        "";
+    mensajeConfirmacion.style.color = "";
 
-    popupConfirmacion.style.display =
-        "flex";
+    popupConfirmacion.style.display = "flex";
 
 }
 
 const campo =
     document.getElementById(
-        "nombreAgregarPlataformaCine"
+        moduloDestino === "musica"
+            ? "nombreAgregarPlataformaMusica"
+            : "nombreAgregarPlataformaCine"
     );
 
 if(campo && titulo){
 
-    campo.value = titulo;
+    campo.value = nombreCompartido;
 
 }
 
