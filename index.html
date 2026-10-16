@@ -3651,6 +3651,341 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 
 <!-- ===== FIN CONFIGURACION CINE ===== -->
 
+<!-- ===== CONFIGURACION DE MUSICA ===== -->
+
+<div id="popupConfiguracionMusica"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1000;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,600px);
+        max-height:85vh;
+        overflow-y:auto;
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:20px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        ">
+
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:15px;
+            ">
+
+            <h2 style="margin:0;color:#FFD700;">
+                🎵 Configurar Música
+            </h2>
+
+            <button onclick="cerrarConfiguracionMusica()">
+                ✖
+            </button>
+
+        </div>
+
+        <p style="text-align:center;color:#ccc;">
+            ⭐ Más utilizadas
+        </p>
+
+        <div id="configuracionMusica"
+             style="
+             display:grid;
+             position:relative;
+             grid-template-columns:1fr;
+             gap:10px;
+             max-height:35vh;
+             overflow-y:auto;
+             padding-right:5px;
+             ">
+        </div>
+
+        <!-- ===== MIS PLATAFORMAS PERSONALIZADAS DE MUSICA ===== -->
+
+        <p style="text-align:center;color:#ccc;">
+            👤 Mis plataformas personalizadas
+        </p>
+
+        <div id="plataformasMusicaPersonalizadasConfiguracion"
+             style="
+             display:grid;
+             position:relative;
+             grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+             gap:10px;
+             max-height:120px;
+             overflow-y:auto;
+             padding-right:5px;
+             ">
+        </div>
+
+        <!-- ===== GUARDAR / AGREGAR ===== -->
+
+        <div style="text-align:center;margin-top:20px;">
+
+            <div style="
+                display:flex;
+                justify-content:center;
+                gap:10px;
+                flex-wrap:wrap;
+                ">
+
+                <button
+                    type="button"
+                    onclick="guardarConfiguracionMusica()"
+                    style="
+                    padding:10px 22px;
+                    font-size:16px;
+                    font-weight:bold;
+                    border-radius:10px;
+                    ">
+                    💾 Guardar Música
+                </button>
+
+                <button
+                    type="button"
+                    onclick="abrirAgregarPlataformaMusica()"
+                    style="
+                    padding:10px 22px;
+                    font-size:16px;
+                    font-weight:bold;
+                    border-radius:10px;
+                    ">
+                    👤 Agregar plataforma
+                </button>
+
+            </div>
+
+            <div id="mensajeMusica"
+                 style="
+                 display:none;
+                 margin-top:12px;
+                 color:#7CFC00;
+                 font-weight:bold;
+                 font-size:16px;
+                 ">
+                ✅ Música guardada correctamente
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN CONFIGURACION MUSICA ===== -->
+
+
+<!-- ===== AGREGAR PLATAFORMA MUSICA ===== -->
+
+<div id="popupAgregarPlataformaMusica"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1200;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,450px);
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:20px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        ">
+
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:15px;
+            ">
+
+            <h2 style="margin:0;color:#FFD700;">
+                🎵 Agregar plataforma
+            </h2>
+
+            <button type="button"
+                    onclick="cerrarAgregarPlataformaMusica()">
+                ✖
+            </button>
+
+        </div>
+
+        <p style="text-align:center;color:#ccc;line-height:1.5;">
+            ✏️ <strong>Escribí el nombre exacto de la aplicación</strong>
+            tal como aparece en tu dispositivo.
+            <br><br>
+
+            ⚠️ Vas a salir de Mi Espacio para comprobar la aplicación.
+            <br><br>
+
+            🖥️ <strong>En PC:</strong> cuando encuentres la página correcta,
+            copiá el enlace de la barra de direcciones y volvé a Mi Espacio.
+            <br><br>
+
+            📱 <strong>En celular:</strong> comprobá la aplicación en Google Play
+            o App Store y compartila con Mi Espacio.
+            <br><br>
+
+            📖 ¿Necesitás ayuda?
+            <br>
+            <button type="button"
+                    onclick="abrirInstructivoCompartirApp()"
+                    style="border:none;background:none;color:#FFD700;font-size:16px;font-weight:bold;cursor:pointer;padding:0;">
+                Ver instructivo
+            </button>
+            <br><br>
+
+            ❗ La plataforma solo se guardará cuando completes la comprobación.
+        </p>
+
+        <input
+            id="nombreAgregarPlataformaMusica"
+            type="text"
+            maxlength="100"
+            placeholder="Nombre exacto de la aplicación"
+            style="width:100%;box-sizing:border-box;padding:12px;font-size:16px;border-radius:10px;border:1px solid #666;margin-bottom:15px;">
+
+        <button
+            type="button"
+            onclick="validarNuevaPlataformaMusica()"
+            style="display:block;width:100%;margin:8px 0;padding:10px;font-size:16px;font-weight:bold;border-radius:10px;">
+            🔎 Validar plataforma
+        </button>
+
+        <button
+            type="button"
+            onclick="cerrarAgregarPlataformaMusica()"
+            style="display:block;width:100%;margin:8px 0;padding:10px;font-size:16px;font-weight:bold;border-radius:10px;">
+            Cancelar
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ===== POPUP INGRESAR LINK PLATAFORMA MUSICA ===== -->
+
+<div id="popupLinkPlataformaMusica"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1300;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,450px);
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:20px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        ">
+
+        <h2 style="margin-top:0;text-align:center;color:#FFD700;">
+            🔗 Ingresar enlace
+        </h2>
+
+        <p style="text-align:center;color:#ccc;line-height:1.5;">
+            Pegá aquí el enlace de la plataforma que copiaste del navegador.
+        </p>
+
+        <input
+            id="urlAgregarPlataformaMusica"
+            type="url"
+            placeholder="https://..."
+            style="width:100%;box-sizing:border-box;padding:12px;font-size:16px;border-radius:10px;border:1px solid #666;margin-bottom:15px;">
+
+        <button
+            type="button"
+            onclick="guardarLinkPlataformaMusica()"
+            style="display:block;width:100%;margin:8px 0;padding:12px;font-size:16px;font-weight:bold;border-radius:10px;">
+            ✅ Guardar enlace
+        </button>
+
+        <button
+            type="button"
+            onclick="cerrarLinkPlataformaMusica()"
+            style="display:block;width:100%;margin:8px 0;padding:12px;font-size:16px;font-weight:bold;border-radius:10px;">
+            ↩️ Cancelar
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ===== POPUP CONFIRMAR PLATAFORMA MUSICA ===== -->
+
+<div id="popupConfirmarPlataformaMusica"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1300;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,450px);
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:20px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        ">
+
+        <h2 style="margin-top:0;text-align:center;color:#FFD700;">
+            🎵 Confirmar plataforma
+        </h2>
+
+        <p id="mensajeConfirmarPlataformaMusica"
+           style="text-align:center;color:#ccc;line-height:1.5;">
+        </p>
+
+        <button
+            type="button"
+            onclick="confirmarPlataformaMusica()"
+            style="display:block;width:100%;margin:10px 0;padding:12px;font-size:16px;font-weight:bold;border-radius:10px;">
+            ✅ Sí, guardar
+        </button>
+
+        <button
+            type="button"
+            onclick="cancelarConfirmacionPlataformaMusica()"
+            style="display:block;width:100%;margin:10px 0;padding:12px;font-size:16px;font-weight:bold;border-radius:10px;">
+            ↩️ No, volver a intentar
+        </button>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN VENTANAS AGREGAR PLATAFORMA MUSICA ===== -->
+
 <!-- ===== AGREGAR PLATAFORMA CINE ===== -->
 
 <div id="popupAgregarPlataformaCine"
@@ -6596,7 +6931,7 @@ const asuntoSoporte = "Consulta - Mi Espacio";
 
 let tipoEnvioCorreo = "soporte";
 
-const vencimiento = "2026-10-20";
+const vencimiento = "2026-11-20";
 
 //=========================================================
 // FIN DATOS DEL CLIENTE
@@ -10153,14 +10488,582 @@ fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Platafor
     .then(function(res){
         return res.json();
     })
-    .then(function(datos){
-        configuracionMusica = datos;
-        console.log("Plataformas de Música cargadas:", configuracionMusica);
-    })
+
+
+.then(function(datos){
+    configuracionMusica = datos;
+    console.log("Plataformas de Música cargadas:", configuracionMusica);
+
+    cargarConfiguracionMusica();
+})
+
+
     .catch(function(err){
         console.warn("No se pudo cargar PlataformasMusica.json", err);
     });
 
+
+// ========================
+// CARGAR CONFIGURACION DE PLATAFORMAS MUSICA
+// ========================
+
+function cargarConfiguracionMusica(){
+
+    const contenedor = document.getElementById(
+        "configuracionMusica"
+    );
+
+    const contenedorPersonalizadas = document.getElementById(
+        "plataformasMusicaPersonalizadasConfiguracion"
+    );
+
+    if(!contenedor || !contenedorPersonalizadas){
+        return;
+    }
+
+    contenedor.innerHTML = "";
+    contenedorPersonalizadas.innerHTML = "";
+
+    const seleccionadas = JSON.parse(
+        localStorage.getItem("PlataformasMusicaSeleccionadas")
+    ) || [];
+
+    const personalizadas = JSON.parse(
+        localStorage.getItem("PlataformasMusicaPersonalizadas")
+    ) || [];
+
+    const personalizadasSeleccionadas = JSON.parse(
+        localStorage.getItem("PlataformasMusicaPersonalizadasSeleccionadas")
+    ) || [];
+
+    configuracionMusica
+        .filter(function(plataforma){
+            return plataforma.activo !== false;
+        })
+        .forEach(function(plataforma){
+
+            const fila = document.createElement("label");
+
+            fila.style.display = "flex";
+            fila.style.alignItems = "center";
+            fila.style.gap = "10px";
+            fila.style.padding = "10px";
+            fila.style.background = "rgba(255,255,255,.05)";
+            fila.style.borderRadius = "10px";
+            fila.style.cursor = "pointer";
+
+            const checkbox = document.createElement("input");
+
+            checkbox.type = "checkbox";
+            checkbox.value = plataforma.id;
+            checkbox.checked = seleccionadas.includes(plataforma.id);
+
+            const imagen = document.createElement("img");
+
+            imagen.src =
+                "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Musicaimg/" +
+                plataforma.logo + ".png";
+
+            imagen.alt = "";
+            imagen.style.width = "36px";
+            imagen.style.height = "36px";
+            imagen.style.objectFit = "contain";
+
+            imagen.onerror = function(){
+                this.style.display = "none";
+            };
+
+            const nombre = document.createElement("span");
+
+            nombre.textContent = plataforma.nombre;
+            nombre.style.color = "#fff";
+
+            fila.appendChild(checkbox);
+            fila.appendChild(imagen);
+            fila.appendChild(nombre);
+
+            contenedor.appendChild(fila);
+
+        });
+
+    personalizadas.forEach(function(plataforma){
+
+        const fila = document.createElement("div");
+
+        fila.style.display = "flex";
+        fila.style.alignItems = "center";
+        fila.style.justifyContent = "space-between";
+        fila.style.gap = "10px";
+        fila.style.padding = "10px";
+        fila.style.background = "rgba(255,255,255,.05)";
+        fila.style.borderRadius = "10px";
+        fila.style.margin = "8px 0";
+
+        const label = document.createElement("label");
+
+        label.style.display = "flex";
+        label.style.alignItems = "center";
+        label.style.gap = "8px";
+        label.style.cursor = "pointer";
+        label.style.flex = "1";
+
+        const checkbox = document.createElement("input");
+
+        checkbox.type = "checkbox";
+        checkbox.value = plataforma.nombre;
+
+        checkbox.checked = personalizadasSeleccionadas.includes(
+            plataforma.nombre
+        );
+
+        label.appendChild(checkbox);
+
+        const icono = document.createElement("span");
+
+        icono.textContent = "🎵";
+
+        label.appendChild(icono);
+
+        const nombre = document.createElement("span");
+
+        nombre.textContent = plataforma.nombre;
+        nombre.style.color = "#fff";
+
+        label.appendChild(nombre);
+
+        fila.appendChild(label);
+
+        const botonEliminar = document.createElement("button");
+
+        botonEliminar.type = "button";
+        botonEliminar.textContent = "🗑️";
+
+        botonEliminar.onclick = function(){
+
+            eliminarPlataformaMusicaPersonalizada(
+                plataforma.nombre
+            );
+
+        };
+
+        fila.appendChild(botonEliminar);
+
+        contenedorPersonalizadas.appendChild(fila);
+
+    });
+}
+
+
+// ========================
+// CONFIGURACION DE MUSICA
+// ========================
+
+function abrirConfiguracionMusica(){
+
+    const popup = document.getElementById(
+        "popupConfiguracionMusica"
+    );
+
+    if(!popup){
+        return;
+    }
+
+    cargarConfiguracionMusica();
+
+    const seleccionadas = JSON.parse(
+        localStorage.getItem("PlataformasMusicaSeleccionadas")
+    ) || [];
+
+    document.querySelectorAll(
+        "#configuracionMusica input[type='checkbox']"
+    ).forEach(function(checkbox){
+
+        checkbox.checked = seleccionadas.includes(
+            checkbox.value
+        );
+
+    });
+
+    const personalizadasSeleccionadas = JSON.parse(
+        localStorage.getItem("PlataformasMusicaPersonalizadasSeleccionadas")
+    ) || [];
+
+    document.querySelectorAll(
+        "#plataformasMusicaPersonalizadasConfiguracion input[type='checkbox']"
+    ).forEach(function(checkbox){
+
+        checkbox.checked = personalizadasSeleccionadas.includes(
+            checkbox.value
+        );
+
+    });
+
+    popup.style.display = "flex";
+
+}
+
+
+// ========================
+// CERRAR CONFIGURACION DE MUSICA
+// ========================
+
+function cerrarConfiguracionMusica(){
+
+    const popup = document.getElementById(
+        "popupConfiguracionMusica"
+    );
+
+    if(!popup){
+        return;
+    }
+
+    popup.style.display = "none";
+
+}
+
+
+// ========================
+// GUARDAR CONFIGURACION DE MUSICA
+// ========================
+
+function guardarConfiguracionMusica(){
+
+    const seleccionadas = [];
+
+    document.querySelectorAll(
+        "#configuracionMusica input[type='checkbox']"
+    ).forEach(function(checkbox){
+
+        if(checkbox.checked){
+            seleccionadas.push(checkbox.value);
+        }
+
+    });
+
+    const personalizadasSeleccionadas = [];
+
+    document.querySelectorAll(
+        "#plataformasMusicaPersonalizadasConfiguracion input[type='checkbox']"
+    ).forEach(function(checkbox){
+
+        if(checkbox.checked){
+            personalizadasSeleccionadas.push(checkbox.value);
+        }
+
+    });
+
+    localStorage.setItem(
+        "PlataformasMusicaSeleccionadas",
+        JSON.stringify(seleccionadas)
+    );
+
+    localStorage.setItem(
+        "PlataformasMusicaPersonalizadasSeleccionadas",
+        JSON.stringify(personalizadasSeleccionadas)
+    );
+
+    const mensaje = document.getElementById(
+        "mensajeMusica"
+    );
+
+    if(mensaje){
+        mensaje.style.display = "block";
+    }
+
+    mostrarPlataformasMusicaSeleccionadas();
+
+    setTimeout(function(){
+
+        if(mensaje){
+            mensaje.style.display = "none";
+        }
+
+        cerrarConfiguracionMusica();
+
+    },1000);
+
+}
+
+
+// ========================
+// MOSTRAR PLATAFORMAS MUSICA SELECCIONADAS
+// ========================
+
+function mostrarPlataformasMusicaSeleccionadas(){
+
+    const contenedor = document.getElementById(
+        "PlataformasMusicaSeleccionadas"
+    );
+
+    if(!contenedor){
+        return;
+    }
+
+    const seleccionadas = JSON.parse(
+        localStorage.getItem("PlataformasMusicaSeleccionadas")
+    ) || [];
+
+    const personalizadasSeleccionadas = JSON.parse(
+        localStorage.getItem("PlataformasMusicaPersonalizadasSeleccionadas")
+    ) || [];
+
+    const personalizadas = JSON.parse(
+        localStorage.getItem("PlataformasMusicaPersonalizadas")
+    ) || [];
+
+    contenedor.innerHTML = "";
+
+    seleccionadas.forEach(function(id){
+
+        const plataforma = configuracionMusica.find(function(item){
+            return item.id === id;
+        });
+
+        if(!plataforma){
+            return;
+        }
+
+        crearTarjetaPlataformaMusica(
+            contenedor,
+            plataforma
+        );
+
+    });
+
+    personalizadas.forEach(function(plataforma){
+
+        if(!personalizadasSeleccionadas.includes(plataforma.nombre)){
+            return;
+        }
+
+        crearTarjetaPlataformaMusica(
+            contenedor,
+            {
+                nombre: plataforma.nombre,
+                logo: "",
+                sitioOficial: plataforma.url,
+                android: plataforma.url,
+                ios: plataforma.url
+            },
+            true
+        );
+
+    });
+
+}
+
+
+// ========================
+// CREAR TARJETA DE MUSICA
+// ========================
+
+function crearTarjetaPlataformaMusica(
+    contenedor,
+    plataforma,
+    personalizada
+){
+
+    const tarjeta = document.createElement("div");
+
+    tarjeta.className = "card";
+
+    tarjeta.style.padding = "12px";
+    tarjeta.style.borderRadius = "16px";
+
+    const boton = document.createElement("button");
+
+    boton.type = "button";
+
+    boton.onclick = function(){
+
+        abrirPlataformaMusica(plataforma);
+
+    };
+
+    boton.style.width = "100%";
+    boton.style.background = "none";
+    boton.style.border = "none";
+    boton.style.color = "inherit";
+    boton.style.font = "inherit";
+    boton.style.cursor = "pointer";
+    boton.style.display = "flex";
+    boton.style.alignItems = "center";
+    boton.style.justifyContent = "center";
+    boton.style.gap = "10px";
+
+    if(plataforma.logo && !personalizada){
+
+        const imagen = document.createElement("img");
+
+        imagen.alt = plataforma.nombre;
+        imagen.style.width = "38px";
+        imagen.style.height = "38px";
+        imagen.style.objectFit = "contain";
+        imagen.style.borderRadius = "8px";
+
+        imagen.src =
+            "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Musicaimg/" +
+            plataforma.logo + ".png";
+
+        imagen.onerror = function(){
+            this.style.display = "none";
+        };
+
+        boton.appendChild(imagen);
+
+    }else{
+
+        const respaldo = document.createElement("span");
+
+        respaldo.textContent = "🎵";
+        respaldo.style.fontSize = "38px";
+
+        boton.appendChild(respaldo);
+
+    }
+
+    const nombre = document.createElement("span");
+
+    nombre.textContent = plataforma.nombre;
+    nombre.style.fontWeight = "bold";
+    nombre.style.fontSize = "16px";
+
+    boton.appendChild(nombre);
+
+    tarjeta.appendChild(boton);
+
+    contenedor.appendChild(tarjeta);
+
+}
+
+
+// ========================
+// SALIDA A PLATAFORMA MUSICA
+// ========================
+
+function abrirPlataformaMusica(datosPlataforma){
+
+    if(!datosPlataforma){
+        return;
+    }
+
+    const userAgent =
+        navigator.userAgent ||
+        navigator.vendor ||
+        window.opera;
+
+    let destino = datosPlataforma.sitioOficial;
+
+    if(/android/i.test(userAgent)){
+
+        if(datosPlataforma.android){
+            destino = datosPlataforma.android;
+        }
+
+    }else if(
+        /iPad|iPhone|iPod/i.test(userAgent) ||
+        (
+            navigator.platform === "MacIntel" &&
+            navigator.maxTouchPoints > 1
+        )
+    ){
+
+        if(datosPlataforma.ios){
+            destino = datosPlataforma.ios;
+        }
+
+    }
+
+    if(!destino){
+        return;
+    }
+
+    const fondo = document.createElement("div");
+
+    fondo.id = "popupSalidaMusica";
+
+    fondo.style.position = "fixed";
+    fondo.style.top = "0";
+    fondo.style.left = "0";
+    fondo.style.width = "100%";
+    fondo.style.height = "100%";
+    fondo.style.background = "rgba(0,0,0,0.75)";
+    fondo.style.display = "flex";
+    fondo.style.alignItems = "center";
+    fondo.style.justifyContent = "center";
+    fondo.style.zIndex = "99999";
+    fondo.style.padding = "20px";
+    fondo.style.boxSizing = "border-box";
+
+    const ventana = document.createElement("div");
+
+    ventana.className = "card";
+    ventana.style.width = "min(92%,450px)";
+    ventana.style.padding = "25px";
+    ventana.style.borderRadius = "20px";
+    ventana.style.textAlign = "center";
+
+    ventana.innerHTML = `
+        <div style="font-size:36px;margin-bottom:10px;">
+            🎵
+        </div>
+
+        <h3>Estás saliendo de Mi Espacio</h3>
+
+        <p>
+            Vas a salir de Mi Espacio para ingresar a
+            <strong></strong>.
+        </p>
+
+        <p style="font-size:13px;line-height:19px;opacity:.85;">
+            Mi Espacio no administra tu cuenta,
+            contraseña, suscripción, pagos ni
+            las condiciones del servicio.
+        </p>
+
+        <p style="font-size:13px;line-height:19px;opacity:.85;">
+            Es responsabilidad del usuario verificar
+            que esté accediendo al sitio o aplicación
+            oficial del proveedor antes de ingresar
+            datos personales o realizar cualquier operación.
+        </p>
+
+        <div style="display:flex;justify-content:center;gap:12px;margin-top:20px;flex-wrap:wrap;">
+            <button type="button" id="cancelarSalidaMusica"
+                style="padding:11px 18px;border:none;border-radius:10px;cursor:pointer;font-weight:bold;">
+                Cancelar
+            </button>
+
+            <button type="button" id="continuarSalidaMusica"
+                style="padding:11px 18px;background:#FFD700;color:#000;border:none;border-radius:10px;cursor:pointer;font-weight:bold;">
+                Continuar →
+            </button>
+        </div>
+    `;
+
+    ventana.querySelector("p strong").textContent =
+        datosPlataforma.nombre;
+
+    fondo.appendChild(ventana);
+    document.body.appendChild(fondo);
+
+    document.getElementById("cancelarSalidaMusica").onclick =
+        function(){
+            fondo.remove();
+        };
+
+    document.getElementById("continuarSalidaMusica").onclick =
+        function(){
+            fondo.remove();
+
+            window.open(
+                destino,
+                "_blank",
+                "noopener,noreferrer"
+            );
+        };
+
+}
 
 
 function mostrarOpcionMusica(opcion){
@@ -10183,6 +11086,7 @@ function mostrarOpcionMusica(opcion){
 
     menu.style.display = "none";
 contenido.style.display = "block";
+mostrarPlataformasMusicaSeleccionadas();
 
 // Ocultar el título y el Volver de la pantalla Música
 const pantallaMusica = document.getElementById("Musica");
@@ -10201,6 +11105,483 @@ if(pantallaMusica){
 }
 
 }
+
+// ========================
+// AGREGAR PLATAFORMA MUSICA
+// ========================
+
+function abrirAgregarPlataformaMusica(){
+
+    const popup = document.getElementById(
+        "popupAgregarPlataformaMusica"
+    );
+
+    if(!popup){
+        return;
+    }
+
+    const campo = document.getElementById(
+        "nombreAgregarPlataformaMusica"
+    );
+
+    const tituloCompartido = localStorage.getItem(
+        "appCompartidaTitulo"
+    ) || "";
+
+    if(campo && tituloCompartido){
+        campo.value = tituloCompartido.replace(
+            /^[ÉE]chale un vistazo a\s+/i,
+            ""
+        );
+    }
+
+    popup.style.display = "flex";
+
+}
+
+
+function cerrarAgregarPlataformaMusica(){
+
+    const popup = document.getElementById(
+        "popupAgregarPlataformaMusica"
+    );
+
+    if(popup){
+        popup.style.display = "none";
+    }
+
+}
+
+
+// ========================
+// VALIDAR PLATAFORMA MUSICA
+// ========================
+
+function validarNuevaPlataformaMusica(){
+
+    const campo = document.getElementById(
+        "nombreAgregarPlataformaMusica"
+    );
+
+    if(!campo){
+        return;
+    }
+
+    const nombre = campo.value.trim();
+
+    if(!nombre){
+        campo.focus();
+        return;
+    }
+
+    localStorage.setItem(
+        "nombrePlataformaMusicaPendiente",
+        nombre
+    );
+
+    localStorage.setItem(
+        "validacionPlataformaMusicaActiva",
+        "true"
+    );
+
+    let url;
+
+    if(esAndroid){
+
+        url = "https://play.google.com/store/search?q=" +
+            encodeURIComponent(nombre) + "&c=apps";
+
+    }else if(esAppleMobile){
+
+        url = "https://apps.apple.com/us/search?term=" +
+            encodeURIComponent(nombre);
+
+    }else{
+
+        url = "https://www.google.com/search?q=" +
+            encodeURIComponent(nombre);
+
+    }
+
+    window.open(url,"_blank");
+
+}
+
+
+// ========================
+// INGRESAR ENLACE MUSICA
+// ========================
+
+function abrirLinkPlataformaMusica(){
+
+    const popup = document.getElementById(
+        "popupLinkPlataformaMusica"
+    );
+
+    const campo = document.getElementById(
+        "urlAgregarPlataformaMusica"
+    );
+
+    if(campo){
+        campo.value = "";
+    }
+
+    if(popup){
+        popup.style.display = "flex";
+    }
+
+}
+
+
+function cerrarLinkPlataformaMusica(){
+
+    const popup = document.getElementById(
+        "popupLinkPlataformaMusica"
+    );
+
+    if(popup){
+        popup.style.display = "none";
+    }
+
+}
+
+
+// ========================
+// GUARDAR PLATAFORMA PERSONALIZADA MUSICA
+// ========================
+
+function guardarNuevaPlataformaMusica(nombre,url){
+
+    nombre = (nombre || "").trim();
+    url = (url || "").trim();
+
+    if(!nombre){
+        return false;
+    }
+
+    const personalizadas = JSON.parse(
+        localStorage.getItem("PlataformasMusicaPersonalizadas")
+    ) || [];
+
+    const repetida = personalizadas.some(function(plataforma){
+        return plataforma.nombre.toLowerCase() ===
+            nombre.toLowerCase();
+    });
+
+    const mensaje = document.getElementById(
+        "mensajeConfirmarPlataformaMusica"
+    );
+
+    if(repetida){
+
+        if(mensaje){
+            mensaje.style.color = "#FF4444";
+            mensaje.textContent =
+                "Esta plataforma ya está guardada.";
+        }
+
+        return false;
+
+    }
+
+    if(personalizadas.length >= 10){
+
+        if(mensaje){
+            mensaje.style.color = "#FF4444";
+            mensaje.textContent =
+                "Alcanzaste el máximo de 10 plataformas personalizadas.";
+        }
+
+        return false;
+
+    }
+
+    personalizadas.push({
+        nombre: nombre,
+        url: url
+    });
+
+    localStorage.setItem(
+        "PlataformasMusicaPersonalizadas",
+        JSON.stringify(personalizadas)
+    );
+
+    const seleccionadas = JSON.parse(
+        localStorage.getItem(
+            "PlataformasMusicaPersonalizadasSeleccionadas"
+        )
+    ) || [];
+
+    if(!seleccionadas.includes(nombre)){
+        seleccionadas.push(nombre);
+    }
+
+    localStorage.setItem(
+        "PlataformasMusicaPersonalizadasSeleccionadas",
+        JSON.stringify(seleccionadas)
+    );
+
+    cargarConfiguracionMusica();
+    mostrarPlataformasMusicaSeleccionadas();
+
+    return true;
+
+}
+
+
+// ========================
+// GUARDAR ENLACE MUSICA
+// ========================
+
+function guardarLinkPlataformaMusica(){
+
+    const campoNombre = document.getElementById(
+        "nombreAgregarPlataformaMusica"
+    );
+
+    const campoUrl = document.getElementById(
+        "urlAgregarPlataformaMusica"
+    );
+
+    if(!campoNombre || !campoUrl){
+        return;
+    }
+
+    const nombre = campoNombre.value.trim();
+    const url = campoUrl.value.trim();
+
+    if(!nombre || !url){
+        campoUrl.focus();
+        return;
+    }
+
+    try{
+
+        const direccion = new URL(url);
+
+        if(direccion.protocol !== "https:" &&
+           direccion.protocol !== "http:"){
+            campoUrl.focus();
+            return;
+        }
+
+    }catch(error){
+
+        campoUrl.focus();
+        return;
+
+    }
+
+    if(!guardarNuevaPlataformaMusica(nombre,url)){
+        return;
+    }
+
+    localStorage.removeItem(
+        "nombrePlataformaMusicaPendiente"
+    );
+
+    localStorage.removeItem(
+        "validacionPlataformaMusicaActiva"
+    );
+
+    cerrarLinkPlataformaMusica();
+    cerrarAgregarPlataformaMusica();
+    abrirConfiguracionMusica();
+
+}
+
+
+// ========================
+// CONFIRMAR PLATAFORMA MUSICA
+// ========================
+
+function confirmarPlataformaMusica(){
+
+    const nombre = localStorage.getItem(
+        "nombrePlataformaMusicaPendiente"
+    ) || "";
+
+    const url = localStorage.getItem(
+        "appCompartidaUrl"
+    ) || "";
+
+    if(!nombre){
+        return;
+    }
+
+    if(!guardarNuevaPlataformaMusica(nombre,url)){
+        return;
+    }
+
+    localStorage.removeItem(
+        "nombrePlataformaMusicaPendiente"
+    );
+
+    localStorage.removeItem(
+        "validacionPlataformaMusicaActiva"
+    );
+
+    localStorage.removeItem("appCompartidaTitulo");
+    localStorage.removeItem("appCompartidaTexto");
+    localStorage.removeItem("appCompartidaUrl");
+
+    const popup = document.getElementById(
+        "popupConfirmarPlataformaMusica"
+    );
+
+    if(popup){
+        popup.style.display = "none";
+    }
+
+    cerrarAgregarPlataformaMusica();
+    abrirConfiguracionMusica();
+
+}
+
+
+// ========================
+// CANCELAR CONFIRMACION MUSICA
+// ========================
+
+function cancelarConfirmacionPlataformaMusica(){
+
+    localStorage.removeItem(
+        "nombrePlataformaMusicaPendiente"
+    );
+
+    localStorage.removeItem(
+        "validacionPlataformaMusicaActiva"
+    );
+
+    localStorage.removeItem("appCompartidaTitulo");
+    localStorage.removeItem("appCompartidaTexto");
+    localStorage.removeItem("appCompartidaUrl");
+
+    const popup = document.getElementById(
+        "popupConfirmarPlataformaMusica"
+    );
+
+    if(popup){
+        popup.style.display = "none";
+    }
+
+    cerrarAgregarPlataformaMusica();
+
+}
+
+
+// ========================
+// ELIMINAR PLATAFORMA PERSONALIZADA MUSICA
+// ========================
+
+function eliminarPlataformaMusicaPersonalizada(nombre){
+
+    const personalizadas =
+        JSON.parse(
+            localStorage.getItem(
+                "PlataformasMusicaPersonalizadas"
+            )
+        ) || [];
+
+    const nuevasPersonalizadas =
+        personalizadas.filter(
+            function(plataforma){
+                return plataforma.nombre !== nombre;
+            }
+        );
+
+    localStorage.setItem(
+        "PlataformasMusicaPersonalizadas",
+        JSON.stringify(nuevasPersonalizadas)
+    );
+
+    const seleccionadas =
+        JSON.parse(
+            localStorage.getItem(
+                "PlataformasMusicaPersonalizadasSeleccionadas"
+            )
+        ) || [];
+
+    const nuevasSeleccionadas =
+        seleccionadas.filter(
+            function(plataforma){
+                return plataforma !== nombre;
+            }
+        );
+
+    localStorage.setItem(
+        "PlataformasMusicaPersonalizadasSeleccionadas",
+        JSON.stringify(nuevasSeleccionadas)
+    );
+
+    cargarConfiguracionMusica();
+    mostrarPlataformasMusicaSeleccionadas();
+
+}
+
+// ========================
+// REGRESO DE VALIDACION MUSICA
+// ========================
+
+document.addEventListener("visibilitychange",function(){
+
+    if(document.visibilityState !== "visible"){
+        return;
+    }
+
+    const nombre = localStorage.getItem(
+        "nombrePlataformaMusicaPendiente"
+    );
+
+    const activa = localStorage.getItem(
+        "validacionPlataformaMusicaActiva"
+    );
+
+    if(!nombre || activa !== "true"){
+        return;
+    }
+
+    const popupAgregar = document.getElementById(
+        "popupAgregarPlataformaMusica"
+    );
+
+    if(!esMovil){
+
+        if(popupAgregar &&
+           popupAgregar.style.display === "flex"){
+
+            abrirLinkPlataformaMusica();
+
+        }
+
+        return;
+
+    }
+
+    const popupConfirmar = document.getElementById(
+        "popupConfirmarPlataformaMusica"
+    );
+
+    const mensaje = document.getElementById(
+        "mensajeConfirmarPlataformaMusica"
+    );
+
+    if(mensaje){
+
+        mensaje.style.color = "#ccc";
+        mensaje.textContent =
+            "¿Querés guardar la plataforma \"" +
+            nombre +
+            "\" que acabás de comprobar?";
+
+    }
+
+    if(popupConfirmar){
+        popupConfirmar.style.display = "flex";
+    }
+
+});
+
 
 
 // ========================
@@ -10660,6 +12041,12 @@ document.getElementById(id).style.display="block";
 if(id=="Cine"){
 
     mostrarPlataformasCineSeleccionadas();
+
+}
+
+if(id=="Musica"){
+
+    mostrarPlataformasMusicaSeleccionadas();
 
 }
 
