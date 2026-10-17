@@ -6444,6 +6444,50 @@ document.querySelector('#Musica h2').style.display='block';
 
 </div>
 
+<!-- ===== CONTENIDO DÉCADAS DE MÚSICA ===== -->
+<div id="contenidoDecadasMusica" style="display:none;">
+
+    <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding:15px;
+    ">
+        <button onclick="volverMenuMusica()">
+            ⬅ Volver
+        </button>
+    </div>
+
+    <h3 style="text-align:center;color:#FFD700;">
+        📀 Décadas de Música
+    </h3>
+
+    <div id="DecadasMusicaSeleccionadas" class="grid"></div>
+
+</div>
+
+<!-- ===== CONTENIDO ESTILOS DE MÚSICA ===== -->
+<div id="contenidoEstilosMusica" style="display:none;">
+
+    <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding:15px;
+    ">
+        <button onclick="volverMenuMusica()">
+            ⬅ Volver
+        </button>
+    </div>
+
+    <h3 style="text-align:center;color:#FFD700;">
+        🎸 Estilos de Música
+    </h3>
+
+    <div id="EstilosMusicaSeleccionados" class="grid"></div>
+
+</div>
+
 </div>
 
 <!-- ===== VENTANA SOPORTE ===== -->
@@ -10503,6 +10547,45 @@ fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/Platafor
         console.warn("No se pudo cargar PlataformasMusica.json", err);
     });
 
+// ========================
+// DÉCADAS Y ESTILOS DE MÚSICA
+// ========================
+
+let configuracionDecadasMusica = [];
+let configuracionEstilosMusica = [];
+
+// ========================
+// CARGAR DÉCADAS DESDE GITHUB
+// ========================
+
+fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/DecadasMusica.json")
+    .then(function(res){
+        return res.json();
+    })
+    .then(function(datos){
+        configuracionDecadasMusica = datos;
+        console.log("Décadas de Música cargadas:", configuracionDecadasMusica);
+    })
+    .catch(function(err){
+        console.warn("No se pudo cargar DecadasMusica.json", err);
+    });
+
+
+// ========================
+// CARGAR ESTILOS DESDE GITHUB
+// ========================
+
+fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/EstilosMusica.json")
+    .then(function(res){
+        return res.json();
+    })
+    .then(function(datos){
+        configuracionEstilosMusica = datos;
+        console.log("Estilos de Música cargados:", configuracionEstilosMusica);
+    })
+    .catch(function(err){
+        console.warn("No se pudo cargar EstilosMusica.json", err);
+    });
 
 // ========================
 // CARGAR CONFIGURACION DE PLATAFORMAS MUSICA
@@ -11069,42 +11152,69 @@ function abrirPlataformaMusica(datosPlataforma){
 
 function mostrarOpcionMusica(opcion){
 
-    if(opcion !== "plataformas"){
+    const menu = document.getElementById("opcionesMenuMusica");
+    const pantallaMusica = document.getElementById("Musica");
+
+    const plataformas = document.getElementById("contenidoPlataformasMusica");
+    const decadas = document.getElementById("contenidoDecadasMusica");
+    const estilos = document.getElementById("contenidoEstilosMusica");
+
+    if(!menu || !pantallaMusica){
         return;
     }
 
-    const menu = document.getElementById(
-        "opcionesMenuMusica"
-    );
+    // Ocultar todos los contenidos
+    if(plataformas) plataformas.style.display = "none";
+    if(decadas) decadas.style.display = "none";
+    if(estilos) estilos.style.display = "none";
 
-    const contenido = document.getElementById(
-        "contenidoPlataformasMusica"
-    );
-
-    if(!menu || !contenido){
+    // Mostrar la opción elegida
+    if(opcion === "plataformas" && plataformas){
+        plataformas.style.display = "block";
+        mostrarPlataformasMusicaSeleccionadas();
+    }
+    else if(opcion === "decadas" && decadas){
+        decadas.style.display = "block";
+    }
+    else if(opcion === "estilos" && estilos){
+        estilos.style.display = "block";
+    }
+    else{
         return;
     }
 
     menu.style.display = "none";
-contenido.style.display = "block";
-mostrarPlataformasMusicaSeleccionadas();
 
-// Ocultar el título y el Volver de la pantalla Música
-const pantallaMusica = document.getElementById("Musica");
-
-if(pantallaMusica){
+    // Ocultar título y Volver principal de Música
     const titulo = pantallaMusica.querySelector("h2");
     const volverPrincipal = pantallaMusica.querySelector("button");
 
-    if(titulo){
-        titulo.style.display = "none";
-    }
-
-    if(volverPrincipal){
-        volverPrincipal.style.display = "none";
-    }
+    if(titulo) titulo.style.display = "none";
+    if(volverPrincipal) volverPrincipal.style.display = "none";
 }
 
+
+// Volver desde Décadas o Estilos al menú de Música
+function volverMenuMusica(){
+
+    const menu = document.getElementById("opcionesMenuMusica");
+    const pantallaMusica = document.getElementById("Musica");
+
+    const decadas = document.getElementById("contenidoDecadasMusica");
+    const estilos = document.getElementById("contenidoEstilosMusica");
+
+    if(decadas) decadas.style.display = "none";
+    if(estilos) estilos.style.display = "none";
+
+    if(menu) menu.style.display = "grid";
+
+    if(pantallaMusica){
+        const titulo = pantallaMusica.querySelector("h2");
+        const volverPrincipal = pantallaMusica.querySelector("button");
+
+        if(titulo) titulo.style.display = "block";
+        if(volverPrincipal) volverPrincipal.style.display = "inline-block";
+    }
 }
 
 // ========================
