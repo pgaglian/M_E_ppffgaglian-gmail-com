@@ -11835,8 +11835,8 @@ function animarVU(){
     btnMinimizar.onclick = minimizar;
     btnMiniRestaurar.onclick = restaurar;
 
-    // =========================================
-    // ARRASTRE
+        // =========================================
+    // ARRASTRE DEL REPRODUCTOR DE MÚSICA
     // =========================================
 
     let elementoArrastrado = null;
@@ -11845,10 +11845,11 @@ function animarVU(){
     let posicionX = 0;
     let posicionY = 0;
 
-    function iniciarArrastre(evento,elemento){
+    function iniciarArrastre(evento, elemento){
         if(
             evento.target.closest("button") ||
-            evento.target.closest("input")
+            evento.target.closest("input") ||
+            evento.target.closest("audio")
         ){
             return;
         }
@@ -11875,6 +11876,8 @@ function animarVU(){
             return;
         }
 
+        evento.preventDefault();
+
         const maxX = Math.max(
             0,
             window.innerWidth - elementoArrastrado.offsetWidth
@@ -11887,12 +11890,18 @@ function animarVU(){
 
         const nuevoX = Math.max(
             0,
-            Math.min(maxX,posicionX + evento.clientX - inicioX)
+            Math.min(
+                maxX,
+                posicionX + evento.clientX - inicioX
+            )
         );
 
         const nuevoY = Math.max(
             0,
-            Math.min(maxY,posicionY + evento.clientY - inicioY)
+            Math.min(
+                maxY,
+                posicionY + evento.clientY - inicioY
+            )
         );
 
         elementoArrastrado.style.left = nuevoX + "px";
@@ -11902,6 +11911,20 @@ function animarVU(){
     function finalizarArrastre(){
         elementoArrastrado = null;
     }
+
+    reproductor.style.touchAction = "none";
+
+    reproductor.addEventListener("pointerdown",function(evento){
+        // El asa conserva su propio arrastre.
+        if(
+            evento.target === asa ||
+            asa.contains(evento.target)
+        ){
+            return;
+        }
+
+        iniciarArrastre(evento,reproductor);
+    });
 
     asa.addEventListener("pointerdown",function(evento){
         iniciarArrastre(evento,reproductor);
@@ -11914,7 +11937,7 @@ function animarVU(){
     document.addEventListener("pointermove",moverArrastre);
     document.addEventListener("pointerup",finalizarArrastre);
     document.addEventListener("pointercancel",finalizarArrastre);
-
+    
     // =========================================
     // CERRAR REPRODUCTOR
     // =========================================
