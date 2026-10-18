@@ -10817,6 +10817,67 @@ function mostrarDecadasMusica(){
 }
 
 
+ // ========================
+ // MOSTRAR ESTILOS DE MÚSICA
+ // ========================
+
+function mostrarEstilosMusica(){
+
+    const contenedor = document.getElementById(
+        "EstilosMusicaSeleccionados"
+    );
+
+    if(!contenedor){
+        return;
+    }
+
+    contenedor.innerHTML = "";
+
+    const seleccionadas = JSON.parse(
+        localStorage.getItem("EstilosMusicaSeleccionados")
+    ) || [];
+
+    if(seleccionadas.length === 0){
+        contenedor.innerHTML =
+            '<p style="text-align:center;">' +
+            'Seleccioná los estilos que querés escuchar desde Configurar.' +
+            '</p>';
+        return;
+    }
+
+    configuracionEstilosMusica
+        .filter(function(estilo){
+            return seleccionadas.includes(estilo.id);
+        })
+        .forEach(function(estilo){
+
+            const tarjeta = document.createElement("div");
+
+            tarjeta.className = "card";
+            tarjeta.style.cursor = "pointer";
+
+            tarjeta.onclick = function(){
+                abrirReproductorMusica(estilo);
+            };
+
+            tarjeta.innerHTML = `
+                <div style="font-size:36px;">
+                    ${estilo.emoji || "🎸"}
+                </div>
+                <div style="font-weight:bold;">
+                    ${estilo.nombre || estilo.categoria || ""}
+                </div>
+                <div style="font-size:13px;margin-top:6px;">
+                    ${estilo.descripcion || ""}
+                </div>
+            `;
+
+            contenedor.appendChild(tarjeta);
+
+        });
+
+}
+
 
 /* =========================================
    REPRODUCTOR DE MÚSICA
@@ -12124,6 +12185,229 @@ function guardarConfiguracionDecadasMusica(){
     }, 1000);
 }
 
+
+/* ========================
+   CONFIGURACIÓN DE ESTILOS
+======================== */
+
+function abrirConfiguracionEstilosMusica(){
+
+    let popup = document.getElementById(
+        "popupConfiguracionEstilosMusica"
+    );
+
+    if(!popup){
+        popup = document.createElement("div");
+        popup.id = "popupConfiguracionEstilosMusica";
+
+        popup.style.cssText =
+            "display:none;position:fixed;inset:0;" +
+            "background:rgba(0,0,0,.8);z-index:1200;" +
+            "align-items:center;justify-content:center;padding:20px;";
+
+        popup.innerHTML = `
+            <div style="
+                width:min(92%,600px);
+                max-height:85vh;
+                overflow-y:auto;
+                background:#1d1d1d;
+                border:1px solid #555;
+                border-radius:20px;
+                padding:20px;
+                box-shadow:0 10px 35px rgba(0,0,0,.7);
+                color:white;
+            ">
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    margin-bottom:15px;
+                ">
+                    <h2 style="margin:0;color:#FFD700;">
+                        🎸 Configurar Estilos
+                    </h2>
+
+                    <button type="button"
+                        onclick="cerrarConfiguracionEstilosMusica()">
+                        ✖
+                    </button>
+                </div>
+
+                <p style="text-align:center;color:#ccc;">
+                    Seleccioná los estilos que escuchás.
+                </p>
+
+                <div id="listaConfiguracionEstilosMusica"
+                    style="
+                    display:grid;
+                    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+                    gap:10px;
+                    max-height:45vh;
+                    overflow-y:auto;
+                    padding-right:5px;
+                    ">
+                </div>
+
+                <div style="
+                    display:flex;
+                    flex-direction:column;
+                    gap:12px;
+                    margin-top:20px;
+                ">
+                    <button type="button"
+                        id="btnSeleccionarTodoEstilosMusica"
+                        onclick="alternarSeleccionEstilosMusica()"
+                        style="
+                        padding:10px 22px;
+                        font-size:16px;
+                        font-weight:bold;
+                        border-radius:10px;
+                        ">
+                        ☑ Seleccionar todo
+                    </button>
+
+                    <button type="button"
+                        onclick="guardarConfiguracionEstilosMusica()"
+                        style="
+                        padding:10px 22px;
+                        font-size:16px;
+                        font-weight:bold;
+                        border-radius:10px;
+                        ">
+                        💾 Guardar Estilos
+                    </button>
+
+                    <div id="mensajeEstilosMusica"
+                        style="
+                        display:none;
+                        margin-top:12px;
+                        color:#7CFC00;
+                        font-weight:bold;
+                        font-size:16px;
+                        ">
+                        ✅ Estilos guardados correctamente
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(popup);
+    }
+
+    const lista = document.getElementById(
+        "listaConfiguracionEstilosMusica"
+    );
+
+    lista.innerHTML = "";
+
+    const seleccionadas = JSON.parse(
+        localStorage.getItem("EstilosMusicaSeleccionados")
+    ) || [];
+
+    configuracionEstilosMusica.forEach(function(estilo){
+
+        const label = document.createElement("label");
+
+        label.style.cssText =
+            "display:flex;align-items:center;gap:10px;padding:10px;";
+
+        const checkbox = document.createElement("input");
+
+        checkbox.type = "checkbox";
+        checkbox.value = estilo.id;
+        checkbox.checked = seleccionadas.includes(estilo.id);
+
+        const nombre = document.createElement("span");
+
+        nombre.textContent =
+            (estilo.emoji || "🎸") + " " +
+            (estilo.nombre || estilo.categoria || "");
+
+        label.appendChild(checkbox);
+        label.appendChild(nombre);
+        lista.appendChild(label);
+    });
+
+    popup.style.display = "flex";
+}
+
+
+function alternarSeleccionEstilosMusica(){
+
+    const checkboxes = document.querySelectorAll(
+        "#listaConfiguracionEstilosMusica input[type='checkbox']"
+    );
+
+    const todasSeleccionadas = checkboxes.length > 0 &&
+        Array.from(checkboxes).every(function(checkbox){
+            return checkbox.checked;
+        });
+
+    checkboxes.forEach(function(checkbox){
+        checkbox.checked = !todasSeleccionadas;
+    });
+
+    const boton = document.getElementById(
+        "btnSeleccionarTodoEstilosMusica"
+    );
+
+    if(boton){
+        boton.textContent = todasSeleccionadas
+            ? "☑ Seleccionar todo"
+            : "☐ Deseleccionar todo";
+    }
+}
+
+
+function cerrarConfiguracionEstilosMusica(){
+
+    const popup = document.getElementById(
+        "popupConfiguracionEstilosMusica"
+    );
+
+    if(popup){
+        popup.style.display = "none";
+    }
+}
+
+
+function guardarConfiguracionEstilosMusica(){
+
+    const seleccionadas = [];
+
+    document.querySelectorAll(
+        "#listaConfiguracionEstilosMusica input[type='checkbox']:checked"
+    ).forEach(function(checkbox){
+        seleccionadas.push(checkbox.value);
+    });
+
+    localStorage.setItem(
+        "EstilosMusicaSeleccionados",
+        JSON.stringify(seleccionadas)
+    );
+
+    const mensaje = document.getElementById(
+        "mensajeEstilosMusica"
+    );
+
+    if(mensaje){
+        mensaje.style.display = "block";
+    }
+
+    setTimeout(function(){
+
+        if(mensaje){
+            mensaje.style.display = "none";
+        }
+
+        cerrarConfiguracionEstilosMusica();
+
+        mostrarEstilosMusica();
+
+    }, 1000);
+}
+
 // ========================
 // CONFIGURACION DE MUSICA
 // ========================
@@ -12564,9 +12848,11 @@ function mostrarOpcionMusica(opcion){
     mostrarDecadasMusica();
     }
 
-    else if(opcion === "estilos" && estilos){
-        estilos.style.display = "block";
-    }
+   else if(opcion === "estilos" && estilos){
+    estilos.style.display = "block";
+    mostrarEstilosMusica();
+}
+
     else{
         return;
     }
