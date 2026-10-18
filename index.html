@@ -11523,11 +11523,11 @@ reproductor.audio = audio;
         });
     });
 
-    barraMini.appendChild(btnMiniPlay);
-    barraMini.appendChild(textoMini);
-    barraMini.appendChild(miniVU);
-    barraMini.appendChild(btnMiniRestaurar);
-    barraMini.appendChild(btnMiniCerrar);
+barraMini.appendChild(textoMini);
+barraMini.appendChild(miniVU);
+barraMini.appendChild(btnMiniPlay);
+barraMini.appendChild(btnMiniRestaurar);
+barraMini.appendChild(btnMiniCerrar);
 
     document.body.appendChild(barraMini);
 
@@ -11818,18 +11818,35 @@ function animarVU(){
         audio.volume = Number(volumen.value);
     });
 
-    // =========================================
-    // MINIMIZAR / RESTAURAR
+        // =========================================
+    // MINIMIZAR / RESTAURAR COMO RADIO
     // =========================================
 
     function minimizar(){
+
+        reproductor.dataset.minimizado = "true";
+
+        reproductor.dataset.displayOriginal =
+            reproductor.style.display || "block";
+
         reproductor.style.display = "none";
+
         barraMini.style.display = "flex";
+
+        btnMiniPlay.textContent =
+            audio.paused ? "▶" : "❚❚";
+
     }
 
     function restaurar(){
+
+        reproductor.dataset.minimizado = "false";
+
         barraMini.style.display = "none";
-        reproductor.style.display = "block";
+
+        reproductor.style.display =
+            reproductor.dataset.displayOriginal || "block";
+
     }
 
     btnMinimizar.onclick = minimizar;
