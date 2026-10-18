@@ -6456,6 +6456,10 @@ document.querySelector('#Musica h2').style.display='block';
         <button onclick="volverMenuMusica()">
             ⬅ Volver
         </button>
+
+        <button onclick="abrirConfiguracionDecadasMusica()">
+            ⚙ Configurar
+        </button>
     </div>
 
     <h3 style="text-align:center;color:#FFD700;">
@@ -6477,6 +6481,10 @@ document.querySelector('#Musica h2').style.display='block';
     ">
         <button onclick="volverMenuMusica()">
             ⬅ Volver
+        </button>
+
+        <button onclick="abrirConfiguracionEstilosMusica()">
+            ⚙ Configurar
         </button>
     </div>
 
@@ -10562,10 +10570,19 @@ fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/DecadasM
     .then(function(res){
         return res.json();
     })
-    .then(function(datos){
+        .then(function(datos){
         configuracionDecadasMusica = datos;
         console.log("Décadas de Música cargadas:", configuracionDecadasMusica);
+
+        const popup = document.getElementById(
+            "popupConfiguracionDecadasMusica"
+        );
+
+        if(popup && popup.style.display === "flex"){
+            abrirConfiguracionDecadasMusica();
+        }
     })
+
     .catch(function(err){
         console.warn("No se pudo cargar DecadasMusica.json", err);
     });
@@ -10737,6 +10754,292 @@ function cargarConfiguracionMusica(){
     });
 }
 
+
+// ========================
+// MOSTRAR DÉCADAS DE MÚSICA
+// ========================
+
+function mostrarDecadasMusica(){
+
+    const contenedor = document.getElementById(
+        "DecadasMusicaSeleccionadas"
+    );
+
+    if(!contenedor){
+        return;
+    }
+
+    contenedor.innerHTML = "";
+
+    const seleccionadas = JSON.parse(
+        localStorage.getItem("DecadasMusicaSeleccionadas")
+    ) || [];
+
+    if(seleccionadas.length === 0){
+        contenedor.innerHTML =
+            '<p style="text-align:center;">' +
+            'Seleccioná las décadas que querés escuchar desde Configurar.' +
+            '</p>';
+        return;
+    }
+
+    configuracionDecadasMusica
+        .filter(function(decada){
+            return seleccionadas.includes(decada.id);
+        })
+        .forEach(function(decada){
+
+            const tarjeta = document.createElement("div");
+
+            tarjeta.className = "card";
+            tarjeta.style.cursor = "pointer";
+
+            tarjeta.innerHTML = `
+                <div style="font-size:36px;">
+                    ${decada.emoji || "📀"}
+                </div>
+                <div style="font-weight:bold;">
+                    ${decada.nombre || decada.categoria || ""}
+                </div>
+                <div style="font-size:13px;margin-top:6px;">
+                    ${decada.descripcion || ""}
+                </div>
+            `;
+
+            contenedor.appendChild(tarjeta);
+
+        });
+
+}
+
+
+// ========================
+// CONFIGURACIÓN DE DÉCADAS
+// ========================
+
+function abrirConfiguracionDecadasMusica(){
+
+    let popup = document.getElementById(
+        "popupConfiguracionDecadasMusica"
+    );
+
+    if(!popup){
+        popup = document.createElement("div");
+        popup.id = "popupConfiguracionDecadasMusica";
+
+        popup.style.cssText =
+            "display:none;position:fixed;inset:0;" +
+            "background:rgba(0,0,0,.8);z-index:1200;" +
+            "align-items:center;justify-content:center;padding:20px;";
+
+        
+        popup.innerHTML = `
+            <div style="
+                width:min(92%,600px);
+                max-height:85vh;
+                overflow-y:auto;
+                background:#1d1d1d;
+                border:1px solid #555;
+                border-radius:20px;
+                padding:20px;
+                box-shadow:0 10px 35px rgba(0,0,0,.7);
+                color:white;
+            ">
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    margin-bottom:15px;
+                ">
+
+                    <h2 style="margin:0;color:#FFD700;">
+                        📀 Configurar Décadas
+                    </h2>
+
+                    <button type="button"
+                            onclick="cerrarConfiguracionDecadasMusica()">
+                        ✖
+                    </button>
+
+                </div>
+
+                <p style="
+                    text-align:center;
+                    color:#ccc;
+                ">
+                    Seleccioná las décadas que escuchás.
+                </p>
+
+                <div id="listaConfiguracionDecadasMusica"
+                     style="
+                     display:grid;
+                     grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+                     gap:10px;
+                     max-height:45vh;
+                     overflow-y:auto;
+                     padding-right:5px;
+                     ">
+                </div>
+
+                <div style="
+                    text-align:center;
+                    margin-top:20px;
+                ">
+
+                    <button
+                        type="button"
+                        id="btnSeleccionarTodoDecadasMusica"
+                        onclick="alternarSeleccionDecadasMusica()"
+                        style="
+                        padding:10px 22px;
+                        font-size:16px;
+                        font-weight:bold;
+                        border-radius:10px;
+                        ">
+                        ☑ Seleccionar todo
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="guardarConfiguracionDecadasMusica()"
+                        style="
+                        padding:10px 22px;
+                        font-size:16px;
+                        font-weight:bold;
+                        border-radius:10px;
+                        ">
+                        💾 Guardar Décadas
+                    </button>
+
+                    <div id="mensajeDecadasMusica"
+                         style="
+                         display:none;
+                         margin-top:12px;
+                         color:#7CFC00;
+                         font-weight:bold;
+                         font-size:16px;
+                         ">
+                        ✅ Décadas guardadas correctamente
+                    </div>
+
+                </div>
+
+            </div>
+        `;
+
+        document.body.appendChild(popup);
+    }
+
+    const lista = document.getElementById(
+        "listaConfiguracionDecadasMusica"
+    );
+
+    lista.innerHTML = "";
+
+    const seleccionadas = JSON.parse(
+        localStorage.getItem("DecadasMusicaSeleccionadas")
+    ) || [];
+
+    configuracionDecadasMusica.forEach(function(decada){
+
+        const label = document.createElement("label");
+
+        label.style.cssText =
+            "display:flex;align-items:center;gap:10px;padding:10px;";
+
+        const checkbox = document.createElement("input");
+
+        checkbox.type = "checkbox";
+        checkbox.value = decada.id;
+        checkbox.checked = seleccionadas.includes(decada.id);
+
+        const nombre = document.createElement("span");
+
+        nombre.textContent =
+            (decada.emoji || "📀") + " " +
+            (decada.nombre || decada.categoria || "");
+
+        label.appendChild(checkbox);
+        label.appendChild(nombre);
+        lista.appendChild(label);
+    });
+
+        popup.style.display = "flex";
+}
+
+function alternarSeleccionDecadasMusica(){
+
+    const checkboxes = document.querySelectorAll(
+        "#listaConfiguracionDecadasMusica input[type='checkbox']"
+    );
+
+    const todasSeleccionadas = checkboxes.length > 0 &&
+        Array.from(checkboxes).every(function(checkbox){
+            return checkbox.checked;
+        });
+
+    checkboxes.forEach(function(checkbox){
+        checkbox.checked = !todasSeleccionadas;
+    });
+
+    const boton = document.getElementById(
+        "btnSeleccionarTodoDecadasMusica"
+    );
+
+    if(boton){
+        boton.textContent = todasSeleccionadas
+            ? "☑ Seleccionar todo"
+            : "☐ Deseleccionar todo";
+    }
+}
+
+
+function cerrarConfiguracionDecadasMusica(){
+
+    const popup = document.getElementById(
+        "popupConfiguracionDecadasMusica"
+    );
+
+    if(popup){
+        popup.style.display = "none";
+    }
+}
+
+function guardarConfiguracionDecadasMusica(){
+
+    const seleccionadas = [];
+
+    document.querySelectorAll(
+        "#listaConfiguracionDecadasMusica input[type='checkbox']:checked"
+    ).forEach(function(checkbox){
+        seleccionadas.push(checkbox.value);
+    });
+
+    localStorage.setItem(
+        "DecadasMusicaSeleccionadas",
+        JSON.stringify(seleccionadas)
+    );
+
+    const mensaje = document.getElementById(
+        "mensajeDecadasMusica"
+    );
+
+    if(mensaje){
+        mensaje.style.display = "block";
+    }
+
+    setTimeout(function(){
+
+        if(mensaje){
+            mensaje.style.display = "none";
+        }
+
+        cerrarConfiguracionDecadasMusica();
+        mostrarDecadasMusica();
+
+    }, 1000);
+}
 
 // ========================
 // CONFIGURACION DE MUSICA
@@ -11174,8 +11477,10 @@ function mostrarOpcionMusica(opcion){
         mostrarPlataformasMusicaSeleccionadas();
     }
     else if(opcion === "decadas" && decadas){
-        decadas.style.display = "block";
+    decadas.style.display = "block";
+    mostrarDecadasMusica();
     }
+
     else if(opcion === "estilos" && estilos){
         estilos.style.display = "block";
     }
