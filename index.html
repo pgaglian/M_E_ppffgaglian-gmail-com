@@ -10794,6 +10794,10 @@ function mostrarDecadasMusica(){
             tarjeta.className = "card";
             tarjeta.style.cursor = "pointer";
 
+            tarjeta.onclick = function(){
+            abrirReproductorMusica(decada);
+        };
+
             tarjeta.innerHTML = `
                 <div style="font-size:36px;">
                     ${decada.emoji || "📀"}
@@ -10812,6 +10816,1082 @@ function mostrarDecadasMusica(){
 
 }
 
+
+
+/* =========================================
+   REPRODUCTOR DE MÚSICA
+   Reutilizable para Décadas y Estilos
+   Independiente del reproductor de Radios
+========================================= */
+
+function abrirReproductorMusica(itemMusica){
+
+    // =========================================
+    // CERRAR REPRODUCTOR ANTERIOR DE MÚSICA
+    // =========================================
+
+    if(window.temporizadorMusicaActivo){
+        clearTimeout(window.temporizadorMusicaActivo);
+        window.temporizadorMusicaActivo = null;
+    }
+
+    const anterior = document.getElementById("reproductorMusicaFijo");
+
+    if(anterior){
+        if(anterior.audio){
+            anterior.audio.__musicaCerrada = true;
+            anterior.audio.pause();
+            anterior.audio.removeAttribute("src");
+            anterior.audio.load();
+        }
+        anterior.remove();
+    }
+
+    const miniAnterior = document.querySelector(
+        'body > div[data-musica-mini="true"]'
+    );
+
+    if(miniAnterior){
+        miniAnterior.remove();
+    }
+
+    // =========================================
+    // VALIDAR ELEMENTO MUSICAL
+    // =========================================
+
+    if(!itemMusica){
+        console.warn("No se recibió una década o estilo musical.");
+        return;
+    }
+
+    // =========================================
+    // PREPARAR FUENTES DE AUDIO
+    // =========================================
+
+    const streams = [];
+
+    if(itemMusica.url_stream){
+        streams.push(itemMusica.url_stream);
+    }
+
+    if(Array.isArray(itemMusica.alternativas)){
+        itemMusica.alternativas.forEach(function(url){
+            if(url && !streams.includes(url)){
+                streams.push(url);
+            }
+        });
+    }
+
+    if(streams.length === 0){
+        console.warn("Este elemento musical no tiene fuentes de audio configuradas.");
+        return;
+    }
+
+    // =========================================
+    // ESTADO DEL REPRODUCTOR
+    // =========================================
+
+    let indiceStream = 0;
+    let intentos = 0;
+    let temporizadorReintento = null;
+    let animacionVU = null;
+    let cerrado = false;
+    let reproduccionSolicitada = true;
+    let numeroOperacionAudio = 0;
+
+    const maxIntentosPorStream = 3;
+
+    // =========================================
+    // CONTENEDOR PRINCIPAL
+    // =========================================
+
+    const reproductor = document.createElement("div");
+    reproductor.id = "reproductorMusicaFijo";
+
+    Object.assign(reproductor.style,{
+        position:"fixed",
+        bottom:"20px",
+        left:"50%",
+        transform:"translateX(-50%)",
+        zIndex:"99999",
+        width:"620px",
+        maxWidth:"95vw",
+        boxSizing:"border-box",
+        padding:"10px 16px 16px",
+        borderRadius:"20px",
+        border:"1px solid rgba(0,240,255,.4)",
+        background:"linear-gradient(180deg,#0d0f1d 0%,#05060b 100%)",
+        boxShadow:"0 15px 40px rgba(0,0,0,.9),0 0 20px rgba(0,240,255,.25)",
+        fontFamily:"'Segoe UI',Roboto,Helvetica,Arial,sans-serif",
+        color:"#fff"
+    });
+
+    // =========================================
+    // ASA DE ARRASTRE
+    // =========================================
+
+    const asa = document.createElement("div");
+
+    Object.assign(asa.style,{
+        width:"50px",
+        height:"18px",
+        margin:"0 auto 8px",
+        background:"rgba(255,255,255,.08)",
+        border:"1px solid rgba(0,240,255,.3)",
+        borderRadius:"10px",
+        display:"flex",
+        justifyContent:"center",
+        alignItems:"center",
+        cursor:"grab",
+        touchAction:"none"
+    });
+
+    asa.title = "Arrastrá para mover";
+    asa.innerHTML =
+        "<div style='width:18px;height:2px;background:#00f0ff;box-shadow:0 2px 0 #00f0ff'></div>";
+
+    reproductor.appendChild(asa);
+
+    // =========================================
+    // CUERPO
+    // =========================================
+
+    const cuerpo = document.createElement("div");
+
+    Object.assign(cuerpo.style,{
+        display:"flex",
+        flexDirection:"column",
+        gap:"12px"
+    });
+
+    // =========================================
+    // PANEL SUPERIOR
+    // =========================================
+
+    const panel = document.createElement("div");
+
+    Object.assign(panel.style,{
+        display:"flex",
+        alignItems:"center",
+        justifyContent:"space-between",
+        gap:"10px",
+        background:"rgba(10,15,30,.7)",
+        border:"1px solid rgba(0,240,255,.3)",
+        padding:"10px 30px 10px 10px",
+        borderRadius:"14px",
+        width:"100%",
+        boxSizing:"border-box",
+        flexWrap:"wrap"
+    });
+
+    // =========================================
+    // IDENTIDAD MUSICAL
+    // =========================================
+
+    const boxInfo = document.createElement("div");
+
+    Object.assign(boxInfo.style,{
+        display:"flex",
+        alignItems:"center",
+        gap:"10px",
+        minWidth:"0",
+        flex:"1"
+    });
+
+    const logo = document.createElement("div");
+
+    Object.assign(logo.style,{
+        width:"46px",
+        height:"46px",
+        borderRadius:"10px",
+        background:"linear-gradient(135deg,#180036,#41006f)",
+        border:"1px solid #ff007f",
+        boxShadow:"0 0 10px rgba(255,0,127,.5)",
+        display:"flex",
+        flexDirection:"column",
+        justifyContent:"center",
+        alignItems:"center",
+        lineHeight:"1",
+        flexShrink:"0"
+    });
+
+    logo.innerHTML =
+        "<span style='font-weight:900;font-size:13px;color:#ff007f;text-shadow:0 0 5px #ff007f'>MÚSICA</span>" +
+        "<span style='font-size:9px;color:#fff;font-weight:bold;margin-top:4px'>RETRO</span>";
+
+    const info = document.createElement("div");
+    info.style.minWidth = "0";
+
+    const nombre = document.createElement("div");
+
+    nombre.textContent =
+        itemMusica.nombre || itemMusica.categoria || "Música";
+
+    Object.assign(nombre.style,{
+        fontWeight:"bold",
+        fontSize:"14px",
+        color:"#00f0ff",
+        textShadow:"0 0 8px rgba(0,240,255,.6)",
+        whiteSpace:"nowrap",
+        overflow:"hidden",
+        textOverflow:"ellipsis"
+    });
+
+    const estado = document.createElement("div");
+
+    estado.textContent = "Preparando audio…";
+
+    Object.assign(estado.style,{
+        fontSize:"10px",
+        color:"#8fa0b5",
+        marginTop:"4px"
+    });
+
+    info.appendChild(nombre);
+    info.appendChild(estado);
+    boxInfo.appendChild(logo);
+    boxInfo.appendChild(info);
+
+    // =========================================
+    // ECUALIZADOR VISUAL
+    // =========================================
+
+    const zonaVU = document.createElement("div");
+
+    Object.assign(zonaVU.style,{
+        display:"flex",
+        alignItems:"flex-end",
+        justifyContent:"center",
+        gap:"3px",
+        height:"30px",
+        width:"120px",
+        margin:"0 5px",
+        padding:"3px 4px",
+        boxSizing:"border-box",
+        background:"linear-gradient(to bottom,#02070b,#000)",
+        border:"1px solid rgba(0,240,255,.45)",
+        borderBottom:"2px solid rgba(0,240,255,.45)",
+        borderRadius:"5px",
+        flexShrink:"0"
+    });
+
+    const barrasVU = [];
+
+    for(let i = 0; i < 20; i++){
+        const barra = document.createElement("div");
+
+        Object.assign(barra.style,{
+            flex:"1",
+            maxWidth:"5px",
+            height:"3px",
+            minHeight:"3px",
+            borderRadius:"2px",
+            background:"linear-gradient(to top,#00ff66 0%,#00f0ff 50%,#ff003c 100%)",
+            boxShadow:"0 0 4px rgba(0,240,255,.8)",
+            opacity:"0.35"
+        });
+
+        zonaVU.appendChild(barra);
+        barrasVU.push(barra);
+    }
+
+    if(window.innerWidth <= 600){
+        zonaVU.style.width = "65px";
+        zonaVU.style.gap = "1px";
+    }
+
+    // =========================================
+    // CONTROLES Y VOLUMEN
+    // =========================================
+
+    const controles = document.createElement("div");
+
+    Object.assign(controles.style,{
+        display:"flex",
+        alignItems:"center",
+        gap:"10px",
+        flexShrink:"0"
+    });
+
+    const btnPlay = document.createElement("button");
+
+    btnPlay.type = "button";
+    btnPlay.textContent = "▶";
+    btnPlay.title = "Reproducir";
+
+    Object.assign(btnPlay.style,{
+        width:"36px",
+        height:"36px",
+        padding:"0",
+        borderRadius:"50%",
+        border:"1px solid #00f0ff",
+        background:"radial-gradient(circle,#0a2540,#020b14)",
+        color:"#00f0ff",
+        cursor:"pointer",
+        display:"flex",
+        justifyContent:"center",
+        alignItems:"center",
+        boxShadow:"0 0 10px rgba(0,240,255,.4)",
+        fontSize:"12px",
+        flexShrink:"0"
+    });
+
+    const boxVolumen = document.createElement("div");
+
+    Object.assign(boxVolumen.style,{
+        display:"flex",
+        alignItems:"center",
+        gap:"5px"
+    });
+
+    const iconoVolumen = document.createElement("span");
+    iconoVolumen.textContent = "🔊";
+    iconoVolumen.style.fontSize = "11px";
+
+    const volumen = document.createElement("input");
+
+    volumen.type = "range";
+    volumen.min = "0";
+    volumen.max = "1";
+    volumen.step = "0.01";
+    volumen.value = "0.8";
+
+    Object.assign(volumen.style,{
+        width:window.innerWidth <= 600 ? "45px" : "65px",
+        accentColor:"#00f0ff"
+    });
+
+    boxVolumen.appendChild(iconoVolumen);
+    boxVolumen.appendChild(volumen);
+
+    controles.appendChild(btnPlay);
+    controles.appendChild(boxVolumen);
+
+    panel.appendChild(boxInfo);
+    panel.appendChild(zonaVU);
+    panel.appendChild(controles);
+
+    // =========================================
+    // BOTONES SUPERIORES
+    // =========================================
+
+    const controlesSuperiores = document.createElement("div");
+
+    Object.assign(controlesSuperiores.style,{
+        position:"absolute",
+        top:"6px",
+        right:"14px",
+        display:"flex",
+        alignItems:"center",
+        gap:"4px",
+        zIndex:"20"
+    });
+
+    function crearBotonSuperior(texto,color,titulo){
+        const boton = document.createElement("button");
+
+        boton.type = "button";
+        boton.textContent = texto;
+        boton.title = titulo;
+
+        Object.assign(boton.style,{
+            cursor:"pointer",
+            width:"26px",
+            height:"26px",
+            padding:"0",
+            borderRadius:"50%",
+            border:"1px solid " + color,
+            background:"rgba(0,240,255,.12)",
+            color:color,
+            fontWeight:"bold",
+            fontSize:"13px",
+            flexShrink:"0"
+        });
+
+        return boton;
+    }
+
+    const btnMinimizar = crearBotonSuperior(
+        "−","#00f0ff","Minimizar reproductor"
+    );
+
+    const btnCerrar = crearBotonSuperior(
+        "✕","#ff0055","Cerrar reproductor"
+    );
+
+    controlesSuperiores.appendChild(btnMinimizar);
+    controlesSuperiores.appendChild(btnCerrar);
+
+    // =========================================
+    // PANEL INFERIOR CON PARLANTES
+    // Sin dial ni aguja
+    // =========================================
+
+    const panelInferior = document.createElement("div");
+
+    Object.assign(panelInferior.style,{
+        display:"grid",
+        gridTemplateColumns:"72px 1fr 72px",
+        gap:"14px",
+        alignItems:"center",
+        background:"#040508",
+        border:"1px solid rgba(255,255,255,.1)",
+        borderRadius:"14px",
+        padding:"10px 14px",
+        width:"100%",
+        boxSizing:"border-box"
+    });
+
+    function crearParlante(){
+        const parlante = document.createElement("div");
+
+        Object.assign(parlante.style,{
+            width:"58px",
+            height:"58px",
+            borderRadius:"50%",
+            border:"2px solid #ff00a0",
+            background:"radial-gradient(circle,#351035 0%,#160016 35%,#030003 70%,#000 100%)",
+            boxShadow:"0 0 12px rgba(255,0,160,.5),inset 0 0 10px #000",
+            position:"relative",
+            margin:"auto"
+        });
+
+        const cono = document.createElement("div");
+
+        Object.assign(cono.style,{
+            position:"absolute",
+            left:"50%",
+            top:"50%",
+            transform:"translate(-50%,-50%)",
+            width:"32px",
+            height:"32px",
+            borderRadius:"50%",
+            border:"1px solid rgba(255,0,160,.45)",
+            boxShadow:"inset 0 0 7px #000"
+        });
+
+        const centro = document.createElement("div");
+
+        Object.assign(centro.style,{
+            position:"absolute",
+            left:"50%",
+            top:"50%",
+            transform:"translate(-50%,-50%)",
+            width:"8px",
+            height:"8px",
+            borderRadius:"50%",
+            background:"#ff00a0",
+            boxShadow:"0 0 8px #ff00a0"
+        });
+
+        parlante.appendChild(cono);
+        parlante.appendChild(centro);
+
+        return parlante;
+    }
+
+    const textoMusica = document.createElement("div");
+
+    textoMusica.textContent =
+        itemMusica.descripcion ||
+        itemMusica.nombre ||
+        itemMusica.categoria ||
+        "Música";
+
+    Object.assign(textoMusica.style,{
+        textAlign:"center",
+        color:"#8fa0b5",
+        fontSize:"12px",
+        padding:"8px",
+        overflowWrap:"anywhere"
+    });
+
+    panelInferior.appendChild(crearParlante());
+    panelInferior.appendChild(textoMusica);
+    panelInferior.appendChild(crearParlante());
+
+    cuerpo.appendChild(panel);
+    cuerpo.appendChild(panelInferior);
+
+    reproductor.appendChild(cuerpo);
+    reproductor.appendChild(controlesSuperiores);
+    document.body.appendChild(reproductor);
+
+    // =========================================
+    // AUDIO
+    // =========================================
+
+   const audio = new Audio();
+
+audio.controls = false;
+audio.autoplay = false;
+audio.preload = "none";
+audio.volume = 0.8;
+audio.crossOrigin = "anonymous";
+
+const contextoAudioMusica =
+    new (window.AudioContext || window.webkitAudioContext)();
+
+const analizadorAudioMusica =
+    contextoAudioMusica.createAnalyser();
+
+analizadorAudioMusica.fftSize = 64;
+
+const fuenteAudioMusica =
+    contextoAudioMusica.createMediaElementSource(audio);
+
+fuenteAudioMusica.connect(analizadorAudioMusica);
+analizadorAudioMusica.connect(contextoAudioMusica.destination);
+
+const datosVUMusica =
+    new Uint8Array(analizadorAudioMusica.frequencyBinCount);
+
+reproductor.audio = audio;
+
+    // =========================================
+    // BARRA MINIMIZADA
+    // =========================================
+
+    const barraMini = document.createElement("div");
+
+    barraMini.dataset.musicaMini = "true";
+
+    Object.assign(barraMini.style,{
+        position:"fixed",
+        left:"50%",
+        bottom:"12px",
+        transform:"translateX(-50%)",
+        width:"360px",
+        maxWidth:"92vw",
+        minHeight:"46px",
+        display:"none",
+        alignItems:"center",
+        gap:"8px",
+        padding:"6px 10px",
+        boxSizing:"border-box",
+        background:"#0d0f1d",
+        border:"1px solid #00f0ff",
+        borderRadius:"14px",
+        boxShadow:"0 0 15px rgba(0,240,255,.35)",
+        zIndex:"100000",
+        touchAction:"none"
+    });
+
+    const btnMiniPlay = document.createElement("button");
+
+    btnMiniPlay.type = "button";
+    btnMiniPlay.textContent = "▶";
+    btnMiniPlay.title = "Reproducir / Pausar";
+
+    Object.assign(btnMiniPlay.style,{
+        width:"32px",
+        height:"32px",
+        padding:"0",
+        borderRadius:"50%",
+        border:"1px solid #00f0ff",
+        background:"radial-gradient(circle,#0a2540,#020b14)",
+        color:"#00f0ff",
+        cursor:"pointer",
+        flexShrink:"0"
+    });
+
+    const textoMini = document.createElement("div");
+
+    textoMini.textContent =
+        itemMusica.nombre || itemMusica.categoria || "Música";
+
+    Object.assign(textoMini.style,{
+        color:"#fff",
+        fontSize:"12px",
+        fontWeight:"bold",
+        whiteSpace:"nowrap",
+        overflow:"hidden",
+        textOverflow:"ellipsis",
+        flex:"1"
+    });
+
+    const miniVU = document.createElement("div");
+
+    Object.assign(miniVU.style,{
+        display:"flex",
+        alignItems:"center",
+        gap:"2px",
+        height:"24px",
+        width:"35px",
+        overflow:"hidden"
+    });
+
+    const barrasMini = [];
+
+    for(let i = 0; i < 6; i++){
+        const barra = document.createElement("div");
+
+        Object.assign(barra.style,{
+            width:"4px",
+            height:"4px",
+            borderRadius:"2px",
+            background:"linear-gradient(180deg,#ff3300 0%,#00f0ff 45%,#00ff66 100%)"
+        });
+
+        miniVU.appendChild(barra);
+        barrasMini.push(barra);
+    }
+
+    const btnMiniRestaurar = document.createElement("button");
+    btnMiniRestaurar.type = "button";
+    btnMiniRestaurar.textContent = "⛶";
+    btnMiniRestaurar.title = "Restaurar";
+
+    const btnMiniCerrar = document.createElement("button");
+    btnMiniCerrar.type = "button";
+    btnMiniCerrar.textContent = "✕";
+    btnMiniCerrar.title = "Cerrar";
+
+    [btnMiniRestaurar,btnMiniCerrar].forEach(function(boton){
+        Object.assign(boton.style,{
+            width:"30px",
+            height:"30px",
+            padding:"0",
+            borderRadius:"50%",
+            border:"1px solid " +
+                (boton === btnMiniCerrar ? "#ff0055" : "#00f0ff"),
+            background:"transparent",
+            color:boton === btnMiniCerrar ? "#ff0055" : "#00f0ff",
+            cursor:"pointer",
+            flexShrink:"0"
+        });
+    });
+
+    barraMini.appendChild(btnMiniPlay);
+    barraMini.appendChild(textoMini);
+    barraMini.appendChild(miniVU);
+    barraMini.appendChild(btnMiniRestaurar);
+    barraMini.appendChild(btnMiniCerrar);
+
+    document.body.appendChild(barraMini);
+
+    // =========================================
+    // ESTADO Y ANIMACIÓN
+    // =========================================
+
+    function actualizarBotones(){
+        const reproduciendo = !audio.paused && !audio.ended;
+
+        btnPlay.textContent = reproduciendo ? "❚❚" : "▶";
+        btnMiniPlay.textContent = reproduciendo ? "❚❚" : "▶";
+        btnPlay.title = reproduciendo ? "Pausar" : "Reproducir";
+        btnMiniPlay.title = reproduciendo ? "Pausar" : "Reproducir";
+    }
+function detenerVU(){
+        if(animacionVU !== null){
+            cancelAnimationFrame(animacionVU);
+            animacionVU = null;
+        }
+
+        barrasVU.forEach(function(barra){
+            barra.style.height = "3px";
+            barra.style.opacity = "0.35";
+        });
+
+        barrasMini.forEach(function(barra){
+            barra.style.height = "4px";
+        });
+    }
+function animarVU(){
+    animacionVU = null;
+
+    if(cerrado || audio.paused || audio.ended){
+        detenerVU();
+        return;
+    }
+
+    analizadorAudioMusica.getByteFrequencyData(datosVUMusica);
+
+    barrasVU.forEach(function(barra, index){
+        const indice = Math.min(
+            datosVUMusica.length - 1,
+            Math.floor(
+                index * (datosVUMusica.length * 0.65) /
+                Math.max(1, barrasVU.length - 1)
+            )
+        );
+
+        const nivel = datosVUMusica[indice] / 255;
+
+        barra.style.height =
+            (Math.max(0.08, nivel) * 24) + "px";
+
+        barra.style.opacity =
+            Math.max(0.45, nivel * 1.15).toString();
+    });
+
+    barrasMini.forEach(function(barra, index){
+        const indice = Math.min(
+            datosVUMusica.length - 1,
+            Math.floor(
+                index * (datosVUMusica.length * 0.65) /
+                Math.max(1, barrasMini.length - 1)
+            )
+        );
+
+        const nivel = datosVUMusica[indice] / 255;
+
+        barra.style.height =
+            (Math.max(0.15, nivel) * 24) + "px";
+    });
+
+    animacionVU = requestAnimationFrame(animarVU);
+}
+    function iniciarVU(){
+        if(animacionVU === null && !cerrado){
+            animacionVU = requestAnimationFrame(animarVU);
+        }
+    }
+
+    // =========================================
+    // REINTENTOS DE CONEXIÓN
+    // Lógica independiente de Radios
+    // =========================================
+
+    function limpiarReintento(){
+        if(temporizadorReintento !== null){
+            clearTimeout(temporizadorReintento);
+            temporizadorReintento = null;
+        }
+
+        if(window.temporizadorMusicaActivo){
+            clearTimeout(window.temporizadorMusicaActivo);
+            window.temporizadorMusicaActivo = null;
+        }
+    }
+
+    function programarReintento(){
+        if(
+            cerrado ||
+            !reproduccionSolicitada ||
+            temporizadorReintento !== null
+        ){
+            return;
+        }
+
+        if(intentos >= maxIntentosPorStream){
+            indiceStream++;
+            intentos = 0;
+        }
+
+        if(indiceStream >= streams.length){
+            estado.textContent = "No se pudo conectar. Tocá ▶ para volver a intentar.";
+            reproduccionSolicitada = false;
+            actualizarBotones();
+            detenerVU();
+            return;
+        }
+
+        estado.textContent =
+            indiceStream === 0
+                ? "Reintentando conexión…"
+                : "Probando fuente alternativa…";
+
+        const demora = intentos === 0 ? 1000 : 3000;
+
+        temporizadorReintento = setTimeout(function(){
+            temporizadorReintento = null;
+
+            if(window.temporizadorMusicaActivo === temporizadorReintento){
+                window.temporizadorMusicaActivo = null;
+            }
+
+            reproducirStream();
+        },demora);
+
+        window.temporizadorMusicaActivo = temporizadorReintento;
+    }
+
+    function reproducirStream(){
+        if(cerrado || !reproduccionSolicitada){
+            return;
+        }
+
+        limpiarReintento();
+
+        if(indiceStream >= streams.length){
+            estado.textContent = "No hay más fuentes disponibles. Tocá ▶ para reintentar.";
+            reproduccionSolicitada = false;
+            actualizarBotones();
+            detenerVU();
+            return;
+        }
+
+        const url = streams[indiceStream];
+        const operacionActual = ++numeroOperacionAudio;
+
+        intentos++;
+
+        estado.textContent =
+            "Conectando señal " + (indiceStream + 1) +
+            " de " + streams.length + "…";
+
+        audio.pause();
+        audio.src = url;
+        audio.load();
+
+        audio.play().then(function(){
+            if(
+                cerrado ||
+                operacionActual !== numeroOperacionAudio ||
+                !reproduccionSolicitada
+            ){
+                return;
+            }
+
+            limpiarReintento();
+            estado.textContent = "Reproduciendo";
+            actualizarBotones();
+            iniciarVU();
+
+        }).catch(function(error){
+            if(
+                cerrado ||
+                operacionActual !== numeroOperacionAudio ||
+                !reproduccionSolicitada
+            ){
+                return;
+            }
+
+            if(error && error.name === "NotAllowedError"){
+                estado.textContent = "Tocá ▶ para iniciar el audio.";
+                reproduccionSolicitada = false;
+                actualizarBotones();
+                detenerVU();
+                return;
+            }
+
+            programarReintento();
+        });
+    }
+
+    // =========================================
+    // EVENTOS DE AUDIO
+    // =========================================
+
+    audio.addEventListener("playing",function(){
+        if(cerrado){
+            return;
+        }
+
+        limpiarReintento();
+        estado.textContent = "Reproduciendo";
+        actualizarBotones();
+        iniciarVU();
+    });
+
+    audio.addEventListener("pause",function(){
+        actualizarBotones();
+        detenerVU();
+    });
+
+    audio.addEventListener("ended",function(){
+        if(reproduccionSolicitada && !cerrado){
+            programarReintento();
+        }else{
+            actualizarBotones();
+        }
+    });
+
+    audio.addEventListener("error",function(){
+        if(reproduccionSolicitada && !cerrado){
+            programarReintento();
+        }
+    });
+
+    audio.addEventListener("stalled",function(){
+        if(reproduccionSolicitada && audio.paused && !cerrado){
+            programarReintento();
+        }
+    });
+
+    audio.addEventListener("waiting",function(){
+        if(!audio.paused && !cerrado){
+            estado.textContent = "Esperando señal…";
+        }
+    });
+
+    // =========================================
+    // PLAY / PAUSE Y VOLUMEN
+    // =========================================
+
+    function alternarReproduccion(){
+        if(cerrado){
+            return;
+        }
+
+        if(!audio.paused){
+            reproduccionSolicitada = false;
+            numeroOperacionAudio++;
+            limpiarReintento();
+            audio.pause();
+            estado.textContent = "En pausa";
+            actualizarBotones();
+            detenerVU();
+            return;
+        }
+
+        reproduccionSolicitada = true;
+
+        if(
+            !audio.src ||
+            audio.ended ||
+            indiceStream >= streams.length
+        ){
+            indiceStream = 0;
+            intentos = 0;
+        }
+
+        reproducirStream();
+    }
+
+    btnPlay.onclick = alternarReproduccion;
+    btnMiniPlay.onclick = alternarReproduccion;
+
+    volumen.addEventListener("input",function(){
+        audio.volume = Number(volumen.value);
+    });
+
+    // =========================================
+    // MINIMIZAR / RESTAURAR
+    // =========================================
+
+    function minimizar(){
+        reproductor.style.display = "none";
+        barraMini.style.display = "flex";
+    }
+
+    function restaurar(){
+        barraMini.style.display = "none";
+        reproductor.style.display = "block";
+    }
+
+    btnMinimizar.onclick = minimizar;
+    btnMiniRestaurar.onclick = restaurar;
+
+    // =========================================
+    // ARRASTRE
+    // =========================================
+
+    let elementoArrastrado = null;
+    let inicioX = 0;
+    let inicioY = 0;
+    let posicionX = 0;
+    let posicionY = 0;
+
+    function iniciarArrastre(evento,elemento){
+        if(
+            evento.target.closest("button") ||
+            evento.target.closest("input")
+        ){
+            return;
+        }
+
+        evento.preventDefault();
+
+        elementoArrastrado = elemento;
+
+        const rect = elemento.getBoundingClientRect();
+
+        inicioX = evento.clientX;
+        inicioY = evento.clientY;
+        posicionX = rect.left;
+        posicionY = rect.top;
+
+        elemento.style.left = rect.left + "px";
+        elemento.style.top = rect.top + "px";
+        elemento.style.bottom = "auto";
+        elemento.style.transform = "none";
+    }
+
+    function moverArrastre(evento){
+        if(!elementoArrastrado){
+            return;
+        }
+
+        const maxX = Math.max(
+            0,
+            window.innerWidth - elementoArrastrado.offsetWidth
+        );
+
+        const maxY = Math.max(
+            0,
+            window.innerHeight - elementoArrastrado.offsetHeight
+        );
+
+        const nuevoX = Math.max(
+            0,
+            Math.min(maxX,posicionX + evento.clientX - inicioX)
+        );
+
+        const nuevoY = Math.max(
+            0,
+            Math.min(maxY,posicionY + evento.clientY - inicioY)
+        );
+
+        elementoArrastrado.style.left = nuevoX + "px";
+        elementoArrastrado.style.top = nuevoY + "px";
+    }
+
+    function finalizarArrastre(){
+        elementoArrastrado = null;
+    }
+
+    asa.addEventListener("pointerdown",function(evento){
+        iniciarArrastre(evento,reproductor);
+    });
+
+    barraMini.addEventListener("pointerdown",function(evento){
+        iniciarArrastre(evento,barraMini);
+    });
+
+    document.addEventListener("pointermove",moverArrastre);
+    document.addEventListener("pointerup",finalizarArrastre);
+    document.addEventListener("pointercancel",finalizarArrastre);
+
+    // =========================================
+    // CERRAR REPRODUCTOR
+    // =========================================
+
+    function cerrarReproductor(){
+        if(cerrado){
+            return;
+        }
+
+        cerrado = true;
+        reproduccionSolicitada = false;
+        numeroOperacionAudio++;
+
+        limpiarReintento();
+        detenerVU();
+
+        audio.__musicaCerrada = true;
+        audio.pause();
+        audio.removeAttribute("src");
+        audio.load();
+
+        reproductor.remove();
+        barraMini.remove();
+
+        document.removeEventListener("pointermove",moverArrastre);
+        document.removeEventListener("pointerup",finalizarArrastre);
+        document.removeEventListener("pointercancel",finalizarArrastre);
+    }
+
+    btnCerrar.onclick = cerrarReproductor;
+    btnMiniCerrar.onclick = cerrarReproductor;
+
+    // =========================================
+    // INICIAR REPRODUCCIÓN
+    // =========================================
+
+    reproducirStream();
+}
 
 // ========================
 // CONFIGURACIÓN DE DÉCADAS
