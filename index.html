@@ -14490,6 +14490,7 @@ function inicio(){
    document.getElementById("Radios").style.display="none";
    document.getElementById("Entrenamiento").style.display="none";
    document.getElementById("Cine").style.display="none";
+   document.getElementById("Juegos").style.display="none";
    
 
 
@@ -22016,14 +22017,25 @@ if(ordenGuardado){
 
     }).filter(Boolean);
 
+    const tarjetasInicio =
+        document.querySelectorAll("#acciones .card");
+
+    tarjetasInicio.forEach(function(tarjeta){
+
+        if(!tarjetas.includes(tarjeta)){
+
+            tarjetas.push(tarjeta);
+
+        }
+
+    });
 
 }else{
 
     tarjetas =
-    document.querySelectorAll("#acciones .card");
+        document.querySelectorAll("#acciones .card");
 
 }
-
 
   let estadosGuardados =
 JSON.parse(localStorage.getItem("estadoAcciones"));
@@ -22136,20 +22148,33 @@ document.getElementById("listaConfiguracionAmbientes");
     const ordenGuardado =
     JSON.parse(localStorage.getItem("ordenConfiguracionAmbientes"));
 
-    if(ordenGuardado){
+if(ordenGuardado){
 
-        tarjetas = ordenGuardado.map(function(id){
+    tarjetas = ordenGuardado.map(function(id){
 
-            return document.getElementById(id);
+        return document.getElementById(id);
 
-        }).filter(Boolean);
+    }).filter(Boolean);
 
-    }else{
-
-        tarjetas =
+    const tarjetasInicio =
         document.querySelectorAll("#menu .card");
 
-    }
+    tarjetasInicio.forEach(function(tarjeta){
+
+        if(!tarjetas.includes(tarjeta)){
+
+            tarjetas.push(tarjeta);
+
+        }
+
+    });
+
+}else{
+
+    tarjetas =
+        document.querySelectorAll("#menu .card");
+
+}
 
     let estadosGuardados =
     JSON.parse(localStorage.getItem("estadoAmbientes"));
