@@ -3561,7 +3561,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 
 <div class="card" style="padding:18px;text-align:center;">
     <div style="display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:nowrap;white-space:nowrap;">
-        <h3 id="nombrePerfilJuego1" style="margin:0;">👑 Perfil1</h3>
+    <h3 id="nombrePerfilJuego1" style="margin:0;cursor:pointer;" onclick="abrirPerfilJuego(1)">👑 Perfil1</h3>
        <button style="margin-left:8px;" onclick="editarNombrePerfilJuego(1)">✏️</button>
         <button onclick="confirmarBorrarPerfilJuego(1)">🗑️</button>
     </div>
@@ -3570,7 +3570,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 
 <div class="card" style="padding:18px;text-align:center;">
     <div style="display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:nowrap;white-space:nowrap;">
-        <h3 id="nombrePerfilJuego2" style="margin:0;">🕹️ Perfil2</h3>
+        <h3 id="nombrePerfilJuego2" style="margin:0;cursor:pointer;" onclick="abrirPerfilJuego(2)">🕹️ Perfil2</h3>
        <button style="margin-left:8px;" onclick="editarNombrePerfilJuego(2)">✏️</button>
         <button onclick="confirmarBorrarPerfilJuego(2)">🗑️</button>
     </div>
@@ -3579,7 +3579,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 
 <div class="card" style="padding:18px;text-align:center;">
     <div style="display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:nowrap;white-space:nowrap;">
-        <h3 id="nombrePerfilJuego3" style="margin:0;">🎯 Perfil3</h3>
+         <h3 id="nombrePerfilJuego3" style="margin:0;cursor:pointer;" onclick="abrirPerfilJuego(3)">🎯 Perfil3</h3>
         <button style="margin-left:8px;" onclick="editarNombrePerfilJuego(3)">✏️</button>
         <button onclick="confirmarBorrarPerfilJuego(3)">🗑️</button>
     </div>
@@ -3587,7 +3587,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 
 <div class="card" style="padding:18px;text-align:center;">
   <div style="display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:nowrap;white-space:nowrap;">
-        <h3 id="nombrePerfilJuego4" style="margin:0;">🏆 Perfil4</h3>
+        <h3 id="nombrePerfilJuego4" style="margin:0;cursor:pointer;" onclick="abrirPerfilJuego(4)">🏆 Perfil4</h3>
         <button style="margin-left:8px;" onclick="editarNombrePerfilJuego(4)">✏️</button>
         <button onclick="confirmarBorrarPerfilJuego(4)">🗑️</button>
     </div>
@@ -3599,6 +3599,54 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 </div>
 
 <!-- ===== FIN MODULO JUEGOS: PERFILES ===== -->
+
+<!-- ===== PANTALLA PERFIL JUEGOS ===== -->
+
+<div id="pantallaPerfilJuego" style="display:none; min-height:100vh;">
+
+    <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding:15px;
+    ">
+        <button type="button" onclick="volverPerfilesJuego()">
+            ⬅ Volver
+        </button>
+
+        <button type="button" onclick="abrirConfiguracionPerfilJuego()">
+            ⚙ Configurar
+        </button>
+    </div>
+
+    <h2 id="tituloPerfilJuego" style="
+        text-align:center;
+        color:#FFD700;
+        margin:10px 0 20px;
+    ">
+        🎮 Juegos
+    </h2>
+
+    <div class="card" style="
+        width:min(92%,700px);
+        margin:20px auto;
+        padding:20px;
+        border-radius:22px;
+    ">
+        <h3 style="margin-top:0;text-align:center;">
+            🪙 Mis juegos
+        </h3>
+
+        <div id="listaJuegosPerfilSeleccionado" style="
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+            gap:12px;
+        "></div>
+    </div>
+
+</div>
+
+<!-- ===== FIN PANTALLA PERFIL JUEGOS ===== -->
 
 <!-- ===== POPUP AVISO PERFIL JUEGOS ===== -->
 
@@ -11262,6 +11310,7 @@ function abrirReproductorMusica(itemMusica){
         gap:"12px"
     });
 
+   
     // =========================================
     // PANEL SUPERIOR
     // =========================================
@@ -11269,18 +11318,18 @@ function abrirReproductorMusica(itemMusica){
     const panel = document.createElement("div");
 
     Object.assign(panel.style,{
-        display:"flex",
+        display:"grid",
+        gridTemplateColumns:"minmax(0,1fr) auto minmax(0,1fr)",
         alignItems:"center",
-        justifyContent:"space-between",
         gap:"10px",
         background:"rgba(10,15,30,.7)",
         border:"1px solid rgba(0,240,255,.3)",
-        padding:"10px 30px 10px 10px",
+        padding:"10px 20px",
         borderRadius:"14px",
         width:"100%",
-        boxSizing:"border-box",
-        flexWrap:"wrap"
+        boxSizing:"border-box"
     });
+
 
     // =========================================
     // IDENTIDAD MUSICAL
@@ -12056,7 +12105,7 @@ function animarVU(){
     });
 
         // =========================================
-    // MINIMIZAR / RESTAURAR COMO RADIO
+    // MINIMIZAR / RESTAURAR
     // =========================================
 
     function minimizar(){
@@ -12089,7 +12138,7 @@ function animarVU(){
     btnMinimizar.onclick = minimizar;
     btnMiniRestaurar.onclick = restaurar;
 
-        // =========================================
+    // =========================================
     // ARRASTRE DEL REPRODUCTOR DE MÚSICA
     // =========================================
 
@@ -14360,6 +14409,50 @@ function editarNombrePerfilJuego(numero){
         input.focus();
     }
 }
+
+let numeroPerfilJuegoActual = null;
+
+function abrirPerfilJuego(numero){
+
+    numeroPerfilJuegoActual = numero;
+
+    const perfiles = document.getElementById("Juegos");
+    const pantalla = document.getElementById("pantallaPerfilJuego");
+    const titulo = document.getElementById("tituloPerfilJuego");
+    const lista = document.getElementById("listaJuegosPerfilSeleccionado");
+
+    if(!perfiles || !pantalla || !titulo || !lista){
+        return;
+    }
+
+    const nombrePerfil = document.getElementById("nombrePerfilJuego" + numero);
+
+    titulo.textContent = nombrePerfil
+        ? "🎮 " + nombrePerfil.textContent.trim()
+        : "🎮 Perfil" + numero;
+
+    lista.innerHTML = "";
+
+    perfiles.style.display = "none";
+    pantalla.style.display = "block";
+}
+
+function volverPerfilesJuego(){
+
+    const pantalla = document.getElementById("pantallaPerfilJuego");
+    const perfiles = document.getElementById("Juegos");
+
+    if(pantalla){
+        pantalla.style.display = "none";
+    }
+
+    if(perfiles){
+        perfiles.style.display = "block";
+    }
+
+    cargarNombresPerfilesJuego();
+}
+
 
 function mostrar(id){
 
@@ -16972,7 +17065,7 @@ if(window.innerWidth <= 600){
     zonaVU.style.margin =
         "0 5px";
 
-zonaVU.style.transform =
+    zonaVU.style.transform =
     "translateX(18px)";
 
     zonaVU.style.padding =
