@@ -2734,6 +2734,15 @@ onclick="mostrar('Redes')">
 <p>Comunicación Digital</p>
 </div>
 
+
+<div class="card" id="ambienteJuegos" data-titulo="🎮 Juegos"
+onclick="mostrar('Juegos')">
+
+<h2>🎮 Juegos</h2>
+<p>Entretenimiento</p>
+</div>
+
+
 </div>
 
 <!-- =====================================
@@ -3511,6 +3520,218 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 </div>
 
 <!-- ===== FIN MODULO CINE ===== -->
+
+
+<!-- ===== MODULO JUEGOS: PERFILES ===== -->
+
+<div id="Juegos" style="display:none; min-height:100vh;">
+
+    <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding:15px;
+    ">
+        <button onclick="inicio()">
+            ⬅ Volver
+        </button>
+    </div>
+
+    <h2 style="
+        text-align:center;
+        color:#FFD700;
+        margin:10px 0 20px;
+    ">
+        🎮 Juegos
+    </h2>
+
+   <div style="
+        width:min(96%,800px);
+        margin:20px auto;
+        display:grid;
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:15px;
+    ">
+
+<div class="card" style="padding:18px;text-align:center;">
+    <div style="display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:nowrap;white-space:nowrap;">
+        <h3 id="nombrePerfilJuego1" style="margin:0;">👑 Perfil1</h3>
+       <button style="margin-left:8px;" onclick="editarNombrePerfilJuego(1)">✏️</button>
+        <button onclick="confirmarBorrarPerfilJuego(1)">🗑️</button>
+    </div>
+</div>
+
+
+<div class="card" style="padding:18px;text-align:center;">
+    <div style="display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:nowrap;white-space:nowrap;">
+        <h3 id="nombrePerfilJuego2" style="margin:0;">🕹️ Perfil2</h3>
+       <button style="margin-left:8px;" onclick="editarNombrePerfilJuego(2)">✏️</button>
+        <button onclick="confirmarBorrarPerfilJuego(2)">🗑️</button>
+    </div>
+</div>
+
+
+<div class="card" style="padding:18px;text-align:center;">
+    <div style="display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:nowrap;white-space:nowrap;">
+        <h3 id="nombrePerfilJuego3" style="margin:0;">🎯 Perfil3</h3>
+        <button style="margin-left:8px;" onclick="editarNombrePerfilJuego(3)">✏️</button>
+        <button onclick="confirmarBorrarPerfilJuego(3)">🗑️</button>
+    </div>
+</div>
+
+<div class="card" style="padding:18px;text-align:center;">
+  <div style="display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:nowrap;white-space:nowrap;">
+        <h3 id="nombrePerfilJuego4" style="margin:0;">🏆 Perfil4</h3>
+        <button style="margin-left:8px;" onclick="editarNombrePerfilJuego(4)">✏️</button>
+        <button onclick="confirmarBorrarPerfilJuego(4)">🗑️</button>
+    </div>
+</div>
+
+
+    </div>
+
+</div>
+
+<!-- ===== FIN MODULO JUEGOS: PERFILES ===== -->
+
+<!-- ===== POPUP AVISO PERFIL JUEGOS ===== -->
+
+<div id="popupAvisoPerfilJuego"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1200;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,450px);
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:20px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        text-align:center;
+        ">
+
+        <h2 style="margin-top:0;color:#FFD700;">
+            🎮 Nombre del perfil
+        </h2>
+
+        <p style="color:#ccc;">
+            El nombre está vacío. ¿Querés volver a editarlo
+            o restaurar el nombre predeterminado?
+        </p>
+
+        <div style="
+            display:flex;
+            justify-content:center;
+            gap:10px;
+            flex-wrap:wrap;
+            margin-top:20px;
+            ">
+
+            <button type="button"
+                    onclick="cerrarAvisoPerfilJuego()">
+                ✏️ Volver a editar
+            </button>
+
+            <button type="button"
+                    onclick="restaurarNombrePerfilJuego()">
+                ↩️ Restaurar nombre
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN POPUP AVISO PERFIL JUEGOS ===== -->
+
+<!-- ===== POPUP EDITAR NOMBRE PERFIL JUEGOS ===== -->
+
+<div id="popupEditarNombrePerfilJuego"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1300;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,450px);
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:20px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        text-align:center;
+        ">
+
+        <h2 style="margin-top:0;color:#FFD700;">
+            🎮 Editar perfil
+        </h2>
+
+        <input id="inputNombrePerfilJuego"
+               type="text"
+               maxlength="10"
+               autocomplete="off"
+               placeholder="Nombre del perfil"
+               style="
+               box-sizing:border-box;
+               width:100%;
+               padding:12px;
+               font-size:18px;
+               border-radius:10px;
+               margin:10px 0 20px;
+               ">
+
+        <div style="
+            display:flex;
+            justify-content:center;
+            gap:10px;
+            flex-wrap:wrap;
+            ">
+
+            <button type="button"
+                    onclick="guardarNombrePerfilJuego()"
+                    style="padding:10px 18px;border-radius:10px;">
+                💾 Guardar
+            </button>
+
+            <button type="button"
+                    onclick="cerrarEditarNombrePerfilJuego()"
+                    style="padding:10px 18px;border-radius:10px;">
+                ✖ Cancelar
+            </button>
+
+        </div>
+
+<div id="mensajeNombrePerfilJuego"
+     style="
+     display:none;
+     margin-top:15px;
+     color:#7CFC00;
+     font-weight:bold;
+     font-size:16px;
+     ">
+    ✔ Nombre del perfil guardado
+</div>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN POPUP EDITAR NOMBRE PERFIL JUEGOS ===== -->
 
 
 <!-- ===== CONFIGURACION DE CINE ===== -->
@@ -13909,7 +14130,230 @@ function eliminarPlataformaCinePersonalizada(nombre){
 cargarConfiguracionCine();
 }
  
+// ===== PERFILES DE JUEGOS =====
 
+function cargarNombresPerfilesJuego(){
+
+    const nombresGuardados = JSON.parse(
+        localStorage.getItem("nombresPerfilesJuego") || "null"
+    );
+
+    const nombresPorDefecto = [
+        "Perfil1",
+        "Perfil2",
+        "Perfil3",
+        "Perfil4"
+    ];
+
+    for(let i = 1; i <= 4; i++){
+
+        const elemento = document.getElementById(
+            "nombrePerfilJuego" + i
+        );
+
+        if(elemento){
+
+            const nombre = nombresGuardados &&
+                nombresGuardados[i - 1]
+                ? nombresGuardados[i - 1]
+                : nombresPorDefecto[i - 1];
+
+            const emoji = elemento.textContent.trim().split(" ")[0];
+
+            elemento.textContent = emoji + " " + nombre;
+        }
+    }
+}
+
+
+let numeroPerfilJuegoPendiente = null;
+
+function cerrarAvisoPerfilJuego(){
+
+    const popup = document.getElementById(
+        "popupAvisoPerfilJuego"
+    );
+
+    if(popup){
+        popup.style.display = "none";
+    }
+
+    const numero = numeroPerfilJuegoPendiente;
+    numeroPerfilJuegoPendiente = null;
+
+    if(numero !== null){
+        editarNombrePerfilJuego(numero);
+    }
+}
+
+function restaurarNombrePerfilJuego(){
+
+    const numero = numeroPerfilJuegoPendiente;
+
+    if(numero === null) return;
+
+    const nombres = JSON.parse(
+        localStorage.getItem("nombresPerfilesJuego") || "null"
+    ) || [
+        "Perfil1",
+        "Perfil2",
+        "Perfil3",
+        "Perfil4"
+    ];
+
+    nombres[numero - 1] = "Perfil" + numero;
+
+    localStorage.setItem(
+        "nombresPerfilesJuego",
+        JSON.stringify(nombres)
+    );
+
+    const popup = document.getElementById(
+        "popupAvisoPerfilJuego"
+    );
+
+    if(popup){
+        popup.style.display = "none";
+    }
+
+    numeroPerfilJuegoPendiente = null;
+
+    cargarNombresPerfilesJuego();
+}
+
+function cerrarEditarNombrePerfilJuego(){
+
+    const popup = document.getElementById(
+        "popupEditarNombrePerfilJuego"
+    );
+
+    if(popup){
+        popup.style.display = "none";
+    }
+
+    numeroPerfilJuegoPendiente = null;
+}
+
+function guardarNombrePerfilJuego(){
+
+    const numero = numeroPerfilJuegoPendiente;
+
+    if(numero === null) return;
+
+    const input = document.getElementById(
+        "inputNombrePerfilJuego"
+    );
+
+    if(!input) return;
+
+    const nombreLimpio = input.value.trim().slice(0, 10);
+
+    if(nombreLimpio === ""){
+
+        const popupEdicion = document.getElementById(
+            "popupEditarNombrePerfilJuego"
+        );
+
+        if(popupEdicion){
+            popupEdicion.style.display = "none";
+        }
+
+        const popupAviso = document.getElementById(
+            "popupAvisoPerfilJuego"
+        );
+
+        if(popupAviso){
+            popupAviso.style.display = "flex";
+        }
+
+        return;
+    }
+
+    const nombres = JSON.parse(
+        localStorage.getItem("nombresPerfilesJuego") || "null"
+    ) || [
+        "Perfil1",
+        "Perfil2",
+        "Perfil3",
+        "Perfil4"
+    ];
+
+    nombres[numero - 1] = nombreLimpio;
+
+    localStorage.setItem(
+        "nombresPerfilesJuego",
+        JSON.stringify(nombres)
+    );
+
+    const popup = document.getElementById(
+        "popupEditarNombrePerfilJuego"
+    );
+
+    const mensaje = document.getElementById(
+        "mensajeNombrePerfilJuego"
+    );
+
+    cargarNombresPerfilesJuego();
+
+    if(mensaje){
+        mensaje.style.display = "block";
+    }
+
+    if(popup){
+        popup.style.display = "flex";
+    }
+
+    setTimeout(function(){
+
+        if(mensaje){
+            mensaje.style.display = "none";
+        }
+
+        if(popup){
+            popup.style.display = "none";
+        }
+
+        numeroPerfilJuegoPendiente = null;
+
+    }, 1000);
+}
+
+function editarNombrePerfilJuego(numero){
+
+    const elemento = document.getElementById(
+        "nombrePerfilJuego" + numero
+    );
+
+    if(!elemento) return;
+
+    const nombresGuardados = JSON.parse(
+        localStorage.getItem("nombresPerfilesJuego") || "null"
+    );
+
+    const nombreActual = nombresGuardados &&
+        nombresGuardados[numero - 1]
+        ? nombresGuardados[numero - 1]
+        : "Perfil" + numero;
+
+    numeroPerfilJuegoPendiente = numero;
+
+    const input = document.getElementById(
+        "inputNombrePerfilJuego"
+    );
+
+    if(!input) return;
+
+    input.value = nombreActual;
+
+    const popup = document.getElementById(
+        "popupEditarNombrePerfilJuego"
+    );
+
+    if(popup){
+        popup.style.display = "flex";
+        input.focus();
+    }
+}
 
 function mostrar(id){
 
@@ -13951,9 +14395,13 @@ document.getElementById("btnVolverAndroid").style.display="none";
 
     document.getElementById("Cine").style.display="none";
 
+    document.getElementById("Juegos").style.display="none";
+
 // Mostrar módulo elegido
 
 document.getElementById(id).style.display="block";
+
+if(id=="Juegos"){ cargarNombresPerfilesJuego(); }
 
 if(id=="Cine"){
 
