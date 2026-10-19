@@ -11265,9 +11265,9 @@ function abrirReproductorMusica(itemMusica){
         boxSizing:"border-box",
         padding:"10px 16px 16px",
         borderRadius:"20px",
-        border:"1px solid rgba(0,240,255,.4)",
+        border:"1px solid #39FF14",
         background:"linear-gradient(180deg,#0d0f1d 0%,#05060b 100%)",
-        boxShadow:"0 15px 40px rgba(0,0,0,.9),0 0 20px rgba(0,240,255,.25)",
+        boxShadow:"0 15px 40px rgba(0,0,0,.9),0 0 20px rgba(57,255,20,.25)",
         fontFamily:"'Segoe UI',Roboto,Helvetica,Arial,sans-serif",
         color:"#fff"
     });
@@ -11323,7 +11323,8 @@ function abrirReproductorMusica(itemMusica){
         alignItems:"center",
         gap:"10px",
         background:"rgba(10,15,30,.7)",
-        border:"1px solid rgba(0,240,255,.3)",
+        border:"1px solid #39FF14",
+        boxShadow:"0 0 8px rgba(57,255,20,.35)",  
         padding:"10px 20px",
         borderRadius:"14px",
         width:"100%",
@@ -11364,7 +11365,7 @@ function abrirReproductorMusica(itemMusica){
 
     logo.innerHTML =
         "<span style='font-weight:900;font-size:13px;color:#ff007f;text-shadow:0 0 5px #ff007f'>MÚSICA</span>" +
-        "<span style='font-size:9px;color:#fff;font-weight:bold;margin-top:4px'>RETRO</span>";
+        "<span style='font-size:9px;color:#fff;font-weight:bold;margin-top:4px'>24/7</span>";
 
     const info = document.createElement("div");
     info.style.minWidth = "0";
@@ -11416,8 +11417,9 @@ function abrirReproductorMusica(itemMusica){
         padding:"3px 4px",
         boxSizing:"border-box",
         background:"linear-gradient(to bottom,#02070b,#000)",
-        border:"1px solid rgba(0,240,255,.45)",
-        borderBottom:"2px solid rgba(0,240,255,.45)",
+        border:"1px solid #39FF14",
+        borderBottom:"2px solid #39FF14",
+        boxShadow:"0 0 6px rgba(57,255,20,.3)",
         borderRadius:"5px",
         flexShrink:"0"
     });
@@ -11559,13 +11561,12 @@ function abrirReproductorMusica(itemMusica){
     }
 
     const btnMinimizar = crearBotonSuperior(
-        "−","#00f0ff","Minimizar reproductor"
+    "−","#39FF14","Minimizar reproductor"
     );
 
     const btnCerrar = crearBotonSuperior(
-        "✕","#ff0055","Cerrar reproductor"
+    "✕","#39FF14","Cerrar reproductor"
     );
-
     controlesSuperiores.appendChild(btnMinimizar);
     controlesSuperiores.appendChild(btnCerrar);
 
@@ -11593,14 +11594,14 @@ function abrirReproductorMusica(itemMusica){
         const parlante = document.createElement("div");
 
         Object.assign(parlante.style,{
-            width:"58px",
-            height:"58px",
-            borderRadius:"50%",
-            border:"2px solid #ff00a0",
-            background:"radial-gradient(circle,#351035 0%,#160016 35%,#030003 70%,#000 100%)",
-            boxShadow:"0 0 12px rgba(255,0,160,.5),inset 0 0 10px #000",
-            position:"relative",
-            margin:"auto"
+           width:"58px",
+           height:"58px",
+           borderRadius:"8px",
+           border:"2px solid #39FF14",
+           background:"radial-gradient(circle,#39FF14 0%,#123d0b 30%,#031003 65%,#000 100%)",
+           boxShadow:"0 0 12px rgba(57,255,20,.5),inset 0 0 10px #000",
+           position:"relative",
+           margin:"auto"
         });
 
         const cono = document.createElement("div");
@@ -11717,9 +11718,9 @@ reproductor.audio = audio;
         padding:"6px 10px",
         boxSizing:"border-box",
         background:"#0d0f1d",
-        border:"1px solid #00f0ff",
+        border:"1px solid #39FF14",
         borderRadius:"14px",
-        boxShadow:"0 0 15px rgba(0,240,255,.35)",
+        boxShadow:"0 0 15px rgba(57,255,20,.35)", 
         zIndex:"100000",
         touchAction:"none"
     });
@@ -11800,10 +11801,9 @@ reproductor.audio = audio;
             height:"30px",
             padding:"0",
             borderRadius:"50%",
-            border:"1px solid " +
-                (boton === btnMiniCerrar ? "#ff0055" : "#00f0ff"),
+            border:"1px solid #39FF14",
             background:"transparent",
-            color:boton === btnMiniCerrar ? "#ff0055" : "#00f0ff",
+            color:"#39FF14",
             cursor:"pointer",
             flexShrink:"0"
         });
