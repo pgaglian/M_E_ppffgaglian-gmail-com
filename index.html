@@ -5216,15 +5216,15 @@ text-decoration:underline;
 
 <div id="configuracionRadios"
 
-     style="
-     display:flex;
-     flex-direction:column;
-     gap:10px;
-     max-height:45vh;
-     overflow-y:auto;
-     padding-right:5px;
-     ">
-</div>
+             style="
+             display:grid;
+             grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+             gap:10px;
+             max-height:45vh;
+             overflow-y:auto;
+             padding-right:5px;
+             ">
+        </div>
 
 <div style="text-align:center;margin-top:20px;">
 
@@ -17029,67 +17029,12 @@ let configuracionRadios = [];
 
 let filtroRadiosActual = "TODAS";
 
-// Orden personalizado de Radios por usuario
-let sortableConfiguracionRadios = null;
-
-function activarDragConfiguracionRadios(){
-
-    const contenedor = document.getElementById("configuracionRadios");
-
-    if(!contenedor || typeof Sortable === "undefined"){
-        return;
-    }
-
-    if(sortableConfiguracionRadios){
-        sortableConfiguracionRadios.destroy();
-    }
-
-    sortableConfiguracionRadios = new Sortable(contenedor, {
-        animation: 150,
-        draggable: ".itemConfiguracionRadios",
-        handle: ".asaRadios",
-        ghostClass: "dragGhost",
-
-        onEnd: function(){
-
-            const orden = Array.from(
-                contenedor.querySelectorAll(".itemConfiguracionRadios")
-            ).map(function(item){
-                return item.dataset.id;
-            });
-
-            const ordenAnterior = JSON.parse(
-                localStorage.getItem("ordenConfiguracionRadios")
-            ) || [];
-
-            ordenAnterior.forEach(function(id){
-                if(!orden.includes(id)){
-                    orden.push(id);
-                }
-            });
-
-            localStorage.setItem(
-                "ordenConfiguracionRadios",
-                JSON.stringify(orden)
-            );
-
-        }
-    });
-
-}
-
-
 function filtrarRadios(tipo){
 
     filtroRadiosActual = tipo;
 
     const contenedor =
         document.getElementById("configuracionRadios");
-
-        // Recuperar el orden personalizado de las Radios
-const ordenRadiosGuardado = JSON.parse(
-    localStorage.getItem("ordenConfiguracionRadios")
-);
 
     if(!contenedor){
         return;
@@ -17112,23 +17057,14 @@ const ordenRadiosGuardado = JSON.parse(
 
     contenedor.innerHTML = "";
 
-    const radiosFiltradas = configuracionRadios.filter(function(radio){
-    return tipo === "TODAS" || radio.tipo === tipo;
-});
+    configuracionRadios
+        .filter(function(radio){
 
-if(ordenRadiosGuardado){
-    radiosFiltradas.sort(function(a, b){
-        const posicionA = ordenRadiosGuardado.indexOf(a.id);
-        const posicionB = ordenRadiosGuardado.indexOf(b.id);
+            return tipo === "TODAS" ||
+                   radio.tipo === tipo;
 
-        if(posicionA === -1) return 1;
-        if(posicionB === -1) return -1;
-
-        return posicionA - posicionB;
-    });
-}
-
-radiosFiltradas.forEach(function(radio){
+        })
+        .forEach(function(radio){
 
             const label = document.createElement("label");
 
@@ -17136,9 +17072,6 @@ radiosFiltradas.forEach(function(radio){
             label.style.alignItems = "center";
             label.style.gap = "8px";
             label.style.cursor = "pointer";
-
-                       label.dataset.id = radio.id;
-            label.className = "itemConfiguracionRadios";
 
             label.innerHTML =
                 '<input type="checkbox" value="' +
@@ -17150,18 +17083,13 @@ radiosFiltradas.forEach(function(radio){
                 '" alt="' + (radio.nombre || '') +
                 '" style="width:45px;height:45px;border-radius:8px;object-fit:cover;">' +
 
-                '<span style="flex:1;">' +
+                '<span>' +
                 radio.nombre +
-                '</span>' +
+                '</span>';
 
-                '<span class="asaRadios" style="font-size:22px;cursor:grab;padding:0 5px;">☰</span>';
-
-                        contenedor.appendChild(label);
+            contenedor.appendChild(label);
 
         });
-
-    // Activar el arrastre de Radios
-    activarDragConfiguracionRadios();
 
 }
 
@@ -17267,30 +17195,6 @@ function guardarConfiguracionRadios(){
         cerrarConfiguracionRadios();
 
     }, 1000);
-    // Guardar el orden personalizado de las Radios
-    const ordenRadios = Array.from(
-        document.querySelectorAll(
-            "#configuracionRadios label"
-        )
-    ).map(function(label){
-        const checkbox = label.querySelector("input[type='checkbox']");
-        return checkbox ? checkbox.value : null;
-    }).filter(Boolean);
-
-    const ordenAnterior = JSON.parse(
-        localStorage.getItem("ordenConfiguracionRadios")
-    ) || [];
-
-    ordenAnterior.forEach(function(id){
-        if(!ordenRadios.includes(id)){
-            ordenRadios.push(id);
-        }
-    });
-
-    localStorage.setItem(
-        "ordenConfiguracionRadios",
-        JSON.stringify(ordenRadios)
-    );
 
     mostrarRadiosSeleccionadas();
 
