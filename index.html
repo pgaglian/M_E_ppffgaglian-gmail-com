@@ -3781,11 +3781,398 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
     ✔ Nombre del perfil guardado
 </div>
 
+<div id="mensajeErrorNombrePerfilJuego"
+     style="
+     display:none;
+     margin-top:10px;
+     color:#FF4444;
+     font-weight:bold;
+     font-size:15px;
+     ">
+</div>
+
     </div>
 
 </div>
 
 <!-- ===== FIN POPUP EDITAR NOMBRE PERFIL JUEGOS ===== -->
+
+<!-- ===== POPUPS JUEGOS POR PERFIL ===== -->
+
+<!-- POPUP AGREGAR JUEGO -->
+
+<div id="popupAgregarJuegoPerfil"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1200;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,450px);
+        max-height:85vh;
+        overflow-y:auto;
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:20px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        ">
+
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:15px;
+            ">
+
+            <h2 style="margin:0;color:#FFD700;">
+                👾 Agregar juego
+            </h2>
+
+            <button type="button"
+                    onclick="cerrarAgregarJuegoPerfil()">
+                ✖
+            </button>
+
+        </div>
+
+        <p style="text-align:center;color:#ccc;line-height:1.5;">
+            ✏️ <strong>Escribí el nombre exacto del juego.</strong>
+            <br><br>
+            Comprobaremos el juego en la tienda correspondiente.
+            <br><br>
+            📖 <strong>¿No sabés cómo compartirlo?</strong>
+            <br>
+            <button
+                type="button"
+                onclick="abrirInstructivoCompartirApp()"
+                style="
+                border:none;
+                background:none;
+                color:#FFD700;
+                font-size:16px;
+                font-weight:bold;
+                cursor:pointer;
+                padding:0;
+                ">
+                Ver instructivo
+            </button>
+            <br><br>
+            ↩️ Después volvé a Mi Espacio para completar el proceso.
+        </p>
+
+        <input
+            id="nombreAgregarJuegoPerfil"
+            type="text"
+            maxlength="100"
+            placeholder="Nombre exacto del juego"
+            style="
+            width:100%;
+            box-sizing:border-box;
+            padding:12px;
+            font-size:16px;
+            border-radius:10px;
+            border:1px solid #666;
+            margin-bottom:15px;
+            ">
+
+        <button
+            type="button"
+            onclick="validarNuevoJuegoPerfil()"
+            style="
+            display:block;
+            width:100%;
+            margin:8px 0;
+            padding:10px;
+            font-size:16px;
+            font-weight:bold;
+            border-radius:10px;
+            ">
+            🔎 Validar juego
+        </button>
+
+        <button
+            type="button"
+            onclick="cerrarAgregarJuegoPerfil()"
+            style="
+            display:block;
+            width:100%;
+            margin:8px 0;
+            padding:10px;
+            font-size:16px;
+            font-weight:bold;
+            border-radius:10px;
+            ">
+            Cancelar
+        </button>
+
+    </div>
+
+</div>
+
+<!-- POPUP INGRESAR ENLACE DEL JUEGO -->
+
+<div id="popupLinkJuegoPerfil"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1300;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,450px);
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:20px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        ">
+
+        <h2 style="margin-top:0;text-align:center;color:#FFD700;">
+            🔗 Ingresar enlace del juego
+        </h2>
+
+        <p style="text-align:center;color:#ccc;line-height:1.5;">
+            Pegá aquí el enlace del juego que copiaste del navegador.
+        </p>
+
+        <input
+            id="urlAgregarJuegoPerfil"
+            type="url"
+            placeholder="https://..."
+            style="
+            width:100%;
+            box-sizing:border-box;
+            padding:12px;
+            font-size:16px;
+            border-radius:10px;
+            border:1px solid #666;
+            margin-bottom:15px;
+            ">
+
+        <button
+            type="button"
+            onclick="guardarLinkJuegoPerfil()"
+            style="
+            display:block;
+            width:100%;
+            margin:8px 0;
+            padding:12px;
+            font-size:16px;
+            font-weight:bold;
+            border-radius:10px;
+            ">
+            ✅ Guardar enlace
+        </button>
+
+        <button
+            type="button"
+            onclick="cerrarLinkJuegoPerfil()"
+            style="
+            display:block;
+            width:100%;
+            margin:8px 0;
+            padding:12px;
+            font-size:16px;
+            font-weight:bold;
+            border-radius:10px;
+            ">
+            ↩️ Cancelar
+        </button>
+
+    </div>
+
+</div>
+
+<!-- POPUP CONFIRMAR JUEGO -->
+
+<div id="popupConfirmarJuegoPerfil"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1300;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,450px);
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:20px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        ">
+
+        <h2 style="margin-top:0;text-align:center;color:#FFD700;">
+            👾 Confirmar juego
+        </h2>
+
+        <p id="mensajeConfirmarJuegoPerfil"
+           style="text-align:center;color:#ccc;line-height:1.5;">
+        </p>
+
+        <button
+            type="button"
+            onclick="confirmarJuegoPerfil()"
+            style="
+            display:block;
+            width:100%;
+            margin:10px 0;
+            padding:12px;
+            font-size:16px;
+            font-weight:bold;
+            border-radius:10px;
+            ">
+            ✅ Sí, guardar
+        </button>
+
+        <button
+            type="button"
+            onclick="cancelarConfirmacionJuegoPerfil()"
+            style="
+            display:block;
+            width:100%;
+            margin:10px 0;
+            padding:12px;
+            font-size:16px;
+            font-weight:bold;
+            border-radius:10px;
+            ">
+            ↩️ No, volver a intentar
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ===== FIN POPUPS JUEGOS POR PERFIL ===== -->
+
+
+<!-- ===== CONFIGURACION JUEGOS DEL PERFIL ===== -->
+
+<div id="popupConfiguracionPerfilJuego"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1100;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,450px);
+        max-height:85vh;
+        overflow-y:auto;
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:20px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        ">
+
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:15px;
+            ">
+
+            <h2 style="margin:0;color:#FFD700;">
+                👾 Configurar juegos
+            </h2>
+
+            <button type="button"
+                    onclick="cerrarConfiguracionPerfilJuego()">
+                ✖
+            </button>
+
+        </div>
+
+        <p style="
+            text-align:center;
+            color:#ccc;
+            line-height:1.5;
+            ">
+            Administrá los juegos de este perfil.
+        </p>
+
+        <button
+            type="button"
+            onclick="abrirAgregarJuegoPerfil()"
+            style="
+            display:block;
+            width:100%;
+            margin:15px 0;
+            padding:12px;
+            font-size:16px;
+            font-weight:bold;
+            border-radius:10px;
+            ">
+            ➕ Agregar juego
+        </button>
+
+        <div id="listaConfiguracionJuegosPerfil"
+             style="
+             display:grid;
+             gap:10px;
+             margin-top:15px;
+             "></div>
+
+
+
+<button
+    type="button"
+    onclick="cerrarConfiguracionPerfilJuego()"
+    style="
+    display:block;
+    width:100%;
+    margin-top:20px;
+    padding:12px;
+    font-size:16px;
+    font-weight:bold;
+    border-radius:10px;
+    text-align:center;
+    ">
+    💾 Guardar Juego
+</button>
+
+
+<div id="mensajeJuego"
+     style="
+     display:none;
+     margin-top:12px;
+     color:#7CFC00;
+     font-weight:bold;
+     font-size:16px;
+     ">
+    ✅ Juegos guardados correctamente
+</div>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN CONFIGURACION JUEGOS DEL PERFIL ===== -->
+
 
 
 <!-- ===== CONFIGURACION DE CINE ===== -->
@@ -4797,18 +5184,6 @@ text-decoration:underline;
     flex-wrap:wrap;
 ">
 
-    <button
-        type="button"
-        onclick="filtrarRadios('TODAS')"
-        id="filtroRadiosTodas"
-        style="
-        padding:8px 18px;
-        border-radius:10px;
-        font-weight:bold;
-        cursor:pointer;
-        ">
-        📻 Todas
-    </button>
 
     <button
         type="button"
@@ -4838,17 +5213,38 @@ text-decoration:underline;
 
 </div>
 
+
 <div id="configuracionRadios"
 
-             style="
-             display:grid;
-             grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-             gap:10px;
-             max-height:45vh;
-             overflow-y:auto;
-             padding-right:5px;
-             ">
-        </div>
+     style="
+     display:flex;
+     flex-direction:column;
+     gap:10px;
+     max-height:45vh;
+     overflow-y:auto;
+     padding-right:5px;
+     ">
+</div>
+
+<div style="text-align:center;margin-top:20px;">
+
+    <button
+        type="button"
+        id="btnSeleccionarTodoRadios"
+        onclick="alternarSeleccionRadios()"
+        style="
+            width:220px;
+            min-height:42px;
+            padding:10px;
+            border-radius:10px;
+            font-size:16px;
+            font-weight:bold;
+            cursor:pointer;
+        ">
+        ☑ Seleccionar todo
+    </button>
+
+</div>
 
         <div style="
             text-align:center;
@@ -6751,6 +7147,35 @@ document.querySelector('#Musica h2').style.display='block';
         📀 Décadas de Música
     </h3>
 
+<!-- AVISO SOPORTE -->
+ <div style="
+ text-align:center; 
+margin:8px auto 18px auto; 
+padding:10px 12px; 
+border-radius:12px; 
+background:rgba(255,255,255,.05); 
+color:#ccc; 
+font-size:14px; 
+line-height:1.5;
+ "> 😎 <strong>¿Alguna no funciona?</strong><br> 
+
+Enviános un correo a 
+🛠️ <strong>Soporte:</strong>
+
+ <span 
+
+onclick="document.getElementById('btnSoporte').click();" 
+style=" 
+color:#FFD700; 
+font-weight:bold; 
+cursor:pointer; 
+text-decoration:underline;
+ "
+ > ✉️ Enviar consulta </span>
+ y la revisamos. 📻🔧 
+</div>
+
+
     <div id="DecadasMusicaSeleccionadas" class="grid"></div>
 
 </div>
@@ -6776,6 +7201,35 @@ document.querySelector('#Musica h2').style.display='block';
     <h3 style="text-align:center;color:#FFD700;">
         🎸 Estilos de Música
     </h3>
+
+<!-- AVISO SOPORTE -->
+
+ <div style="
+ text-align:center; 
+margin:8px auto 18px auto; 
+padding:10px 12px; 
+border-radius:12px; 
+background:rgba(255,255,255,.05); 
+color:#ccc; 
+font-size:14px; 
+line-height:1.5;
+ "> 😎 <strong>¿Alguno no funciona?</strong><br> 
+
+Enviános un correo a 
+🛠️ <strong>Soporte:</strong>
+
+ <span 
+
+onclick="document.getElementById('btnSoporte').click();" 
+style=" 
+color:#FFD700; 
+font-weight:bold; 
+cursor:pointer; 
+text-decoration:underline;
+ "
+ > ✉️ Enviar consulta </span>
+ y la revisamos. 📻🔧 
+</div>
 
     <div id="EstilosMusicaSeleccionados" class="grid"></div>
 
@@ -14200,6 +14654,8 @@ function cargarNombresPerfilesJuego(){
         "Perfil4"
     ];
 
+    
+
     for(let i = 1; i <= 4; i++){
 
         const elemento = document.getElementById(
@@ -14333,6 +14789,47 @@ function guardarNombrePerfilJuego(){
         "Perfil4"
     ];
 
+    // Evitar nombres repetidos entre perfiles
+
+    const nombreDuplicado = nombres.some(function(nombre, indice){
+
+        return indice !== numero - 1 &&
+            nombre.trim().toLowerCase() === nombreLimpio.toLowerCase();
+
+    });
+
+if(nombreDuplicado){
+
+    const mensajeVerde = document.getElementById(
+        "mensajeNombrePerfilJuego"
+    );
+
+    if(mensajeVerde){
+        mensajeVerde.style.display = "none";
+    }
+
+    const mensajeError = document.getElementById(
+        "mensajeErrorNombrePerfilJuego"
+    );
+
+    if(mensajeError){
+        mensajeError.textContent =
+            "Ese nombre ya existe en otro perfil. Elegí uno diferente.";
+
+        mensajeError.style.display = "block";
+    }
+
+    return;
+}
+
+const mensajeError = document.getElementById(
+    "mensajeErrorNombrePerfilJuego"
+);
+
+if(mensajeError){
+    mensajeError.textContent = "";
+    mensajeError.style.display = "none";
+}
     nombres[numero - 1] = nombreLimpio;
 
     localStorage.setItem(
@@ -14400,6 +14897,15 @@ function editarNombrePerfilJuego(numero){
 
     input.value = nombreActual;
 
+    const mensajeError = document.getElementById(
+    "mensajeErrorNombrePerfilJuego"
+);
+
+if(mensajeError){
+    mensajeError.textContent = "";
+    mensajeError.style.display = "none";
+}
+
     const popup = document.getElementById(
         "popupEditarNombrePerfilJuego"
     );
@@ -14450,8 +14956,34 @@ function volverPerfilesJuego(){
         perfiles.style.display = "block";
     }
 
+ 
     cargarNombresPerfilesJuego();
 }
+
+
+// ===== ABRIR Y CERRAR CONFIGURACION JUEGOS DEL PERFIL =====
+
+function abrirConfiguracionPerfilJuego(){
+
+    const popup = document.getElementById("popupConfiguracionPerfilJuego");
+
+    if(popup){
+        popup.style.display = "flex";
+    }
+
+}
+
+function cerrarConfiguracionPerfilJuego(){
+
+    const popup = document.getElementById("popupConfiguracionPerfilJuego");
+
+    if(popup){
+        popup.style.display = "none";
+    }
+
+}
+
+// ===== FIN CONFIGURACION JUEGOS DEL PERFIL =====
 
 
 function mostrar(id){
@@ -16497,12 +17029,66 @@ let configuracionRadios = [];
 
 let filtroRadiosActual = "TODAS";
 
+// Orden personalizado de Radios por usuario
+let sortableConfiguracionRadios = null;
+
+function activarDragConfiguracionRadios(){
+
+    const contenedor = document.getElementById("configuracionRadios");
+
+    if(!contenedor || typeof Sortable === "undefined"){
+        return;
+    }
+
+    if(sortableConfiguracionRadios){
+        sortableConfiguracionRadios.destroy();
+    }
+
+    sortableConfiguracionRadios = new Sortable(contenedor, {
+        animation: 150,
+        draggable: ".itemConfiguracionRadios",
+        ghostClass: "dragGhost",
+
+        onEnd: function(){
+
+            const orden = Array.from(
+                contenedor.querySelectorAll(".itemConfiguracionRadios")
+            ).map(function(item){
+                return item.dataset.id;
+            });
+
+            const ordenAnterior = JSON.parse(
+                localStorage.getItem("ordenConfiguracionRadios")
+            ) || [];
+
+            ordenAnterior.forEach(function(id){
+                if(!orden.includes(id)){
+                    orden.push(id);
+                }
+            });
+
+            localStorage.setItem(
+                "ordenConfiguracionRadios",
+                JSON.stringify(orden)
+            );
+
+        }
+    });
+
+}
+
+
 function filtrarRadios(tipo){
 
     filtroRadiosActual = tipo;
 
     const contenedor =
         document.getElementById("configuracionRadios");
+
+        // Recuperar el orden personalizado de las Radios
+const ordenRadiosGuardado = JSON.parse(
+    localStorage.getItem("ordenConfiguracionRadios")
+);
 
     if(!contenedor){
         return;
@@ -16525,14 +17111,23 @@ function filtrarRadios(tipo){
 
     contenedor.innerHTML = "";
 
-    configuracionRadios
-        .filter(function(radio){
+    const radiosFiltradas = configuracionRadios.filter(function(radio){
+    return tipo === "TODAS" || radio.tipo === tipo;
+});
 
-            return tipo === "TODAS" ||
-                   radio.tipo === tipo;
+if(ordenRadiosGuardado){
+    radiosFiltradas.sort(function(a, b){
+        const posicionA = ordenRadiosGuardado.indexOf(a.id);
+        const posicionB = ordenRadiosGuardado.indexOf(b.id);
 
-        })
-        .forEach(function(radio){
+        if(posicionA === -1) return 1;
+        if(posicionB === -1) return -1;
+
+        return posicionA - posicionB;
+    });
+}
+
+radiosFiltradas.forEach(function(radio){
 
             const label = document.createElement("label");
 
@@ -16540,6 +17135,9 @@ function filtrarRadios(tipo){
             label.style.alignItems = "center";
             label.style.gap = "8px";
             label.style.cursor = "pointer";
+
+                       label.dataset.id = radio.id;
+            label.className = "itemConfiguracionRadios";
 
             label.innerHTML =
                 '<input type="checkbox" value="' +
@@ -16551,14 +17149,45 @@ function filtrarRadios(tipo){
                 '" alt="' + (radio.nombre || '') +
                 '" style="width:45px;height:45px;border-radius:8px;object-fit:cover;">' +
 
-                '<span>' +
+                '<span style="flex:1;">' +
                 radio.nombre +
-                '</span>';
+                '</span>' +
 
-            contenedor.appendChild(label);
+                '<span class="asaRadios" style="font-size:22px;cursor:grab;padding:0 5px;">☰</span>';
+
+                        contenedor.appendChild(label);
 
         });
 
+    // Activar el arrastre de Radios
+    activarDragConfiguracionRadios();
+
+}
+
+function alternarSeleccionRadios(){
+
+    const checkboxes = document.querySelectorAll(
+        "#configuracionRadios input[type='checkbox']"
+    );
+
+    const todasSeleccionadas = checkboxes.length > 0 &&
+        Array.from(checkboxes).every(function(checkbox){
+            return checkbox.checked;
+        });
+
+    checkboxes.forEach(function(checkbox){
+        checkbox.checked = !todasSeleccionadas;
+    });
+
+    const boton = document.getElementById(
+        "btnSeleccionarTodoRadios"
+    );
+
+    if(boton){
+        boton.textContent = todasSeleccionadas
+            ? "☑ Seleccionar todo"
+            : "☐ Deseleccionar todo";
+    }
 }
 
 function abrirConfiguracionRadios(){
@@ -16637,6 +17266,30 @@ function guardarConfiguracionRadios(){
         cerrarConfiguracionRadios();
 
     }, 1000);
+    // Guardar el orden personalizado de las Radios
+    const ordenRadios = Array.from(
+        document.querySelectorAll(
+            "#configuracionRadios label"
+        )
+    ).map(function(label){
+        const checkbox = label.querySelector("input[type='checkbox']");
+        return checkbox ? checkbox.value : null;
+    }).filter(Boolean);
+
+    const ordenAnterior = JSON.parse(
+        localStorage.getItem("ordenConfiguracionRadios")
+    ) || [];
+
+    ordenAnterior.forEach(function(id){
+        if(!ordenRadios.includes(id)){
+            ordenRadios.push(id);
+        }
+    });
+
+    localStorage.setItem(
+        "ordenConfiguracionRadios",
+        JSON.stringify(ordenRadios)
+    );
 
     mostrarRadiosSeleccionadas();
 
