@@ -14983,6 +14983,261 @@ function cerrarConfiguracionPerfilJuego(){
 
 }
 
+
+/* ==========================================
+   JUEGOS POR PERFIL — FLUJO ADAPTADO DE CINE
+   ========================================== */
+
+
+function abrirAgregarJuegoPerfil(){
+
+    if(!numeroPerfilJuegoActual) return;
+
+    const popup = document.getElementById("popupAgregarJuegoPerfil");
+    const campo = document.getElementById("nombreAgregarJuegoPerfil");
+
+    if(!popup || !campo) return;
+
+    const texto = popup.querySelector("p");
+
+    if(texto){
+        if(!esMovil){
+            texto.innerHTML =
+                "✏️ <strong>Escribí el nombre exacto del juego.</strong>" +
+                "<br><br>" +
+                "🖥️ <strong>En PC:</strong> buscá el juego y copiá el enlace de la página correcta desde la barra de direcciones." +
+                "<br><br>" +
+                "↩️ Volvé a Mi Espacio y pegá el enlace cuando te lo solicitemos." +
+                "<br><br>" +
+                "❗ Si no copiás el enlace, no podremos guardar el juego.";
+        }else{
+            texto.innerHTML =
+                "✏️ <strong>Escribí el nombre exacto del juego.</strong>" +
+                "<br><br>" +
+                "📱 Comprobaremos el juego en la tienda correspondiente." +
+                "<br><br>" +
+                "📖 <strong>¿No sabés cómo compartirlo?</strong><br>" +
+                "<button type='button' onclick='abrirInstructivoCompartirApp()' style='border:none;background:none;color:#FFD700;font-size:16px;font-weight:bold;cursor:pointer;padding:0;'>Ver instructivo</button>" +
+                "<br><br>" +
+                "↩️ Después volvé a Mi Espacio para completar el proceso.";
+        }
+    }
+
+    campo.value = "";
+    popup.style.display = "flex";
+}
+
+function cerrarAgregarJuegoPerfil(){
+
+    const popup = document.getElementById("popupAgregarJuegoPerfil");
+
+    if(popup) popup.style.display = "none";
+}
+
+function validarNuevoJuegoPerfil(){
+
+    const campo = document.getElementById("nombreAgregarJuegoPerfil");
+    if(!campo) return;
+
+    const nombre = campo.value.trim();
+    if(!nombre) return;
+
+    localStorage.setItem("nombreJuegoPerfilPendiente", nombre);
+    localStorage.setItem(
+        "numeroPerfilJuegoPendiente",
+        String(numeroPerfilJuegoActual)
+    );
+    localStorage.setItem("moduloPlataformaPendiente", "juegos");
+    localStorage.setItem("validacionJuegoPerfilActiva", "true");
+
+    let urlBusqueda;
+
+    if(esAndroid){
+        urlBusqueda =
+            "https://play.google.com/store/search?q=" +
+            encodeURIComponent(nombre) + "&c=apps";
+    }else if(esAppleMobile){
+        urlBusqueda =
+            "https://apps.apple.com/us/search?term=" +
+            encodeURIComponent(nombre);
+    }else{
+        urlBusqueda =
+            "https://www.google.com/search?q=" +
+            encodeURIComponent(nombre);
+    }
+
+    window.open(urlBusqueda, "_blank");
+}
+
+/* Regresar de la búsqueda: PC o dispositivo móvil */
+document.addEventListener("visibilitychange", function(){
+
+    if(document.visibilityState !== "visible") return;
+
+    if(localStorage.getItem("moduloPlataformaPendiente") !== "juegos"){
+        return;
+    }
+
+    const nombre = localStorage.getItem("nombreJuegoPerfilPendiente");
+    const activa = localStorage.getItem("validacionJuegoPerfilActiva");
+
+    if(!nombre || activa !== "true") return;
+
+    if(!esMovil){
+
+        const popup = document.getElementById("popupAgregarJuegoPerfil");
+
+        if(popup && popup.style.display === "flex"){
+            abrirLinkJuegoPerfil();
+        }
+
+        return;
+    }
+
+    const popup = document.getElementById("popupConfirmarJuegoPerfil");
+    const mensaje = document.getElementById("mensajeConfirmarJuegoPerfil");
+
+    if(popup && mensaje){
+        mensaje.textContent =
+            esAndroid
+                ? "¿El juego que compartiste desde Google Play es el correcto?"
+                : "¿El juego que compartiste desde App Store es el correcto?";
+
+        popup.style.display = "flex";
+    }
+});
+
+/* PC: abrir la ventana para pegar el enlace */
+function abrirLinkJuegoPerfil(){
+
+    const popup = document.getElementById("popupLinkJuegoPerfil");
+    const campo = document.getElementById("urlAgregarJuegoPerfil");
+
+    if(!popup || !campo) return;
+
+    campo.value = "";
+    popup.style.display = "flex";
+}
+
+function cerrarLinkJuegoPerfil(){
+
+    const popup = document.getElementById("popupLinkJuegoPerfil");
+
+    if(popup) popup.style.display = "none";
+}
+
+/* Guardar el enlace pegado en PC */
+function guardarLinkJuegoPerfil(){
+
+    const campo = document.getElementById("urlAgregarJuegoPerfil");
+    if(!campo) return;
+
+    const url = campo.value.trim();
+    if(!url) return;
+
+    try{
+        const enlace = new URL(url);
+
+        if(enlace.protocol !== "https:" && enlace.protocol !== "http:"){
+            return;
+        }
+
+        guardarJuegoEnPerfil(enlace.href);
+
+    }catch(error){
+        return;
+    }
+}
+
+/* Móvil: confirmar el juego compartido */
+function confirmarJuegoPerfil(){
+
+    const url = localStorage.getItem("appCompartidaUrl") || "";
+
+    if(!url){
+        const mensaje = document.getElementById("mensajeConfirmarJuegoPerfil");
+
+        if(mensaje){
+            mensaje.textContent =
+                "Todavía no recibimos el enlace compartido. Volvé a compartir el juego con Mi Espacio.";
+        }
+
+        return;
+    }
+
+    guardarJuegoEnPerfil(url);
+}
+
+/* Guardado exclusivo en el perfil seleccionado */
+function guardarJuegoEnPerfil(url){
+
+    const nombre = localStorage.getItem("nombreJuegoPerfilPendiente");
+    const numero = Number(
+        localStorage.getItem("numeroPerfilJuegoPendiente")
+    );
+
+    if(!nombre || !numero || !url) return;
+
+    const clave = "juegosPerfil" + numero;
+    let juegos = [];
+
+    try{
+        juegos = JSON.parse(localStorage.getItem(clave) || "[]");
+        if(!Array.isArray(juegos)) juegos = [];
+    }catch(error){
+        juegos = [];
+    }
+
+    const duplicado = juegos.some(function(juego){
+        return juego.nombre &&
+            juego.nombre.toLowerCase() === nombre.toLowerCase();
+    });
+
+    if(duplicado){
+        const mensaje = document.getElementById("mensajeConfirmarJuegoPerfil");
+
+        if(mensaje){
+            mensaje.textContent = "Ese juego ya está guardado en este perfil.";
+        }
+
+        return;
+    }
+
+    juegos.push({
+        nombre: nombre,
+        url: url
+    });
+
+    localStorage.setItem(clave, JSON.stringify(juegos));
+
+    cancelarConfirmacionJuegoPerfil();
+    cerrarAgregarJuegoPerfil();
+
+    abrirPerfilJuego(numero);
+}
+
+/* Limpiar únicamente el proceso pendiente de Juegos */
+function cancelarConfirmacionJuegoPerfil(){
+
+    const popup = document.getElementById("popupConfirmarJuegoPerfil");
+
+    if(popup) popup.style.display = "none";
+
+    cerrarLinkJuegoPerfil();
+
+    localStorage.removeItem("nombreJuegoPerfilPendiente");
+    localStorage.removeItem("numeroPerfilJuegoPendiente");
+    localStorage.removeItem("validacionJuegoPerfilActiva");
+
+    if(localStorage.getItem("moduloPlataformaPendiente") === "juegos"){
+        localStorage.removeItem("moduloPlataformaPendiente");
+        localStorage.removeItem("appCompartidaTitulo");
+        localStorage.removeItem("appCompartidaTexto");
+        localStorage.removeItem("appCompartidaUrl");
+    }
+}
+
+
 // ===== FIN CONFIGURACION JUEGOS DEL PERFIL =====
 
 
