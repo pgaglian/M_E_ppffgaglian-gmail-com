@@ -26596,16 +26596,12 @@ function recibirAppCompartida(){
     const texto =
         parametros.get("text") || "";
 
-   const url =
-    parametros.get("url") ||
-    parametros.get("text") ||
-    "";
+    const url =
+        parametros.get("url") ||
+        parametros.get("text") ||
+        "";
 
-    if(
-        !titulo &&
-        !texto &&
-        !url
-    ){
+    if(!titulo && !texto && !url){
         return;
     }
 
@@ -26619,98 +26615,167 @@ function recibirAppCompartida(){
         texto
     );
 
-  localStorage.setItem(
-    "appCompartidaUrl",
-    url
-);
-
-const moduloDestino =
-    localStorage.getItem(
-        "moduloPlataformaPendiente"
-    ) || "cine";
-
-const nombreCompartido =
-    titulo.replace(
-        /^[ÉE]chale un vistazo a\s+/i,
-        ""
+    localStorage.setItem(
+        "appCompartidaUrl",
+        url
     );
 
-if(moduloDestino === "musica"){
-
-    const nombreMusica =
+    const moduloDestino =
         localStorage.getItem(
-            "nombrePlataformaMusicaPendiente"
-        ) || nombreCompartido;
+            "moduloPlataformaPendiente"
+        ) ||
+        (
+            localStorage.getItem(
+                "validacionJuegoPerfilActiva"
+            ) === "true" &&
+            localStorage.getItem(
+                "nombreJuegoPerfilPendiente"
+            ) &&
+            localStorage.getItem(
+                "numeroPerfilJuegoPendiente"
+            )
+                ? "juegos"
+                : "cine"
+        );
 
-    localStorage.setItem(
-        "nombrePlataformaMusicaPendiente",
-        nombreMusica
+    const nombreCompartido =
+        titulo.replace(
+            /^[ÉE]chale un vistazo a\s+/i,
+            ""
+        );
+
+    // ========================
+    // JUEGOS: FLUJO INDEPENDIENTE
+    // ========================
+
+    if(moduloDestino === "juegos"){
+
+        const popup =
+            document.getElementById(
+                "popupConfirmarJuegoPerfil"
+            );
+
+        const mensaje =
+            document.getElementById(
+                "mensajeConfirmarJuegoPerfil"
+            );
+
+        if(popup && mensaje){
+
+            mensaje.textContent =
+                esAndroid
+                    ? "¿El juego que compartiste desde Google Play es el correcto?"
+                    : "¿El juego que compartiste desde App Store es el correcto?";
+
+            popup.style.display = "flex";
+
+        }
+
+    }
+
+    // ========================
+    // MÚSICA: FLUJO INDEPENDIENTE
+    // ========================
+
+    else if(moduloDestino === "musica"){
+
+        const nombreMusica =
+            localStorage.getItem(
+                "nombrePlataformaMusicaPendiente"
+            ) || nombreCompartido;
+
+        localStorage.setItem(
+            "nombrePlataformaMusicaPendiente",
+            nombreMusica
+        );
+
+        localStorage.setItem(
+            "validacionPlataformaMusicaActiva",
+            "true"
+        );
+
+        const popup =
+            document.getElementById(
+                "popupConfirmarPlataformaMusica"
+            );
+
+        const mensaje =
+            document.getElementById(
+                "mensajeConfirmarPlataformaMusica"
+            );
+
+        if(popup && mensaje){
+
+            mensaje.textContent =
+                "¿Querés guardar la plataforma de Música que compartiste?";
+
+            mensaje.style.color = "";
+            popup.style.display = "flex";
+
+        }
+
+        const campo =
+            document.getElementById(
+                "nombreAgregarPlataformaMusica"
+            );
+
+        if(campo && titulo){
+            campo.value = nombreCompartido;
+        }
+
+    }
+
+    // ========================
+    // CINE: FLUJO INDEPENDIENTE
+    // ========================
+
+    else if(moduloDestino === "cine"){
+
+        localStorage.setItem(
+            "nombrePlataformaCinePendiente",
+            nombreCompartido
+        );
+
+        localStorage.setItem(
+            "validacionPlataformaCineActiva",
+            "true"
+        );
+
+        const popup =
+            document.getElementById(
+                "popupConfirmarPlataformaCine"
+            );
+
+        const mensaje =
+            document.getElementById(
+                "mensajeConfirmarPlataformaCine"
+            );
+
+        if(popup && mensaje){
+
+            mensaje.textContent =
+                "¿La aplicación que compartiste desde Google Play es la correcta?";
+
+            mensaje.style.color = "";
+            popup.style.display = "flex";
+
+        }
+
+        const campo =
+            document.getElementById(
+                "nombreAgregarPlataformaCine"
+            );
+
+        if(campo && titulo){
+            campo.value = nombreCompartido;
+        }
+
+    }
+
+    console.log(
+        "APP COMPARTIDA - MÓDULO:",
+        moduloDestino
     );
-
-    localStorage.setItem(
-        "validacionPlataformaMusicaActiva",
-        "true"
-    );
-
-}else{
-
-    localStorage.setItem(
-        "nombrePlataformaCinePendiente",
-        nombreCompartido
-    );
-
-    localStorage.setItem(
-        "validacionPlataformaCineActiva",
-        "true"
-    );
-
-}
-
-const esMusica =
-    moduloDestino === "musica";
-
-const popupConfirmacion =
-    document.getElementById(
-        esMusica
-            ? "popupConfirmarPlataformaMusica"
-            : "popupConfirmarPlataformaCine"
-    );
-
-const mensajeConfirmacion =
-    document.getElementById(
-        esMusica
-            ? "mensajeConfirmarPlataformaMusica"
-            : "mensajeConfirmarPlataformaCine"
-    );
-
-if(
-    popupConfirmacion &&
-    mensajeConfirmacion
-){
-
-    mensajeConfirmacion.innerHTML =
-        esMusica
-            ? "¿Querés guardar la plataforma de Música que compartiste?"
-            : "¿La aplicación que compartiste desde Google Play es la correcta?";
-
-    mensajeConfirmacion.style.color = "";
-
-    popupConfirmacion.style.display = "flex";
-
-}
-
-const campo =
-    document.getElementById(
-        moduloDestino === "musica"
-            ? "nombreAgregarPlataformaMusica"
-            : "nombreAgregarPlataformaCine"
-    );
-
-if(campo && titulo){
-
-    campo.value = nombreCompartido;
-
-}
 
     console.log(
         "APP COMPARTIDA - TITULO:",
@@ -26728,6 +26793,7 @@ if(campo && titulo){
     );
 
 }
+
 
 recibirAppCompartida();
 
