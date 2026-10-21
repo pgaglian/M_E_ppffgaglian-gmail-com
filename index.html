@@ -15315,12 +15315,25 @@ function guardarJuegoEnPerfil(url){
         url: url
     });
 
-    localStorage.setItem(clave, JSON.stringify(juegos));
+localStorage.setItem(clave, JSON.stringify(juegos));
 
-    cancelarConfirmacionJuegoPerfil();
-    cerrarAgregarJuegoPerfil();
+// Cerrar la confirmación
+const popup = document.getElementById("popupConfirmarJuegoPerfil");
 
-    abrirPerfilJuego(numero);
+if(popup){
+    popup.style.display = "none";
+}
+
+// Limpiar los datos pendientes de Juegos
+cancelarConfirmacionJuegoPerfil();
+cerrarAgregarJuegoPerfil();
+
+// Volver al perfil donde se guardó el juego
+numeroPerfilJuegoActual = numero;
+
+document.getElementById("Juegos").style.display = "none";
+
+abrirPerfilJuego(numero);
 }
 
 /* Limpiar únicamente el proceso pendiente de Juegos */
@@ -15350,6 +15363,9 @@ function cancelarConfirmacionJuegoPerfil(){
 
 function mostrar(id){
 
+    document.getElementById("pantallaPerfilJuego").style.display = "none";
+    document.getElementById("Juegos").style.display = "none";
+
     // Ocultar portada principal
 
     document.querySelector("header").style.display="none";
@@ -15358,7 +15374,7 @@ function mostrar(id){
 
     document.getElementById("acciones").style.display="none";
 
-document.getElementById("btnVolverAndroid").style.display="none";
+    document.getElementById("btnVolverAndroid").style.display="none";
 
     document.getElementById("tituloAcciones").style.display="none";
 
