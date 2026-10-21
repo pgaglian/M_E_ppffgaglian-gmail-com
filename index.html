@@ -14918,6 +14918,60 @@ if(mensajeError){
 
 let numeroPerfilJuegoActual = null;
 
+function cargarJuegosPerfil(numero){
+
+    const lista = document.getElementById("listaJuegosPerfilSeleccionado");
+
+    if(!lista) return;
+
+    lista.innerHTML = "";
+
+    const clave = "juegosPerfil" + numero;
+    let juegos = [];
+
+    try{
+        juegos = JSON.parse(localStorage.getItem(clave) || "[]");
+
+        if(!Array.isArray(juegos)){
+            juegos = [];
+        }
+
+    }catch(error){
+        juegos = [];
+    }
+
+    if(juegos.length === 0){
+        lista.textContent = "Todavía no hay juegos guardados en este perfil.";
+        return;
+    }
+
+    juegos.forEach(function(juego){
+
+        const tarjeta = document.createElement("div");
+
+        tarjeta.style.cssText =
+            "background:#1d1d1d;" +
+            "border:1px solid #555;" +
+            "border-radius:12px;" +
+            "padding:14px;" +
+            "margin:10px 0;";
+
+        const nombre = document.createElement("p");
+        nombre.textContent = "🎮 " + (juego.nombre || "Juego");
+        tarjeta.appendChild(nombre);
+
+        const enlace = document.createElement("a");
+        enlace.textContent = "▶️ Abrir juego";
+        enlace.href = juego.url;
+        enlace.target = "_blank";
+        enlace.rel = "noopener noreferrer";
+
+        tarjeta.appendChild(enlace);
+        lista.appendChild(tarjeta);
+
+    });
+}
+
 function abrirPerfilJuego(numero){
 
     numeroPerfilJuegoActual = numero;
@@ -14937,7 +14991,7 @@ function abrirPerfilJuego(numero){
         ? "🎮 " + nombrePerfil.textContent.trim()
         : "🎮 Perfil" + numero;
 
-    lista.innerHTML = "";
+   cargarJuegosPerfil(numero);
 
     perfiles.style.display = "none";
     pantalla.style.display = "block";
@@ -15180,17 +15234,39 @@ function guardarLinkJuegoPerfil(){
     }
 }
 
-/* Móvil: confirmar el juego compartido */
 function confirmarJuegoPerfil(){
 
-    const url = localStorage.getItem("appCompartidaUrl") || "";
+    const pendiente =
+        localStorage.getItem("nombreJuegoPerfilPendiente");
 
-    if(!url){
-        const mensaje = document.getElementById("mensajeConfirmarJuegoPerfil");
+    const numero = Number(
+        localStorage.getItem("numeroPerfilJuegoPendiente")
+    );
+
+    if(!pendiente || !numero){
+        const mensaje = document.getElementById(
+            "mensajeConfirmarJuegoPerfil"
+        );
 
         if(mensaje){
             mensaje.textContent =
-                "Todavía no recibimos el enlace compartido. Volvé a compartir el juego con Mi Espacio.";
+                "No encontramos el perfil del juego. Volvé a intentarlo.";
+        }
+
+        return;
+    }
+
+    const url =
+        localStorage.getItem("appCompartidaUrl") || "";
+
+    if(!url){
+        const mensaje = document.getElementById(
+            "mensajeConfirmarJuegoPerfil"
+        );
+
+        if(mensaje){
+            mensaje.textContent =
+                "Todavía no recibimos el enlace. Volvé a compartir el juego con Mi Espacio.";
         }
 
         return;
