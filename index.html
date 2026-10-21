@@ -15317,21 +15317,8 @@ function guardarJuegoEnPerfil(url){
 
 localStorage.setItem(clave, JSON.stringify(juegos));
 
-// Cerrar la confirmación
-const popup = document.getElementById("popupConfirmarJuegoPerfil");
-
-if(popup){
-    popup.style.display = "none";
-}
-
-// Limpiar los datos pendientes de Juegos
 cancelarConfirmacionJuegoPerfil();
 cerrarAgregarJuegoPerfil();
-
-// Volver al perfil donde se guardó el juego
-numeroPerfilJuegoActual = numero;
-
-document.getElementById("Juegos").style.display = "none";
 
 abrirPerfilJuego(numero);
 }
@@ -15363,8 +15350,7 @@ function cancelarConfirmacionJuegoPerfil(){
 
 function mostrar(id){
 
-    document.getElementById("pantallaPerfilJuego").style.display = "none";
-    document.getElementById("Juegos").style.display = "none";
+   
 
     // Ocultar portada principal
 
