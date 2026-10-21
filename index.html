@@ -14993,38 +14993,69 @@ function abrirAgregarJuegoPerfil(){
 
     if(!numeroPerfilJuegoActual) return;
 
-    const popup = document.getElementById("popupAgregarJuegoPerfil");
-    const campo = document.getElementById("nombreAgregarJuegoPerfil");
+    const popup =
+        document.getElementById("popupAgregarJuegoPerfil");
+
+    const campo =
+        document.getElementById("nombreAgregarJuegoPerfil");
 
     if(!popup || !campo) return;
 
-    const texto = popup.querySelector("p");
+    popup.style.display = "flex";
 
-    if(texto){
+    const textoAgregarJuego =
+        popup.querySelector("p");
+
+    if(textoAgregarJuego){
+
         if(!esMovil){
-            texto.innerHTML =
-                "✏️ <strong>Escribí el nombre exacto del juego.</strong>" +
+
+            textoAgregarJuego.innerHTML =
+                "✏️ <strong>Escribí el nombre exacto del juego</strong>" +
+                " tal como aparece en tu dispositivo." +
                 "<br><br>" +
-                "🖥️ <strong>En PC:</strong> buscá el juego y copiá el enlace de la página correcta desde la barra de direcciones." +
+
+                "⚠️ Vas a salir de Mi Espacio para comprobar el juego." +
                 "<br><br>" +
-                "↩️ Volvé a Mi Espacio y pegá el enlace cuando te lo solicitemos." +
+
+                "🖥️ <strong>En PC:</strong> cuando encuentres la página correcta," +
+                " copiá el enlace de la barra de direcciones." +
                 "<br><br>" +
-                "❗ Si no copiás el enlace, no podremos guardar el juego.";
+
+                "↩️ Después volvé a Mi Espacio y pegá el enlace cuando te lo solicitemos." +
+                "<br><br>" +
+
+                "❗ <strong>Si no copiás el enlace, no podremos guardar el juego.</strong>";
+
         }else{
-            texto.innerHTML =
-                "✏️ <strong>Escribí el nombre exacto del juego.</strong>" +
+
+            textoAgregarJuego.innerHTML =
+                "✏️ <strong>Escribí el nombre exacto del juego</strong>" +
+                " tal como aparece en tu dispositivo." +
                 "<br><br>" +
-                "📱 Comprobaremos el juego en la tienda correspondiente." +
+
+                "⚠️ Vas a salir de Mi Espacio para comprobar" +
+                " el juego en Google Play o App Store y poder compartirlo con Mi Espacio." +
                 "<br><br>" +
-                "📖 <strong>¿No sabés cómo compartirlo?</strong><br>" +
-                "<button type='button' onclick='abrirInstructivoCompartirApp()' style='border:none;background:none;color:#FFD700;font-size:16px;font-weight:bold;cursor:pointer;padding:0;'>Ver instructivo</button>" +
+
+                "📖 <strong>¿No sabés cómo compartirlo?</strong>" +
+                "<br>" +
+                "👉 <button type='button' onclick='abrirInstructivoCompartirApp()' " +
+                "style='border:none;background:none;color:#FFD700;font-size:16px;font-weight:bold;cursor:pointer;padding:0;'>" +
+                "Ver instructivo</button>" +
                 "<br><br>" +
-                "↩️ Después volvé a Mi Espacio para completar el proceso.";
+
+                "↩️ <strong>Después volvé a Mi Espacio para confirmar.</strong>" +
+                "<br><br>" +
+
+                "❗ <strong>Si no volvés a Mi Espacio, el juego no se guardará.</strong>" +
+                "<br><br>" +
+
+                "🔐 <strong>Esta comprobación se hace una sola vez.</strong>";
         }
     }
 
     campo.value = "";
-    popup.style.display = "flex";
 }
 
 function cerrarAgregarJuegoPerfil(){
