@@ -15315,13 +15315,38 @@ function guardarJuegoEnPerfil(url){
         url: url
     });
 
+
 localStorage.setItem(clave, JSON.stringify(juegos));
 
-cancelarConfirmacionJuegoPerfil();
-cerrarAgregarJuegoPerfil();
+const mensaje =
+    document.getElementById("mensajeConfirmarJuegoPerfil");
 
-abrirPerfilJuego(numero);
+if(mensaje){
+    mensaje.textContent = "✔ Juego guardado en el perfil";
+    mensaje.style.color = "#32CD32";
 }
+
+setTimeout(function(){
+
+    cancelarConfirmacionJuegoPerfil();
+    cerrarAgregarJuegoPerfil();
+
+    const urlLimpia =
+        window.location.pathname +
+        window.location.hash;
+
+    window.history.replaceState(
+        window.history.state,
+        document.title,
+        urlLimpia
+    );
+
+    abrirPerfilJuego(numero);
+
+}, 1000);
+
+}
+
 
 /* Limpiar únicamente el proceso pendiente de Juegos */
 function cancelarConfirmacionJuegoPerfil(){
