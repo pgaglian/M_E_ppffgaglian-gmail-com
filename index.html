@@ -15561,11 +15561,8 @@ function cancelarConfirmacionJuegoPerfil(){
 
 // ===== FIN CONFIGURACION JUEGOS DEL PERFIL =====
 
-
 function mostrar(id){
-
    
-
     // Ocultar portada principal
 
     document.querySelector("header").style.display="none";
@@ -15605,6 +15602,8 @@ function mostrar(id){
     document.getElementById("Cine").style.display="none";
 
     document.getElementById("Juegos").style.display="none";
+    const pantallaPerfilJuego = document.getElementById("pantallaPerfilJuego");
+if(pantallaPerfilJuego) pantallaPerfilJuego.style.display = "none";
 
 // Mostrar módulo elegido
 
