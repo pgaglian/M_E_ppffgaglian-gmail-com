@@ -15202,6 +15202,7 @@ function guardarSeleccionJuegosPerfil(){
 }
 
 
+
 function cerrarConfiguracionPerfilJuego(){
 
     const popup = document.getElementById("popupConfiguracionPerfilJuego");
@@ -15210,7 +15211,16 @@ function cerrarConfiguracionPerfilJuego(){
         popup.style.display = "none";
     }
 
+    const numero = numeroPerfilJuegoActual;
+
+    if(!numero) return;
+
+    mostrar("Juegos");
+
+    abrirPerfilJuego(numero);
+
 }
+
 
 
 /* ==========================================
@@ -15502,7 +15512,6 @@ if(mensaje){
     mensaje.style.color = "#32CD32";
 }
 
-
 setTimeout(function(){
 
     cancelarConfirmacionJuegoPerfil();
@@ -15518,17 +15527,9 @@ setTimeout(function(){
         urlLimpia
     );
 
-    const pantallaPerfil =
-        document.getElementById("pantallaPerfilJuego");
-
-    if(pantallaPerfil){
-        pantallaPerfil.style.display = "none";
-    }
-
-    mostrar("Juegos");
-
     abrirPerfilJuego(numero);
 
+    
     abrirConfiguracionPerfilJuego();
 
 }, 1000);
