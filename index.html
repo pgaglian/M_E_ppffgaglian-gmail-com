@@ -15502,6 +15502,7 @@ if(mensaje){
     mensaje.style.color = "#32CD32";
 }
 
+
 setTimeout(function(){
 
     cancelarConfirmacionJuegoPerfil();
@@ -15517,9 +15518,17 @@ setTimeout(function(){
         urlLimpia
     );
 
+    const pantallaPerfil =
+        document.getElementById("pantallaPerfilJuego");
+
+    if(pantallaPerfil){
+        pantallaPerfil.style.display = "none";
+    }
+
+    mostrar("Juegos");
+
     abrirPerfilJuego(numero);
 
-    
     abrirConfiguracionPerfilJuego();
 
 }, 1000);
