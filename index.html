@@ -15144,6 +15144,13 @@ function abrirConfiguracionPerfilJuego(){
 
     if(!popup || !numeroPerfilJuegoActual) return;
 
+        const mensaje = document.getElementById("mensajeJuego");
+
+    if(mensaje){
+        mensaje.textContent = "";
+        mensaje.style.display = "none";
+    }
+
     cargarConfiguracionJuegosPerfil(numeroPerfilJuegoActual);
 
     popup.style.display = "flex";
