@@ -4115,7 +4115,16 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
             Administrá los juegos de este perfil.
         </p>
 
-        <button
+     
+
+        <div id="listaConfiguracionJuegosPerfil"
+             style="
+             display:grid;
+             gap:10px;
+             margin-top:15px;
+             "></div>
+
+   <button
             type="button"
             onclick="abrirAgregarJuegoPerfil()"
             style="
@@ -4130,15 +4139,6 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
             ➕ Agregar juego
         </button>
 
-        <div id="listaConfiguracionJuegosPerfil"
-             style="
-             display:grid;
-             gap:10px;
-             margin-top:15px;
-             "></div>
-
-
-
 <button
     type="button"
     onclick="guardarSeleccionJuegosPerfil(); cerrarConfiguracionPerfilJuego()"
@@ -4152,7 +4152,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
     border-radius:10px;
     text-align:center;
     ">
-    💾 Guardar Juego
+    💾 Guardar juego
 </button>
 
 
@@ -15239,6 +15239,34 @@ function abrirAgregarJuegoPerfil(){
         document.getElementById("nombreAgregarJuegoPerfil");
 
     if(!popup || !campo) return;
+
+        const clave = "juegosPerfil" + numeroPerfilJuegoActual;
+    let juegos = [];
+
+    try{
+        juegos = JSON.parse(localStorage.getItem(clave) || "[]");
+
+        if(!Array.isArray(juegos)){
+            juegos = [];
+        }
+
+    }catch(error){
+        juegos = [];
+    }
+
+    if(juegos.length >= 10){
+
+        const mensaje = document.getElementById("mensajeJuego");
+
+        if(mensaje){
+            mensaje.textContent =
+                "⚠ Alcanzaste el máximo de 10 juegos para este perfil. Eliminá uno para agregar otro.";
+            mensaje.style.color = "#FF4444";
+            mensaje.style.display = "block";
+        }
+
+        return;
+    }
 
     popup.style.display = "flex";
 
