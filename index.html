@@ -15508,22 +15508,37 @@ function guardarJuegoEnPerfil(url){
     }catch(error){
         juegos = [];
     }
+    const mensajeJuegoDuplicado =
+        document.getElementById("mensajeConfirmarJuegoPerfil");
 
     const duplicado = juegos.some(function(juego){
         return juego.nombre &&
-            juego.nombre.toLowerCase() === nombre.toLowerCase();
+            juego.nombre.trim().toLowerCase() === nombre.trim().toLowerCase();
     });
 
     if(duplicado){
-        const mensaje = document.getElementById("mensajeConfirmarJuegoPerfil");
 
-        if(mensaje){
-            mensaje.textContent = "Ese juego ya está guardado en este perfil.";
+        if(mensajeJuegoDuplicado){
+            mensajeJuegoDuplicado.textContent =
+                "⚠ Ese juego ya está guardado en este perfil.";
+            mensajeJuegoDuplicado.style.color = "#FFD700";
+            mensajeJuegoDuplicado.style.display = "block";
         }
 
         return;
     }
 
+    if(juegos.length >= 10){
+
+        if(mensajeJuegoDuplicado){
+            mensajeJuegoDuplicado.textContent =
+                "⚠ Ya tenés 10 juegos en este perfil. Eliminá uno para agregar otro.";
+            mensajeJuegoDuplicado.style.color = "#FFD700";
+            mensajeJuegoDuplicado.style.display = "block";
+        }
+
+        return;
+    }
     juegos.push({
         nombre: nombre,
         url: url
@@ -15532,12 +15547,14 @@ function guardarJuegoEnPerfil(url){
 
 localStorage.setItem(clave, JSON.stringify(juegos));
 
-const mensaje =
+
+
+const mensajeGuardado =
     document.getElementById("mensajeConfirmarJuegoPerfil");
 
-if(mensaje){
-    mensaje.textContent = "✔ Juego guardado en el perfil";
-    mensaje.style.color = "#32CD32";
+if(mensajeGuardado){
+    mensajeGuardado.textContent = "✔ Juego guardado en el perfil";
+    mensajeGuardado.style.color = "#32CD32";
 }
 
 setTimeout(function(){
