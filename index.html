@@ -15368,18 +15368,106 @@ function cargarJuegosPerfil(numero){
         filaIcono.appendChild(nombre);
         tarjeta.appendChild(filaIcono);
 
-        const enlace = document.createElement("a");
-        enlace.textContent = "▶️ Abrir juego";
-        enlace.href = juego.url;
-        enlace.target = "_blank";
-        enlace.rel = "noopener noreferrer";
+                tarjeta.style.cursor = "pointer";
 
-        tarjeta.appendChild(enlace);
+        tarjeta.onclick = function(){
+            mostrarAvisoSalidaJuego(juego.url);
+        };
+
         lista.appendChild(tarjeta);
 
     });
 
 }
+
+
+function mostrarAvisoSalidaJuego(url){
+
+    if(!url){
+        return;
+    }
+
+    const fondo = document.createElement("div");
+    fondo.id = "popupSalidaJuego";
+
+    fondo.style.position = "fixed";
+    fondo.style.inset = "0";
+    fondo.style.background = "rgba(0,0,0,0.75)";
+    fondo.style.display = "flex";
+    fondo.style.alignItems = "center";
+    fondo.style.justifyContent = "center";
+    fondo.style.zIndex = "99999";
+    fondo.style.padding = "20px";
+    fondo.style.boxSizing = "border-box";
+
+    const ventana = document.createElement("div");
+    ventana.className = "card";
+    ventana.style.width = "min(92%,450px)";
+    ventana.style.padding = "25px";
+    ventana.style.borderRadius = "20px";
+    ventana.style.textAlign = "center";
+
+    ventana.innerHTML = `
+        <div style="font-size:36px;margin-bottom:10px;">
+            🎮
+        </div>
+
+        <h3>Estás saliendo de Mi Espacio</h3>
+
+        <p>
+            Vas a salir de Mi Espacio para ingresar al juego.
+        </p>
+
+        <p style="font-size:13px;line-height:19px;opacity:.85;">
+            Mi Espacio no administra tu cuenta,
+            contraseña, suscripción, pagos ni
+            las condiciones del servicio.
+        </p>
+
+        <p style="font-size:13px;line-height:19px;opacity:.85;">
+            Es responsabilidad del usuario verificar
+            que esté accediendo al sitio o aplicación
+            oficial del proveedor antes de ingresar
+            datos personales o realizar cualquier operación.
+        </p>
+
+        <div style="
+            display:flex;
+            justify-content:center;
+            gap:12px;
+            margin-top:20px;
+            flex-wrap:wrap;
+        ">
+            <button type="button" id="cancelarSalidaJuego"
+                style="padding:11px 18px;border:none;border-radius:10px;cursor:pointer;font-weight:bold;">
+                Cancelar
+            </button>
+
+            <button type="button" id="continuarSalidaJuego"
+                style="padding:11px 18px;background:#FFD700;color:#000;border:none;border-radius:10px;cursor:pointer;font-weight:bold;">
+                Continuar →
+            </button>
+        </div>
+    `;
+
+    document.body.appendChild(fondo);
+    fondo.appendChild(ventana);
+
+    document.getElementById("cancelarSalidaJuego").onclick = function(){
+        fondo.remove();
+    };
+
+    document.getElementById("continuarSalidaJuego").onclick = function(){
+        fondo.remove();
+
+        window.open(
+            url,
+            "_blank",
+            "noopener,noreferrer"
+        );
+    };
+}
+
 
 function cargarConfiguracionJuegosPerfil(numero){
 
