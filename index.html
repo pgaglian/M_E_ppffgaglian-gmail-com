@@ -15174,83 +15174,93 @@ function cargarConfiguracionJuegosPerfil(numero){
             "cursor:pointer;" +
             "flex-shrink:0;";
 
+        
         editar.addEventListener("click", function(){
 
-            const nombreActual = juego.nombre || "Juego";
+            const campo = document.createElement("input");
 
-            const nuevoNombre = prompt(
-                "Ingresá el nuevo nombre del juego:",
-                nombreActual
-            );
+            campo.type = "text";
+            campo.value = juego.nombre || "Juego";
+            campo.maxLength = 60;
 
-            if(nuevoNombre === null) return;
+            campo.style.cssText =
+                "flex:1;" +
+                "min-width:0;" +
+                "padding:6px;" +
+                "border-radius:6px;";
 
-            const nombreLimpio = nuevoNombre.trim();
+            const guardar = document.createElement("button");
+            guardar.type = "button";
+            guardar.textContent = "✔️";
+            guardar.title = "Guardar nombre";
 
-                        if(!nombreLimpio){
+            guardar.addEventListener("click", function(){
+
+                const nombreLimpio = campo.value.trim();
                 const mensaje = document.getElementById("mensajeJuego");
 
-                if(mensaje){
-                    mensaje.textContent = "⚠ El nombre no puede quedar vacío.";
-                    mensaje.style.color = "#FFD700";
-                    mensaje.style.display = "block";
-                    setTimeout(function(){
-                    mensaje.style.display = "none";
-                    }, 1000);
-                }
+                function mostrarMensajeJuego(texto){
+                    if(!mensaje) return;
 
-                return;
-            }
-
-            let listaActual = [];
-
-            try{
-                listaActual = JSON.parse(
-                    localStorage.getItem(clave) || "[]"
-                );
-
-                if(!Array.isArray(listaActual)){
-                    listaActual = [];
-                }
-
-            }catch(error){
-                listaActual = [];
-            }
-
-            const nombreNormalizado = nombreLimpio.toLowerCase();
-
-            const duplicado = listaActual.some(function(otroJuego, otroIndice){
-                return otroIndice !== indice &&
-                    otroJuego.nombre &&
-                    otroJuego.nombre.trim().toLowerCase() === nombreNormalizado;
-            });
-
-             if(duplicado){
-                const mensaje = document.getElementById("mensajeJuego");
-
-                if(mensaje){
-                    mensaje.textContent = "⚠ Ese juego ya está guardado en este perfil.";
+                    mensaje.textContent = texto;
                     mensaje.style.color = "#FFD700";
                     mensaje.style.display = "block";
 
                     setTimeout(function(){
                         mensaje.style.display = "none";
-                    }, 1000);
+                    }, 2000);
                 }
 
-                return;
-            }
+                if(!nombreLimpio){
+                    mostrarMensajeJuego("⚠ El nombre no puede quedar vacío.");
+                    return;
+                }
 
-            listaActual[indice].nombre = nombreLimpio;
+                let listaActual = [];
 
-            localStorage.setItem(
-                clave,
-                JSON.stringify(listaActual)
-            );
+                try{
+                    listaActual = JSON.parse(
+                        localStorage.getItem(clave) || "[]"
+                    );
 
-            cargarConfiguracionJuegosPerfil(numero);
-            cargarJuegosPerfil(numero);
+                    if(!Array.isArray(listaActual)){
+                        listaActual = [];
+                    }
+                }catch(error){
+                    listaActual = [];
+                }
 
+                const nombreNormalizado = nombreLimpio.toLowerCase();
+
+                const duplicado = listaActual.some(function(otroJuego, otroIndice){
+                    return otroIndice !== indice &&
+                        otroJuego.nombre &&
+                        otroJuego.nombre.trim().toLowerCase() === nombreNormalizado;
+                });
+
+                if(duplicado){
+                    mostrarMensajeJuego(
+                        "⚠ Ese juego ya está guardado en este perfil."
+                    );
+                    return;
+                }
+
+                listaActual[indice].nombre = nombreLimpio;
+
+                localStorage.setItem(
+                    clave,
+                    JSON.stringify(listaActual)
+                );
+
+                cargarConfiguracionJuegosPerfil(numero);
+                cargarJuegosPerfil(numero);
+            });
+
+            fila.replaceChild(campo, nombre);
+            fila.replaceChild(guardar, editar);
+
+            campo.focus();
+            campo.select();
         });
 
         const eliminar = document.createElement("button");
