@@ -443,10 +443,6 @@ button{
 }
 
 
-#viewer{display:none;position:fixed;inset:0;background:#000;z-index:999;flex-direction:column}
-#viewerHeader{background:#111;padding:10px;display:flex;justify-content:space-between}
-#pdfFrame{flex:1;border:none;width:100%}
-
 /* ===== TARJETAS PRONOSTICO CLIMA ===== */
 
 .tarjetaHoraClima{
@@ -2757,8 +2753,10 @@ box-shadow:0 6px 18px rgba(0,0,0,.45);
 <div class="grid" id="menu">
 
 
+
 <div class="card" id="ambienteBiblioteca" data-titulo="📚 Biblioteca"
-onclick="mostrar('Libros')">
+onclick="mostrar('Biblioteca')">
+
 
 <h2>📚 Biblioteca</h2>
 <p>Libros y Documentos</p>
@@ -3675,6 +3673,68 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 </div>
 
 <!-- ===== FIN MODULO JUEGOS: PERFILES ===== -->
+
+
+<!-- ===== POPUP ELIMINAR PERFIL DE JUEGOS ===== -->
+
+<div id="popupEliminarPerfilJuego"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:99999;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     box-sizing:border-box;
+     ">
+
+    <div style="
+        width:min(92%,420px);
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:25px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        color:white;
+        text-align:center;
+        ">
+
+        <h2 style="margin:0 0 20px;color:#FFD700;">
+            🗑️ Eliminar perfil
+        </h2>
+
+        <p id="mensajeEliminarPerfilJuego"
+           style="color:#ccc;font-size:16px;line-height:23px;">
+        </p>
+
+        <div style="
+            display:flex;
+            justify-content:center;
+            gap:12px;
+            margin-top:25px;
+            flex-wrap:wrap;
+        ">
+
+            <button type="button"
+                    onclick="eliminarPerfilJuego()">
+                🗑️ Sí, eliminar
+            </button>
+
+            <button type="button"
+                    onclick="cancelarEliminarPerfilJuego()">
+                ❌ No, cancelar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN POPUP ELIMINAR PERFIL DE JUEGOS ===== -->
+
 
 <!-- ===== PANTALLA PERFIL JUEGOS ===== -->
 
@@ -7216,10 +7276,21 @@ font-size:18px;
 </div>
 
 
-<div id="Libros" style="display:none">
-<button onclick="inicio()">⬅ Volver</button>
-<div id="listaLibros" class="grid"></div>
+<!-- ===== NUEVA BIBLIOTECA ===== -->
+
+<div id="Biblioteca" style="display:none; min-height:100vh;">
+
+    <button onclick="inicio()">⬅ Volver</button>
+
+    <h2 style="text-align:center; color:#FFD700;">
+        📚 Biblioteca
+    </h2>
+
+    <div id="contenidoBiblioteca"></div>
+
 </div>
+
+<!-- ===== FIN NUEVA BIBLIOTECA ===== -->
 
 
 <div id="Musica" style="display:none">
@@ -7837,33 +7908,7 @@ function copiarDatoColaboracion(dato){
 
 </div>
 
-
-<div id="viewer">
-
-<div id="viewerHeader">
-
-    <span id="tituloPdf"></span>
-
-    <div>
-
-        <button onclick="cerrarPDF()">
-            ✖ Cerrar
-        </button>
-
-    </div>
-
-</div>
-<iframe id="pdfFrame"></iframe>
-</div>
-
 <script>
-
-const Libros=[
-{titulo:"El Hobbit"},
-{titulo:"La comunidad del anillo"},
-{titulo:"Las dos torres"},
-{titulo:"El retorno del rey"}
-];
 
 
 //=========================================================
@@ -7909,16 +7954,6 @@ let ultimaLatitud = null;
 let ultimaLongitud = null;
 let direccionManual = null;
 let zonaHorariaClima = null;
-
-const lista=document.getElementById("listaLibros");
-Libros.forEach(l=>{
-lista.innerHTML+=`
-<div class="card">
-<img src="Libros/${l.titulo}.jpg" onerror="this.src='https://via.placeholder.com/180x260?text=Sin+Portada'">
-<h3>${l.titulo}</h3>
-<button onclick="abrirPDF('Libros/${l.titulo}.pdf','${l.titulo}')">📄 Leer PDF</button>
-</div>`;
-});
 
 
 // ===== CONFIGURACION TIEMPOS ENTRENAMIENTO =====
@@ -15037,6 +15072,93 @@ function cargarNombresPerfilesJuego(){
 }
 
 
+/* ===== ELIMINAR PERFIL DE JUEGOS ===== */
+
+let numeroPerfilJuegoAEliminar = null;
+
+function confirmarBorrarPerfilJuego(numero){
+
+    numeroPerfilJuegoAEliminar = numero;
+
+    const popup = document.getElementById(
+        "popupEliminarPerfilJuego"
+    );
+
+    const mensaje = document.getElementById(
+        "mensajeEliminarPerfilJuego"
+    );
+
+    if(!popup || !mensaje) return;
+
+    const nombres = JSON.parse(
+        localStorage.getItem("nombresPerfilesJuego") || "null"
+    ) || [
+        "Perfil1",
+        "Perfil2",
+        "Perfil3",
+        "Perfil4"
+    ];
+
+    const nombre = nombres[numero - 1] || "Perfil" + numero;
+
+    mensaje.textContent =
+        "¿Estás seguro de que querés eliminar el perfil «" +
+        nombre +
+        "»? Se perderán todos los juegos y la información guardada en este perfil. Esta acción no se puede deshacer.";
+
+    popup.style.display = "flex";
+}
+
+function cancelarEliminarPerfilJuego(){
+
+    const popup = document.getElementById(
+        "popupEliminarPerfilJuego"
+    );
+
+    if(popup){
+        popup.style.display = "none";
+    }
+
+    numeroPerfilJuegoAEliminar = null;
+}
+
+function eliminarPerfilJuego(){
+
+    const numero = numeroPerfilJuegoAEliminar;
+
+    if(numero === null || numero < 1 || numero > 4){
+        cancelarEliminarPerfilJuego();
+        return;
+    }
+
+    // Eliminar únicamente los juegos de este perfil
+    localStorage.removeItem("juegosPerfil" + numero);
+
+    // Restablecer el nombre del perfil
+    const nombres = JSON.parse(
+        localStorage.getItem("nombresPerfilesJuego") || "null"
+    ) || [
+        "Perfil1",
+        "Perfil2",
+        "Perfil3",
+        "Perfil4"
+    ];
+
+    nombres[numero - 1] = "Perfil" + numero;
+
+    localStorage.setItem(
+        "nombresPerfilesJuego",
+        JSON.stringify(nombres)
+    );
+
+    cancelarEliminarPerfilJuego();
+
+    cargarNombresPerfilesJuego();
+}
+
+/* ===== FIN ELIMINAR PERFIL DE JUEGOS ===== */
+
+
 let numeroPerfilJuegoPendiente = null;
 
 function cerrarAvisoPerfilJuego(){
@@ -16279,7 +16401,7 @@ function mostrar(id){
 
     // Ocultar módulos
 
-    document.getElementById("Libros").style.display="none";
+    document.getElementById("Biblioteca").style.display="none";
 
     document.getElementById("Musica").style.display="none";
 
@@ -16379,7 +16501,7 @@ function inicio(){
 
    
 
-    document.getElementById("Libros").style.display="none";
+    document.getElementById("Biblioteca").style.display="none";
     document.getElementById("Musica").style.display="none";
     document.getElementById("Calendario").style.display="none";
     document.getElementById("Clima").style.display="none";
@@ -16389,7 +16511,8 @@ function inicio(){
    document.getElementById("Entrenamiento").style.display="none";
    document.getElementById("Cine").style.display="none";
    document.getElementById("Juegos").style.display="none";
-   document.getElementById("pantallaPerfilJuego").style.display="none";
+   const pantallaPerfilJuego = document.getElementById("pantallaPerfilJuego");
+   if(pantallaPerfilJuego) pantallaPerfilJuego.style.display = "none";
    
 
 
@@ -16445,23 +16568,6 @@ function inicio(){
     }
 
 }
-
-
-function abrirPDF(pdf,titulo){
-
-    document.getElementById("tituloPdf").textContent = titulo;
-    document.getElementById("pdfFrame").src = pdf;
-    document.getElementById("viewer").style.display = "flex";
-   
-}
-
-function cerrarPDF(){
-
-    document.getElementById("viewer").style.display = "none";
-    document.getElementById("pdfFrame").src = "";
-
-}
-
 
 
 //========================
@@ -16814,7 +16920,7 @@ function mostrarMenuAndroid(seccion, registrarHistorial = true){
 
     if(seccion=="acciones"){
 
-document.getElementById("Libros").style.display="none";
+document.getElementById("Biblioteca").style.display="none";
 document.getElementById("Musica").style.display="none";
 document.getElementById("Calendario").style.display="none";
 document.getElementById("Clima").style.display="none";
@@ -16837,7 +16943,7 @@ document.getElementById("Entrenamiento").style.display="none";
 
     if(seccion=="ambientes"){
 
-document.getElementById("Libros").style.display="none";
+document.getElementById("Biblioteca").style.display="none";
 document.getElementById("Musica").style.display="none";
 document.getElementById("Calendario").style.display="none";
 document.getElementById("Clima").style.display="none";
