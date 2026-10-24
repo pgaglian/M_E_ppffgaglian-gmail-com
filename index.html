@@ -1930,17 +1930,22 @@ body.eclipse header{
     position:fixed;
     right:20px;
     bottom:110px;
-    width:340px;
+
+    width:420px;
     max-width:calc(100vw - 28px);
-    max-height:70vh;
+    height:auto;
+    max-height:75vh;
     overflow-y:auto;
+
     box-sizing:border-box;
-    padding:18px;
+    padding:22px;
+
     background:linear-gradient(145deg,#252525,#101010);
     color:#fff;
     border:1px solid #D4AF37;
     border-radius:18px;
     box-shadow:0 8px 30px rgba(0,0,0,.65);
+
     z-index:999999;
     display:none;
 }
@@ -1952,6 +1957,51 @@ body.eclipse header{
     text-align:center;
 }
 
+
+/* ===== BARRA SUPERIOR MI ESPACIO IA ===== */
+
+#barraMiEspacioIA{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:12px;
+    cursor:move;
+    user-select:none;
+    touch-action:none;
+}
+
+#barraMiEspacioIA h2{
+    margin:0;
+    flex:1;
+    text-align:left;
+    font-size:20px;
+}
+
+.controlesMiEspacioIA{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    flex-shrink:0;
+}
+
+.controlesMiEspacioIA button{
+    width:30px;
+    height:30px;
+    padding:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid #D4AF37;
+    border-radius:7px;
+    background:#252525;
+    color:#D4AF37;
+    font-size:21px;
+    line-height:1;
+    cursor:pointer;
+}
+
+
 #panelMiEspacioIA .iaSubtitulo{
     margin:0 0 14px;
     color:#ddd;
@@ -1959,16 +2009,42 @@ body.eclipse header{
     text-align:center;
 }
 
+#respuestaMiEspacioIA{
+    text-align:center;
+    margin:14px 0;
+}
+
+#entradaMiEspacioIA{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    width:100%;
+    box-sizing:border-box;
+}
+
+#textoMiEspacioIA{
+    flex:1;
+    min-width:0;
+    box-sizing:border-box;
+    text-align:center;
+}
+
+#microfonoMiEspacioIA{
+    flex-shrink:0;
+}
+
 @media (max-width:768px){
     #panelMiEspacioIA{
         right:12px;
-        bottom:88px;
-        width:340px;
-        max-width:calc(100vw - 24px);
-        max-height:65vh;
-        padding:15px;
+        bottom:76px;
+        width:calc(100vw - 24px);
+        max-width:420px;
+        max-height:70vh;
+        padding:17px;
     }
 }
+
 /* Solo tarjetas de perfiles de Juegos */
 @media screen and (max-width: 600px) {
     #contenedorPerfilesJuego {
@@ -14960,9 +15036,53 @@ function cargarJuegosPerfil(numero){
             "padding:14px;" +
             "margin:10px 0;";
 
+               const filaIcono = document.createElement("div");
+
+        filaIcono.style.cssText =
+            "display:flex;" +
+            "align-items:center;" +
+            "gap:10px;";
+
+        const coloresIconosJuego = [
+            "#E53935",
+            "#FB8C00",
+            "#FDD835",
+            "#43A047",
+            "#00ACC1",
+            "#1E88E5",
+            "#3949AB",
+            "#8E24AA",
+            "#D81B60",
+            "#FFFFFF"
+        ];
+
+        if(!juego.colorIcono){
+            const indiceColor = juegos.indexOf(juego) % coloresIconosJuego.length;
+            juego.colorIcono = coloresIconosJuego[indiceColor];
+            localStorage.setItem(clave, JSON.stringify(juegos));
+        }
+
+        const icono = document.createElement("span");
+        icono.textContent = "🎮";
+
+        icono.style.cssText =
+            "display:inline-flex;" +
+            "align-items:center;" +
+            "justify-content:center;" +
+            "width:42px;" +
+            "height:42px;" +
+            "border:2px solid " + juego.colorIcono + ";" +
+            "border-radius:10px;" +
+            "box-sizing:border-box;" +
+            "flex-shrink:0;";
+
         const nombre = document.createElement("p");
-        nombre.textContent = "🎮 " + (juego.nombre || "Juego");
-        tarjeta.appendChild(nombre);
+        nombre.textContent = juego.nombre || "Juego";
+        nombre.style.margin = "0";
+
+        filaIcono.appendChild(icono);
+        filaIcono.appendChild(nombre);
+        tarjeta.appendChild(filaIcono);
 
         const enlace = document.createElement("a");
         enlace.textContent = "▶️ Abrir juego";
@@ -27202,13 +27322,58 @@ window.addEventListener(
 
 <div id="panelMiEspacioIA">
 
-    <h2>🐸 Mi Espacio IA</h2>
+    <div id="barraMiEspacioIA">
+
+        <h2>🐸 Mi Espacio IA</h2>
+
+        <div class="controlesMiEspacioIA">
+
+            <button
+                type="button"
+                id="minimizarMiEspacioIA"
+                title="Minimizar"
+                aria-label="Minimizar Mi Espacio IA">−</button>
+
+            <button
+                type="button"
+                id="cerrarMiEspacioIA"
+                title="Cerrar"
+                aria-label="Cerrar Mi Espacio IA">×</button>
+
+        </div>
+
+    </div>
 
     <p class="iaSubtitulo">
         ¿Qué te gustaría hacer?
     </p>
 
+    <div id="contenidoMiEspacioIA">
+
+        <div id="respuestaMiEspacioIA">
+            Estoy acá para ayudarte.
+        </div>
+
+        <div id="entradaMiEspacioIA">
+
+            <input
+                type="text"
+                id="textoMiEspacioIA"
+                placeholder="Escribí lo que necesitás..."
+                aria-label="Escribir a Mi Espacio IA">
+
+            <button
+                type="button"
+                id="microfonoMiEspacioIA"
+                title="Usar micrófono"
+                aria-label="Usar micrófono">🎙️</button>
+
+        </div>
+
+    </div>
+
 </div>
+
 
 
 <script>
@@ -27224,65 +27389,99 @@ window.addEventListener(
         return;
     }
 
-    // Mantener la ranita flotando sobre la página.
+    // Mantener la ranita y el panel fuera de contenedores ocultos.
     document.body.appendChild(botonFlotanteIA);
     document.body.appendChild(panelMiEspacioIA);
 
-    let temporizadorIA = null;
-    let esperandoSegundoToque = false;
+    
+/* Un toque abre el panel; otro toque lo cierra. */
 
-    botonFlotanteIA.addEventListener("click", function () {
+botonFlotanteIA.addEventListener("click", function () {
 
-        // Si el panel está abierto, no hacer nada.
-        if (panelMiEspacioIA.style.display === "block") {
-            return;
+    const estaAbierto =
+        panelMiEspacioIA.style.display === "block";
+
+    if (estaAbierto) {
+
+        panelMiEspacioIA.style.setProperty(
+            "display", "none", "important"
+        );
+
+    } else {
+
+        panelMiEspacioIA.style.setProperty(
+            "display", "block", "important"
+        );
+
+        panelMiEspacioIA.style.setProperty(
+            "visibility", "visible", "important"
+        );
+
+        panelMiEspacioIA.style.setProperty(
+            "opacity", "1", "important"
+        );
+
+        panelMiEspacioIA.style.setProperty(
+            "z-index", "1000001", "important"
+        );
+
+    }
+
+});
+
+/* Minimizar: oculta el contenido y conserva la barra superior. */
+const minimizarMiEspacioIA =
+    document.getElementById("minimizarMiEspacioIA");
+
+const contenidoMiEspacioIA =
+    document.getElementById("contenidoMiEspacioIA");
+
+const subtituloMiEspacioIA =
+    panelMiEspacioIA.querySelector(".iaSubtitulo");
+
+if (minimizarMiEspacioIA && contenidoMiEspacioIA) {
+
+    minimizarMiEspacioIA.addEventListener("click", function () {
+
+        const estaMinimizado =
+            contenidoMiEspacioIA.style.display === "none";
+
+        contenidoMiEspacioIA.style.display =
+            estaMinimizado ? "block" : "none";
+
+        if (subtituloMiEspacioIA) {
+            subtituloMiEspacioIA.style.display =
+                estaMinimizado ? "block" : "none";
         }
 
-        // SEGUNDO TOQUE: abrir el panel.
-        if (esperandoSegundoToque) {
+        minimizarMiEspacioIA.textContent =
+            estaMinimizado ? "−" : "+";
 
-            clearTimeout(temporizadorIA);
-            temporizadorIA = null;
-            esperandoSegundoToque = false;
-
-            botonFlotanteIA.classList.remove("agrandada");
-
-            panelMiEspacioIA.style.setProperty(
-                "display", "block", "important"
-            );
-
-            panelMiEspacioIA.style.setProperty(
-                "visibility", "visible", "important"
-            );
-
-            panelMiEspacioIA.style.setProperty(
-                "opacity", "1", "important"
-            );
-
-            panelMiEspacioIA.style.setProperty(
-                "z-index", "1000001", "important"
-            );
-
-            return;
-        }
-
-        // PRIMER TOQUE: agrandar la ranita.
-        esperandoSegundoToque = true;
-        botonFlotanteIA.classList.add("agrandada");
-
-        temporizadorIA = setTimeout(function () {
-
-            // Si no hubo segundo toque, volver al tamaño normal.
-            botonFlotanteIA.classList.remove("agrandada");
-
-            esperandoSegundoToque = false;
-            temporizadorIA = null;
-
-        }, 3000);
+        minimizarMiEspacioIA.title =
+            estaMinimizado ? "Minimizar" : "Restaurar";
 
     });
 
+}
+
+/* Cerrar: oculta el panel, pero conserva la ranita. */
+const cerrarMiEspacioIA =
+    document.getElementById("cerrarMiEspacioIA");
+
+if (cerrarMiEspacioIA) {
+
+    cerrarMiEspacioIA.addEventListener("click", function () {
+
+        panelMiEspacioIA.style.setProperty(
+            "display", "none", "important"
+        );
+
+    });
+
+}
+
 })();
+
 </script>
 
 
