@@ -3873,6 +3873,8 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 
 <!-- ===== FIN POPUP EDITAR NOMBRE PERFIL JUEGOS ===== -->
 
+
+
 <!-- ===== POPUPS JUEGOS POR PERFIL ===== -->
 
 <!-- POPUP AGREGAR JUEGO -->
@@ -5110,6 +5112,86 @@ y la revisamos. 🛠️🔧
 <!-- ===== FIN POPUP INSTRUCTIVO ===== -->
 
 <!-- ===== FIN AGREGAR PLATAFORMA CINE ===== -->
+
+
+<!-- ===== POPUP EDITAR PLATAFORMA PERSONALIZADA CINE ===== -->
+
+<div id="popupEditarPlataformaCine"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1400;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,450px);
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:20px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        text-align:center;
+        ">
+
+        <h2 style="margin-top:0;color:#FFD700;">
+            🎬 Editar plataforma
+        </h2>
+
+        <input id="inputNombrePlataformaCineEditar"
+               type="text"
+               maxlength="60"
+               autocomplete="off"
+               placeholder="Nombre de la plataforma"
+               style="
+               box-sizing:border-box;
+               width:100%;
+               padding:12px;
+               font-size:18px;
+               border-radius:10px;
+               margin:10px 0 20px;
+               ">
+
+        <div style="
+            display:flex;
+            justify-content:center;
+            gap:10px;
+            flex-wrap:wrap;
+            ">
+
+            <button type="button"
+                    onclick="guardarNombrePlataformaCineEditada()"
+                    style="padding:10px 18px;border-radius:10px;">
+                💾 Guardar
+            </button>
+
+            <button type="button"
+                    onclick="cerrarEditarPlataformaCine()"
+                    style="padding:10px 18px;border-radius:10px;">
+                ✖ Cancelar
+            </button>
+
+        </div>
+
+        <div id="mensajeErrorPlataformaCineEditar"
+             style="
+             display:none;
+             margin-top:15px;
+             color:#FF4444;
+             font-weight:bold;
+             font-size:15px;
+             ">
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN POPUP EDITAR PLATAFORMA CINE ===== -->
 
 
 <!-- ===== MODULO RADIOS ===== -->
@@ -14588,26 +14670,62 @@ personalizadas.forEach(
             label
         );
 
+                const botonEditar =
+            document.createElement("button");
+
+        botonEditar.type = "button";
+        botonEditar.textContent = "✏️";
+        botonEditar.title = "Editar nombre de la plataforma";
+
+        botonEditar.onclick = function(){
+
+            const popup = document.getElementById(
+                "popupEditarPlataformaCine"
+            );
+
+            const input = document.getElementById(
+                "inputNombrePlataformaCineEditar"
+            );
+
+            const mensajeError = document.getElementById(
+                "mensajeErrorPlataformaCineEditar"
+            );
+
+            if(!popup || !input) return;
+
+            window.plataformaCineEnEdicion = plataforma.nombre;
+
+            input.value = plataforma.nombre;
+
+            if(mensajeError){
+                mensajeError.textContent = "";
+                mensajeError.style.display = "none";
+            }
+
+            popup.style.display = "flex";
+            input.focus();
+            input.select();
+        };
+
+        fila.appendChild(botonEditar);
+
         const botonEliminar =
             document.createElement("button");
 
         botonEliminar.type = "button";
-
         botonEliminar.textContent = "🗑️";
+        botonEliminar.title = "Eliminar plataforma";
 
-        botonEliminar.onclick =
-            function(){
+        botonEliminar.onclick = function(){
 
-                eliminarPlataformaCinePersonalizada(
-                    plataforma.nombre
-                );
+            eliminarPlataformaCinePersonalizada(
+                plataforma.nombre
+            );
 
-            };
+        };
 
-        fila.appendChild(
-            botonEliminar
-        );
-
+        fila.appendChild(botonEliminar);
+        
         contenedorPersonalizadas.appendChild(
             fila
         );
@@ -14713,6 +14831,172 @@ function eliminarPlataformaCinePersonalizada(nombre){
     );
 
 cargarConfiguracionCine();
+}
+
+// ================================
+// EDITAR PLATAFORMA PERSONALIZADA CINE
+// ================================
+
+function guardarNombrePlataformaCineEditada(){
+
+    const nombreAnterior = window.plataformaCineEnEdicion;
+
+    if(!nombreAnterior) return;
+
+    const input = document.getElementById(
+        "inputNombrePlataformaCineEditar"
+    );
+
+    const mensajeError = document.getElementById(
+        "mensajeErrorPlataformaCineEditar"
+    );
+
+    const popup = document.getElementById(
+        "popupEditarPlataformaCine"
+    );
+
+    if(!input || !popup) return;
+
+    const nombreNuevo = input.value.trim();
+
+    function mostrarErrorCine(texto){
+
+        if(!mensajeError) return;
+
+        mensajeError.textContent = texto;
+        mensajeError.style.display = "block";
+    }
+
+    if(!nombreNuevo){
+
+        mostrarErrorCine(
+            "⚠ El nombre no puede quedar vacío."
+        );
+
+        return;
+    }
+
+    let personalizadas = [];
+
+    try{
+
+        personalizadas = JSON.parse(
+            localStorage.getItem(
+                "PlataformasCinePersonalizadas"
+            ) || "[]"
+        );
+
+        if(!Array.isArray(personalizadas)){
+            personalizadas = [];
+        }
+
+    }catch(error){
+
+        personalizadas = [];
+    }
+
+    const duplicada = personalizadas.some(
+        function(plataforma){
+
+            return plataforma.nombre !== nombreAnterior &&
+                plataforma.nombre.trim().toLowerCase() ===
+                    nombreNuevo.toLowerCase();
+
+        }
+    );
+
+    if(duplicada){
+
+        mostrarErrorCine(
+            "⚠ Esa plataforma ya está guardada."
+        );
+
+        return;
+    }
+
+    const plataforma = personalizadas.find(
+        function(item){
+            return item.nombre === nombreAnterior;
+        }
+    );
+
+    if(!plataforma) return;
+
+    // Cambiar únicamente el nombre
+    plataforma.nombre = nombreNuevo;
+
+    localStorage.setItem(
+        "PlataformasCinePersonalizadas",
+        JSON.stringify(personalizadas)
+    );
+
+    // Actualizar también la lista de plataformas seleccionadas
+    let seleccionadas = [];
+
+    try{
+
+        seleccionadas = JSON.parse(
+            localStorage.getItem(
+                "PlataformasCinePersonalizadasSeleccionadas"
+            ) || "[]"
+        );
+
+        if(!Array.isArray(seleccionadas)){
+            seleccionadas = [];
+        }
+
+    }catch(error){
+
+        seleccionadas = [];
+    }
+
+    seleccionadas = seleccionadas.map(
+        function(nombre){
+
+            return nombre === nombreAnterior
+                ? nombreNuevo
+                : nombre;
+
+        }
+    );
+
+    localStorage.setItem(
+        "PlataformasCinePersonalizadasSeleccionadas",
+        JSON.stringify(seleccionadas)
+    );
+
+    popup.style.display = "none";
+
+    window.plataformaCineEnEdicion = null;
+
+    cargarConfiguracionCine();
+}
+
+
+// ================================
+// CERRAR EDICIÓN DE PLATAFORMA CINE
+// ================================
+
+function cerrarEditarPlataformaCine(){
+
+    const popup = document.getElementById(
+        "popupEditarPlataformaCine"
+    );
+
+    const mensajeError = document.getElementById(
+        "mensajeErrorPlataformaCineEditar"
+    );
+
+    if(popup){
+        popup.style.display = "none";
+    }
+
+    if(mensajeError){
+        mensajeError.textContent = "";
+        mensajeError.style.display = "none";
+    }
+
+    window.plataformaCineEnEdicion = null;
 }
  
 // ===== PERFILES DE JUEGOS =====
@@ -15287,7 +15571,7 @@ function cargarConfiguracionJuegosPerfil(numero){
                 cargarJuegosPerfil(numero);
             };
         });
-        
+
         const eliminar = document.createElement("button");
 
         eliminar.type = "button";
