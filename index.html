@@ -15194,6 +15194,9 @@ function cargarConfiguracionJuegosPerfil(numero){
                     mensaje.textContent = "⚠ El nombre no puede quedar vacío.";
                     mensaje.style.color = "#FFD700";
                     mensaje.style.display = "block";
+                    setTimeout(function(){
+                    mensaje.style.display = "none";
+                    }, 1000);
                 }
 
                 return;
@@ -15222,13 +15225,17 @@ function cargarConfiguracionJuegosPerfil(numero){
                     otroJuego.nombre.trim().toLowerCase() === nombreNormalizado;
             });
 
-                        if(duplicado){
+             if(duplicado){
                 const mensaje = document.getElementById("mensajeJuego");
 
                 if(mensaje){
                     mensaje.textContent = "⚠ Ese juego ya está guardado en este perfil.";
                     mensaje.style.color = "#FFD700";
                     mensaje.style.display = "block";
+
+                    setTimeout(function(){
+                        mensaje.style.display = "none";
+                    }, 1000);
                 }
 
                 return;
@@ -15810,7 +15817,7 @@ if(mensajeGuardado){
 
             setTimeout(function(){
                 mensaje.style.display = "none";
-            }, 2000);
+            }, 1000);
         }
 
     }, 1000);
@@ -16485,7 +16492,7 @@ document.getElementById("btnGuardarTema").onclick = function(){
 
         panelTema.style.display = "none";
 
-    },2000);
+    },1000);
 
 };
 
