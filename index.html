@@ -4141,7 +4141,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 
 <button
     type="button"
-    onclick="guardarSeleccionJuegosPerfil(); cerrarConfiguracionPerfilJuego()"
+    onclick="guardarSeleccionJuegosPerfil()"
     style="
     display:block;
     width:100%;
@@ -15199,12 +15199,23 @@ function guardarSeleccionJuegosPerfil(){
     cargarJuegosPerfil(numero);
     cargarConfiguracionJuegosPerfil(numero);
 
-    const mensaje = document.getElementById("mensajeJuego");
+        const mensaje = document.getElementById("mensajeJuego");
 
     if(mensaje){
-        mensaje.textContent = "✅ Selección de juegos guardada correctamente";
+        mensaje.textContent = "✔ Juego guardado correctamente";
+        mensaje.style.color = "#32CD32";
         mensaje.style.display = "block";
     }
+
+    setTimeout(function(){
+
+        if(mensaje){
+            mensaje.style.display = "none";
+        }
+
+        cerrarConfiguracionPerfilJuego();
+
+    }, 1000);
 
 }
 
@@ -15564,27 +15575,37 @@ if(mensajeGuardado){
     mensajeGuardado.style.color = "#32CD32";
 }
 
-setTimeout(function(){
+    setTimeout(function(){
 
-    cancelarConfirmacionJuegoPerfil();
-    cerrarAgregarJuegoPerfil();
+        cancelarConfirmacionJuegoPerfil();
+        cerrarAgregarJuegoPerfil();
 
-    const urlLimpia =
-        window.location.pathname +
-        window.location.hash;
+        const urlLimpia =
+            window.location.pathname +
+            window.location.hash;
 
-    window.history.replaceState(
-        window.history.state,
-        document.title,
-        urlLimpia
-    );
+        window.history.replaceState(
+            window.history.state,
+            document.title,
+            urlLimpia
+        );
 
-    abrirPerfilJuego(numero);
+        abrirPerfilJuego(numero);
+        abrirConfiguracionPerfilJuego();
 
-    
-    abrirConfiguracionPerfilJuego();
+        const mensaje = document.getElementById("mensajeJuego");
 
-}, 1000);
+        if(mensaje){
+            mensaje.textContent = "✔ Juego guardado correctamente";
+            mensaje.style.color = "#32CD32";
+            mensaje.style.display = "block";
+
+            setTimeout(function(){
+                mensaje.style.display = "none";
+            }, 2000);
+        }
+
+    }, 1000);
 
 }
 
