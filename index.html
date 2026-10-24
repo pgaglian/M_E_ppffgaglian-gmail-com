@@ -15174,45 +15174,69 @@ function cargarConfiguracionJuegosPerfil(numero){
             "cursor:pointer;" +
             "flex-shrink:0;";
 
-        
-        editar.addEventListener("click", function(){
+                editar.addEventListener("click", function(){
 
-            const campo = document.createElement("input");
+            const popup = document.getElementById(
+                "popupEditarNombrePerfilJuego"
+            );
 
-            campo.type = "text";
-            campo.value = juego.nombre || "Juego";
-            campo.maxLength = 60;
+            const input = document.getElementById(
+                "inputNombrePerfilJuego"
+            );
 
-            campo.style.cssText =
-                "flex:1;" +
-                "min-width:0;" +
-                "padding:6px;" +
-                "border-radius:6px;";
+            const mensaje = document.getElementById(
+                "mensajeNombrePerfilJuego"
+            );
 
-            const guardar = document.createElement("button");
-            guardar.type = "button";
-            guardar.textContent = "✔️";
-            guardar.title = "Guardar nombre";
+            const mensajeError = document.getElementById(
+                "mensajeErrorNombrePerfilJuego"
+            );
 
-            guardar.addEventListener("click", function(){
+            if(!popup || !input) return;
 
-                const nombreLimpio = campo.value.trim();
-                const mensaje = document.getElementById("mensajeJuego");
+            // Identificar el juego que se está editando
+            const indiceJuegoEditando = indice;
 
-                function mostrarMensajeJuego(texto){
-                    if(!mensaje) return;
+            input.value = juego.nombre || "Juego";
 
-                    mensaje.textContent = texto;
-                    mensaje.style.color = "#FFD700";
-                    mensaje.style.display = "block";
+            if(mensaje){
+                mensaje.style.display = "none";
+            }
 
-                    setTimeout(function(){
+            if(mensajeError){
+                mensajeError.textContent = "";
+                mensajeError.style.display = "none";
+            }
+
+            popup.style.display = "flex";
+            input.focus();
+
+            const botonGuardar = popup.querySelector(
+                'button[onclick*="guardarNombrePerfilJuego"]'
+            );
+
+            if(!botonGuardar) return;
+
+            botonGuardar.onclick = function(){
+
+                const nombreLimpio = input.value.trim().slice(0, 60);
+
+                function mostrarErrorJuego(texto){
+
+                    if(mensaje){
                         mensaje.style.display = "none";
-                    }, 2000);
+                    }
+
+                    if(mensajeError){
+                        mensajeError.textContent = texto;
+                        mensajeError.style.display = "block";
+                    }
                 }
 
                 if(!nombreLimpio){
-                    mostrarMensajeJuego("⚠ El nombre no puede quedar vacío.");
+                    mostrarErrorJuego(
+                        "⚠ El nombre del juego no puede quedar vacío."
+                    );
                     return;
                 }
 
@@ -15226,43 +15250,44 @@ function cargarConfiguracionJuegosPerfil(numero){
                     if(!Array.isArray(listaActual)){
                         listaActual = [];
                     }
+
                 }catch(error){
                     listaActual = [];
                 }
 
-                const nombreNormalizado = nombreLimpio.toLowerCase();
-
                 const duplicado = listaActual.some(function(otroJuego, otroIndice){
-                    return otroIndice !== indice &&
+
+                    return otroIndice !== indiceJuegoEditando &&
                         otroJuego.nombre &&
-                        otroJuego.nombre.trim().toLowerCase() === nombreNormalizado;
+                        otroJuego.nombre.trim().toLowerCase() ===
+                            nombreLimpio.toLowerCase();
+
                 });
 
                 if(duplicado){
-                    mostrarMensajeJuego(
-                        "⚠ Ese juego ya está guardado en este perfil."
+                    mostrarErrorJuego(
+                        "Ese juego ya está guardado en este perfil. Elegí otro nombre."
                     );
                     return;
                 }
 
-                listaActual[indice].nombre = nombreLimpio;
+                if(!listaActual[indiceJuegoEditando]) return;
+
+                // Cambiar únicamente el nombre del juego
+                listaActual[indiceJuegoEditando].nombre = nombreLimpio;
 
                 localStorage.setItem(
                     clave,
                     JSON.stringify(listaActual)
                 );
 
+                popup.style.display = "none";
+
                 cargarConfiguracionJuegosPerfil(numero);
                 cargarJuegosPerfil(numero);
-            });
-
-            fila.replaceChild(campo, nombre);
-            fila.replaceChild(guardar, editar);
-
-            campo.focus();
-            campo.select();
+            };
         });
-
+        
         const eliminar = document.createElement("button");
 
         eliminar.type = "button";
