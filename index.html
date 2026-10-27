@@ -2049,6 +2049,42 @@ body.eclipse header{
 }
 
 
+/* ===== CASILLEROS DE BIBLIOTECA ===== */
+
+.casilleroBiblioteca {
+    min-height: 175px;
+    box-sizing: border-box;
+    padding: 16px 10px;
+    border: 1px solid #555;
+    border-radius: 14px;
+    background: linear-gradient(145deg, #292929, #111111);
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+    font-size: 48px;
+    cursor: pointer;
+    overflow-wrap: anywhere;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.casilleroBiblioteca p {
+    margin: 0;
+    color: #FFD700;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.casilleroBiblioteca:active {
+    transform: scale(0.97);
+    border-color: #FFD700;
+}
+
+/* ===== FIN CASILLEROS DE BIBLIOTECA ===== */
+
 
 </style>
 </head>
@@ -7280,13 +7316,224 @@ font-size:18px;
 
 <div id="Biblioteca" style="display:none; min-height:100vh;">
 
-    <button onclick="inicio()">⬅ Volver</button>
+    <div id="encabezadoBiblioteca">
 
-    <h2 style="text-align:center; color:#FFD700;">
-        📚 Biblioteca
-    </h2>
+        <button onclick="inicio()">⬅ Volver</button>
 
-    <div id="contenidoBiblioteca"></div>
+        <h2 style="text-align:center; color:#FFD700;">
+            📚 Biblioteca
+        </h2>
+
+    </div>
+
+    
+<div id="contenidoBiblioteca"
+     style="
+     display:grid;
+     grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));
+     gap:18px;
+     padding:15px;
+     box-sizing:border-box;
+     ">
+
+    <!-- BLOQUE LIBROS -->
+    <div class="card"
+         style="cursor:pointer;text-align:center;padding:20px;"
+         onclick="abrirSeccionBiblioteca('libros')">
+
+        <div style="
+            min-height:150px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            flex-direction:column;
+            gap:12px;
+            border-radius:12px;
+            background:linear-gradient(135deg,#39234f,#171717);
+            ">
+            <span style="font-size:64px;">📖</span>
+            <strong>Libros</strong>
+        </div>
+
+        <p>Novelas, cuentos y libros de estudio.</p>
+    </div>
+
+    <!-- BLOQUE APUNTES -->
+    <div class="card"
+         style="cursor:pointer;text-align:center;padding:20px;"
+         onclick="abrirSeccionBiblioteca('apuntes')">
+
+        <div style="
+            min-height:150px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            flex-direction:column;
+            gap:12px;
+            border-radius:12px;
+            background:linear-gradient(135deg,#174d40,#171717);
+            ">
+            <span style="font-size:64px;">📝</span>
+            <strong>Apuntes</strong>
+        </div>
+
+        <p>Notas, resúmenes y material de estudio.</p>
+    </div>
+
+    <!-- BLOQUE DOCUMENTOS -->
+    <div class="card"
+         style="cursor:pointer;text-align:center;padding:20px;"
+         onclick="abrirSeccionBiblioteca('documentos')">
+
+        <div style="
+            min-height:150px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            flex-direction:column;
+            gap:12px;
+            border-radius:12px;
+            background:linear-gradient(135deg,#17406b,#171717);
+            ">
+            <span style="font-size:64px;">📄</span>
+            <strong>Documentos</strong>
+        </div>
+
+        <p>Documentos y archivos de consulta.</p>
+    </div>
+
+    <!-- BLOQUE OTROS MATERIALES -->
+    <div class="card"
+         style="cursor:pointer;text-align:center;padding:20px;"
+         onclick="abrirSeccionBiblioteca('otros')">
+
+        <div style="
+            min-height:150px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            flex-direction:column;
+            gap:12px;
+            border-radius:12px;
+            background:linear-gradient(135deg,#725019,#171717);
+            ">
+            <span style="font-size:64px;">🗂️</span>
+            <strong>Otros materiales</strong>
+        </div>
+
+        <p>Otros archivos y enlaces compatibles.</p>
+    </div>
+
+</div>
+
+<!-- ===== CONTENIDO DE CADA SECCION ===== -->
+
+<div id="seccionBiblioteca"
+     style="display:none; padding:15px; box-sizing:border-box;">
+</div>
+
+<!-- ===== FIN CONTENIDO DE CADA SECCION ===== -->
+
+
+<!-- ===== POPUP AGREGAR MATERIAL BIBLIOTECA ===== -->
+
+<div id="popupMaterialBiblioteca"
+     style="
+        display:none;
+        position:fixed;
+        inset:0;
+        z-index:15000;
+        background:rgba(0,0,0,.82);
+        align-items:center;
+        justify-content:center;
+        padding:15px;
+        box-sizing:border-box;
+     ">
+
+    <div style="
+        width:100%;
+        max-width:500px;
+        max-height:90vh;
+        overflow-y:auto;
+        box-sizing:border-box;
+        padding:20px;
+        border:1px solid #555;
+        border-radius:16px;
+        background:#1b1b1b;
+        color:white;
+     ">
+
+        <h2 id="tituloPopupMaterialBiblioteca"
+            style="text-align:center;color:#FFD700;">
+            📚 Agregar material
+        </h2>
+
+        <label for="nombreMaterialBiblioteca">
+            Nombre del material
+        </label>
+
+        <input id="nombreMaterialBiblioteca"
+               type="text"
+               maxlength="80"
+               placeholder="Escribí el nombre"
+               style="width:100%;box-sizing:border-box;padding:12px;margin:8px 0 16px;">
+
+        <label for="imagenMaterialBiblioteca">
+            Imagen o portada (opcional)
+        </label>
+
+        <input id="imagenMaterialBiblioteca"
+               type="file"
+               accept="image/*"
+               style="width:100%;box-sizing:border-box;margin:8px 0 16px;">
+
+        <label for="archivoMaterialBiblioteca">
+            Archivo para leer o consultar (opcional)
+        </label>
+
+        <input id="archivoMaterialBiblioteca"
+               type="file"
+               accept=".pdf,.epub,.txt,.doc,.docx,.rtf,.jpg,.jpeg,.png,.webp"
+               style="width:100%;box-sizing:border-box;margin:8px 0 16px;">
+
+        <label for="urlMaterialBiblioteca">
+            O enlace al material
+        </label>
+
+        <input id="urlMaterialBiblioteca"
+               type="url"
+               placeholder="https://..."
+               style="width:100%;box-sizing:border-box;padding:12px;margin:8px 0 12px;">
+
+        <p id="mensajeMaterialBiblioteca"
+           style="min-height:20px;text-align:center;color:#FFD700;">
+        </p>
+
+        <div style="
+            display:flex;
+            gap:10px;
+            justify-content:center;
+            flex-wrap:wrap;
+            margin-top:15px;
+         ">
+
+            <button type="button"
+                    onclick="cancelarMaterialBiblioteca()">
+                Cancelar
+            </button>
+
+            <button type="button"
+                    onclick="guardarMaterialBiblioteca()"
+                    style="background:#32CD32;color:#111;font-weight:bold;">
+                Guardar
+            </button>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- ===== FIN POPUP AGREGAR MATERIAL BIBLIOTECA ===== -->
 
 </div>
 
@@ -16377,6 +16624,370 @@ function cancelarConfirmacionJuegoPerfil(){
 
 
 // ===== FIN CONFIGURACION JUEGOS DEL PERFIL =====
+
+
+
+/* ===== ABRIR SECCIONES DE BIBLIOTECA ===== */
+
+function abrirSeccionBiblioteca(tipo){
+
+    const secciones = {
+        libros: {
+            titulo: "📖 Libros",
+            descripcion: "Novelas, cuentos y libros de estudio."
+        },
+        apuntes: {
+            titulo: "📝 Apuntes",
+            descripcion: "Notas, resúmenes y material de estudio."
+        },
+        documentos: {
+            titulo: "📄 Documentos",
+            descripcion: "Documentos y archivos de consulta."
+        },
+        otros: {
+            titulo: "🗂️ Otros materiales",
+            descripcion: "Otros archivos y enlaces compatibles."
+        }
+    };
+
+    const seccion = secciones[tipo];
+
+    if(!seccion) return;
+
+    const bloques = document.getElementById("contenidoBiblioteca");
+    const contenido = document.getElementById("seccionBiblioteca");
+
+    if(!bloques || !contenido) return;
+
+    bloques.style.display = "none";
+    contenido.style.display = "block";
+    document.getElementById("encabezadoBiblioteca").style.display = "none";
+
+    tipoBibliotecaActual = tipo;
+
+contenido.innerHTML = `
+    <button type="button" onclick="volverBloquesBiblioteca()">
+        ⬅ Volver
+    </button>
+
+    <h2 style="text-align:center; color:#FFD700;">
+        ${tipo === "libros" ? "📖 Mis libros" :
+          tipo === "apuntes" ? "📝 Mis apuntes" :
+          tipo === "documentos" ? "📄 Mis documentos" :
+          "🗂️ Mis otros materiales"}
+    </h2>
+
+    
+
+<div id="listaBibliotecaActual"
+     style="
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(min(100%,145px),1fr));
+        gap:14px;
+        padding:15px 0;
+     ">
+
+    <div class="casilleroBiblioteca" onclick="seleccionarCasilleroBiblioteca(1)">📖<p>Agregar material</p></div>
+    <div class="casilleroBiblioteca" onclick="seleccionarCasilleroBiblioteca(2)">📕<p>Agregar material</p></div>
+    <div class="casilleroBiblioteca" onclick="seleccionarCasilleroBiblioteca(3)">📗<p>Agregar material</p></div>
+    <div class="casilleroBiblioteca" onclick="seleccionarCasilleroBiblioteca(4)">📘<p>Agregar material</p></div>
+    <div class="casilleroBiblioteca" onclick="seleccionarCasilleroBiblioteca(5)">📙<p>Agregar material</p></div>
+    <div class="casilleroBiblioteca" onclick="seleccionarCasilleroBiblioteca(6)">📚<p>Agregar material</p></div>
+    <div class="casilleroBiblioteca" onclick="seleccionarCasilleroBiblioteca(7)">📔<p>Agregar material</p></div>
+    <div class="casilleroBiblioteca" onclick="seleccionarCasilleroBiblioteca(8)">📖<p>Agregar material</p></div>
+    <div class="casilleroBiblioteca" onclick="seleccionarCasilleroBiblioteca(9)">📕<p>Agregar material</p></div>
+    <div class="casilleroBiblioteca" onclick="seleccionarCasilleroBiblioteca(10)">📗<p>Agregar material</p></div>
+
+</div>
+
+
+`;
+
+actualizarCasillerosBiblioteca();
+
+}
+
+function volverBloquesBiblioteca(){
+
+    const bloques = document.getElementById("contenidoBiblioteca");
+    const contenido = document.getElementById("seccionBiblioteca");
+
+    if(!bloques || !contenido) return;
+
+    contenido.style.display = "none";
+    bloques.style.display = "grid";
+    document.getElementById("encabezadoBiblioteca").style.display = "block";
+
+}
+
+/* ===== FIN ABRIR SECCIONES DE BIBLIOTECA ===== */
+
+
+/* ===== SELECCIONAR CASILLERO DE BIBLIOTECA ===== */
+
+let tipoBibliotecaActual = "";
+let casilleroBibliotecaActual = 0;
+
+
+function seleccionarCasilleroBiblioteca(numero){
+
+    if(
+        !["libros", "apuntes", "documentos", "otros"]
+            .includes(tipoBibliotecaActual)
+    ){
+        return;
+    }
+
+    casilleroBibliotecaActual = numero;
+
+    const popup = document.getElementById("popupMaterialBiblioteca");
+    const nombre = document.getElementById("nombreMaterialBiblioteca");
+    const url = document.getElementById("urlMaterialBiblioteca");
+    const mensaje = document.getElementById("mensajeMaterialBiblioteca");
+    const tituloPopup = document.getElementById("tituloPopupMaterialBiblioteca");
+
+    if(!popup || !nombre || !url || !mensaje || !tituloPopup) return;
+
+    let materiales = [];
+
+    try{
+        materiales = JSON.parse(
+            localStorage.getItem("biblioteca_" + tipoBibliotecaActual) || "[]"
+        );
+
+        if(!Array.isArray(materiales)) materiales = [];
+
+    }catch(error){
+        materiales = [];
+    }
+
+    const existente = materiales.find(
+        material => Number(material.casillero) === numero
+    );
+
+    nombre.value = existente ? existente.nombre : "";
+    url.value = existente ? existente.url || "" : "";
+
+    mensaje.textContent = "";
+    tituloPopup.textContent = existente
+        ? "📚 Editar material"
+        : "📚 Agregar material";
+
+    popup.style.display = "flex";
+}
+
+function cancelarMaterialBiblioteca(){
+
+    const popup = document.getElementById("popupMaterialBiblioteca");
+
+    if(popup){
+        popup.style.display = "none";
+    }
+
+    document.getElementById("mensajeMaterialBiblioteca").textContent = "";
+}
+
+/* ===== FIN SELECCIONAR CASILLERO DE BIBLIOTECA ===== */
+
+
+/* ===== GUARDAR MATERIAL DE BIBLIOTECA ===== */
+
+function guardarMaterialBiblioteca(){
+
+    const nombre = document
+        .getElementById("nombreMaterialBiblioteca")
+        .value.trim();
+
+    const url = document
+        .getElementById("urlMaterialBiblioteca")
+        .value.trim();
+
+    const mensaje = document
+        .getElementById("mensajeMaterialBiblioteca");
+
+    if(!nombre){
+        mensaje.textContent = "⚠ Escribí el nombre del material.";
+        mensaje.style.color = "#FF4444";
+        return;
+    }
+
+    if(!tipoBibliotecaActual || !casilleroBibliotecaActual){
+        mensaje.textContent = "⚠ No se pudo identificar el casillero.";
+        mensaje.style.color = "#FF4444";
+        return;
+    }
+
+    if(url){
+        try{
+            const enlace = new URL(url);
+
+            if(enlace.protocol !== "http:" &&
+               enlace.protocol !== "https:"){
+                throw new Error("Enlace no válido");
+            }
+        }catch(error){
+            mensaje.textContent = "⚠ Ingresá un enlace web válido.";
+            mensaje.style.color = "#FF4444";
+            return;
+        }
+    }
+
+    const clave =
+        "biblioteca_" + tipoBibliotecaActual;
+
+    let materiales = [];
+
+    try{
+        materiales = JSON.parse(
+            localStorage.getItem(clave) || "[]"
+        );
+
+        if(!Array.isArray(materiales)){
+            materiales = [];
+        }
+    }catch(error){
+        mensaje.textContent = "⚠ No se pudieron leer los materiales guardados.";
+        mensaje.style.color = "#FF4444";
+        return;
+    }
+
+    const duplicado = materiales.some(material =>
+        material.nombre.toLowerCase() === nombre.toLowerCase() &&
+        material.casillero !== casilleroBibliotecaActual
+    );
+
+    if(duplicado){
+        mensaje.textContent = "⚠ Ese nombre ya existe en esta categoría.";
+        mensaje.style.color = "#FF4444";
+        return;
+    }
+
+    const existente = materiales.find(material =>
+        material.casillero === casilleroBibliotecaActual
+    );
+
+    if(!existente && materiales.length >= 10){
+        mensaje.textContent = "⚠ Esta categoría ya tiene 10 materiales.";
+        mensaje.style.color = "#FF4444";
+        return;
+    }
+
+    const material = {
+        nombre: nombre,
+        url: url,
+        casillero: casilleroBibliotecaActual
+    };
+
+    if(existente){
+        materiales = materiales.map(item =>
+            item.casillero === casilleroBibliotecaActual
+                ? material
+                : item
+        );
+    }else{
+        materiales.push(material);
+    }
+
+    try{
+        localStorage.setItem(
+            clave,
+            JSON.stringify(materiales)
+        );
+    }catch(error){
+        mensaje.textContent = "⚠ No se pudo guardar el material en este dispositivo.";
+        mensaje.style.color = "#FF4444";
+        return;
+    }
+
+    mensaje.textContent = "✔ Material guardado.";
+    mensaje.style.color = "#32CD32";
+
+    setTimeout(() => {
+
+        const popup = document.getElementById(
+            "popupMaterialBiblioteca"
+        );
+
+        if(popup){
+            popup.style.display = "none";
+        }
+
+    }, 700);
+}
+
+/* ===== FIN GUARDAR MATERIAL DE BIBLIOTECA ===== */
+
+
+/* ===== MOSTRAR MATERIALES EN CASILLEROS ===== */
+
+function actualizarCasillerosBiblioteca(){
+
+    const lista = document.getElementById("listaBibliotecaActual");
+
+    if(!lista || !tipoBibliotecaActual) return;
+
+    let materiales = [];
+
+    try{
+        materiales = JSON.parse(
+            localStorage.getItem(
+                "biblioteca_" + tipoBibliotecaActual
+            ) || "[]"
+        );
+
+        if(!Array.isArray(materiales)){
+            materiales = [];
+        }
+    }catch(error){
+        materiales = [];
+    }
+
+    const iconos = [
+        "📖","📕","📗","📘","📙",
+        "📚","📔","📖","📕","📗"
+    ];
+
+    lista.innerHTML = "";
+
+    for(let numero = 1; numero <= 10; numero++){
+
+        const material = materiales.find(
+            item => item.casillero === numero
+        );
+
+        const casillero = document.createElement("div");
+        casillero.className = "casilleroBiblioteca";
+
+        if(material){
+
+            casillero.innerHTML = `
+                ${iconos[numero - 1]}
+                <p>${material.nombre.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")}</p>
+            `;
+
+            casillero.onclick = function(){
+                seleccionarCasilleroBiblioteca(numero);
+            };
+
+        }else{
+
+            casillero.innerHTML = `
+                ${iconos[numero - 1]}
+                <p>Agregar material</p>
+            `;
+
+            casillero.onclick = function(){
+                seleccionarCasilleroBiblioteca(numero);
+            };
+        }
+
+        lista.appendChild(casillero);
+    }
+}
+
+/* ===== FIN MOSTRAR MATERIALES EN CASILLEROS ===== */
+
+
 
 function mostrar(id){
    
