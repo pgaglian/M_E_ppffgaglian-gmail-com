@@ -2048,39 +2048,155 @@ body.eclipse header{
     }
 }
 
-
 /* ===== CASILLEROS DE BIBLIOTECA ===== */
 
-.casilleroBiblioteca {
-    min-height: 175px;
+#listaBibliotecaActual {
+    padding: 24px 16px 30px !important;
+    gap: 22px 16px !important;
+    background:
+        linear-gradient(
+            to bottom,
+            transparent 48%,
+            #5b3219 48%,
+            #b77a3b 50%,
+            #24140b 52%,
+            transparent 54%
+        ),
+        linear-gradient(180deg, #1a100a, #090706);
+    border: 2px solid #6b421f;
+    border-radius: 10px;
+    box-shadow: inset 0 0 24px #000000;
+}
+
+.casilleroBiblioteca.libroBiblioteca {
+    position: relative;
+    min-width: 0;
+    min-height: 220px;
     box-sizing: border-box;
-    padding: 16px 10px;
-    border: 1px solid #555;
-    border-radius: 14px;
-    background: linear-gradient(145deg, #292929, #111111);
-    color: #FFFFFF;
+    padding: 14px 8px 12px;
+    border: 1px solid #c39a4a;
+    border-left: 7px solid rgba(0,0,0,0.5);
+    border-radius: 5px 9px 9px 5px;
+    background: linear-gradient(90deg, #10243b, #234b70 35%, #10243b);
+    color: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     gap: 10px;
     text-align: center;
-    font-size: 48px;
+    font-size: 42px;
     cursor: pointer;
-    overflow-wrap: anywhere;
-    transition: transform 0.2s, border-color 0.2s;
+    overflow: hidden;
+    box-shadow:
+        inset 2px 0 0 rgba(255,255,255,0.15),
+        inset -3px 0 0 rgba(0,0,0,0.3),
+        0 6px 8px rgba(0,0,0,0.65);
+    transition: transform 0.2s, filter 0.2s;
 }
 
-.casilleroBiblioteca p {
+/* Colores de los diez lomos */
+
+.libroBiblioteca:nth-child(10n+1) {
+    background: linear-gradient(90deg, #10243b, #234b70 35%, #10243b);
+}
+
+.libroBiblioteca:nth-child(10n+2) {
+    background: linear-gradient(90deg, #591719, #a52d28 35%, #591719);
+}
+
+.libroBiblioteca:nth-child(10n+3) {
+    background: linear-gradient(90deg, #153c25, #267442 35%, #153c25);
+}
+
+.libroBiblioteca:nth-child(10n+4) {
+    background: linear-gradient(90deg, #58361a, #a87536 35%, #58361a);
+}
+
+.libroBiblioteca:nth-child(10n+5) {
+    background: linear-gradient(90deg, #10354b, #176a88 35%, #10354b);
+}
+
+.libroBiblioteca:nth-child(10n+6) {
+    background: linear-gradient(90deg, #402044, #79417d 35%, #402044);
+}
+
+.libroBiblioteca:nth-child(10n+7) {
+    background: linear-gradient(90deg, #17464b, #247d80 35%, #17464b);
+}
+
+.libroBiblioteca:nth-child(10n+8) {
+    background: linear-gradient(90deg, #551821, #962d3c 35%, #551821);
+}
+
+.libroBiblioteca:nth-child(10n+9) {
+    background: linear-gradient(90deg, #234321, #477a32 35%, #234321);
+}
+
+.libroBiblioteca:nth-child(10n+10) {
+    background: linear-gradient(90deg, #292929, #57504a 35%, #292929);
+}
+
+/* Número del casillero */
+
+.numeroLibroBiblioteca {
+    width: 42px;
+    height: 32px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e8c46b;
+    border-radius: 5px;
+    background: rgba(0,0,0,0.45);
+    color: #ffdc83;
+    font-family: Georgia, serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Icono del libro vacío */
+
+.iconoLibroBiblioteca {
+    font-size: 42px;
+    line-height: 1.2;
+}
+
+/* Nombre del material */
+
+.casilleroBiblioteca .tituloLibroBiblioteca {
+    width: 100%;
+    box-sizing: border-box;
     margin: 0;
-    color: #FFD700;
-    font-size: 14px;
-    line-height: 1.4;
+    padding: 7px 3px;
+    border-top: 1px solid rgba(255,215,0,0.55);
+    background: rgba(0,0,0,0.38);
+    color: #ffdc83;
+    font-family: Georgia, serif;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
 }
 
-.casilleroBiblioteca:active {
+/* Portada del libro */
+
+.portadaLibroBiblioteca {
+    display: block;
+    width: 100%;
+    height: 105px;
+    min-height: 0;
+    object-fit: cover;
+    border: 1px solid #d6b56b;
+    border-radius: 3px;
+    box-sizing: border-box;
+    background: #17110b;
+}
+
+.casilleroBiblioteca.libroBiblioteca:active {
     transform: scale(0.97);
-    border-color: #FFD700;
+    filter: brightness(1.25);
+    border-color: #ffd700;
 }
 
 /* ===== FIN CASILLEROS DE BIBLIOTECA ===== */
@@ -7522,6 +7638,14 @@ font-size:18px;
                 Cancelar
             </button>
 
+          
+            <button type="button"
+                    onclick="eliminarMaterialBiblioteca()"
+                    id="btnEliminarMaterialBiblioteca"
+                    style="display:none;background:#FF4444;color:white;font-weight:bold;">
+                🗑️ Eliminar material
+            </button>
+
             <button type="button"
                     onclick="guardarMaterialBiblioteca()"
                     style="background:#32CD32;color:#111;font-weight:bold;">
@@ -7536,6 +7660,186 @@ font-size:18px;
 <!-- ===== FIN POPUP AGREGAR MATERIAL BIBLIOTECA ===== -->
 
 </div>
+
+
+
+<!-- ===== POPUP CONFIRMAR ELIMINACION BIBLIOTECA ===== -->
+
+<div id="popupConfirmarEliminarBiblioteca"
+     style="
+        display:none;
+        position:fixed;
+        inset:0;
+        z-index:16000;
+        background:rgba(0,0,0,.82);
+        align-items:center;
+        justify-content:center;
+        padding:15px;
+        box-sizing:border-box;
+     ">
+
+    <div style="
+        width:100%;
+        max-width:420px;
+        box-sizing:border-box;
+        padding:22px;
+        border:1px solid #555;
+        border-radius:16px;
+        background:#1b1b1b;
+        color:white;
+        text-align:center;
+     ">
+
+        <h2 style="color:#FF4444;">
+            🗑️ Eliminar material
+        </h2>
+
+        <p>
+            ¿Querés eliminar este material?
+        </p>
+
+        <p style="color:#FFD700;">
+            Se perderán su portada y el archivo guardado.
+            Esta acción no se puede deshacer.
+        </p>
+
+        <div style="
+            display:flex;
+            gap:10px;
+            justify-content:center;
+            flex-wrap:wrap;
+            margin-top:20px;
+        ">
+
+            <button type="button"
+                    onclick="cancelarEliminarMaterialBiblioteca()">
+                Cancelar
+            </button>
+
+            <button type="button"
+                    onclick="confirmarEliminarMaterialBiblioteca()"
+                    style="background:#FF4444;color:white;font-weight:bold;">
+                Sí, eliminar
+            </button>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- ===== FIN POPUP CONFIRMAR ELIMINACION BIBLIOTECA ===== -->
+
+
+<!-- ===== POPUP OPCIONES MATERIAL BIBLIOTECA ===== -->
+
+<div id="popupOpcionesMaterialBiblioteca"
+     style="
+        display:none;
+        position:fixed;
+        inset:0;
+        z-index:16000;
+        background:rgba(0,0,0,.82);
+        align-items:center;
+        justify-content:center;
+        padding:15px;
+        box-sizing:border-box;
+     ">
+
+    <div style="
+        width:100%;
+        max-width:400px;
+        padding:22px;
+        box-sizing:border-box;
+        border:1px solid #555;
+        border-radius:16px;
+        background:#1b1b1b;
+        color:white;
+        text-align:center;
+     ">
+
+        <h2 style="color:#FFD700;">
+            📚 ¿Qué querés hacer?
+        </h2>
+
+        <button type="button"
+                onclick="leerMaterialBiblioteca()"
+                style="display:block;width:100%;padding:12px;margin:10px 0;">
+            📖 Leer material
+        </button>
+
+        <button type="button"
+                onclick="editarMaterialBiblioteca()"
+                style="display:block;width:100%;padding:12px;margin:10px 0;">
+            ✏️ Editar material
+        </button>
+
+        <button type="button"
+                onclick="cerrarOpcionesMaterialBiblioteca()"
+                style="display:block;width:100%;padding:12px;margin:10px 0;">
+            Cancelar
+        </button>
+
+    </div>
+</div>
+
+<!-- ===== FIN POPUP OPCIONES MATERIAL BIBLIOTECA ===== -->
+
+
+<!-- ===== POPUP ELEGIR LECTURA BIBLIOTECA ===== -->
+
+<div id="popupElegirLecturaBiblioteca"
+     style="
+        display:none;
+        position:fixed;
+        inset:0;
+        z-index:16001;
+        background:rgba(0,0,0,.82);
+        align-items:center;
+        justify-content:center;
+        padding:15px;
+        box-sizing:border-box;
+     ">
+
+    <div style="
+        width:100%;
+        max-width:400px;
+        padding:22px;
+        box-sizing:border-box;
+        border:1px solid #555;
+        border-radius:16px;
+        background:#1b1b1b;
+        color:white;
+        text-align:center;
+     ">
+
+        <h2 style="color:#FFD700;">
+            📚 ¿Qué querés abrir?
+        </h2>
+
+        <button type="button"
+                onclick="abrirEnlaceMaterialBiblioteca()"
+                style="display:block;width:100%;padding:12px;margin:10px 0;">
+            🌐 Abrir enlace web
+        </button>
+
+        <button type="button"
+                onclick="abrirArchivoElegidoBiblioteca()"
+                style="display:block;width:100%;padding:12px;margin:10px 0;">
+            📎 Abrir archivo adjunto
+        </button>
+
+        <button type="button"
+                onclick="cerrarEleccionLecturaBiblioteca()"
+                style="display:block;width:100%;padding:12px;margin:10px 0;">
+            Cancelar
+        </button>
+
+    </div>
+</div>
+
+<!-- ===== FIN POPUP ELEGIR LECTURA BIBLIOTECA ===== -->
+
+
 
 <!-- ===== FIN NUEVA BIBLIOTECA ===== -->
 
@@ -16626,6 +16930,157 @@ function cancelarConfirmacionJuegoPerfil(){
 // ===== FIN CONFIGURACION JUEGOS DEL PERFIL =====
 
 
+/* ===== ALMACENAMIENTO LOCAL DE ARCHIVOS DE BIBLIOTECA ===== */
+
+function abrirBaseDatosBiblioteca(){
+
+    return new Promise((resolve, reject) => {
+
+        const solicitud = indexedDB.open("MiEspacioBiblioteca", 1);
+
+        solicitud.onupgradeneeded = function(event){
+
+            const baseDatos = event.target.result;
+
+            if(!baseDatos.objectStoreNames.contains("archivos")){
+                baseDatos.createObjectStore("archivos", {
+                    keyPath: "id"
+                });
+            }
+        };
+
+        solicitud.onsuccess = function(){
+            resolve(solicitud.result);
+        };
+
+        solicitud.onerror = function(){
+            reject(solicitud.error);
+        };
+
+    });
+}
+
+/* ===== FIN ALMACENAMIENTO LOCAL DE ARCHIVOS ===== */
+
+
+/* ===== GUARDAR ARCHIVO LOCAL DE BIBLIOTECA ===== */
+
+function guardarArchivoBiblioteca(id, archivo){
+
+    return abrirBaseDatosBiblioteca().then(baseDatos => {
+
+        return new Promise((resolve, reject) => {
+
+            const transaccion = baseDatos.transaction(
+                ["archivos"],
+                "readwrite"
+            );
+
+            transaccion.objectStore("archivos").put({
+                id: id,
+                archivo: archivo
+            });
+
+            transaccion.oncomplete = function(){
+                baseDatos.close();
+                resolve(true);
+            };
+
+            transaccion.onerror = function(){
+                baseDatos.close();
+                reject(transaccion.error);
+            };
+
+            transaccion.onabort = function(){
+                baseDatos.close();
+                reject(transaccion.error);
+            };
+
+        });
+
+    });
+}
+
+/* ===== RECUPERAR ARCHIVO LOCAL DE BIBLIOTECA ===== */
+
+function recuperarArchivoBiblioteca(id){
+
+    return abrirBaseDatosBiblioteca().then(baseDatos => {
+
+        return new Promise((resolve, reject) => {
+
+            const transaccion = baseDatos.transaction(
+                ["archivos"],
+                "readonly"
+            );
+
+            const solicitud = transaccion
+                .objectStore("archivos")
+                .get(id);
+
+            solicitud.onsuccess = function(){
+                resolve(solicitud.result
+                    ? solicitud.result.archivo
+                    : null
+                );
+            };
+
+            solicitud.onerror = function(){
+                reject(solicitud.error);
+            };
+
+            transaccion.oncomplete = function(){
+                baseDatos.close();
+            };
+
+            transaccion.onerror = function(){
+                baseDatos.close();
+                reject(transaccion.error);
+            };
+
+        });
+
+    });
+}
+
+/* ===== BORRAR ARCHIVO LOCAL DE BIBLIOTECA ===== */
+
+function borrarArchivoBiblioteca(id){
+
+    return abrirBaseDatosBiblioteca().then(baseDatos => {
+
+        return new Promise((resolve, reject) => {
+
+            const transaccion = baseDatos.transaction(
+                ["archivos"],
+                "readwrite"
+            );
+
+            transaccion.objectStore("archivos").delete(id);
+
+            transaccion.oncomplete = function(){
+                baseDatos.close();
+                resolve(true);
+            };
+
+            transaccion.onerror = function(){
+                baseDatos.close();
+                reject(transaccion.error);
+            };
+
+            transaccion.onabort = function(){
+                baseDatos.close();
+                reject(transaccion.error);
+            };
+
+        });
+
+    });
+}
+
+/* ===== FIN FUNCIONES DE ARCHIVOS DE BIBLIOTECA ===== */
+
+
 
 /* ===== ABRIR SECCIONES DE BIBLIOTECA ===== */
 
@@ -16729,7 +17184,7 @@ let tipoBibliotecaActual = "";
 let casilleroBibliotecaActual = 0;
 
 
-function seleccionarCasilleroBiblioteca(numero){
+async function seleccionarCasilleroBiblioteca(numero){
 
     if(
         !["libros", "apuntes", "documentos", "otros"]
@@ -16745,8 +17200,11 @@ function seleccionarCasilleroBiblioteca(numero){
     const url = document.getElementById("urlMaterialBiblioteca");
     const mensaje = document.getElementById("mensajeMaterialBiblioteca");
     const tituloPopup = document.getElementById("tituloPopupMaterialBiblioteca");
+    const campoImagen = document.getElementById("imagenMaterialBiblioteca");
+    const campoArchivo = document.getElementById("archivoMaterialBiblioteca");
 
-    if(!popup || !nombre || !url || !mensaje || !tituloPopup) return;
+    if(!popup || !nombre || !url || !mensaje || !tituloPopup ||
+       !campoImagen || !campoArchivo) return;
 
     let materiales = [];
 
@@ -16762,16 +17220,153 @@ function seleccionarCasilleroBiblioteca(numero){
     }
 
     const existente = materiales.find(
-        material => Number(material.casillero) === numero
+        material => Number(material.casillero) === Number(numero)
     );
 
-    nombre.value = existente ? existente.nombre : "";
+    const idMaterialBiblioteca = tipoBibliotecaActual + "_" + numero;
+    const idPortadaBiblioteca = idMaterialBiblioteca + "_portada";
+    const idArchivoBiblioteca = idMaterialBiblioteca + "_archivo";
+
+    nombre.value = existente ? existente.nombre || "" : "";
     url.value = existente ? existente.url || "" : "";
+
+    campoImagen.value = "";
+    campoArchivo.value = "";
 
     mensaje.textContent = "";
     tituloPopup.textContent = existente
         ? "📚 Editar material"
         : "📚 Agregar material";
+    
+    const btnEliminar = document.getElementById("btnEliminarMaterialBiblioteca");
+
+    if(btnEliminar){
+    btnEliminar.style.display = existente ? "inline-block" : "none";
+    }
+
+
+/* Mostrar archivos guardados y permitir reemplazarlos */
+
+let infoArchivos = document.getElementById("infoArchivosBiblioteca");
+
+if(!infoArchivos){
+    infoArchivos = document.createElement("div");
+    infoArchivos.id = "infoArchivosBiblioteca";
+
+    campoArchivo.parentNode.insertBefore(
+        infoArchivos,
+        campoArchivo.nextSibling
+    );
+}
+
+infoArchivos.replaceChildren();
+
+const etiquetaImagen = document.querySelector(
+    'label[for="imagenMaterialBiblioteca"]'
+);
+
+const etiquetaArchivo = document.querySelector(
+    'label[for="archivoMaterialBiblioteca"]'
+);
+
+/* Recuperar la portada guardada */
+
+if(existente && existente.tienePortada){
+
+    if(etiquetaImagen) etiquetaImagen.style.display = "none";
+    campoImagen.style.display = "none";
+
+    try{
+        const imagenGuardada =
+            await recuperarArchivoBiblioteca(idPortadaBiblioteca);
+
+        if(imagenGuardada){
+
+            const vistaPrevia = document.createElement("img");
+
+            vistaPrevia.alt = "Portada guardada";
+            vistaPrevia.style.cssText =
+                "display:block;max-width:130px;max-height:150px;object-fit:contain;margin:10px auto;border-radius:8px;";
+
+            const lector = new FileReader();
+
+            await new Promise((resolve, reject) => {
+                lector.onload = function(){
+                    vistaPrevia.src = lector.result;
+                    resolve();
+                };
+
+                lector.onerror = reject;
+                lector.readAsDataURL(imagenGuardada);
+            });
+
+            infoArchivos.appendChild(vistaPrevia);
+           
+            const cambiarPortada = document.createElement("button");
+            cambiarPortada.type = "button";
+            cambiarPortada.textContent = "Cambiar portada";
+
+            cambiarPortada.onclick = function(){
+
+    if(etiquetaImagen){
+        etiquetaImagen.style.display = "block";
+    }
+
+    campoImagen.style.display = "block";
+    campoImagen.value = "";
+
+    cambiarPortada.style.display = "none";
+};
+
+            infoArchivos.appendChild(cambiarPortada);
+
+        }else{
+            if(etiquetaImagen) etiquetaImagen.style.display = "";
+            campoImagen.style.display = "";
+        }
+
+    }catch(error){
+        console.error("No se pudo recuperar la portada:", error);
+        if(etiquetaImagen) etiquetaImagen.style.display = "";
+        campoImagen.style.display = "";
+    }
+
+}else{
+    if(etiquetaImagen) etiquetaImagen.style.display = "";
+    campoImagen.style.display = "";
+}
+
+/* Mostrar el nombre del documento guardado */
+
+if(existente && existente.tieneArchivo){
+
+    if(etiquetaArchivo) etiquetaArchivo.style.display = "none";
+    campoArchivo.style.display = "none";
+
+    const textoArchivo = document.createElement("p");
+    textoArchivo.textContent =
+        "📎 Archivo guardado: " +
+        (existente.nombreArchivo || "Documento guardado");
+
+    infoArchivos.appendChild(textoArchivo);
+
+    const cambiarArchivo = document.createElement("button");
+    cambiarArchivo.type = "button";
+    cambiarArchivo.textContent = "Reemplazar archivo";
+
+    cambiarArchivo.onclick = function(){
+        if(etiquetaArchivo) etiquetaArchivo.style.display = "";
+        campoArchivo.style.display = "";
+        cambiarArchivo.style.display = "none";
+    };
+
+    infoArchivos.appendChild(cambiarArchivo);
+
+}else{
+    if(etiquetaArchivo) etiquetaArchivo.style.display = "";
+    campoArchivo.style.display = "";
+}
+
 
     popup.style.display = "flex";
 }
@@ -16787,12 +17382,126 @@ function cancelarMaterialBiblioteca(){
     document.getElementById("mensajeMaterialBiblioteca").textContent = "";
 }
 
+
+function eliminarMaterialBiblioteca(){
+
+    if(!tipoBibliotecaActual || !casilleroBibliotecaActual){
+        return;
+    }
+
+    const popupConfirmacion = document.getElementById(
+        "popupConfirmarEliminarBiblioteca"
+    );
+
+    if(popupConfirmacion){
+        popupConfirmacion.style.display = "flex";
+    }
+}
+
+
+function cancelarEliminarMaterialBiblioteca(){
+
+    const popup = document.getElementById(
+        "popupConfirmarEliminarBiblioteca"
+    );
+
+    if(popup){
+        popup.style.display = "none";
+    }
+}
+
+
+async function confirmarEliminarMaterialBiblioteca(){
+
+    cancelarEliminarMaterialBiblioteca();
+
+    await ejecutarEliminacionMaterialBiblioteca();
+}
+
+
+async function ejecutarEliminacionMaterialBiblioteca(){
+
+    if(!tipoBibliotecaActual || !casilleroBibliotecaActual){
+        return;
+    }
+
+    const clave = "biblioteca_" + tipoBibliotecaActual;
+
+    const idPortada =
+        tipoBibliotecaActual + "_" + casilleroBibliotecaActual + "_portada";
+
+    const idArchivo =
+        tipoBibliotecaActual + "_" + casilleroBibliotecaActual + "_archivo";
+
+    try{
+
+        const materiales = JSON.parse(
+            localStorage.getItem(clave) || "[]"
+        );
+
+        const actualizados = materiales.filter(
+            material =>
+                Number(material.casillero) !==
+                Number(casilleroBibliotecaActual)
+        );
+
+        await borrarArchivoBiblioteca(idPortada);
+        await borrarArchivoBiblioteca(idArchivo);
+
+        localStorage.setItem(
+            clave,
+            JSON.stringify(actualizados)
+        );
+
+        const popup = document.getElementById(
+            "popupMaterialBiblioteca"
+        );
+
+        if(popup){
+            popup.style.display = "none";
+        }
+
+        actualizarCasillerosBiblioteca();
+
+    }catch(error){
+
+        const mensaje = document.getElementById(
+            "mensajeMaterialBiblioteca"
+        );
+
+        if(mensaje){
+            mensaje.textContent =
+                "⚠ No se pudo eliminar el material. Intentá nuevamente.";
+        }
+
+    }
+}
+
+function cancelarEliminarMaterialBiblioteca(){
+
+    const popup = document.getElementById(
+        "popupConfirmarEliminarBiblioteca"
+    );
+
+    if(popup){
+        popup.style.display = "none";
+    }
+}
+
+
+async function confirmarEliminarMaterialBiblioteca(){
+
+    cancelarEliminarMaterialBiblioteca();
+
+    await ejecutarEliminacionMaterialBiblioteca();
+}
+
 /* ===== FIN SELECCIONAR CASILLERO DE BIBLIOTECA ===== */
 
 
 /* ===== GUARDAR MATERIAL DE BIBLIOTECA ===== */
 
-function guardarMaterialBiblioteca(){
+async function guardarMaterialBiblioteca(){
 
     const nombre = document
         .getElementById("nombreMaterialBiblioteca")
@@ -16802,14 +17511,16 @@ function guardarMaterialBiblioteca(){
         .getElementById("urlMaterialBiblioteca")
         .value.trim();
 
+    const imagen = document
+        .getElementById("imagenMaterialBiblioteca")
+        .files[0];
+
+    const archivo = document
+        .getElementById("archivoMaterialBiblioteca")
+        .files[0];
+
     const mensaje = document
         .getElementById("mensajeMaterialBiblioteca");
-
-    if(!nombre){
-        mensaje.textContent = "⚠ Escribí el nombre del material.";
-        mensaje.style.color = "#FF4444";
-        return;
-    }
 
     if(!tipoBibliotecaActual || !casilleroBibliotecaActual){
         mensaje.textContent = "⚠ No se pudo identificar el casillero.";
@@ -16817,23 +17528,7 @@ function guardarMaterialBiblioteca(){
         return;
     }
 
-    if(url){
-        try{
-            const enlace = new URL(url);
-
-            if(enlace.protocol !== "http:" &&
-               enlace.protocol !== "https:"){
-                throw new Error("Enlace no válido");
-            }
-        }catch(error){
-            mensaje.textContent = "⚠ Ingresá un enlace web válido.";
-            mensaje.style.color = "#FF4444";
-            return;
-        }
-    }
-
-    const clave =
-        "biblioteca_" + tipoBibliotecaActual;
+    const clave = "biblioteca_" + tipoBibliotecaActual;
 
     let materiales = [];
 
@@ -16851,9 +17546,43 @@ function guardarMaterialBiblioteca(){
         return;
     }
 
+    const existente = materiales.find(material =>
+        Number(material.casillero) === Number(casilleroBibliotecaActual)
+    );
+
+    /* Nombre vacío: quitar el material del casillero */
+
+    /* El nombre del material es obligatorio */
+
+    if(!nombre.trim()){
+
+        mensaje.textContent =
+            "⚠ El nombre del material es obligatorio.";
+
+        mensaje.style.color = "#FF4444";
+
+        return;
+    }
+
+
+    if(url){
+        try{
+            const enlace = new URL(url);
+
+            if(enlace.protocol !== "http:" &&
+               enlace.protocol !== "https:"){
+                throw new Error("Enlace no válido");
+            }
+        }catch(error){
+            mensaje.textContent = "⚠ Ingresá un enlace web válido.";
+            mensaje.style.color = "#FF4444";
+            return;
+        }
+    }
+
     const duplicado = materiales.some(material =>
-        material.nombre.toLowerCase() === nombre.toLowerCase() &&
-        material.casillero !== casilleroBibliotecaActual
+        (material.nombre || "").toLowerCase() === nombre.toLowerCase() &&
+        Number(material.casillero) !== Number(casilleroBibliotecaActual)
     );
 
     if(duplicado){
@@ -16862,39 +17591,59 @@ function guardarMaterialBiblioteca(){
         return;
     }
 
-    const existente = materiales.find(material =>
-        material.casillero === casilleroBibliotecaActual
-    );
-
     if(!existente && materiales.length >= 10){
         mensaje.textContent = "⚠ Esta categoría ya tiene 10 materiales.";
         mensaje.style.color = "#FF4444";
         return;
     }
 
-    const material = {
-        nombre: nombre,
-        url: url,
-        casillero: casilleroBibliotecaActual
-    };
+    const idPortada =
+        tipoBibliotecaActual + "_" + casilleroBibliotecaActual + "_portada";
 
-    if(existente){
-        materiales = materiales.map(item =>
-            item.casillero === casilleroBibliotecaActual
-                ? material
-                : item
-        );
-    }else{
-        materiales.push(material);
-    }
+    const idArchivo =
+        tipoBibliotecaActual + "_" + casilleroBibliotecaActual + "_archivo";
 
     try{
-        localStorage.setItem(
-            clave,
-            JSON.stringify(materiales)
-        );
+
+        if(imagen){
+            if(!imagen.type.startsWith("image/")){
+                mensaje.textContent = "⚠ La portada debe ser una imagen.";
+                mensaje.style.color = "#FF4444";
+                return;
+            }
+
+            await guardarArchivoBiblioteca(idPortada, imagen);
+        }
+
+        if(archivo){
+            await guardarArchivoBiblioteca(idArchivo, archivo);
+        }
+
+        
+const material = {
+    nombre: nombre,
+    url: url,
+    casillero: Number(casilleroBibliotecaActual),
+    tienePortada: imagen ? true : !!(existente && existente.tienePortada),
+    tieneArchivo: archivo ? true : !!(existente && existente.tieneArchivo),
+    nombreArchivo: archivo ? archivo.name : (existente ? existente.nombreArchivo || "" : "")
+};
+
+
+        if(existente){
+            materiales = materiales.map(item =>
+                Number(item.casillero) === Number(casilleroBibliotecaActual)
+                    ? material
+                    : item
+            );
+        }else{
+            materiales.push(material);
+        }
+
+        localStorage.setItem(clave, JSON.stringify(materiales));
+
     }catch(error){
-        mensaje.textContent = "⚠ No se pudo guardar el material en este dispositivo.";
+        mensaje.textContent = "⚠ No se pudieron guardar los archivos. Revisá el espacio disponible.";
         mensaje.style.color = "#FF4444";
         return;
     }
@@ -16902,20 +17651,19 @@ function guardarMaterialBiblioteca(){
     mensaje.textContent = "✔ Material guardado.";
     mensaje.style.color = "#32CD32";
 
-    setTimeout(() => {
+    actualizarCasillerosBiblioteca();
 
-        const popup = document.getElementById(
-            "popupMaterialBiblioteca"
-        );
+    setTimeout(() => {
+        const popup = document.getElementById("popupMaterialBiblioteca");
 
         if(popup){
             popup.style.display = "none";
         }
-
     }, 700);
 }
 
 /* ===== FIN GUARDAR MATERIAL DE BIBLIOTECA ===== */
+
 
 
 /* ===== MOSTRAR MATERIALES EN CASILLEROS ===== */
@@ -16952,38 +17700,448 @@ function actualizarCasillerosBiblioteca(){
     for(let numero = 1; numero <= 10; numero++){
 
         const material = materiales.find(
-            item => item.casillero === numero
+            item => Number(item.casillero) === numero
         );
 
         const casillero = document.createElement("div");
-        casillero.className = "casilleroBiblioteca";
+        casillero.className = "casilleroBiblioteca libroBiblioteca";
+
+        const numeroLibro = document.createElement("div");
+        numeroLibro.className = "numeroLibroBiblioteca";
+        numeroLibro.textContent = numero;
+
+        const icono = document.createElement("div");
+        icono.className = "iconoLibroBiblioteca";
+        icono.textContent = iconos[numero - 1];
+
+        const titulo = document.createElement("p");
+        titulo.className = "tituloLibroBiblioteca";
+        titulo.textContent = material
+            ? (material.nombre || "")
+            : "Agregar material";
+
+        casillero.appendChild(numeroLibro);
+        casillero.appendChild(icono);
+        casillero.appendChild(titulo);
 
         if(material){
 
-            casillero.innerHTML = `
-                ${iconos[numero - 1]}
-                <p>${material.nombre.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")}</p>
-            `;
-
             casillero.onclick = function(){
-                seleccionarCasilleroBiblioteca(numero);
+
+                casilleroBibliotecaActual = numero;
+
+                const popup = document.getElementById(
+                    "popupOpcionesMaterialBiblioteca"
+                );
+
+                if(popup){
+                    popup.style.display = "flex";
+                }
+
             };
+
+            if(material.tienePortada){
+
+                recuperarArchivoBiblioteca(
+                    tipoBibliotecaActual + "_" + numero + "_portada"
+                ).then(imagen => {
+
+                    if(!imagen || !casillero.isConnected) return;
+
+                    const lector = new FileReader();
+
+                    lector.onload = function(){
+
+                        if(!casillero.isConnected) return;
+
+                        const portada = document.createElement("img");
+
+                        portada.className = "portadaLibroBiblioteca";
+                        portada.src = lector.result;
+                        portada.alt = material.nombre || "Portada";
+
+                        
+                        casillero.innerHTML = "";
+
+                        casillero.style.padding = "0";
+                        casillero.style.gap = "0";
+                        casillero.style.background = "#100c08";
+                        casillero.style.border = "1px solid #c39a4a";
+                        casillero.style.display = "flex";
+                        casillero.style.flexDirection = "column";
+
+                        portada.style.width = "100%";
+                        portada.style.height = "175px";
+                        portada.style.maxWidth = "none";
+                        portada.style.flex = "1";
+                        portada.style.minHeight = "0";
+                        portada.style.objectFit = "cover";
+                        portada.style.border = "none";
+                        portada.style.borderRadius = "0";
+
+                        titulo.style.width = "100%";
+                        titulo.style.minHeight = "42px";
+                        titulo.style.boxSizing = "border-box";
+                        titulo.style.display = "flex";
+                        titulo.style.alignItems = "center";
+                        titulo.style.justifyContent = "center";
+                        titulo.style.padding = "8px";
+                        titulo.style.background = "#17110b";
+                        titulo.style.borderTop = "1px solid #c39a4a";
+                        titulo.style.color = "#ffdc83";
+
+                        casillero.appendChild(portada);
+                        casillero.appendChild(titulo);
+
+                    };
+
+                    lector.onerror = function(){
+                        console.error("No se pudo leer la portada.");
+                    };
+
+                    lector.readAsDataURL(imagen);
+
+                }).catch(error => {
+                    console.error("No se pudo recuperar la portada:", error);
+                });
+            }
 
         }else{
 
-            casillero.innerHTML = `
-                ${iconos[numero - 1]}
-                <p>Agregar material</p>
-            `;
-
             casillero.onclick = function(){
                 seleccionarCasilleroBiblioteca(numero);
             };
+
         }
 
         lista.appendChild(casillero);
     }
 }
+
+
+/* ===== ABRIR ARCHIVO DE BIBLIOTECA ===== */
+
+
+/* ===== OPCIONES DEL MATERIAL DE BIBLIOTECA ===== */
+
+function cerrarOpcionesMaterialBiblioteca(){
+
+    const popup = document.getElementById(
+        "popupOpcionesMaterialBiblioteca"
+    );
+
+    if(popup){
+        popup.style.display = "none";
+    }
+}
+
+
+function editarMaterialBiblioteca(){
+
+    const numero = casilleroBibliotecaActual;
+
+    cerrarOpcionesMaterialBiblioteca();
+
+    if(numero){
+        seleccionarCasilleroBiblioteca(numero);
+    }
+}
+
+function leerMaterialBiblioteca(){
+
+    const numero = casilleroBibliotecaActual;
+
+    if(!numero || !tipoBibliotecaActual) return;
+
+    const clave = "biblioteca_" + tipoBibliotecaActual;
+    const materiales = JSON.parse(
+        localStorage.getItem(clave) || "[]"
+    );
+
+    const material = materiales.find(
+        item => Number(item.casillero) === Number(numero)
+    );
+
+    if(!material) return;
+
+    const tieneLink = !!material.url;
+    const tieneArchivo = !!material.tieneArchivo;
+
+    cerrarOpcionesMaterialBiblioteca();
+
+    if(!tieneLink && !tieneArchivo){
+
+        const mensaje = document.getElementById(
+            "mensajeMaterialBiblioteca"
+        );
+
+        if(mensaje){
+            mensaje.textContent =
+                "⚠ Este material no tiene archivo de lectura ni enlace web.";
+            mensaje.style.color = "#FF4444";
+        }
+
+        return;
+    }
+
+    if(tieneLink && tieneArchivo){
+
+        const popup = document.getElementById(
+            "popupElegirLecturaBiblioteca"
+        );
+
+        if(popup){
+            popup.style.display = "flex";
+        }
+
+        return;
+    }
+
+    if(tieneLink){
+        window.open(material.url, "_blank");
+    }else{
+        abrirArchivoMaterialBiblioteca(numero);
+    }
+}
+
+function cerrarEleccionLecturaBiblioteca(){
+
+    const popup = document.getElementById(
+        "popupElegirLecturaBiblioteca"
+    );
+
+    if(popup){
+        popup.style.display = "none";
+    }
+}
+
+function abrirEnlaceMaterialBiblioteca(){
+
+    const numero = casilleroBibliotecaActual;
+
+    if(!numero || !tipoBibliotecaActual) return;
+
+    const clave = "biblioteca_" + tipoBibliotecaActual;
+    const materiales = JSON.parse(
+        localStorage.getItem(clave) || "[]"
+    );
+
+    const material = materiales.find(
+        item => Number(item.casillero) === Number(numero)
+    );
+
+    cerrarEleccionLecturaBiblioteca();
+
+    if(material && material.url){
+        confirmarSalidaBiblioteca(material.url, "enlace");
+    }
+}
+
+function abrirArchivoElegidoBiblioteca(){
+
+    const numero = casilleroBibliotecaActual;
+
+    cerrarEleccionLecturaBiblioteca();
+
+    if(numero){
+        abrirArchivoMaterialBiblioteca(numero);
+    }
+}
+
+/* ===== FIN OPCIONES DEL MATERIAL DE BIBLIOTECA ===== */
+
+
+async function abrirArchivoMaterialBiblioteca(numero){
+
+    if(!tipoBibliotecaActual || !numero){
+        return;
+    }
+
+    const idArchivo =
+        tipoBibliotecaActual + "_" + numero + "_archivo";
+
+    try{
+
+        const archivo = await recuperarArchivoBiblioteca(idArchivo);
+
+        if(!archivo){
+            const mensaje = document.getElementById(
+                "mensajeMaterialBiblioteca"
+            );
+
+            if(mensaje){
+                mensaje.textContent =
+                    "⚠ No hay un archivo adjunto para este material.";
+            }
+
+            return;
+        }
+
+        const urlTemporal = URL.createObjectURL(archivo);
+        confirmarSalidaBiblioteca(urlTemporal, "archivo");
+
+
+        if(!ventana){
+            URL.revokeObjectURL(urlTemporal);
+            const mensaje = document.getElementById(
+                "mensajeMaterialBiblioteca"
+            );
+
+            if(mensaje){
+                mensaje.textContent =
+                    "⚠ El navegador bloqueó la apertura del archivo.";
+            }
+        }
+
+    }catch(error){
+
+        const mensaje = document.getElementById(
+            "mensajeMaterialBiblioteca"
+        );
+
+        if(mensaje){
+            mensaje.textContent =
+                "⚠ No se pudo abrir el archivo adjunto.";
+        }
+    }
+}
+
+/* ===== FIN ABRIR ARCHIVO DE BIBLIOTECA ===== */
+
+
+/* ===== CONFIRMAR SALIDA DE BIBLIOTECA ===== */
+
+function confirmarSalidaBiblioteca(url, tipo){
+
+    const fondo = document.createElement("div");
+
+    fondo.id = "popupSalidaBiblioteca";
+
+    fondo.style.position = "fixed";
+    fondo.style.top = "0";
+    fondo.style.left = "0";
+    fondo.style.width = "100%";
+    fondo.style.height = "100%";
+    fondo.style.background = "rgba(0,0,0,0.75)";
+    fondo.style.display = "flex";
+    fondo.style.alignItems = "center";
+    fondo.style.justifyContent = "center";
+    fondo.style.zIndex = "99999";
+    fondo.style.padding = "20px";
+    fondo.style.boxSizing = "border-box";
+
+    const ventana = document.createElement("div");
+
+    ventana.className = "card";
+    ventana.style.width = "min(92%,450px)";
+    ventana.style.padding = "25px";
+    ventana.style.borderRadius = "20px";
+    ventana.style.textAlign = "center";
+
+    ventana.innerHTML = `
+        <div style="font-size:36px;margin-bottom:10px;">
+            📚
+        </div>
+
+        <h3>Estás saliendo de Mi Espacio</h3>
+
+<p>
+    Estás por salir de Mi Espacio para acceder a
+    ${tipo === "enlace"
+        ? "un sitio web externo mediante el enlace que seleccionaste"
+        : "un archivo externo que seleccionaste"}.
+</p>
+
+<p style="
+    font-size:13px;
+    line-height:19px;
+    opacity:.85;
+">
+    El contenido externo no es necesariamente propiedad
+    de Mi Espacio ni está bajo su control. Verificá su
+    origen y confiabilidad antes de abrirlo.
+</p>
+
+
+        <div style="
+            display:flex;
+            justify-content:center;
+            gap:12px;
+            margin-top:20px;
+            flex-wrap:wrap;
+        ">
+            <button
+                type="button"
+                id="cancelarSalidaBiblioteca"
+                style="
+                    padding:11px 18px;
+                    border:none;
+                    border-radius:10px;
+                    cursor:pointer;
+                    font-weight:bold;
+                ">
+                Cancelar
+            </button>
+
+            <button
+                type="button"
+                id="continuarSalidaBiblioteca"
+                style="
+                    padding:11px 18px;
+                    background:#FFD700;
+                    color:#000;
+                    border:none;
+                    border-radius:10px;
+                    cursor:pointer;
+                    font-weight:bold;
+                ">
+                Continuar →
+            </button>
+        </div>
+    `;
+
+    fondo.appendChild(ventana);
+    document.body.appendChild(fondo);
+
+    document.getElementById("cancelarSalidaBiblioteca").onclick =
+        function(){
+            fondo.remove();
+        };
+
+    document.getElementById("continuarSalidaBiblioteca").onclick =
+        function(){
+
+            fondo.remove();
+
+            if(tipo === "enlace"){
+                window.open(url, "_blank", "noopener,noreferrer");
+            }else{
+                const ventanaArchivo = window.open(
+                    "",
+                    "_blank"
+                );
+
+                if(ventanaArchivo){
+                    ventanaArchivo.location.href = url;
+                }else{
+                    URL.revokeObjectURL(url);
+
+                    const mensaje = document.getElementById(
+                        "mensajeMaterialBiblioteca"
+                    );
+
+                    if(mensaje){
+                        mensaje.textContent =
+                            "⚠ El navegador bloqueó la apertura del archivo.";
+                        mensaje.style.color = "#FF4444";
+                    }
+                }
+            }
+        };
+}
+
+/* ===== FIN CONFIRMAR SALIDA DE BIBLIOTECA ===== */
+
 
 /* ===== FIN MOSTRAR MATERIALES EN CASILLEROS ===== */
 
