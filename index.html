@@ -17977,20 +17977,52 @@ async function abrirArchivoMaterialBiblioteca(numero){
             return;
         }
 
-        const urlTemporal = URL.createObjectURL(archivo);
-        confirmarSalidaBiblioteca(urlTemporal, "archivo");
+        // ANDROID: preparar el archivo para enviarlo al celular
+        if(window.MiEspacioArchivos){
 
+            const lector = new FileReader();
 
-        if(!ventana){
-            URL.revokeObjectURL(urlTemporal);
-            const mensaje = document.getElementById(
-                "mensajeMaterialBiblioteca"
+            lector.onload = function(){
+
+                const base64 = lector.result.split(",")[1];
+
+                confirmarSalidaBiblioteca(
+                    "",
+                    "archivo",
+                    function(){
+
+                        window.MiEspacioArchivos.abrirArchivo(
+                            base64,
+                            archivo.name || "archivo",
+                            archivo.type || "application/octet-stream"
+                        );
+
+                    }
+                );
+            };
+
+            lector.onerror = function(){
+                const mensaje = document.getElementById(
+                    "mensajeMaterialBiblioteca"
+                );
+
+                if(mensaje){
+                    mensaje.textContent =
+                        "⚠ No se pudo preparar el archivo adjunto.";
+                }
+            };
+
+            lector.readAsDataURL(archivo);
+
+        }else{
+
+            // PC y PWA: conservar la apertura actual
+            const urlTemporal = URL.createObjectURL(archivo);
+
+            confirmarSalidaBiblioteca(
+                urlTemporal,
+                "archivo"
             );
-
-            if(mensaje){
-                mensaje.textContent =
-                    "⚠ El navegador bloqueó la apertura del archivo.";
-            }
         }
 
     }catch(error){
@@ -18006,12 +18038,12 @@ async function abrirArchivoMaterialBiblioteca(numero){
     }
 }
 
-/* ===== FIN ABRIR ARCHIVO DE BIBLIOTECA ===== */
 
+/* ===== FIN ABRIR ARCHIVO DE BIBLIOTECA ===== */
 
 /* ===== CONFIRMAR SALIDA DE BIBLIOTECA ===== */
 
-function confirmarSalidaBiblioteca(url, tipo){
+function confirmarSalidaBiblioteca(url, tipo, accionAndroid = null){
 
     const fondo = document.createElement("div");
 
@@ -18045,23 +18077,22 @@ function confirmarSalidaBiblioteca(url, tipo){
 
         <h3>Estás saliendo de Mi Espacio</h3>
 
-<p>
-    Estás por salir de Mi Espacio para acceder a
-    ${tipo === "enlace"
-        ? "un sitio web externo mediante el enlace que seleccionaste"
-        : "un archivo externo que seleccionaste"}.
-</p>
+        <p>
+            Estás por salir de Mi Espacio para acceder a
+            ${tipo === "enlace"
+                ? "un sitio web externo mediante el enlace que seleccionaste"
+                : "un archivo externo que seleccionaste"}.
+        </p>
 
-<p style="
-    font-size:13px;
-    line-height:19px;
-    opacity:.85;
-">
-    El contenido externo no es necesariamente propiedad
-    de Mi Espacio ni está bajo su control. Verificá su
-    origen y confiabilidad antes de abrirlo.
-</p>
-
+        <p style="
+            font-size:13px;
+            line-height:19px;
+            opacity:.85;
+        ">
+            El contenido externo no es necesariamente propiedad
+            de Mi Espacio ni está bajo su control. Verificá su
+            origen y confiabilidad antes de abrirlo.
+        </p>
 
         <div style="
             display:flex;
@@ -18113,13 +18144,16 @@ function confirmarSalidaBiblioteca(url, tipo){
 
             fondo.remove();
 
+            // Android: enviar el archivo al visor del celular
+            if(typeof accionAndroid === "function"){
+                accionAndroid();
+                return;
+            }
+
             if(tipo === "enlace"){
                 window.open(url, "_blank", "noopener,noreferrer");
             }else{
-                const ventanaArchivo = window.open(
-                    "",
-                    "_blank"
-                );
+                const ventanaArchivo = window.open("", "_blank");
 
                 if(ventanaArchivo){
                     ventanaArchivo.location.href = url;
@@ -18139,6 +18173,7 @@ function confirmarSalidaBiblioteca(url, tipo){
             }
         };
 }
+
 
 /* ===== FIN CONFIRMAR SALIDA DE BIBLIOTECA ===== */
 
