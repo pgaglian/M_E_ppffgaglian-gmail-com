@@ -29800,6 +29800,7 @@ window.addEventListener(
 
 
 <script>
+
 (function () {
 
     const botonFlotanteIA =
@@ -30009,7 +30010,34 @@ window.addEventListener(
 })();
 
 </script>
+<script src="https://cdn.jsdelivr.net/gh/pgaglian/Mi-Espacio-Datos@main/IA/IA.js"></script>
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const entrada = document.getElementById("textoMiEspacioIA");
+
+    if (!entrada) return;
+
+    entrada.addEventListener("keydown", function (evento) {
+
+        if (evento.key === "Enter") {
+
+            const texto = entrada.value.trim();
+
+            if (!texto) return;
+
+            MiEspacioIA.procesar(texto);
+
+            entrada.value = "";
+
+        }
+
+    });
+
+});
+
+</script>
 
 </body>
 </html>
