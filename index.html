@@ -29816,92 +29816,195 @@ window.addEventListener(
     document.body.appendChild(botonFlotanteIA);
     document.body.appendChild(panelMiEspacioIA);
 
-    
-/* Un toque abre el panel; otro toque lo cierra. */
+    /* ===== MOVIMIENTO DE LA RANITA ===== */
 
-botonFlotanteIA.addEventListener("click", function () {
+    let moviendoRanita = false;
+    let seMovioRanita = false;
 
-    const estaAbierto =
-        panelMiEspacioIA.style.display === "block";
+    let inicioX = 0;
+    let inicioY = 0;
+    let posicionX = 0;
+    let posicionY = 0;
 
-    if (estaAbierto) {
+    botonFlotanteIA.addEventListener("pointerdown", function(e) {
 
-        panelMiEspacioIA.style.setProperty(
-            "display", "none", "important"
+        if (!e.isPrimary) return;
+        if (e.pointerType === "mouse" && e.button !== 0) return;
+
+        moviendoRanita = true;
+        seMovioRanita = false;
+
+        inicioX = e.clientX;
+        inicioY = e.clientY;
+
+        const rect = botonFlotanteIA.getBoundingClientRect();
+
+        posicionX = rect.left;
+        posicionY = rect.top;
+
+        botonFlotanteIA.setPointerCapture(e.pointerId);
+
+    });
+
+    botonFlotanteIA.addEventListener("pointermove", function(e) {
+
+        if (!moviendoRanita) return;
+
+        const diferenciaX = e.clientX - inicioX;
+        const diferenciaY = e.clientY - inicioY;
+
+        if (
+            Math.abs(diferenciaX) > 5 ||
+            Math.abs(diferenciaY) > 5
+        ) {
+            seMovioRanita = true;
+        }
+
+        if (!seMovioRanita) return;
+
+        let nuevaX = posicionX + diferenciaX;
+        let nuevaY = posicionY + diferenciaY;
+
+        nuevaX = Math.max(
+            0,
+            Math.min(
+                nuevaX,
+                window.innerWidth - botonFlotanteIA.offsetWidth
+            )
         );
 
-    } else {
-
-        panelMiEspacioIA.style.setProperty(
-            "display", "block", "important"
+        nuevaY = Math.max(
+            0,
+            Math.min(
+                nuevaY,
+                window.innerHeight - botonFlotanteIA.offsetHeight
+            )
         );
 
-        panelMiEspacioIA.style.setProperty(
-            "visibility", "visible", "important"
+        botonFlotanteIA.style.setProperty(
+            "left", nuevaX + "px", "important"
         );
 
-        panelMiEspacioIA.style.setProperty(
-            "opacity", "1", "important"
+        botonFlotanteIA.style.setProperty(
+            "top", nuevaY + "px", "important"
         );
 
-        panelMiEspacioIA.style.setProperty(
-            "z-index", "1000001", "important"
+        botonFlotanteIA.style.setProperty(
+            "right", "auto", "important"
         );
+
+        botonFlotanteIA.style.setProperty(
+            "bottom", "auto", "important"
+        );
+
+    });
+
+    botonFlotanteIA.addEventListener("pointerup", function() {
+
+        moviendoRanita = false;
+
+    });
+
+    botonFlotanteIA.addEventListener("pointercancel", function() {
+
+        moviendoRanita = false;
+        seMovioRanita = false;
+
+    });
+
+    /* ===== ABRIR Y CERRAR EL PANEL ===== */
+
+    botonFlotanteIA.addEventListener("click", function() {
+
+        // Si se arrastró la ranita, no abrir el panel.
+        if (seMovioRanita) {
+            seMovioRanita = false;
+            return;
+        }
+
+        const estaAbierto =
+            panelMiEspacioIA.style.display === "block";
+
+        if (estaAbierto) {
+
+            panelMiEspacioIA.style.setProperty(
+                "display", "none", "important"
+            );
+
+        } else {
+
+            panelMiEspacioIA.style.setProperty(
+                "display", "block", "important"
+            );
+
+            panelMiEspacioIA.style.setProperty(
+                "visibility", "visible", "important"
+            );
+
+            panelMiEspacioIA.style.setProperty(
+                "opacity", "1", "important"
+            );
+
+            panelMiEspacioIA.style.setProperty(
+                "z-index", "1000001", "important"
+            );
+
+        }
+
+    });
+
+    /* ===== MINIMIZAR Y RESTAURAR ===== */
+
+    const minimizarMiEspacioIA =
+        document.getElementById("minimizarMiEspacioIA");
+
+    const contenidoMiEspacioIA =
+        document.getElementById("contenidoMiEspacioIA");
+
+    const subtituloMiEspacioIA =
+        panelMiEspacioIA.querySelector(".iaSubtitulo");
+
+    if (minimizarMiEspacioIA && contenidoMiEspacioIA) {
+
+        minimizarMiEspacioIA.addEventListener("click", function() {
+
+            const estaMinimizado =
+                contenidoMiEspacioIA.style.display === "none";
+
+            contenidoMiEspacioIA.style.display =
+                estaMinimizado ? "block" : "none";
+
+            if (subtituloMiEspacioIA) {
+                subtituloMiEspacioIA.style.display =
+                    estaMinimizado ? "block" : "none";
+            }
+
+            minimizarMiEspacioIA.textContent =
+                estaMinimizado ? "−" : "+";
+
+            minimizarMiEspacioIA.title =
+                estaMinimizado ? "Minimizar" : "Restaurar";
+
+        });
 
     }
 
-});
+    /* ===== CERRAR EL PANEL ===== */
 
-/* Minimizar: oculta el contenido y conserva la barra superior. */
-const minimizarMiEspacioIA =
-    document.getElementById("minimizarMiEspacioIA");
+    const cerrarMiEspacioIA =
+        document.getElementById("cerrarMiEspacioIA");
 
-const contenidoMiEspacioIA =
-    document.getElementById("contenidoMiEspacioIA");
+    if (cerrarMiEspacioIA) {
 
-const subtituloMiEspacioIA =
-    panelMiEspacioIA.querySelector(".iaSubtitulo");
+        cerrarMiEspacioIA.addEventListener("click", function() {
 
-if (minimizarMiEspacioIA && contenidoMiEspacioIA) {
+            panelMiEspacioIA.style.setProperty(
+                "display", "none", "important"
+            );
 
-    minimizarMiEspacioIA.addEventListener("click", function () {
+        });
 
-        const estaMinimizado =
-            contenidoMiEspacioIA.style.display === "none";
-
-        contenidoMiEspacioIA.style.display =
-            estaMinimizado ? "block" : "none";
-
-        if (subtituloMiEspacioIA) {
-            subtituloMiEspacioIA.style.display =
-                estaMinimizado ? "block" : "none";
-        }
-
-        minimizarMiEspacioIA.textContent =
-            estaMinimizado ? "−" : "+";
-
-        minimizarMiEspacioIA.title =
-            estaMinimizado ? "Minimizar" : "Restaurar";
-
-    });
-
-}
-
-/* Cerrar: oculta el panel, pero conserva la ranita. */
-const cerrarMiEspacioIA =
-    document.getElementById("cerrarMiEspacioIA");
-
-if (cerrarMiEspacioIA) {
-
-    cerrarMiEspacioIA.addEventListener("click", function () {
-
-        panelMiEspacioIA.style.setProperty(
-            "display", "none", "important"
-        );
-
-    });
-
-}
+    }
 
 })();
 
