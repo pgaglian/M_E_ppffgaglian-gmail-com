@@ -1849,17 +1849,20 @@ body.eclipse header{
 
 }
 
+
 /* ===== ACCESO FLOTANTE MI ESPACIO IA ===== */
 
 #btnMiEspacioIA{
     position:fixed !important;
     right:20px !important;
     bottom:20px !important;
+    left:auto !important;
+    top:auto !important;
 
-    width:76px !important;
-    height:76px !important;
-    min-width:76px !important;
-    min-height:76px !important;
+    width:90px !important;
+    height:90px !important;
+    min-width:90px !important;
+    min-height:90px !important;
 
     padding:0 !important;
     border:2px solid #D4AF37;
@@ -1872,9 +1875,22 @@ body.eclipse header{
     justify-content:center;
 
     flex-shrink:0;
-    cursor:pointer;
+    cursor:grab;
+    touch-action:none;
+    user-select:none;
+    -webkit-user-select:none;
+
     z-index:1000000 !important;
     overflow:hidden;
+
+    transition:width .2s ease,
+               height .2s ease,
+               min-width .2s ease,
+               min-height .2s ease;
+}
+
+#btnMiEspacioIA:active{
+    cursor:grabbing;
 }
 
 #btnMiEspacioIA img{
@@ -1883,41 +1899,36 @@ body.eclipse header{
     height:100%;
     object-fit:contain;
     border-radius:50%;
-}
-
-
-#btnMiEspacioIA{
-    transition:width .2s ease,
-               height .2s ease,
-               min-width .2s ease,
-               min-height .2s ease;
+    pointer-events:none;
 }
 
 #btnMiEspacioIA.agrandada{
-    width:88px !important;
-    height:88px !important;
-    min-width:88px !important;
-    min-height:88px !important;
+    width:90px !important;
+    height:90px !important;
+    min-width:90px !important;
+    min-height:90px !important;
 }
 
 @media (max-width:768px){
+
     #btnMiEspacioIA{
         right:14px !important;
         bottom:14px !important;
-        width:48px !important;
-        height:48px !important;
-        min-width:48px !important;
-        min-height:48px !important;
+
+        width:80px !important;
+        height:80px !important;
+        min-width:80px !important;
+        min-height:80px !important;
     }
 
     #btnMiEspacioIA.agrandada{
-        width:64px !important;
-        height:64px !important;
-        min-width:64px !important;
-        min-height:64px !important;
+        width:80px !important;
+        height:80px !important;
+        min-width:80px !important;
+        min-height:80px !important;
     }
-}
 
+}
 
 
 /* ===== PANEL MI ESPACIO IA ===== */
