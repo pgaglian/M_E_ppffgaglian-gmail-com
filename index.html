@@ -30069,6 +30069,121 @@ window.addEventListener(
     const entrada =
         document.getElementById("textoMiEspacioIA");
 
+    /* ===== COMANDO DE VOZ MI ESPACIO IA ===== */
+
+    const microfono =
+        document.getElementById("microfonoMiEspacioIA");
+
+    const ReconocimientoVoz =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+    if (microfono) {
+
+        if (!ReconocimientoVoz) {
+
+            microfono.title =
+                "El navegador no admite reconocimiento de voz";
+
+            microfono.disabled = true;
+
+        } else {
+
+            const reconocimiento =
+                new ReconocimientoVoz();
+
+            reconocimiento.lang = "es-AR";
+            reconocimiento.continuous = false;
+            reconocimiento.interimResults = false;
+
+            let escuchando = false;
+
+            microfono.addEventListener("click", function() {
+
+                if (escuchando) {
+                    reconocimiento.stop();
+                    return;
+                }
+
+                try {
+
+                    reconocimiento.start();
+
+                } catch(error) {
+
+                    console.error(
+                        "Mi Espacio IA: no se pudo iniciar el micrófono.",
+                        error
+                    );
+
+                }
+
+            });
+
+            reconocimiento.onstart = function() {
+
+                escuchando = true;
+
+                microfono.textContent = "🔴";
+                microfono.title = "Escuchando...";
+
+            };
+
+            reconocimiento.onresult = function(evento) {
+
+                const texto =
+                    evento.results[0][0].transcript.trim();
+
+                if (!texto) return;
+
+                entrada.value = texto;
+
+                if (
+                    typeof MiEspacioIA === "undefined" ||
+                    typeof MiEspacioIA.procesar !== "function"
+                ) {
+                    console.error(
+                        "Mi Espacio IA: el motor no está disponible."
+                    );
+                    return;
+                }
+
+                entrada.value = "";
+
+                MiEspacioIA.procesar(texto).catch(error => {
+
+                    console.error(
+                        "Mi Espacio IA: error al procesar la voz.",
+                        error
+                    );
+
+                });
+
+            };
+
+            reconocimiento.onerror = function(evento) {
+
+                console.error(
+                    "Mi Espacio IA: error de reconocimiento de voz.",
+                    evento.error
+                );
+
+            };
+
+            reconocimiento.onend = function() {
+
+                escuchando = false;
+
+                microfono.textContent = "🎙️";
+                microfono.title = "Usar micrófono";
+
+            };
+
+        }
+
+    }
+
+
     if (!entrada) {
         console.error("Mi Espacio IA: no se encontró el campo de búsqueda.");
         return;
