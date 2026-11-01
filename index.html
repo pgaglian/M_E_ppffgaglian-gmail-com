@@ -30011,7 +30011,57 @@ window.addEventListener(
 
 </script>
 
-<script src="https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/IA/IA.js"></script>
+<script>
+(async function(){
+
+    const url =
+        "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/IA/IA.js";
+
+    try {
+
+        const respuesta = await fetch(url);
+
+        if(!respuesta.ok){
+            throw new Error("HTTP " + respuesta.status);
+        }
+
+        const codigo = await respuesta.text();
+
+        const archivo = new Blob(
+            [codigo],
+            { type: "text/javascript" }
+        );
+
+        const urlTemporal = URL.createObjectURL(archivo);
+
+        const script = document.createElement("script");
+
+        script.src = urlTemporal;
+
+        script.onload = function(){
+            console.log("🐸 Mi Espacio IA: motor cargado correctamente");
+            URL.revokeObjectURL(urlTemporal);
+        };
+
+        script.onerror = function(){
+            console.error("Mi Espacio IA: no se pudo ejecutar el motor.");
+            URL.revokeObjectURL(urlTemporal);
+        };
+
+        document.head.appendChild(script);
+
+    } catch(error) {
+
+        console.error(
+            "Mi Espacio IA: error al descargar el motor.",
+            error
+        );
+
+    }
+
+})();
+
+</script>
 
 <script>
 (function () {
