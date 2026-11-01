@@ -30012,31 +30012,42 @@ window.addEventListener(
 </script>
 
 <script src="https://cdn.jsdelivr.net/gh/pgaglian/Mi-Espacio-Datos@main/IA/IA.js?v=3"></script>
-
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+(function () {
 
-    const entrada = document.getElementById("textoMiEspacioIA");
+    const entrada =
+        document.getElementById("textoMiEspacioIA");
 
-    if (!entrada) return;
+    if (!entrada) {
+        console.error("Mi Espacio IA: no se encontró el campo de búsqueda.");
+        return;
+    }
 
     entrada.addEventListener("keydown", function (evento) {
 
-        if (evento.key === "Enter") {
+        if (evento.key !== "Enter") return;
 
-            const texto = entrada.value.trim();
+        const texto = entrada.value.trim();
 
-            if (!texto) return;
+        if (!texto) return;
 
-            MiEspacioIA.procesar(texto);
-
-            entrada.value = "";
-
+        if (
+            typeof MiEspacioIA === "undefined" ||
+            typeof MiEspacioIA.procesar !== "function"
+        ) {
+            console.error("Mi Espacio IA: el motor no está disponible.");
+            return;
         }
+
+        entrada.value = "";
+
+        MiEspacioIA.procesar(texto).catch(error => {
+            console.error("Mi Espacio IA: error al procesar el pedido.", error);
+        });
 
     });
 
-});
+})();
 
 </script>
 
