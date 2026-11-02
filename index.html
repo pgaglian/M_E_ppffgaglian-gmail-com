@@ -15769,6 +15769,400 @@ function cerrarEditarPlataformaCine(){
     window.plataformaCineEnEdicion = null;
 }
  
+// =====================================
+// MODULO REDES SOCIALES
+// =====================================
+
+// CARGAR REDES SOCIALES DESDE GITHUB
+
+let configuracionRedes = [];
+
+fetch("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/RedesSociales.json")
+
+    .then(function(res){
+        return res.json();
+    })
+
+    .then(function(datos){
+
+        configuracionRedes = datos;
+
+        cargarConfiguracionRedes();
+
+       
+    })
+
+    .catch(function(err){
+
+        console.warn(
+            "No se pudo cargar RedesSociales.json",
+            err
+        );
+
+    });
+
+// ================================
+// CARGAR CONFIGURACION REDES SOCIALES
+// ================================
+
+function cargarConfiguracionRedes(){
+
+    const contenedor = document.getElementById(
+        "configuracionRedes"
+    );
+
+    if(!contenedor){
+        return;
+    }
+
+    const seleccionadas = JSON.parse(
+        localStorage.getItem(
+            "RedesSocialesSeleccionadas"
+        ) || "[]"
+    );
+
+    contenedor.innerHTML = "";
+
+    configuracionRedes.forEach(function(red){
+
+        if(!red.activo){
+            return;
+        }
+
+        const fila = document.createElement("label");
+
+        fila.style.display = "flex";
+        fila.style.alignItems = "center";
+        fila.style.gap = "10px";
+        fila.style.padding = "10px";
+        fila.style.background = "#333";
+        fila.style.borderRadius = "10px";
+        fila.style.cursor = "pointer";
+
+        const checkbox = document.createElement("input");
+
+        checkbox.type = "checkbox";
+        checkbox.value = red.id;
+        checkbox.checked = seleccionadas.includes(red.id);
+
+        const imagen = document.createElement("img");
+
+        imagen.src =
+            "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/RedesSocialesimg/" +
+            red.logo + ".png";
+
+        imagen.alt = red.nombre;
+        imagen.style.width = "32px";
+        imagen.style.height = "32px";
+        imagen.style.objectFit = "contain";
+
+        const nombre = document.createElement("span");
+
+        nombre.textContent = red.nombre;
+
+        fila.appendChild(checkbox);
+        fila.appendChild(imagen);
+        fila.appendChild(nombre);
+
+        contenedor.appendChild(fila);
+
+    });
+
+}
+
+// ================================
+// ABRIR CONFIGURACION REDES SOCIALES
+// ================================
+
+function abrirConfiguracionRedes(){
+
+    cargarConfiguracionRedes();
+
+    const popup = document.getElementById(
+        "popupConfiguracionRedes"
+    );
+
+    if(popup){
+        popup.style.display = "flex";
+    }
+
+}
+
+
+// ================================
+// CERRAR CONFIGURACION REDES SOCIALES
+// ================================
+
+function cerrarConfiguracionRedes(){
+
+    const popup = document.getElementById(
+        "popupConfiguracionRedes"
+    );
+
+    if(popup){
+        popup.style.display = "none";
+    }
+
+}
+
+
+// ================================
+// GUARDAR CONFIGURACION REDES SOCIALES
+// ================================
+
+function guardarConfiguracionRedes(){
+
+    const contenedor = document.getElementById(
+        "configuracionRedes"
+    );
+
+    if(!contenedor){
+        return;
+    }
+
+    const seleccionadas = Array.from(
+        contenedor.querySelectorAll(
+            'input[type="checkbox"]:checked'
+        )
+    ).map(function(checkbox){
+        return checkbox.value;
+    });
+
+    localStorage.setItem(
+        "RedesSocialesSeleccionadas",
+        JSON.stringify(seleccionadas)
+    );
+
+    const mensaje = document.getElementById(
+        "mensajeRedes"
+    );
+
+    if(mensaje){
+        mensaje.textContent =
+            "✅ Redes Sociales guardadas correctamente";
+
+        mensaje.style.display = "block";
+    }
+
+}
+
+// =====================================
+// MOSTRAR MIS REDES SOCIALES
+// =====================================
+
+function mostrarRedesSeleccionadas(){
+
+    const contenedor = document.getElementById(
+        "RedesSocialesSeleccionadas"
+    );
+
+    if(!contenedor) return;
+
+    const seleccionadas = JSON.parse(
+        localStorage.getItem(
+            "RedesSocialesSeleccionadas"
+        ) || "[]"
+    );
+
+    contenedor.innerHTML = "";
+
+    configuracionRedes.forEach(function(red){
+
+        if(!seleccionadas.includes(red.id) || !red.activo){
+            return;
+        }
+
+        const tarjeta = document.createElement("div");
+
+        tarjeta.className = "card";
+
+        tarjeta.style.padding = "15px";
+        tarjeta.style.borderRadius = "15px";
+        tarjeta.style.textAlign = "center";
+        tarjeta.style.cursor = "pointer";
+
+        const imagen = document.createElement("img");
+
+        imagen.src =
+            "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/RedesSocialesimg/" +
+            red.logo + ".png";
+
+        imagen.alt = red.nombre;
+        imagen.style.width = "65px";
+        imagen.style.height = "65px";
+        imagen.style.objectFit = "contain";
+
+        const nombre = document.createElement("h3");
+
+        nombre.textContent = red.nombre;
+
+        tarjeta.appendChild(imagen);
+        tarjeta.appendChild(nombre);
+
+        tarjeta.onclick = function(){
+            abrirRedSocial(red.id);
+        };
+
+        contenedor.appendChild(tarjeta);
+
+    });
+
+}
+
+
+// =====================================
+// SALIDA A RED SOCIAL
+// =====================================
+
+function abrirRedSocial(idRed){
+
+    const datosRed = configuracionRedes.find(function(red){
+
+        return red.id === idRed;
+
+    });
+
+    if(!datosRed || !datosRed.activo){
+        return;
+    }
+
+    // Detectar dispositivo
+
+    const userAgent = navigator.userAgent || "";
+
+    let destino = datosRed.sitioOficial;
+
+    if(/android/i.test(userAgent)){
+
+        if(datosRed.android){
+            destino = datosRed.android;
+        }
+
+    }else if(
+        /iPad|iPhone|iPod/i.test(userAgent) ||
+        (
+            navigator.platform === "MacIntel" &&
+            navigator.maxTouchPoints > 1
+        )
+    ){
+
+        if(datosRed.ios){
+            destino = datosRed.ios;
+        }
+
+    }
+
+    if(!destino){
+        return;
+    }
+
+    // Ventana de confirmación
+
+    const fondo = document.createElement("div");
+
+    fondo.id = "popupSalidaRedSocial";
+
+    fondo.style.position = "fixed";
+    fondo.style.inset = "0";
+    fondo.style.width = "100%";
+    fondo.style.height = "100%";
+    fondo.style.background = "rgba(0,0,0,0.75)";
+    fondo.style.display = "flex";
+    fondo.style.alignItems = "center";
+    fondo.style.justifyContent = "center";
+    fondo.style.zIndex = "99999";
+    fondo.style.padding = "20px";
+    fondo.style.boxSizing = "border-box";
+
+    const ventana = document.createElement("div");
+
+    ventana.className = "card";
+    ventana.style.width = "min(92%,450px)";
+    ventana.style.padding = "25px";
+    ventana.style.borderRadius = "20px";
+    ventana.style.textAlign = "center";
+
+    const titulo = document.createElement("h3");
+
+    titulo.textContent = "Estás saliendo de Mi Espacio";
+
+    const texto = document.createElement("p");
+
+    texto.append(
+        "Vas a salir de Mi Espacio para ingresar a "
+    );
+
+    const nombre = document.createElement("strong");
+
+    nombre.textContent = datosRed.nombre;
+
+    texto.appendChild(nombre);
+    texto.append(".");
+
+    const aviso = document.createElement("p");
+
+    aviso.style.fontSize = "13px";
+    aviso.style.lineHeight = "19px";
+    aviso.style.opacity = ".85";
+
+    aviso.textContent =
+        "Mi Espacio no administra tu cuenta, contraseña, " +
+        "datos personales ni las condiciones del servicio.";
+
+    const botones = document.createElement("div");
+
+    botones.style.display = "flex";
+    botones.style.justifyContent = "center";
+    botones.style.gap = "12px";
+    botones.style.marginTop = "20px";
+    botones.style.flexWrap = "wrap";
+
+    const cancelar = document.createElement("button");
+
+    cancelar.type = "button";
+    cancelar.textContent = "Cancelar";
+
+    const continuar = document.createElement("button");
+
+    continuar.type = "button";
+    continuar.textContent = "Continuar →";
+
+    continuar.style.background = "#FFD700";
+    continuar.style.color = "#000";
+
+    cancelar.onclick = function(){
+
+        fondo.remove();
+
+    };
+
+    continuar.onclick = function(){
+
+        fondo.remove();
+
+        window.open(
+            destino,
+            "_blank",
+            "noopener,noreferrer"
+        );
+
+    };
+
+    botones.appendChild(cancelar);
+    botones.appendChild(continuar);
+
+    ventana.appendChild(titulo);
+    ventana.appendChild(texto);
+    ventana.appendChild(aviso);
+    ventana.appendChild(botones);
+
+    fondo.appendChild(ventana);
+
+    document.body.appendChild(fondo);
+
+}
+
+
 // ===== PERFILES DE JUEGOS =====
 
 function cargarNombresPerfilesJuego(){
@@ -18407,6 +18801,8 @@ function mostrar(id){
 
     document.getElementById("Cine").style.display="none";
 
+    document.getElementById("Redes").style.display="none";
+
     document.getElementById("Juegos").style.display="none";
     const pantallaPerfilJuego = document.getElementById("pantallaPerfilJuego");
 if(pantallaPerfilJuego) pantallaPerfilJuego.style.display = "none";
@@ -18420,6 +18816,12 @@ if(id=="Juegos"){ cargarNombresPerfilesJuego(); }
 if(id=="Cine"){
 
     mostrarPlataformasCineSeleccionadas();
+
+}
+
+if(id=="Redes"){
+
+    mostrarRedesSeleccionadas();
 
 }
 
@@ -18498,6 +18900,7 @@ function inicio(){
    document.getElementById("Radios").style.display="none";
    document.getElementById("Entrenamiento").style.display="none";
    document.getElementById("Cine").style.display="none";
+   document.getElementById("Redes").style.display="none";
    document.getElementById("Juegos").style.display="none";
    const pantallaPerfilJuego = document.getElementById("pantallaPerfilJuego");
    if(pantallaPerfilJuego) pantallaPerfilJuego.style.display = "none";
@@ -18908,6 +19311,7 @@ function mostrarMenuAndroid(seccion, registrarHistorial = true){
 
     if(seccion=="acciones"){
 
+document.getElementById("Redes").style.display="none";
 document.getElementById("Biblioteca").style.display="none";
 document.getElementById("Musica").style.display="none";
 document.getElementById("Calendario").style.display="none";
