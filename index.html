@@ -2771,11 +2771,11 @@ onclick="mostrar('Pizarra')">
 <p>Notas y recordatorios</p>
 </div>
 
-<div class="card" id="accionChat" data-titulo="💬 Chat"
-onclick="mostrar('Chat')">
+<div class="card" id="accionRedes" data-titulo="🌐 Redes Sociales"
+onclick="mostrar('Redes')">
 
-<h2>💬 Chat</h2>
-<p>Mensajes y conversaciones</p>
+<h2>🌐 Redes Sociales</h2>
+<p>Comunicación Digital</p>
 </div>
 
 
@@ -2970,14 +2970,6 @@ onclick="mostrar('Videos')">
 <p>Videos Personales</p>
 </div>
 
-<div class="card" id="ambienteRedes" data-titulo="🌐 Redes Sociales"
-onclick="mostrar('Redes')">
-
-<h2>🌐 Redes Sociales</h2>
-<p>Comunicación Digital</p>
-</div>
-
-
 <div class="card" id="ambienteJuegos" data-titulo="🎮 Juegos"
 onclick="mostrar('Juegos')">
 
@@ -2999,7 +2991,7 @@ onclick="mostrar('Juegos')">
         <div>⚡ ACCIONES</div>
 
         <div style="font-size:24px;margin-top:10px;">
-            📅 🌤 📝 📧 🏦 💳
+            📅 🌤 📝 📧 🏦 💳 🌐
         </div>
 
     </button>
@@ -3010,7 +3002,7 @@ onclick="mostrar('Juegos')">
         <div>🌎 AMBIENTES</div>
 
         <div style="font-size:24px;margin-top:10px;">
-            📚 🎵 📻 🏋️ 🎬 📸 🌐 🎮
+            📚 🎵 📻 🏋️ 🎬 📸 🎮
         </div>
 
     </button>
@@ -3763,6 +3755,65 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 </div>
 
 <!-- ===== FIN MODULO CINE ===== -->
+
+
+<!-- ===== MODULO REDES SOCIALES ===== -->
+
+<div id="Redes" style="display:none; min-height:100vh;">
+
+    <!-- CABECERA -->
+    <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding:15px;
+    ">
+        <button onclick="inicio()">
+            ⬅ Volver
+        </button>
+
+        <button onclick="abrirConfiguracionRedes()">
+            ⚙ Configurar
+        </button>
+    </div>
+
+    <!-- TITULO -->
+    <h2 style="
+        text-align:center;
+        color:#FFD700;
+        margin-top:10px;
+    ">
+        🌐 Redes Sociales
+    </h2>
+
+    <!-- MIS REDES SOCIALES -->
+    <div class="card" style="
+        width:min(92%,700px);
+        margin:20px auto;
+        padding:20px;
+        border-radius:22px;
+    ">
+
+        <h3 style="
+            margin-top:0;
+            text-align:center;
+        ">
+            🌐 Mis Redes Sociales
+        </h3>
+
+        <div id="RedesSocialesSeleccionadas"
+             style="
+             display:grid;
+             grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+             gap:12px;
+             ">
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN MODULO REDES SOCIALES ===== -->
 
 
 <!-- ===== MODULO JUEGOS: PERFILES ===== -->
@@ -4623,6 +4674,128 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 </div>
 
 <!-- ===== FIN CONFIGURACION CINE ===== -->
+
+
+<!-- ===== CONFIGURACION DE REDES SOCIALES ===== -->
+
+<div id="popupConfiguracionRedes"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1000;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,600px);
+        max-height:85vh;
+        overflow-y:auto;
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:20px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        ">
+
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:15px;
+            ">
+
+            <h2 style="margin:0;color:#FFD700;">
+                🌐 Configurar Redes Sociales
+            </h2>
+
+            <button onclick="cerrarConfiguracionRedes()">
+                ✖
+            </button>
+
+        </div>
+
+        <p style="
+            text-align:center;
+            color:#ccc;
+            ">
+            ⭐ Seleccioná las redes sociales que utilizás
+        </p>
+
+        <div id="configuracionRedes"
+             style="
+             display:grid;
+             grid-template-columns:1fr;
+             gap:10px;
+             max-height:45vh;
+             overflow-y:auto;
+             padding-right:5px;
+             ">
+        </div>
+
+        <div style="
+            text-align:center;
+            margin-top:20px;
+        ">
+
+            <button
+                type="button"
+                onclick="guardarConfiguracionRedes()"
+                style="
+                padding:10px 22px;
+                font-size:16px;
+                font-weight:bold;
+                border-radius:10px;
+                ">
+                💾 Guardar Redes Sociales
+            </button>
+
+            <div id="mensajeRedes"
+                 style="
+                 display:none;
+                 margin-top:12px;
+                 color:#7CFC00;
+                 font-weight:bold;
+                 font-size:16px;
+                 ">
+                ✅ Redes Sociales guardadas correctamente
+            </div>
+
+        </div>
+
+        <div style="
+            border-top:1px solid #555;
+            margin-top:22px;
+            padding-top:15px;
+            text-align:center;
+            color:#ccc;
+        ">
+
+            <p style="margin:5px 0;">
+                😎 ¿Te falta alguna red social?
+            </p>
+
+            <p style="margin:5px 0;">
+                Envíanos un correo y la revisamos.
+            </p>
+
+            <p style="margin:10px 0;">
+                🛠️ <b>Soporte:</b>
+                ✉️ <b>Enviar consulta</b>
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN CONFIGURACION DE REDES SOCIALES ===== -->
+
+
 
 <!-- ===== CONFIGURACION DE MUSICA ===== -->
 
