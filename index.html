@@ -12884,7 +12884,7 @@ audio.controls = false;
 audio.autoplay = false;
 audio.preload = "none";
 audio.volume = 0.8;
-audio.removeAttribute("crossorigin");
+audio.crossOrigin = "anonymous";
 
 const contextoAudioMusica =
     new (window.AudioContext || window.webkitAudioContext)();
