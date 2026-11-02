@@ -15847,9 +15847,19 @@ function cargarConfiguracionRedes(){
 
         const imagen = document.createElement("img");
 
-        imagen.src =
-            "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/RedesSocialesimg/" +
-            red.logo + ".png";
+       imagen.src =
+    "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/RedesSocialesimg/" +
+    red.logo + ".png";
+
+imagen.onerror = function(){
+
+    imagen.onerror = null;
+
+    imagen.src =
+        "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/RedesSocialesimg/" +
+        red.logo + ".jpg";
+
+};
 
         imagen.alt = red.nombre;
         imagen.style.width = "32px";
@@ -15912,20 +15922,20 @@ function cerrarConfiguracionRedes(){
 
 function guardarConfiguracionRedes(){
 
-    const contenedor = document.getElementById(
-        "configuracionRedes"
-    );
+    const seleccionadas = [];
 
-    if(!contenedor){
-        return;
-    }
+    document.querySelectorAll(
+        "#configuracionRedes input[type='checkbox']"
+    ).forEach(function(checkbox){
 
-    const seleccionadas = Array.from(
-        contenedor.querySelectorAll(
-            'input[type="checkbox"]:checked'
-        )
-    ).map(function(checkbox){
-        return checkbox.value;
+        if(checkbox.checked){
+
+            seleccionadas.push(
+                checkbox.value
+            );
+
+        }
+
     });
 
     localStorage.setItem(
@@ -15938,11 +15948,20 @@ function guardarConfiguracionRedes(){
     );
 
     if(mensaje){
-        mensaje.textContent =
-            "✅ Redes Sociales guardadas correctamente";
-
         mensaje.style.display = "block";
     }
+
+    setTimeout(function(){
+
+        if(mensaje){
+            mensaje.style.display = "none";
+        }
+
+        cerrarConfiguracionRedes();
+
+    },1000);
+
+    mostrarRedesSeleccionadas();
 
 }
 
@@ -15983,9 +16002,19 @@ function mostrarRedesSeleccionadas(){
 
         const imagen = document.createElement("img");
 
-        imagen.src =
-            "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/RedesSocialesimg/" +
-            red.logo + ".png";
+      imagen.src =
+    "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/RedesSocialesimg/" +
+    red.logo + ".png";
+
+imagen.onerror = function(){
+
+    imagen.onerror = null;
+
+    imagen.src =
+        "https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/RedesSocialesimg/" +
+        red.logo + ".jpg";
+
+};
 
         imagen.alt = red.nombre;
         imagen.style.width = "65px";
