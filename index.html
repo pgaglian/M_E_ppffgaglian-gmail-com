@@ -288,6 +288,15 @@ transition:.25s;
 
 }
 
+/* La tarjeta principal de Clima muestra el fondo dinámico */
+
+#Clima .tarjetaPrincipalClima{
+    background:transparent !important;
+    border:1px solid rgba(255,255,255,.45);
+    border-radius:22px;
+    box-shadow:0 4px 16px rgba(0,0,0,.25);
+}
+
 /* ===== DEGRADADO Y PROFUNDIDAD DE TARJETAS SEGÚN APARIENCIA ===== */
 
 body.bosque #acciones .card,
@@ -447,7 +456,11 @@ button{
 
 .tarjetaHoraClima{
 
-transition:.25s;
+    background:#303030 !important;
+    color:#ffffff !important;
+    border:1px solid #555;
+    border-radius:12px;
+    transition:.25s;
 
 }
 
@@ -3039,7 +3052,7 @@ Clima
 
 
 <div
-class="card"
+class="card tarjetaPrincipalClima"
 style="
 width:min(92%,360px);
 margin:12px auto;
@@ -3119,7 +3132,7 @@ Cargando clima...
 
       <div
 style="
-color:#DDD;
+color:inherit;
 font-size:17px;
 margin-bottom:15px;
 ">
@@ -3689,6 +3702,25 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
                 ✅ Billeteras guardadas correctamente
             </div>
 
+            </div>
+
+        <!-- AVISO DE SOPORTE -->
+        <div style="
+            margin-top:20px;
+            padding:15px;
+            text-align:center;
+            border-top:1px solid #444;
+            color:#ccc;
+            font-size:14px;
+            line-height:21px;
+        ">
+            😎 ¿No encontrás tu billetera?<br>
+            Envíanos un correo y contanos cuál te gustaría que agreguemos.<br>
+            🛠️ <strong>Soporte:</strong>
+            <span onclick="document.getElementById('btnSoporte').click();"
+                  style="color:#FFD700; font-weight:bold; cursor:pointer; text-decoration:underline;">
+                ✉️ Enviar consulta
+            </span>
         </div>
 
     </div>
@@ -3786,35 +3818,34 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
         🌐 Redes Sociales
     </h2>
 
-    <!-- MIS REDES SOCIALES -->
-    <div class="card" style="
-        width:min(92%,700px);
-        margin:20px auto;
-        padding:20px;
-        border-radius:22px;
+<!-- MIS REDES SOCIALES -->
+<div class="card" style="
+    width:min(92%,700px);
+    margin:20px auto;
+    padding:20px;
+    border-radius:22px;
+">
+
+    <h3 style="
+        margin-top:0;
+        text-align:center;
     ">
+        🌐 Mis Redes Sociales
+    </h3>
 
-        <h3 style="
-            margin-top:0;
-            text-align:center;
-        ">
-            🌐 Mis Redes Sociales
-        </h3>
-
-        <div id="RedesSocialesSeleccionadas"
-             style="
-             display:grid;
-             grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-             gap:12px;
-             ">
-        </div>
-
+    <div id="RedesSocialesSeleccionadas"
+         style="
+         display:grid;
+         grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+         gap:12px;
+         ">
     </div>
 
 </div>
 
-<!-- ===== FIN MODULO REDES SOCIALES ===== -->
+</div>
 
+<!-- ===== FIN MODULO REDES SOCIALES ===== -->
 
 <!-- ===== MODULO JUEGOS: PERFILES ===== -->
 
@@ -4743,6 +4774,22 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 
             <button
                 type="button"
+                id="btnSeleccionarTodasRedes"
+                onclick="seleccionarTodasRedesSociales()"
+                style="
+                padding:10px 22px;
+                font-size:15px;
+                font-weight:bold;
+                border-radius:10px;
+                margin-bottom:12px;
+                ">
+                ☑ Seleccionar todo
+            </button>
+
+            <br>
+
+            <button
+                type="button"
                 onclick="guardarConfiguracionRedes()"
                 style="
                 padding:10px 22px;
@@ -4762,39 +4809,33 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
                  font-size:16px;
                  ">
                 ✅ Redes Sociales guardadas correctamente
-            </div>
+                        </div>
 
         </div>
 
+        <!-- AVISO DE SOPORTE -->
         <div style="
-            border-top:1px solid #555;
-            margin-top:22px;
-            padding-top:15px;
+            margin-top:20px;
+            padding:15px;
             text-align:center;
+            border-top:1px solid #444;
             color:#ccc;
+            font-size:14px;
+            line-height:21px;
         ">
-
-            <p style="margin:5px 0;">
-                😎 ¿Te falta alguna red social?
-            </p>
-
-            <p style="margin:5px 0;">
-                Envíanos un correo y la revisamos.
-            </p>
-
-            <p style="margin:10px 0;">
-                🛠️ <b>Soporte:</b>
-                ✉️ <b>Enviar consulta</b>
-            </p>
-
+            😎 ¿Te falta alguna red social?<br>
+            Envíanos un correo y la revisamos.<br>
+            🛠️ <strong>Soporte:</strong>
+            <span onclick="document.getElementById('btnSoporte').click();"
+                  style="color:#FFD700; font-weight:bold; cursor:pointer; text-decoration:underline;">
+                ✉️ Enviar consulta
+            </span>
         </div>
 
     </div>
 
 </div>
-
 <!-- ===== FIN CONFIGURACION DE REDES SOCIALES ===== -->
-
 
 
 <!-- ===== CONFIGURACION DE MUSICA ===== -->
@@ -5634,35 +5675,6 @@ y la revisamos. 🛠️🔧
             📻 Mis Emisoras
         </h3>
 
-<!-- AVISO SOPORTE -->
- <div style="
- text-align:center; 
-margin:8px auto 18px auto; 
-padding:10px 12px; 
-border-radius:12px; 
-background:rgba(255,255,255,.05); 
-color:#ccc; 
-font-size:14px; 
-line-height:1.5;
- "> 😎 <strong>¿Alguna radio no funciona?</strong><br> 
-
-Enviános un correo a 
-🛠️ <strong>Soporte:</strong>
-
- <span 
-
-onclick="document.getElementById('btnSoporte').click();" 
-style=" 
-color:#FFD700; 
-font-weight:bold; 
-cursor:pointer; 
-text-decoration:underline;
- "
- > ✉️ Enviar consulta </span>
- y la revisamos. 📻🔧 
-</div>
-
-
 <!-- RADIOS SELECCIONADAS -->
 
         <div id="RadiosSeleccionadas"
@@ -5826,8 +5838,27 @@ text-decoration:underline;
                  font-size:16px;
                  ">
                 ✅ Radios guardadas correctamente
-            </div>
+                        </div>
 
+        </div>
+
+        <!-- AVISO DE SOPORTE -->
+        <div style="
+            margin-top:20px;
+            padding:15px;
+            text-align:center;
+            border-top:1px solid #444;
+            color:#ccc;
+            font-size:14px;
+            line-height:21px;
+        ">
+            😎 ¿Alguna radio no funciona?<br>
+            Envíanos un correo y la revisamos.<br>
+            🛠️ <strong>Soporte:</strong>
+            <span onclick="document.getElementById('btnSoporte').click();"
+                  style="color:#FFD700; font-weight:bold; cursor:pointer; text-decoration:underline;">
+                ✉️ Enviar consulta
+            </span>
         </div>
 
     </div>
@@ -5835,7 +5866,7 @@ text-decoration:underline;
 </div>
 
 <!-- ===== FIN CONFIGURACION RADIOS ===== -->
-
+ 
 <!-- ===== CONFIGURACION DE BANCOS ===== -->
 
 <div id="popupConfiguracionBancos"
@@ -5917,7 +5948,6 @@ text-decoration:underline;
             </div>
 
         </div>
-
         <div style="
             margin-top:20px;
             padding:15px;
@@ -5927,9 +5957,13 @@ text-decoration:underline;
             font-size:14px;
             line-height:21px;
         ">
-            ¿No encontrás tu Banco?<br>
-            📩 Contactá a Soporte y contanos cuál te gustaría que agreguemos.
-
+            😎 ¿No encontrás tu Banco?<br>
+            Envíanos un correo y contanos cuál te gustaría que agreguemos.<br>
+            🛠️ <strong>Soporte:</strong>
+            <span onclick="document.getElementById('btnSoporte').click();"
+                  style="color:#FFD700; font-weight:bold; cursor:pointer; text-decoration:underline;">
+                ✉️ Enviar consulta
+            </span>
         </div>
 
     </div>
@@ -15964,6 +15998,38 @@ function guardarConfiguracionRedes(){
     mostrarRedesSeleccionadas();
 
 }
+
+
+// ================================
+// SELECCIONAR / DESELECCIONAR TODAS LAS REDES
+// ================================
+
+function seleccionarTodasRedesSociales(){
+
+    const checks = document.querySelectorAll(
+        "#configuracionRedes input[type='checkbox']"
+    );
+
+    const todasSeleccionadas = Array.from(checks).every(
+        checkbox => checkbox.checked
+    );
+
+    checks.forEach(function(checkbox){
+        checkbox.checked = !todasSeleccionadas;
+    });
+
+    const boton = document.getElementById(
+        "btnSeleccionarTodasRedes"
+    );
+
+    if(boton){
+        boton.textContent = todasSeleccionadas
+            ? "☑ Seleccionar todo"
+            : "☐ Deseleccionar todo";
+    }
+
+}
+
 
 // =====================================
 // MOSTRAR MIS REDES SOCIALES
@@ -29150,7 +29216,9 @@ function cambiarCieloClima(){
     const esNoche =
         hora < 6 ||
         hora >= 19;
-            // Color de texto según la claridad del fondo
+
+   // Color de texto según la claridad del fondo
+
     clima.style.color =
         (!esNoche && (
             codigo === 0 ||
@@ -29164,8 +29232,9 @@ function cambiarCieloClima(){
             codigo === 75 ||
             codigo === 77
         ))
-        ? "#17202a"
-        : "#ffffff";
+
+       ? "#FFD700"
+       : "#ffffff";
 
 
     //========================
