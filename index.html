@@ -28217,11 +28217,15 @@ function buscarCiudad(lat,lon){
 console.log(JSON.stringify(data.address, null, 2));
 
 let zona =
-data.address.suburb ||
-data.address.neighbourhood ||
-data.address.quarter ||
-data.address.city_district ||
-"";
+    data.address.city ||
+    data.address.town ||
+    data.address.village ||
+    data.address.municipality ||
+    data.address.suburb ||
+    data.address.neighbourhood ||
+    data.address.quarter ||
+    data.address.city_district ||
+    "";
 
 let ciudad =
 data.address.city ||
@@ -29146,6 +29150,22 @@ function cambiarCieloClima(){
     const esNoche =
         hora < 6 ||
         hora >= 19;
+            // Color de texto según la claridad del fondo
+    clima.style.color =
+        (!esNoche && (
+            codigo === 0 ||
+            codigo === 1 ||
+            codigo === 2 ||
+            codigo === 3 ||
+            codigo === 45 ||
+            codigo === 48 ||
+            codigo === 71 ||
+            codigo === 73 ||
+            codigo === 75 ||
+            codigo === 77
+        ))
+        ? "#17202a"
+        : "#ffffff";
 
 
     //========================
@@ -29759,10 +29779,10 @@ function abrirPronosticoCompleto(){
 
     }
 
-    window.open(
-        `https://www.windy.com/?${lat},${lon},8`,
+      window.open(
+        `https://www.msn.com/es-ar/weather`,
         "_blank"
-    );
+    );  
 
 }
 
