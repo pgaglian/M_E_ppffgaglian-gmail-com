@@ -2484,7 +2484,7 @@ margin-right:12px;
     <span
         id="btnWhatsApp"
         style="cursor:pointer;"
-        onclick="window.open('https://wa.me/5491111111111','_blank')"
+        onclick="window.open('https://wa.me/5491125851870','_blank')"
         title="WhatsApp">
         ☎️
     </span>
@@ -15404,6 +15404,69 @@ function obtenerImagenCine(nombre, callback){
 
 }
 
+// ICONOS DE RESPALDO PARA PLATAFORMAS MANUALES
+
+const ICONOS_CINE_PERSONALIZADOS = [
+    "🎬", "🎥", "📽️", "🎞️",
+    "🎟️", "📺", "⭐", "🍿"
+];
+
+function obtenerIconoCinePersonalizado(nombre, plataformas){
+
+    const lista = Array.isArray(plataformas) ? plataformas : [];
+
+    const usados = lista
+        .map(function(plataforma){ return plataforma.icono; })
+        .filter(Boolean);
+
+    const disponible = ICONOS_CINE_PERSONALIZADOS.find(function(icono){
+        return !usados.includes(icono);
+    });
+
+    if(disponible){
+        return disponible;
+    }
+
+    const texto = String(nombre || "Cine");
+    let hash = 0;
+
+    for(let i = 0; i < texto.length; i++){
+        hash = ((hash * 31) + texto.charCodeAt(i)) >>> 0;
+    }
+
+    return ICONOS_CINE_PERSONALIZADOS[
+        hash % ICONOS_CINE_PERSONALIZADOS.length
+    ];
+}
+
+function asegurarIconosCinePersonalizados(plataformas){
+
+    let huboCambios = false;
+
+    plataformas.forEach(function(plataforma, indice){
+
+        if(!plataforma.icono){
+
+            plataforma.icono = obtenerIconoCinePersonalizado(
+                plataforma.nombre,
+                plataformas.slice(0, indice)
+            );
+
+            huboCambios = true;
+        }
+
+    });
+
+    if(huboCambios){
+        localStorage.setItem(
+            "PlataformasCinePersonalizadas",
+            JSON.stringify(plataformas)
+        );
+    }
+
+    return plataformas;
+}
+
 // ========================
 // CARGAR CONFIGURACION CINE
 // ========================
@@ -15538,6 +15601,8 @@ const personalizadas =
         )
     ) || [];
 
+asegurarIconosCinePersonalizados(personalizadas);
+
 const seleccionadasPersonalizadas =
     JSON.parse(
         localStorage.getItem(
@@ -15583,7 +15648,12 @@ personalizadas.forEach(
         const icono =
             document.createElement("span");
 
-        icono.textContent = "🍿";
+        icono.textContent =
+          plataforma.icono ||
+      obtenerIconoCinePersonalizado(
+          plataforma.nombre,
+            personalizadas
+    );
 
         label.appendChild(
             icono
@@ -20577,7 +20647,12 @@ function guardarNuevaPlataformaCine(){
 guardadas.push({
 
     nombre: nombre,
-    url: urlRecibida
+    url: urlRecibida,
+
+    icono: obtenerIconoCinePersonalizado(
+        nombre,
+        guardadas
+    )
 
 });
 
@@ -24176,6 +24251,8 @@ const personalizadas =
         )
     ) || [];
 
+ asegurarIconosCinePersonalizados(personalizadas);   
+
 const seleccionadasPersonalizadas =
     JSON.parse(
         localStorage.getItem(
@@ -24238,7 +24315,12 @@ personalizadas.forEach(function(plataforma){
         const respaldo =
             document.createElement("span");
 
-        respaldo.textContent = "🍿";
+        respaldo.textContent =
+         plataforma.icono ||
+          obtenerIconoCinePersonalizado(
+        plataforma.nombre,
+        personalizadas
+    );
 
         respaldo.style.fontSize = "38px";
 
