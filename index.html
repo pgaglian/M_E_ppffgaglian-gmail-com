@@ -2225,6 +2225,16 @@ body.eclipse header{
 
 /* ===== FIN CASILLEROS DE BIBLIOTECA ===== */
 
+/* ===== INICIO FONDO MI RINCÓN ===== */
+#MiRincon {
+  background-image: url("https://raw.githubusercontent.com/pgaglian/Mi-Espacio-Datos/main/MiRinconimg/mirincon.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+/* ===== FIN FONDO MI RINCÓN ===== */
+
 
 </style>
 </head>
@@ -2973,15 +2983,16 @@ onclick="mostrar('Cine')">
 onclick="mostrar('Recuerdos')">
 <h2>📸 Recuerdos</h2>
 
-<p>Fotos y Momentos</p>
+<p>Fotos y Videos</p>
 </div>
 
-<div class="card" id="ambienteVideos" data-titulo="▶ Videos"
+<div class="card" id="ambienteMiRincon" data-titulo="🪴 Mi Rincón"
 
-onclick="mostrar('Videos')">
+onclick="mostrar('MiRincon')">
 
-<h2>▶ Videos</h2>
-<p>Videos Personales</p>
+<h2>🪴 Mi Rincón</h2>
+<p>Guardá lo que quieras, a tu manera</p>
+
 </div>
 
 <div class="card" id="ambienteJuegos" data-titulo="🎮 Juegos"
@@ -3016,7 +3027,7 @@ onclick="mostrar('Juegos')">
         <div>🌎 AMBIENTES</div>
 
         <div style="font-size:24px;margin-top:10px;">
-            📚 🎵 📻 🏋️ 🍿 📸 🎮
+            📚 🎵 📻 🏋️ 🍿 📸 🎮 🪴
         </div>
 
     </button>
@@ -3847,6 +3858,300 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 </div>
 
 <!-- ===== FIN MODULO REDES SOCIALES ===== -->
+
+
+<!-- ===== INICIO MODULO MI RINCÓN ===== -->
+
+<div id="MiRincon" style="display:none; min-height:100vh;">
+
+    <!-- CABECERA -->
+    <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding:15px;
+    ">
+        <button type="button" onclick="inicio()">
+            ⬅ Volver
+        </button>
+
+        <button type="button" onclick="abrirConfiguracionMiRincon()">
+            ⚙ Configurar
+        </button>
+    </div>
+
+    <!-- TITULO -->
+    <h2 style="
+        text-align:center;
+        color:#FFD700;
+        margin:10px 0 20px;
+    ">
+        🪴 Mi Rincón
+    </h2>
+
+    <!-- ELEMENTOS GUARDADOS -->
+    <div class="card" style="
+        width:min(92%,700px);
+        margin:20px auto;
+        padding:20px;
+        border-radius:22px;
+        box-sizing:border-box;
+    ">
+
+        <h3 style="margin-top:0;text-align:center;">
+            ✨ Mis cosas guardadas
+        </h3>
+
+        <div id="listaMiRincon" style="
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+            gap:12px;
+        "></div>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN PANTALLA PRINCIPAL MI RINCÓN ===== -->
+
+
+<!-- ===== INICIO CONFIGURACION MI RINCÓN ===== -->
+
+<div id="popupConfiguracionMiRincon"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1100;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     box-sizing:border-box;
+     ">
+
+    <div style="
+        width:min(92%,450px);
+        max-height:85vh;
+        overflow-y:auto;
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:20px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        color:white;
+        box-sizing:border-box;
+    ">
+
+        <!-- ENCABEZADO -->
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:15px;
+        ">
+
+            <h2 style="margin:0;color:#FFD700;">
+                🪴 Configurar Mi Rincón
+            </h2>
+
+            <button type="button"
+                    onclick="cerrarConfiguracionMiRincon()">
+                ✖
+            </button>
+
+        </div>
+
+        <!-- FRASE -->
+        <p style="
+            text-align:center;
+            color:#ccc;
+            line-height:1.5;
+        ">
+            ✨ Seleccioná lo que quieras
+        </p>
+
+        <!-- LISTA PARA ADMINISTRAR -->
+        <div id="listaConfiguracionMiRincon"
+             style="
+             display:grid;
+             gap:10px;
+             margin-top:15px;
+        "></div>
+
+        <!-- AGREGAR ELEMENTO -->
+        <button
+            type="button"
+            onclick="abrirAgregarMiRincon()"
+            style="
+            display:block;
+            width:100%;
+            margin:15px 0;
+            padding:12px;
+            font-size:16px;
+            font-weight:bold;
+            border-radius:10px;
+        ">
+            ➕ Agregar elemento
+        </button>
+
+        <!-- GUARDAR CAMBIOS -->
+        <button
+            type="button"
+            onclick="guardarMiRincon()"
+            style="
+            display:block;
+            width:100%;
+            margin-top:20px;
+            padding:12px;
+            font-size:16px;
+            font-weight:bold;
+            border-radius:10px;
+            text-align:center;
+        ">
+            💾 Guardar cambios
+        </button>
+
+        <!-- MENSAJE -->
+        <div id="mensajeMiRincon"
+             style="
+             display:none;
+             margin-top:12px;
+             color:#7CFC00;
+             font-weight:bold;
+             font-size:16px;
+             text-align:center;
+        ">
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN CONFIGURACION MI RINCÓN ===== -->
+
+<!-- ===== INICIO POPUP AGREGAR MI RINCÓN ===== -->
+
+<div id="popupAgregarMiRincon"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1200;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,450px);
+        max-height:85vh;
+        overflow-y:auto;
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:20px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        color:white;
+        ">
+
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:15px;
+            ">
+
+            <h2 style="margin:0;color:#FFD700;">
+                🪴 Agregar elemento
+            </h2>
+
+            <button type="button"
+                    onclick="cerrarAgregarMiRincon()">
+                ✖
+            </button>
+
+        </div>
+
+        <p style="text-align:center;color:#ccc;line-height:1.5;">
+            ✏️ <strong>Escribí el nombre exacto de lo que querés guardar.</strong>
+            <br><br>
+            Comprobaremos el elemento correspondiente.
+            <br><br>
+            📖 <strong>¿No sabés cómo compartirlo?</strong>
+            <br>
+            <button
+                type="button"
+                onclick="abrirInstructivoCompartirApp()"
+                style="
+                border:none;
+                background:none;
+                color:#FFD700;
+                font-size:16px;
+                font-weight:bold;
+                cursor:pointer;
+                padding:0;
+                ">
+                Ver instructivo
+            </button>
+            <br><br>
+            ↩️ Después volvé a Mi Espacio para completar el proceso.
+        </p>
+
+        <input
+            id="nombreNuevoMiRincon"
+            type="text"
+            maxlength="100"
+            placeholder="Nombre exacto del elemento"
+            style="
+            width:100%;
+            box-sizing:border-box;
+            padding:12px;
+            font-size:16px;
+            border-radius:10px;
+            border:1px solid #666;
+            margin-bottom:15px;
+            ">
+
+        <button
+            type="button"
+            onclick="validarNuevoMiRincon()"
+            style="
+            display:block;
+            width:100%;
+            margin:8px 0;
+            padding:10px;
+            font-size:16px;
+            font-weight:bold;
+            border-radius:10px;
+            ">
+            🔎 Validar elemento
+        </button>
+
+        <button
+            type="button"
+            onclick="cerrarAgregarMiRincon()"
+            style="
+            display:block;
+            width:100%;
+            margin:8px 0;
+            padding:10px;
+            font-size:16px;
+            font-weight:bold;
+            border-radius:10px;
+            ">
+            Cancelar
+        </button>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN POPUP AGREGAR MI RINCÓN ===== -->
+
+<!-- ===== FIN MODULO MI RINCÓN ===== -->
+
 
 <!-- ===== MODULO JUEGOS: PERFILES ===== -->
 
@@ -17409,7 +17714,7 @@ function cerrarConfiguracionPerfilJuego(){
 
 
 /* ==========================================
-   JUEGOS POR PERFIL — FLUJO ADAPTADO DE CINE
+   JUEGOS POR PERFIL 
    ========================================== */
 
 
@@ -19099,6 +19404,8 @@ function mostrar(id){
 
     document.getElementById("Redes").style.display="none";
 
+    document.getElementById("MiRincon").style.display="none";
+
     document.getElementById("Juegos").style.display="none";
     const pantallaPerfilJuego = document.getElementById("pantallaPerfilJuego");
 if(pantallaPerfilJuego) pantallaPerfilJuego.style.display = "none";
@@ -19108,6 +19415,8 @@ if(pantallaPerfilJuego) pantallaPerfilJuego.style.display = "none";
 document.getElementById(id).style.display="block";
 
 if(id=="Juegos"){ cargarNombresPerfilesJuego(); }
+
+if(id=="MiRincon"){ cargarMiRincon(); }
 
 if(id=="Cine"){
 
@@ -19198,6 +19507,7 @@ function inicio(){
    document.getElementById("Entrenamiento").style.display="none";
    document.getElementById("Cine").style.display="none";
    document.getElementById("Redes").style.display="none";
+   document.getElementById("MiRincon").style.display="none";
    document.getElementById("Juegos").style.display="none";
    const pantallaPerfilJuego = document.getElementById("pantallaPerfilJuego");
    if(pantallaPerfilJuego) pantallaPerfilJuego.style.display = "none";
@@ -30438,6 +30748,187 @@ window.addEventListener("popstate", function(event){
     inicio();
 
 });
+
+// ========================================
+// POPUP AGREGAR ELEMENTO - MI RINCÓN
+// ========================================
+function abrirAgregarMiRincon(){
+
+    const popup =
+        document.getElementById("popupAgregarMiRincon");
+
+    const campo =
+        document.getElementById("nombreNuevoMiRincon");
+
+    if(!popup || !campo) return;
+
+    let elementos = [];
+
+    try{
+        elementos = JSON.parse(
+            localStorage.getItem("miRinconElementos") || "[]"
+        );
+
+        if(!Array.isArray(elementos)){
+            elementos = [];
+        }
+
+    }catch(error){
+        elementos = [];
+    }
+
+    if(elementos.length >= 10){
+        alert("⚠ Alcanzaste el máximo de 10 elementos en Mi Rincón. Eliminá uno para agregar otro.");
+        return;
+    }
+
+    popup.style.display = "flex";
+
+    const textoAgregar =
+        popup.querySelector("p");
+
+    if(textoAgregar){
+
+        if(!esMovil){
+
+            textoAgregar.innerHTML =
+                "✏️ <strong>Escribí el nombre exacto del elemento</strong>" +
+                " tal como aparece en tu dispositivo." +
+                "<br><br>" +
+
+                "⚠️ Vas a salir de Mi Espacio para comprobar el elemento." +
+                "<br><br>" +
+
+                "🖥️ <strong>En PC:</strong> cuando encuentres la página correcta," +
+                " copiá el enlace de la barra de direcciones." +
+                "<br><br>" +
+
+                "↩️ Después volvé a Mi Espacio y pegá el enlace cuando te lo solicitemos." +
+                "<br><br>" +
+
+                "❗ <strong>Si no copiás el enlace, no podremos guardar el elemento.</strong>";
+
+        }else{
+
+            textoAgregar.innerHTML =
+                "✏️ <strong>Escribí el nombre exacto del elemento</strong>" +
+                " tal como aparece en tu dispositivo." +
+                "<br><br>" +
+
+                "⚠️ Vas a salir de Mi Espacio para comprobar" +
+                " el elemento correspondiente y poder compartirlo con Mi Espacio." +
+                "<br><br>" +
+
+                "📖 <strong>¿No sabés cómo compartirlo?</strong>" +
+                "<br>" +
+                "👉 <button type='button' onclick='abrirInstructivoCompartirApp()' " +
+                "style='border:none;background:none;color:#FFD700;font-size:16px;font-weight:bold;cursor:pointer;padding:0;'>" +
+                "Ver instructivo</button>" +
+                "<br><br>" +
+
+                "↩️ <strong>Después volvé a Mi Espacio para confirmar.</strong>" +
+                "<br><br>" +
+
+                "❗ <strong>Si no volvés a Mi Espacio, el elemento no se guardará.</strong>" +
+                "<br><br>" +
+
+                "🔐 <strong>Esta comprobación se hace una sola vez.</strong>";
+        }
+    }
+
+    campo.value = "";
+}
+
+
+function cerrarAgregarMiRincon(){
+
+    const popup = document.getElementById("popupAgregarMiRincon");
+
+    if(popup){
+        popup.style.display = "none";
+    }
+
+}
+
+// ========================================
+// CONFIGURACIÓN - MI RINCÓN
+// ========================================
+
+function abrirConfiguracionMiRincon(){
+
+    const popup = document.getElementById("popupConfiguracionMiRincon");
+
+    if(!popup) return;
+
+    cargarConfiguracionMiRincon();
+
+    popup.style.display = "flex";
+}
+
+
+function cerrarConfiguracionMiRincon(){
+
+    const popup = document.getElementById("popupConfiguracionMiRincon");
+
+    if(popup){
+        popup.style.display = "none";
+    }
+
+}
+
+
+function cargarConfiguracionMiRincon(){
+
+    const lista = document.getElementById("listaConfiguracionMiRincon");
+
+    if(!lista) return;
+
+    lista.innerHTML = "";
+
+    let elementos = [];
+
+    try {
+        elementos = JSON.parse(
+            localStorage.getItem("miRinconElementos") || "[]"
+        );
+    } catch(error) {
+        elementos = [];
+    }
+
+    if(elementos.length === 0){
+
+        lista.innerHTML = `
+            <p style="text-align:center;color:#ccc;padding:15px;">
+                Todavía no guardaste elementos en Mi Rincón.
+            </p>
+        `;
+
+        return;
+    }
+
+    elementos.forEach(function(elemento){
+
+        const fila = document.createElement("div");
+
+        fila.style.cssText = `
+            display:flex;
+            align-items:center;
+            gap:10px;
+            padding:12px;
+            background:#292929;
+            border:1px solid #555;
+            border-radius:10px;
+            color:white;
+        `;
+
+        fila.textContent =
+            (elemento.icono || "⭐") + " " + elemento.nombre;
+
+        lista.appendChild(fila);
+
+    });
+
+}
 
 // ========================
 // RECIBIR APP COMPARTIDA
