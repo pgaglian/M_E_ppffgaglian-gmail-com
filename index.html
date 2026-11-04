@@ -2777,11 +2777,12 @@ box-shadow:0 6px 18px rgba(0,0,0,.45);
 
 </div>
 
-<div class="card" id="accionPizarra"  data-titulo="📝 Pizarra"
-onclick="mostrar('Pizarra')">
+<div class="card" id="accionPizarra" data-titulo="📒 Mi Organizador"
+onclick="mostrar('MiOrganizador')">
 
-<h2>📝 Pizarra</h2>
-<p>Notas y recordatorios</p>
+<h2>📒 Mi Organizador</h2>
+<p>Organizá tu día, notas y recordatorios</p>
+
 </div>
 
 <div class="card" id="accionRedes" data-titulo="🌐 Redes Sociales"
@@ -2959,11 +2960,11 @@ onclick="mostrar('Entrenamiento')">
 <p>Entrenamiento por intervalos</p>
 </div>
 
-<div class="card" id="ambienteCine" data-titulo="🎬 Cine"
+<div class="card" id="ambienteCine" data-titulo="🍿 Cine"
  
 onclick="mostrar('Cine')">
 
-<h2>🎬 Cine</h2>
+<h2>🍿 Cine</h2>
 <p>Películas y Series</p>
 </div>
 
@@ -3004,7 +3005,7 @@ onclick="mostrar('Juegos')">
         <div>⚡ ACCIONES</div>
 
         <div style="font-size:24px;margin-top:10px;">
-            📅 🌤 📝 📧 🏦 💳 🌐
+            📅 🌤 📒 📧 🏦 💳 🌐
         </div>
 
     </button>
@@ -3015,7 +3016,7 @@ onclick="mostrar('Juegos')">
         <div>🌎 AMBIENTES</div>
 
         <div style="font-size:24px;margin-top:10px;">
-            📚 🎵 📻 🏋️ 🎬 📸 🎮
+            📚 🎵 📻 🏋️ 🍿 📸 🎮
         </div>
 
     </button>
@@ -3755,7 +3756,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
         color:#FFD700;
         margin-top:10px;
     ">
-        🎬 Cine
+        🍿 Cine
     </h2>
 
     <!-- MIS PLATAFORMAS -->
@@ -3771,7 +3772,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
             margin-top:0;
             text-align:center;
         ">
-            🎬 Mis Plataformas
+            🍿 Mis Plataformas
         </h3>
 
 <div id="PlataformasCineSeleccionadas"
@@ -4591,7 +4592,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
             ">
 
             <h2 style="margin:0;color:#FFD700;">
-                🎬 Configurar Cine
+                🍿 Configurar Cine
             </h2>
 
             <button onclick="cerrarConfiguracionCine()">
@@ -5447,7 +5448,7 @@ y la revisamos. 🛠️🔧
             text-align:center;
             color:#FFD700;
         ">
-            🎬 Confirmar plataforma
+            🍿 Confirmar plataforma
         </h2>
 
         <p id="mensajeConfirmarPlataformaCine"
@@ -5576,7 +5577,7 @@ y la revisamos. 🛠️🔧
         ">
 
         <h2 style="margin-top:0;color:#FFD700;">
-            🎬 Editar plataforma
+            🍿 Editar plataforma
         </h2>
 
         <input id="inputNombrePlataformaCineEditar"
@@ -8061,6 +8062,134 @@ font-size:18px;
 
 <!-- ===== FIN NUEVA BIBLIOTECA ===== -->
 
+
+
+<!-- ================================================== -->
+<!-- ===== MODULO MI ORGANIZADOR ===== -->
+<!-- ================================================== -->
+
+<div id="MiOrganizador" style="display:none; min-height:100vh;">
+
+    <!-- ENCABEZADO -->
+
+   <div id="encabezadoMiOrganizador" style="
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    padding:15px;
+">
+
+        <button onclick="inicio()">
+            ⬅ Volver
+        </button>
+
+    </div>
+
+    <h2 id="tituloPrincipalMiOrganizador" style="
+    text-align:center;
+    color:#FFD700;
+    margin:10px 0 25px;
+">
+
+        📒 Mi Organizador
+    </h2>
+
+
+    <!-- MENSAJE GENERAL DEL MODULO -->
+
+    <div id="mensajeMiOrganizador"
+         style="
+         display:none;
+         text-align:center;
+         font-weight:bold;
+         padding:12px;
+         margin:10px 15px;
+         ">
+    </div>
+
+
+    <!-- OPCIONES PRINCIPALES -->
+
+    <div id="menuMiOrganizador"
+         style="
+         display:grid;
+         grid-template-columns:repeat(2,minmax(0,1fr));
+         gap:15px;
+         padding:15px;
+         max-width:650px;
+         margin:auto;
+         ">
+
+
+        <!-- HOY -->
+
+        <div class="card"
+             onclick="abrirVistaOrganizador('hoy')"
+             style="text-align:center;cursor:pointer;">
+
+            <h2>☀️ Hoy</h2>
+
+            <p>Tareas del día</p>
+
+        </div>
+
+
+        <!-- SEMANA -->
+
+        <div class="card"
+             onclick="abrirVistaOrganizador('semana')"
+             style="text-align:center;cursor:pointer;">
+
+            <h2>📅 Semana</h2>
+
+            <p>Planificación semanal</p>
+
+        </div>
+
+
+        <!-- MES -->
+
+        <div class="card"
+             onclick="abrirVistaOrganizador('mes')"
+             style="text-align:center;cursor:pointer;">
+
+            <h2>🗓️ Mes</h2>
+
+            <p>Planificación mensual</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- CONTENEDOR DE LAS VISTAS INTERNAS -->
+
+    <div id="vistaMiOrganizador"
+         style="display:none;padding:15px;">
+
+        <button onclick="volverMenuOrganizador()">
+          ⬅ Volver a Mi Organizador
+        </button>
+
+        <h2 id="tituloVistaOrganizador"
+            style="
+            text-align:center;
+            color:#FFD700;
+            margin:20px 0;
+            ">
+        </h2>
+
+        <div id="contenidoVistaOrganizador">
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN MODULO MI ORGANIZADOR ===== -->
+
+<!-- ===== MUSICA ===== -->
 
 <div id="Musica" style="display:none">
 
@@ -15368,7 +15497,7 @@ fila.appendChild(checkbox);
                 const respaldo =
                     document.createElement("span");
 
-                respaldo.textContent = "🎬";
+                respaldo.textContent = "🍿";
 
                 fila.appendChild(respaldo);
 
@@ -15454,7 +15583,7 @@ personalizadas.forEach(
         const icono =
             document.createElement("span");
 
-        icono.textContent = "🎬";
+        icono.textContent = "🍿";
 
         label.appendChild(
             icono
@@ -18880,6 +19009,8 @@ function mostrar(id){
 
     document.getElementById("Biblioteca").style.display="none";
 
+    document.getElementById("MiOrganizador").style.display="none";
+
     document.getElementById("Musica").style.display="none";
 
     document.getElementById("Calendario").style.display="none";
@@ -18987,6 +19118,7 @@ function inicio(){
    
 
     document.getElementById("Biblioteca").style.display="none";
+    document.getElementById("MiOrganizador").style.display="none";
     document.getElementById("Musica").style.display="none";
     document.getElementById("Calendario").style.display="none";
     document.getElementById("Clima").style.display="none";
@@ -19052,6 +19184,49 @@ function inicio(){
         aplicarEstadoAmbientes();
 
     }
+
+}
+
+// ==========================================
+// NAVEGACION INTERNA - MI ORGANIZADOR
+// ==========================================
+
+function abrirVistaOrganizador(vista){
+
+    document.getElementById("encabezadoMiOrganizador").style.display = "none";
+
+    document.getElementById("tituloPrincipalMiOrganizador").style.display = "none";
+    
+    document.getElementById("menuMiOrganizador").style.display = "none";
+
+    document.getElementById("vistaMiOrganizador").style.display = "block";
+
+    const titulo = document.getElementById("tituloVistaOrganizador");
+
+    if(vista === "hoy"){
+        titulo.innerHTML = "☀️ Hoy";
+    }
+
+    if(vista === "semana"){
+        titulo.innerHTML = "📅 Semana";
+    }
+
+    if(vista === "mes"){
+        titulo.innerHTML = "🗓️ Mes";
+    }
+
+}
+
+
+function volverMenuOrganizador(){
+
+    document.getElementById("encabezadoMiOrganizador").style.display = "flex";
+
+    document.getElementById("tituloPrincipalMiOrganizador").style.display = "block";
+
+    document.getElementById("vistaMiOrganizador").style.display = "none";
+
+    document.getElementById("menuMiOrganizador").style.display = "grid";
 
 }
 
@@ -23967,7 +24142,7 @@ boton.style.width = "100%";
             const respaldo =
                 document.createElement("span");
 
-            respaldo.textContent = "🎬";
+            respaldo.textContent = "🍿";
 
             boton.appendChild(respaldo);
 
@@ -24063,7 +24238,7 @@ personalizadas.forEach(function(plataforma){
         const respaldo =
             document.createElement("span");
 
-        respaldo.textContent = "🎬";
+        respaldo.textContent = "🍿";
 
         respaldo.style.fontSize = "38px";
 
@@ -24222,7 +24397,7 @@ function abrirPlataformaCine(datosPlataforma){
             font-size:36px;
             margin-bottom:10px;
         ">
-            🎬
+            🍿
         </div>
 
         <h3>
