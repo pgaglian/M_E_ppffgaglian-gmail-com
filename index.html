@@ -3850,7 +3850,6 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 
 <!-- ===== FIN MODULO REDES SOCIALES ===== -->
 
-
 <!-- ===== INICIO MODULO MI RINCÓN ===== -->
 
 <div id="MiRincon" style="display:none; min-height:100vh;">
@@ -3906,7 +3905,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 <!-- ===== FIN PANTALLA PRINCIPAL MI RINCÓN ===== -->
 
 
-<!-- ===== INICIO CONFIGURACION MI RINCÓN ===== -->
+<!-- ===== INICIO POPUP CONFIGURACION MI RINCÓN ===== -->
 
 <div id="popupConfiguracionMiRincon"
      style="
@@ -4019,7 +4018,88 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 
 </div>
 
-<!-- ===== FIN CONFIGURACION MI RINCÓN ===== -->
+<!-- ===== FIN POPUP CONFIGURACION MI RINCÓN ===== -->
+
+
+<!-- ===== INICIO POPUP EDITAR ELEMENTO MI RINCÓN ===== -->
+
+<div id="popupEditarMiRincon"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1400;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,450px);
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:20px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        text-align:center;
+        ">
+
+        <h2 style="margin-top:0;color:#FFD700;">
+            🪴 Editar elemento
+        </h2>
+
+        <input id="inputNombreMiRinconEditar"
+               type="text"
+               maxlength="60"
+               autocomplete="off"
+               placeholder="Nombre del elemento"
+               style="
+               box-sizing:border-box;
+               width:100%;
+               padding:12px;
+               font-size:18px;
+               border-radius:10px;
+               margin:10px 0 20px;
+               ">
+
+        <div style="
+            display:flex;
+            justify-content:center;
+            gap:10px;
+            flex-wrap:wrap;
+            ">
+
+            <button type="button"
+                    onclick="guardarNombreMiRinconEditado()"
+                    style="padding:10px 18px;border-radius:10px;">
+                💾 Guardar
+            </button>
+
+            <button type="button"
+                    onclick="cerrarEditarMiRincon()"
+                    style="padding:10px 18px;border-radius:10px;">
+                ✖ Cancelar
+            </button>
+
+        </div>
+
+        <div id="mensajeErrorMiRinconEditar"
+             style="
+             display:none;
+             margin-top:15px;
+             color:#FF4444;
+             font-weight:bold;
+             font-size:15px;
+             ">
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN POPUP EDITAR ELEMENTO MI RINCÓN ===== -->
+
 
 <!-- ===== INICIO POPUP AGREGAR MI RINCÓN ===== -->
 
@@ -4105,6 +4185,39 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
             margin-bottom:15px;
             ">
 
+        <!-- SELECTOR DE ICONOS MI RINCÓN -->
+
+        <p style="text-align:center;color:#ccc;margin:5px 0 10px;">
+            🎨 Elegí un icono para identificar tu elemento
+        </p>
+
+        <div id="selectorIconosMiRincon"
+             style="
+             display:flex;
+             justify-content:center;
+             flex-wrap:wrap;
+             gap:10px;
+             margin-bottom:18px;
+             ">
+
+            <button type="button" onclick="seleccionarIconoMiRincon('📱')">📱</button>
+            <button type="button" onclick="seleccionarIconoMiRincon('🌐')">🌐</button>
+            <button type="button" onclick="seleccionarIconoMiRincon('🚀')">🚀</button>
+            <button type="button" onclick="seleccionarIconoMiRincon('🎨')">🎨</button>
+            <button type="button" onclick="seleccionarIconoMiRincon('🎧')">🎧</button>
+            <button type="button" onclick="seleccionarIconoMiRincon('📚')">📚</button>
+            <button type="button" onclick="seleccionarIconoMiRincon('🎮')">🎮</button>
+            <button type="button" onclick="seleccionarIconoMiRincon('🧰')">🧰</button>
+            <button type="button" onclick="seleccionarIconoMiRincon('💡')">💡</button>
+            <button type="button" onclick="seleccionarIconoMiRincon('⭐')">⭐</button>
+
+        </div>
+
+        <p id="iconoSeleccionadoMiRincon"
+           style="text-align:center;color:#FFD700;margin:0 0 15px;">
+            Icono seleccionado: ⭐
+        </p>
+
         <button
             type="button"
             onclick="validarNuevoMiRincon()"
@@ -4167,48 +4280,45 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
         🎮 Juegos
     </h2>
 
-   <div id="contenedorPerfilesJuego" style="
-    width:min(96%,800px);
-    margin:20px auto;
-    display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:15px;
-">
+    <div id="contenedorPerfilesJuego" style="
+        width:min(96%,800px);
+        margin:20px auto;
+        display:grid;
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:15px;
+    ">
 
-<div class="card" style="padding:18px;text-align:center;">
-    <div style="display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:nowrap;white-space:nowrap;">
-    <h3 id="nombrePerfilJuego1" style="margin:0;cursor:pointer;" onclick="abrirPerfilJuego(1)">👑 Perfil1</h3>
-       <button style="margin-left:8px;" onclick="editarNombrePerfilJuego(1)">✏️</button>
-        <button onclick="confirmarBorrarPerfilJuego(1)">🗑️</button>
-    </div>
-</div>
+        <div class="card" style="padding:18px;text-align:center;">
+            <div style="display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:nowrap;white-space:nowrap;">
+                <h3 id="nombrePerfilJuego1" style="margin:0;cursor:pointer;" onclick="abrirPerfilJuego(1)">👑 Perfil1</h3>
+                <button style="margin-left:8px;" onclick="editarNombrePerfilJuego(1)">✏️</button>
+                <button onclick="confirmarBorrarPerfilJuego(1)">🗑️</button>
+            </div>
+        </div>
 
+        <div class="card" style="padding:18px;text-align:center;">
+            <div style="display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:nowrap;white-space:nowrap;">
+                <h3 id="nombrePerfilJuego2" style="margin:0;cursor:pointer;" onclick="abrirPerfilJuego(2)">🕹️ Perfil2</h3>
+                <button style="margin-left:8px;" onclick="editarNombrePerfilJuego(2)">✏️</button>
+                <button onclick="confirmarBorrarPerfilJuego(2)">🗑️</button>
+            </div>
+        </div>
 
-<div class="card" style="padding:18px;text-align:center;">
-    <div style="display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:nowrap;white-space:nowrap;">
-        <h3 id="nombrePerfilJuego2" style="margin:0;cursor:pointer;" onclick="abrirPerfilJuego(2)">🕹️ Perfil2</h3>
-       <button style="margin-left:8px;" onclick="editarNombrePerfilJuego(2)">✏️</button>
-        <button onclick="confirmarBorrarPerfilJuego(2)">🗑️</button>
-    </div>
-</div>
+        <div class="card" style="padding:18px;text-align:center;">
+            <div style="display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:nowrap;white-space:nowrap;">
+                <h3 id="nombrePerfilJuego3" style="margin:0;cursor:pointer;" onclick="abrirPerfilJuego(3)">🎯 Perfil3</h3>
+                <button style="margin-left:8px;" onclick="editarNombrePerfilJuego(3)">✏️</button>
+                <button onclick="confirmarBorrarPerfilJuego(3)">🗑️</button>
+            </div>
+        </div>
 
-
-<div class="card" style="padding:18px;text-align:center;">
-    <div style="display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:nowrap;white-space:nowrap;">
-         <h3 id="nombrePerfilJuego3" style="margin:0;cursor:pointer;" onclick="abrirPerfilJuego(3)">🎯 Perfil3</h3>
-        <button style="margin-left:8px;" onclick="editarNombrePerfilJuego(3)">✏️</button>
-        <button onclick="confirmarBorrarPerfilJuego(3)">🗑️</button>
-    </div>
-</div>
-
-<div class="card" style="padding:18px;text-align:center;">
-  <div style="display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:nowrap;white-space:nowrap;">
-        <h3 id="nombrePerfilJuego4" style="margin:0;cursor:pointer;" onclick="abrirPerfilJuego(4)">🏆 Perfil4</h3>
-        <button style="margin-left:8px;" onclick="editarNombrePerfilJuego(4)">✏️</button>
-        <button onclick="confirmarBorrarPerfilJuego(4)">🗑️</button>
-    </div>
-</div>
-
+        <div class="card" style="padding:18px;text-align:center;">
+            <div style="display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:nowrap;white-space:nowrap;">
+                <h3 id="nombrePerfilJuego4" style="margin:0;cursor:pointer;" onclick="abrirPerfilJuego(4)">🏆 Perfil4</h3>
+                <button style="margin-left:8px;" onclick="editarNombrePerfilJuego(4)">✏️</button>
+                <button onclick="confirmarBorrarPerfilJuego(4)">🗑️</button>
+            </div>
+        </div>
 
     </div>
 
@@ -4276,7 +4386,6 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 </div>
 
 <!-- ===== FIN POPUP ELIMINAR PERFIL DE JUEGOS ===== -->
-
 
 <!-- ===== PANTALLA PERFIL JUEGOS ===== -->
 
@@ -5469,6 +5578,117 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
 </div>
 
 <!-- ===== FIN VENTANAS AGREGAR PLATAFORMA MUSICA ===== -->
+
+
+<!-- ===== POPUP INGRESAR LINK MI RINCÓN ===== -->
+
+<div id="popupLinkMiRincon"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1300;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,450px);
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:20px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        ">
+
+        <h2 style="margin-top:0;text-align:center;color:#FFD700;">
+            🔗 Ingresar enlace
+        </h2>
+
+        <p style="text-align:center;color:#ccc;line-height:1.5;">
+            Pegá aquí el enlace del elemento que copiaste del navegador.
+        </p>
+
+        <input
+            id="urlAgregarMiRincon"
+            type="url"
+            placeholder="https://..."
+            style="width:100%;box-sizing:border-box;padding:12px;font-size:16px;border-radius:10px;border:1px solid #666;margin-bottom:15px;">
+
+        <button
+            type="button"
+            onclick="guardarLinkMiRincon()"
+            style="display:block;width:100%;margin:8px 0;padding:12px;font-size:16px;font-weight:bold;border-radius:10px;">
+            ✅ Guardar enlace
+        </button>
+
+        <button
+            type="button"
+            onclick="cerrarLinkMiRincon()"
+            style="display:block;width:100%;margin:8px 0;padding:12px;font-size:16px;font-weight:bold;border-radius:10px;">
+            ↩️ Cancelar
+        </button>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN POPUP INGRESAR LINK MI RINCÓN ===== -->
+
+
+<!-- ===== POPUP CONFIRMAR MI RINCÓN ===== -->
+
+<div id="popupConfirmarMiRincon"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.75);
+     z-index:1300;
+     align-items:center;
+     justify-content:center;
+     padding:20px;
+     ">
+
+    <div style="
+        width:min(92%,450px);
+        background:#1d1d1d;
+        border:1px solid #555;
+        border-radius:20px;
+        padding:20px;
+        box-shadow:0 10px 35px rgba(0,0,0,.7);
+        ">
+
+        <h2 style="margin-top:0;text-align:center;color:#FFD700;">
+            🪴 Confirmar elemento
+        </h2>
+
+        <p id="mensajeConfirmarMiRincon"
+           style="text-align:center;color:#ccc;line-height:1.5;">
+        </p>
+
+        <button
+            type="button"
+            onclick="confirmarMiRincon()"
+            style="display:block;width:100%;margin:10px 0;padding:12px;font-size:16px;font-weight:bold;border-radius:10px;">
+            ✅ Sí, guardar
+        </button>
+
+        <button
+            type="button"
+            onclick="cancelarConfirmacionMiRincon()"
+            style="display:block;width:100%;margin:10px 0;padding:12px;font-size:16px;font-weight:bold;border-radius:10px;">
+            ↩️ No, volver a intentar
+        </button>
+
+    </div>
+
+</div>
+
+<!-- ===== FIN POPUP CONFIRMAR MI RINCÓN ===== -->
+
 
 <!-- ===== AGREGAR PLATAFORMA CINE ===== -->
 
@@ -30867,23 +31087,67 @@ function cerrarConfiguracionMiRincon(){
 
 }
 
+// ========================================
+// CONFIGURACIÓN - MI RINCÓN
+// ========================================
+// ========================================
+// CONFIGURACIÓN - MI RINCÓN
+// ========================================
 
 function cargarConfiguracionMiRincon(){
 
-    const lista = document.getElementById("listaConfiguracionMiRincon");
+    const lista = document.getElementById(
+        "listaConfiguracionMiRincon"
+    );
 
     if(!lista) return;
 
     lista.innerHTML = "";
 
     let elementos = [];
+    let seleccionados = [];
 
-    try {
+    try{
+
         elementos = JSON.parse(
             localStorage.getItem("miRinconElementos") || "[]"
         );
-    } catch(error) {
+
+        if(!Array.isArray(elementos)){
+            elementos = [];
+        }
+
+        const guardadosSeleccionados =
+            localStorage.getItem("miRinconElementosSeleccionados");
+
+        if(guardadosSeleccionados === null){
+
+            seleccionados = elementos.map(
+                elemento => elemento.nombre
+            );
+
+            localStorage.setItem(
+                "miRinconElementosSeleccionados",
+                JSON.stringify(seleccionados)
+            );
+
+        }else{
+
+            seleccionados = JSON.parse(
+                guardadosSeleccionados
+            );
+
+            if(!Array.isArray(seleccionados)){
+                seleccionados = [];
+            }
+
+        }
+
+    }catch(error){
+
         elementos = [];
+        seleccionados = [];
+
     }
 
     if(elementos.length === 0){
@@ -30899,21 +31163,75 @@ function cargarConfiguracionMiRincon(){
 
     elementos.forEach(function(elemento){
 
+        if(!elemento || !elemento.nombre) return;
+
         const fila = document.createElement("div");
 
-        fila.style.cssText = `
-            display:flex;
-            align-items:center;
-            gap:10px;
-            padding:12px;
-            background:#292929;
-            border:1px solid #555;
-            border-radius:10px;
-            color:white;
-        `;
+        fila.style.display = "flex";
+        fila.style.alignItems = "center";
+        fila.style.justifyContent = "space-between";
+        fila.style.gap = "10px";
 
-        fila.textContent =
+        // CASILLA DE SELECCIÓN
+
+        const checkbox = document.createElement("input");
+
+        checkbox.type = "checkbox";
+        checkbox.checked = seleccionados.includes(elemento.nombre);
+
+        checkbox.setAttribute(
+            "data-mi-rincon-nombre",
+            elemento.nombre
+        );
+
+        fila.appendChild(checkbox);
+
+        // ICONO Y NOMBRE
+
+        const nombre = document.createElement("span");
+
+        nombre.textContent =
             (elemento.icono || "⭐") + " " + elemento.nombre;
+
+        nombre.style.flex = "1";
+        nombre.style.minWidth = "0";
+        nombre.style.overflowWrap = "anywhere";
+
+        fila.appendChild(nombre);
+
+
+        // BOTÓN EDITAR - MISMA LÓGICA QUE CINE
+
+        const botonEditar = document.createElement("button");
+
+        botonEditar.type = "button";
+        botonEditar.textContent = "✏️";
+        botonEditar.title = "Editar nombre del elemento";
+
+        botonEditar.onclick = function(){
+
+            editarElementoMiRincon(elemento.nombre);
+
+        };
+
+        fila.appendChild(botonEditar);
+
+
+        // BOTÓN ELIMINAR - MISMA LÓGICA QUE CINE
+
+        const botonEliminar = document.createElement("button");
+
+        botonEliminar.type = "button";
+        botonEliminar.textContent = "🗑️";
+        botonEliminar.title = "Eliminar elemento";
+
+        botonEliminar.onclick = function(){
+
+            eliminarElementoMiRincon(elemento.nombre);
+
+        };
+
+        fila.appendChild(botonEliminar);
 
         lista.appendChild(fila);
 
@@ -30921,6 +31239,1091 @@ function cargarConfiguracionMiRincon(){
 
 }
 
+// ========================================
+// GUARDAR CONFIGURACION MI RINCÓN
+// ========================================
+
+function guardarMiRincon(){
+
+    const lista = document.getElementById(
+        "listaConfiguracionMiRincon"
+    );
+
+    if(!lista) return;
+
+    const seleccionados = [];
+
+    lista.querySelectorAll(
+        "input[data-mi-rincon-nombre]"
+    ).forEach(function(checkbox){
+
+        if(checkbox.checked){
+
+            seleccionados.push(
+                checkbox.getAttribute("data-mi-rincon-nombre")
+            );
+
+        }
+
+    });
+
+    localStorage.setItem(
+        "miRinconElementosSeleccionados",
+        JSON.stringify(seleccionados)
+    );
+
+    cargarMiRincon();
+
+    const mensaje = document.getElementById(
+        "mensajeMiRincon"
+    );
+
+    if(mensaje){
+
+        mensaje.textContent = "✅ Cambios guardados correctamente.";
+        mensaje.style.display = "block";
+
+    }
+
+    setTimeout(function(){
+
+        if(mensaje){
+            mensaje.style.display = "none";
+        }
+
+        const popup = document.getElementById(
+            "popupConfiguracionMiRincon"
+        );
+
+        if(popup){
+            popup.style.display = "none";
+        }
+
+    },1000);
+
+}
+
+// ========================================
+// ELIMINAR ELEMENTO - MI RINCÓN
+// ========================================
+
+function eliminarElementoMiRincon(nombre){
+
+    if(!confirm(
+        "¿Querés eliminar definitivamente este elemento de Mi Rincón?"
+    )){
+        return;
+    }
+
+    let elementos = [];
+    let seleccionados = [];
+
+    try{
+
+        elementos = JSON.parse(
+            localStorage.getItem("miRinconElementos") || "[]"
+        );
+
+        seleccionados = JSON.parse(
+            localStorage.getItem("miRinconElementosSeleccionados") || "[]"
+        );
+
+        if(!Array.isArray(elementos)) elementos = [];
+        if(!Array.isArray(seleccionados)) seleccionados = [];
+
+    }catch(error){
+
+        elementos = [];
+        seleccionados = [];
+
+    }
+
+    elementos = elementos.filter(function(elemento){
+
+        return elemento && elemento.nombre !== nombre;
+
+    });
+
+    seleccionados = seleccionados.filter(function(item){
+
+        return item !== nombre;
+
+    });
+
+    localStorage.setItem(
+        "miRinconElementos",
+        JSON.stringify(elementos)
+    );
+
+    localStorage.setItem(
+        "miRinconElementosSeleccionados",
+        JSON.stringify(seleccionados)
+    );
+
+    cargarConfiguracionMiRincon();
+    cargarMiRincon();
+
+}
+
+// ========================================
+// EDITAR ELEMENTO - MI RINCÓN
+// ========================================
+
+function editarElementoMiRincon(nombreAnterior){
+
+    const popup = document.getElementById(
+        "popupEditarMiRincon"
+    );
+
+    const input = document.getElementById(
+        "inputNombreMiRinconEditar"
+    );
+
+    const mensajeError = document.getElementById(
+        "mensajeErrorMiRinconEditar"
+    );
+
+    if(!popup || !input){
+        alert("No se encontró el popup de edición.");
+        return;
+    }
+
+    window.miRinconEnEdicion = nombreAnterior;
+
+    input.value = nombreAnterior;
+
+    if(mensajeError){
+        mensajeError.textContent = "";
+        mensajeError.style.display = "none";
+    }
+
+    popup.style.display = "flex";
+
+    input.focus();
+    input.select();
+
+}
+
+
+// ========================================
+// GUARDAR NOMBRE EDITADO - MI RINCÓN
+// ========================================
+
+function guardarNombreMiRinconEditado(){
+
+    const nombreAnterior = window.miRinconEnEdicion;
+
+    if(!nombreAnterior) return;
+
+    const input = document.getElementById(
+        "inputNombreMiRinconEditar"
+    );
+
+    const mensajeError = document.getElementById(
+        "mensajeErrorMiRinconEditar"
+    );
+
+    const popup = document.getElementById(
+        "popupEditarMiRincon"
+    );
+
+    if(!input || !popup) return;
+
+    const nombreNuevo = input.value.trim();
+
+    function mostrarError(texto){
+
+        if(!mensajeError) return;
+
+        mensajeError.textContent = texto;
+        mensajeError.style.display = "block";
+
+    }
+
+    if(!nombreNuevo){
+
+        mostrarError("⚠ El nombre no puede quedar vacío.");
+        return;
+
+    }
+
+    let elementos = [];
+    let seleccionados = [];
+
+    try{
+
+        elementos = JSON.parse(
+            localStorage.getItem("miRinconElementos") || "[]"
+        );
+
+        seleccionados = JSON.parse(
+            localStorage.getItem("miRinconElementosSeleccionados") || "[]"
+        );
+
+        if(!Array.isArray(elementos)) elementos = [];
+        if(!Array.isArray(seleccionados)) seleccionados = [];
+
+    }catch(error){
+
+        mostrarError("⚠ No se pudieron leer los elementos guardados.");
+        return;
+
+    }
+
+    const duplicado = elementos.some(function(elemento){
+
+        return elemento &&
+            elemento.nombre !== nombreAnterior &&
+            elemento.nombre.trim().toLowerCase() === nombreNuevo.toLowerCase();
+
+    });
+
+    if(duplicado){
+
+        mostrarError("⚠ Ese elemento ya está guardado.");
+        return;
+
+    }
+
+    const elemento = elementos.find(function(item){
+
+        return item && item.nombre === nombreAnterior;
+
+    });
+
+    if(!elemento) return;
+
+    elemento.nombre = nombreNuevo;
+
+    seleccionados = seleccionados.map(function(nombre){
+
+        return nombre === nombreAnterior ? nombreNuevo : nombre;
+
+    });
+
+    localStorage.setItem(
+        "miRinconElementos",
+        JSON.stringify(elementos)
+    );
+
+    localStorage.setItem(
+        "miRinconElementosSeleccionados",
+        JSON.stringify(seleccionados)
+    );
+
+    cerrarEditarMiRincon();
+
+    cargarConfiguracionMiRincon();
+    cargarMiRincon();
+
+}
+
+
+// ========================================
+// CERRAR EDICIÓN - MI RINCÓN
+// ========================================
+
+function cerrarEditarMiRincon(){
+
+    const popup = document.getElementById(
+        "popupEditarMiRincon"
+    );
+
+    const mensajeError = document.getElementById(
+        "mensajeErrorMiRinconEditar"
+    );
+
+    if(popup){
+        popup.style.display = "none";
+    }
+
+    if(mensajeError){
+        mensajeError.textContent = "";
+        mensajeError.style.display = "none";
+    }
+
+    window.miRinconEnEdicion = null;
+
+}
+
+// ========================================
+// EDITAR ELEMENTO - MI RINCÓN
+// ========================================
+
+function editarElementoMiRincon(nombreAnterior){
+
+    const popup = document.getElementById(
+        "popupEditarMiRincon"
+    );
+
+    const input = document.getElementById(
+        "inputNombreMiRinconEditar"
+    );
+
+    const mensajeError = document.getElementById(
+        "mensajeErrorMiRinconEditar"
+    );
+
+    if(!popup || !input){
+        alert("No se encontró el popup de edición.");
+        return;
+    }
+
+    window.miRinconEnEdicion = nombreAnterior;
+
+    input.value = nombreAnterior;
+
+    if(mensajeError){
+        mensajeError.textContent = "";
+        mensajeError.style.display = "none";
+    }
+
+    popup.style.display = "flex";
+
+    input.focus();
+    input.select();
+
+}
+
+
+// ========================================
+// GUARDAR NOMBRE EDITADO - MI RINCÓN
+// ========================================
+
+function guardarNombreMiRinconEditado(){
+
+    const nombreAnterior = window.miRinconEnEdicion;
+
+    if(!nombreAnterior) return;
+
+    const input = document.getElementById(
+        "inputNombreMiRinconEditar"
+    );
+
+    const mensajeError = document.getElementById(
+        "mensajeErrorMiRinconEditar"
+    );
+
+    const popup = document.getElementById(
+        "popupEditarMiRincon"
+    );
+
+    if(!input || !popup) return;
+
+    const nombreNuevo = input.value.trim();
+
+    function mostrarError(texto){
+
+        if(!mensajeError) return;
+
+        mensajeError.textContent = texto;
+        mensajeError.style.display = "block";
+
+    }
+
+    if(!nombreNuevo){
+
+        mostrarError("⚠ El nombre no puede quedar vacío.");
+        return;
+
+    }
+
+    let elementos = [];
+    let seleccionados = [];
+
+    try{
+
+        elementos = JSON.parse(
+            localStorage.getItem("miRinconElementos") || "[]"
+        );
+
+        seleccionados = JSON.parse(
+            localStorage.getItem("miRinconElementosSeleccionados") || "[]"
+        );
+
+        if(!Array.isArray(elementos)) elementos = [];
+        if(!Array.isArray(seleccionados)) seleccionados = [];
+
+    }catch(error){
+
+        mostrarError("⚠ No se pudieron leer los elementos guardados.");
+        return;
+
+    }
+
+    const duplicado = elementos.some(function(elemento){
+
+        return elemento &&
+            elemento.nombre !== nombreAnterior &&
+            elemento.nombre.trim().toLowerCase() === nombreNuevo.toLowerCase();
+
+    });
+
+    if(duplicado){
+
+        mostrarError("⚠ Ese elemento ya está guardado.");
+        return;
+
+    }
+
+    const elemento = elementos.find(function(item){
+
+        return item && item.nombre === nombreAnterior;
+
+    });
+
+    if(!elemento) return;
+
+    elemento.nombre = nombreNuevo;
+
+    seleccionados = seleccionados.map(function(nombre){
+
+        return nombre === nombreAnterior ? nombreNuevo : nombre;
+
+    });
+
+    localStorage.setItem(
+        "miRinconElementos",
+        JSON.stringify(elementos)
+    );
+
+    localStorage.setItem(
+        "miRinconElementosSeleccionados",
+        JSON.stringify(seleccionados)
+    );
+
+    cerrarEditarMiRincon();
+
+    cargarConfiguracionMiRincon();
+    cargarMiRincon();
+
+}
+
+
+// ========================================
+// CERRAR EDICIÓN - MI RINCÓN
+// ========================================
+
+function cerrarEditarMiRincon(){
+
+    const popup = document.getElementById(
+        "popupEditarMiRincon"
+    );
+
+    const mensajeError = document.getElementById(
+        "mensajeErrorMiRinconEditar"
+    );
+
+    if(popup){
+        popup.style.display = "none";
+    }
+
+    if(mensajeError){
+        mensajeError.textContent = "";
+        mensajeError.style.display = "none";
+    }
+
+    window.miRinconEnEdicion = null;
+
+}
+
+// ========================================
+// SELECCIONAR ICONO - MI RINCÓN
+// ========================================
+
+let iconoMiRinconSeleccionado = "⭐";
+
+function seleccionarIconoMiRincon(icono){
+
+    iconoMiRinconSeleccionado = icono;
+
+    const mensaje = document.getElementById(
+        "iconoSeleccionadoMiRincon"
+    );
+
+    if(mensaje){
+        mensaje.textContent =
+            "Icono seleccionado: " + icono;
+    }
+
+}
+
+// ========================================
+// VALIDAR ELEMENTO - MI RINCÓN
+// ========================================
+
+function validarNuevoMiRincon(){
+
+    const campo = document.getElementById(
+        "nombreNuevoMiRincon"
+    );
+
+    if(!campo) return;
+
+    const nombre = campo.value.trim();
+
+    if(!nombre){
+        alert("⚠️ Escribí el nombre del elemento.");
+        return;
+    }
+
+    let elementos = [];
+
+    try{
+        elementos = JSON.parse(
+            localStorage.getItem("miRinconElementos") || "[]"
+        );
+
+        if(!Array.isArray(elementos)){
+            elementos = [];
+        }
+
+    }catch(error){
+        elementos = [];
+    }
+
+    const repetido = elementos.some(function(elemento){
+        return elemento.nombre.toLowerCase() === nombre.toLowerCase();
+    });
+
+    if(repetido){
+        alert("⚠️ Ese elemento ya está guardado en Mi Rincón.");
+        return;
+    }
+
+    if(elementos.length >= 10){
+        alert("⚠️ Alcanzaste el máximo de 10 elementos.");
+        return;
+    }
+
+    localStorage.setItem(
+        "nombreMiRinconPendiente",
+        nombre
+    );
+
+    localStorage.setItem(
+        "iconoMiRinconPendiente",
+        iconoMiRinconSeleccionado || "⭐"
+    );
+
+    localStorage.setItem(
+        "moduloPlataformaPendiente",
+        "miRincon"
+    );
+
+    localStorage.setItem(
+        "validacionMiRinconActiva",
+        "true"
+    );
+
+    const urlBusqueda =
+        "https://www.google.com/search?q=" +
+        encodeURIComponent(nombre);
+
+    window.open(urlBusqueda, "_blank");
+}
+
+// ========================================
+// REGRESO DE VALIDACIÓN - MI RINCÓN
+// ========================================
+
+document.addEventListener("visibilitychange", function(){
+
+    if(document.visibilityState !== "visible") return;
+
+    if(localStorage.getItem("moduloPlataformaPendiente") !== "miRincon"){
+        return;
+    }
+
+    const nombre = localStorage.getItem(
+        "nombreMiRinconPendiente"
+    );
+
+    const activa = localStorage.getItem(
+        "validacionMiRinconActiva"
+    );
+
+    if(!nombre || activa !== "true") return;
+
+    // En PC se solicita pegar el enlace.
+    if(!esMovil){
+
+        const popup = document.getElementById(
+            "popupAgregarMiRincon"
+        );
+
+        if(popup && popup.style.display === "flex"){
+            abrirLinkMiRincon();
+        }
+
+        return;
+    }
+
+    // En móviles, la confirmación la gestiona
+    // recibirAppCompartida() cuando llega el enlace compartido.
+
+});
+
+
+// ========================================
+// ABRIR LINK - MI RINCÓN
+// ========================================
+
+function abrirLinkMiRincon(){
+
+    const popup = document.getElementById(
+        "popupLinkMiRincon"
+    );
+
+    const campo = document.getElementById(
+        "urlAgregarMiRincon"
+    );
+
+    if(!popup || !campo) return;
+
+    campo.value = "";
+    popup.style.display = "flex";
+}
+
+
+// ========================================
+// CERRAR LINK - MI RINCÓN
+// ========================================
+
+function cerrarLinkMiRincon(){
+
+    const popup = document.getElementById(
+        "popupLinkMiRincon"
+    );
+
+    if(popup){
+        popup.style.display = "none";
+    }
+
+}
+
+// ========================================
+// GUARDAR LINK - MI RINCÓN
+// ========================================
+// ========================================
+// GUARDAR LINK - MI RINCÓN
+// ========================================
+
+function guardarLinkMiRincon(){
+
+    const campo = document.getElementById(
+        "urlAgregarMiRincon"
+    );
+
+    if(!campo) return;
+
+    const nombre = localStorage.getItem(
+        "nombreMiRinconPendiente"
+    );
+
+    const icono = localStorage.getItem(
+        "iconoMiRinconPendiente"
+    ) || "⭐";
+
+    const url = campo.value.trim();
+
+    if(!nombre){
+        alert("⚠️ No se encontró el nombre del elemento.");
+        return;
+    }
+
+    if(!url){
+        alert("⚠️ Pegá el enlace del elemento.");
+        return;
+    }
+
+    try{
+
+        const enlace = new URL(url);
+
+        if(
+            enlace.protocol !== "https:" &&
+            enlace.protocol !== "http:"
+        ){
+            alert("⚠️ El enlace debe comenzar con http:// o https://");
+            return;
+        }
+
+        guardarNuevaMiRincon(
+            nombre,
+            enlace.href,
+            icono
+        );
+
+    }catch(error){
+
+        alert("⚠️ El enlace ingresado no es válido.");
+
+    }
+
+}
+
+
+
+// ========================================
+// GUARDAR ELEMENTO - MI RINCÓN
+// ========================================
+
+function guardarNuevaMiRincon(nombre, url, icono){
+
+    if(!nombre || !url) return false;
+
+    let elementos = [];
+    let seleccionados = [];
+
+    try{
+
+        elementos = JSON.parse(
+            localStorage.getItem("miRinconElementos") || "[]"
+        );
+
+        seleccionados = JSON.parse(
+            localStorage.getItem("miRinconElementosSeleccionados") || "[]"
+        );
+
+        if(!Array.isArray(elementos)) elementos = [];
+        if(!Array.isArray(seleccionados)) seleccionados = [];
+
+    }catch(error){
+
+        alert("⚠️ No se pudieron leer los elementos guardados.");
+        return false;
+
+    }
+
+    const repetido = elementos.some(function(elemento){
+
+        return elemento &&
+               typeof elemento.nombre === "string" &&
+               elemento.nombre.toLowerCase() === nombre.toLowerCase();
+
+    });
+
+    if(repetido){
+        alert("⚠️ Ese elemento ya está guardado en Mi Rincón.");
+        return false;
+    }
+
+    if(elementos.length >= 10){
+        alert("⚠️ Alcanzaste el máximo de 10 elementos.");
+        return false;
+    }
+
+    elementos.push({
+        icono: icono || "⭐",
+        nombre: nombre,
+        url: url
+    });
+
+    if(!seleccionados.includes(nombre)){
+        seleccionados.push(nombre);
+    }
+
+    localStorage.setItem(
+        "miRinconElementos",
+        JSON.stringify(elementos)
+    );
+
+    localStorage.setItem(
+        "miRinconElementosSeleccionados",
+        JSON.stringify(seleccionados)
+    );
+
+    localStorage.removeItem("nombreMiRinconPendiente");
+    localStorage.removeItem("iconoMiRinconPendiente");
+    localStorage.removeItem("moduloPlataformaPendiente");
+    localStorage.removeItem("validacionMiRinconActiva");
+
+    const popupLink = document.getElementById(
+        "popupLinkMiRincon"
+    );
+
+    const popupAgregar = document.getElementById(
+        "popupAgregarMiRincon"
+    );
+
+    const popupConfirmar = document.getElementById(
+        "popupConfirmarMiRincon"
+    );
+
+    if(popupLink) popupLink.style.display = "none";
+    if(popupAgregar) popupAgregar.style.display = "none";
+    if(popupConfirmar) popupConfirmar.style.display = "none";
+
+    cargarConfiguracionMiRincon();
+    cargarMiRincon();
+
+    const popupConfig = document.getElementById(
+        "popupConfiguracionMiRincon"
+    );
+
+    if(popupConfig){
+        popupConfig.style.display = "flex";
+    }
+
+    const mensaje = document.getElementById(
+        "mensajeMiRincon"
+    );
+
+    if(mensaje){
+
+        mensaje.textContent = "✅ Elemento guardado correctamente.";
+        mensaje.style.display = "block";
+
+        clearTimeout(window.temporizadorMensajeMiRincon);
+
+        window.temporizadorMensajeMiRincon = setTimeout(function(){
+
+            mensaje.style.display = "none";
+
+        }, 1000);
+
+    }
+
+    return true;
+
+}
+
+// ========================================
+// CONFIRMAR ELEMENTO COMPARTIDO - MI RINCÓN
+// ========================================
+
+function confirmarMiRincon(){
+
+    const nombre = localStorage.getItem(
+        "nombreMiRinconPendiente"
+    );
+
+    const icono = localStorage.getItem(
+        "iconoMiRinconPendiente"
+    ) || "⭐";
+
+    const url = localStorage.getItem(
+        "appCompartidaUrl"
+    );
+
+    if(!nombre || !url){
+        alert("⚠️ No se recibió correctamente el elemento compartido.");
+        return;
+    }
+
+    try{
+
+        const enlace = new URL(url);
+
+        if(
+            enlace.protocol !== "https:" &&
+            enlace.protocol !== "http:"
+        ){
+            alert("⚠️ El enlace recibido no es válido.");
+            return;
+        }
+
+        const guardado = guardarNuevaMiRincon(
+            nombre,
+            enlace.href,
+            icono
+        );
+
+        // Limpiar datos compartidos solamente si se guardó.
+
+        if(guardado){
+
+            localStorage.removeItem("appCompartidaTitulo");
+            localStorage.removeItem("appCompartidaTexto");
+            localStorage.removeItem("appCompartidaUrl");
+
+        }
+
+    }catch(error){
+
+        alert("⚠️ El enlace recibido no es válido.");
+
+    }
+
+}
+
+
+// ========================================
+// CANCELAR CONFIRMACIÓN - MI RINCÓN
+// ========================================
+
+function cancelarConfirmacionMiRincon(){
+
+    localStorage.removeItem("nombreMiRinconPendiente");
+    localStorage.removeItem("iconoMiRinconPendiente");
+    localStorage.removeItem("moduloPlataformaPendiente");
+    localStorage.removeItem("validacionMiRinconActiva");
+
+    localStorage.removeItem("appCompartidaTitulo");
+    localStorage.removeItem("appCompartidaTexto");
+    localStorage.removeItem("appCompartidaUrl");
+
+    const popup = document.getElementById(
+        "popupConfirmarMiRincon"
+    );
+
+    const popupAgregar = document.getElementById(
+        "popupAgregarMiRincon"
+    );
+
+    if(popup) popup.style.display = "none";
+    if(popupAgregar) popupAgregar.style.display = "none";
+
+}
+
+
+// ========================================
+// CARGAR ELEMENTOS SELECCIONADOS - MI RINCÓN
+// ========================================
+
+function cargarMiRincon(){
+
+    const lista = document.getElementById(
+        "listaMiRincon"
+    );
+
+    if(!lista) return;
+
+    lista.innerHTML = "";
+
+    let elementos = [];
+    let seleccionados = [];
+
+    try{
+
+        elementos = JSON.parse(
+            localStorage.getItem("miRinconElementos") || "[]"
+        );
+
+        if(!Array.isArray(elementos)){
+            elementos = [];
+        }
+
+        const guardadosSeleccionados =
+            localStorage.getItem("miRinconElementosSeleccionados");
+
+        if(guardadosSeleccionados === null){
+
+            seleccionados = elementos.map(function(elemento){
+
+                return elemento && elemento.nombre
+                    ? elemento.nombre
+                    : null;
+
+            }).filter(Boolean);
+
+            localStorage.setItem(
+                "miRinconElementosSeleccionados",
+                JSON.stringify(seleccionados)
+            );
+
+        }else{
+
+            seleccionados = JSON.parse(
+                guardadosSeleccionados
+            );
+
+            if(!Array.isArray(seleccionados)){
+                seleccionados = [];
+            }
+
+        }
+
+    }catch(error){
+
+        elementos = [];
+        seleccionados = [];
+
+    }
+
+    if(elementos.length === 0){
+
+        lista.innerHTML = `
+            <p style="text-align:center;color:#ccc;padding:15px;">
+                Todavía no guardaste elementos en Mi Rincón.
+            </p>
+        `;
+
+        return;
+    }
+
+    const elementosVisibles = elementos.filter(function(elemento){
+
+        return elemento &&
+               elemento.nombre &&
+               seleccionados.includes(elemento.nombre);
+
+    });
+
+    if(elementosVisibles.length === 0){
+
+        lista.innerHTML = `
+            <p style="text-align:center;color:#ccc;padding:15px;">
+                No tenés elementos seleccionados para mostrar.
+                Podés elegirlos desde Configurar.
+            </p>
+        `;
+
+        return;
+    }
+
+    elementosVisibles.forEach(function(elemento){
+
+        const tarjeta = document.createElement("button");
+
+        tarjeta.type = "button";
+
+        tarjeta.style.cssText = `
+            display:flex;
+            align-items:center;
+            gap:12px;
+            width:100%;
+            padding:15px;
+            background:#292929;
+            border:1px solid #555;
+            border-radius:12px;
+            color:white;
+            font-size:16px;
+            text-align:left;
+            cursor:pointer;
+        `;
+
+        const icono = document.createElement("span");
+
+        icono.textContent = elemento.icono || "⭐";
+        icono.style.fontSize = "26px";
+
+        const nombre = document.createElement("span");
+
+        nombre.textContent =
+            elemento.nombre || "Elemento guardado";
+
+        tarjeta.appendChild(icono);
+        tarjeta.appendChild(nombre);
+
+        tarjeta.addEventListener("click", function(){
+
+            if(!elemento.url) return;
+
+            window.open(
+                elemento.url,
+                "_blank",
+                "noopener,noreferrer"
+            );
+
+        });
+
+        lista.appendChild(tarjeta);
+
+    });
+
+}
 // ========================
 // RECIBIR APP COMPARTIDA
 // ========================
@@ -31068,6 +32471,60 @@ function recibirAppCompartida(){
     }
 
     // ========================
+    // MI RINCÓN: FLUJO INDEPENDIENTE
+    // ========================
+
+    else if(moduloDestino === "miRincon"){
+
+        const nombreMiRincon =
+            localStorage.getItem(
+                "nombreMiRinconPendiente"
+            ) || nombreCompartido;
+
+        localStorage.setItem(
+            "nombreMiRinconPendiente",
+            nombreMiRincon
+        );
+
+        localStorage.setItem(
+            "validacionMiRinconActiva",
+            "true"
+        );
+
+        const popup =
+            document.getElementById(
+                "popupConfirmarMiRincon"
+            );
+
+        const mensaje =
+            document.getElementById(
+                "mensajeConfirmarMiRincon"
+            );
+
+        if(popup && mensaje){
+
+            mensaje.textContent =
+                "¿Querés guardar \"" +
+                nombreMiRincon +
+                "\" en Mi Rincón?";
+
+            mensaje.style.color = "";
+            popup.style.display = "flex";
+
+        }
+
+        const campo =
+            document.getElementById(
+                "nombreNuevoMiRincon"
+            );
+
+        if(campo && nombreMiRincon){
+            campo.value = nombreMiRincon;
+        }
+
+    }
+
+    // ========================
     // CINE: FLUJO INDEPENDIENTE
     // ========================
 
@@ -31138,6 +32595,7 @@ function recibirAppCompartida(){
 
 
 recibirAppCompartida();
+
 
 
 /* =====================================================
