@@ -31770,6 +31770,7 @@ function validarNuevoMiRincon(){
     let elementos = [];
 
     try{
+
         elementos = JSON.parse(
             localStorage.getItem("miRinconElementos") || "[]"
         );
@@ -31779,11 +31780,17 @@ function validarNuevoMiRincon(){
         }
 
     }catch(error){
+
         elementos = [];
+
     }
 
     const repetido = elementos.some(function(elemento){
-        return elemento.nombre.toLowerCase() === nombre.toLowerCase();
+
+        return elemento &&
+               elemento.nombre &&
+               elemento.nombre.toLowerCase() === nombre.toLowerCase();
+
     });
 
     if(repetido){
@@ -31816,13 +31823,32 @@ function validarNuevoMiRincon(){
         "true"
     );
 
-    const urlBusqueda =
-        "https://www.google.com/search?q=" +
-        encodeURIComponent(nombre);
+    let urlBusqueda;
+
+    if(esAndroid){
+
+        urlBusqueda =
+            "https://play.google.com/store/search?q=" +
+            encodeURIComponent(nombre) +
+            "&c=apps";
+
+    }else if(esAppleMobile){
+
+        urlBusqueda =
+            "https://apps.apple.com/us/search?term=" +
+            encodeURIComponent(nombre);
+
+    }else{
+
+        urlBusqueda =
+            "https://www.google.com/search?q=" +
+            encodeURIComponent(nombre);
+
+    }
 
     window.open(urlBusqueda, "_blank");
-}
 
+}
 // ========================================
 // REGRESO DE VALIDACIÓN - MI RINCÓN
 // ========================================
