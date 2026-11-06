@@ -20179,24 +20179,28 @@ function cambiarTema(tema){
 
 }
 
+
 //========================
 // MENÚ ANDROID
 //========================
 
 function mostrarMenuAndroid(seccion, registrarHistorial = true){
 
+    // Ocultar menú inicial de Android
     document.getElementById("menuAndroid").style.display="none";
-   if(registrarHistorial){
 
-    history.pushState(
-        { pantalla: seccion },
-        "",
-        "#" + seccion
-    );
+    // Registrar historial
+    if(registrarHistorial){
 
-}
+        history.pushState(
+            { pantalla: seccion },
+            "",
+            "#" + seccion
+        );
 
+    }
 
+    // Configuración general
     document.getElementById("btnVolverAndroid").style.display="block";
     document.querySelector("header").style.display="none";
     document.getElementById("panelCliente").style.display="none";
@@ -20211,46 +20215,63 @@ function mostrarMenuAndroid(seccion, registrarHistorial = true){
         sortableAmbientes.option("disabled", movil);
     }
 
+    // =================================
+    // OCULTAR PANTALLAS DE MÓDULOS
+    // =================================
 
+    const pantallas = [
+        "Redes",
+        "Biblioteca",
+        "Musica",
+        "Calendario",
+        "Clima",
+        "Bancos",
+        "Billeteras",
+        "Radios",
+        "Entrenamiento",
+        "Cine",
+        "Juegos",
+        "MiRincon",
+        "Recuerdos",
+        "MiOrganizador",
+        "Correo"
+    ];
+
+    pantallas.forEach(function(id){
+
+        const pantalla = document.getElementById(id);
+
+        if(pantalla){
+            pantalla.style.display="none";
+        }
+
+    });
+
+    // =================================
+    // MOSTRAR ACCIONES
+    // =================================
 
     if(seccion=="acciones"){
-
-document.getElementById("Redes").style.display="none";
-document.getElementById("Biblioteca").style.display="none";
-document.getElementById("Musica").style.display="none";
-document.getElementById("Calendario").style.display="none";
-document.getElementById("Clima").style.display="none";
-document.getElementById("Bancos").style.display="none";
-document.getElementById("Billeteras").style.display="none";
-document.getElementById("Radios").style.display="none";
-document.getElementById("Entrenamiento").style.display="none";
-
-
-   
-    document.getElementById("acciones").style.display="grid";
-
-        document.getElementById("tituloAcciones").style.display="block";
 
         document.getElementById("menu").style.display="none";
         document.getElementById("tituloAmbientes").style.display="none";
 
+        document.getElementById("acciones").style.display="grid";
+        document.getElementById("tituloAcciones").style.display="block";
+
     }
 
+    // =================================
+    // MOSTRAR AMBIENTES
+    // =================================
 
     if(seccion=="ambientes"){
 
-document.getElementById("Biblioteca").style.display="none";
-document.getElementById("Musica").style.display="none";
-document.getElementById("Calendario").style.display="none";
-document.getElementById("Clima").style.display="none";
-document.getElementById("Bancos").style.display="none";
-document.getElementById("Billeteras").style.display="none";
-document.getElementById("Radios").style.display="none";
-document.getElementById("Entrenamiento").style.display="none"; 
+        document.getElementById("acciones").style.display="none";
+        document.getElementById("tituloAcciones").style.display="none";
 
-document.getElementById("acciones").style.display="none"; document.getElementById("tituloAcciones").style.display="none";
-
-document.getElementById("menu").style.display="grid";       document.getElementById("tituloAmbientes").style.display="block";
+        document.getElementById("menu").style.display="grid";
+        document.getElementById("tituloAmbientes").style.display="block";
 
     }
 
@@ -31130,9 +31151,6 @@ function cerrarConfiguracionMiRincon(){
 
 }
 
-// ========================================
-// CONFIGURACIÓN - MI RINCÓN
-// ========================================
 // ========================================
 // CONFIGURACIÓN - MI RINCÓN
 // ========================================
