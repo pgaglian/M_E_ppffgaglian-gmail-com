@@ -8715,13 +8715,15 @@ font-size:18px;
 
 <!-- ===== FIN BUSCADOR ===== -->
 
+
+
     <!-- CONTENEDOR DE LAS VISTAS INTERNAS -->
 
     <div id="vistaMiOrganizador"
          style="display:none;padding:15px;">
 
         <button onclick="volverMenuOrganizador()">
-          ⬅ Volver a Mi Organizador
+          ⬅ Volver
         </button>
 
         <h2 id="tituloVistaOrganizador"
@@ -19827,6 +19829,8 @@ function abrirVistaOrganizador(vista){
     
     document.getElementById("menuMiOrganizador").style.display = "none";
 
+    document.getElementById("busquedaMiOrganizador").style.display = "none";
+
     document.getElementById("vistaMiOrganizador").style.display = "block";
 
     const titulo = document.getElementById("tituloVistaOrganizador");
@@ -19855,6 +19859,8 @@ function volverMenuOrganizador(){
     document.getElementById("vistaMiOrganizador").style.display = "none";
 
     document.getElementById("menuMiOrganizador").style.display = "grid";
+
+    document.getElementById("busquedaMiOrganizador").style.display = "block";
 
 }
 
