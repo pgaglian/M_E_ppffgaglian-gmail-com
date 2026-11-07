@@ -5992,35 +5992,52 @@ y la revisamos. 🛠️🔧
            ">
         </p>
 
-        <button
-            type="button"
-            onclick="confirmarPlataformaCine()"
-            style="
-            display:block;
-            width:100%;
-            margin:10px 0;
-            padding:12px;
-            font-size:16px;
-            font-weight:bold;
-            border-radius:10px;
-            ">
-            ✅ Sí, guardar
+       <button
+    id="btnGuardarConfirmarCine"
+    type="button"
+    onclick="confirmarPlataformaCine()"
+    style="
+    display:block;
+    width:100%;
+    margin:10px 0;
+    padding:12px;
+    font-size:16px;
+    font-weight:bold;
+    border-radius:10px;
+    ">
+    ✅ Sí, guardar
         </button>
 
-        <button
-            type="button"
-            onclick="cancelarConfirmacionPlataformaCine()"
-            style="
-            display:block;
-            width:100%;
-            margin:10px 0;
-            padding:12px;
-            font-size:16px;
-            font-weight:bold;
-            border-radius:10px;
-            ">
-            ↩️ No, volver a intentar
-        </button>
+    <button
+    id="btnReintentarConfirmarCine"
+    type="button"
+    onclick="reintentarConfirmacionPlataformaCine()"
+    style="
+    display:block;
+    width:100%;
+    margin:10px 0;
+    padding:12px;
+    font-size:16px;
+    font-weight:bold;
+    border-radius:10px;
+    ">
+    ↩️ No, volver a intentar
+     </button>
+
+     <button
+    type="button"
+    onclick="cancelarConfirmacionPlataformaCine()"
+    style="
+    display:block;
+    width:100%;
+    margin:10px 0;
+    padding:12px;
+    font-size:16px;
+    font-weight:bold;
+    border-radius:10px;
+    ">
+    ✖ Cancelar
+</button>
 
     </div>
 
@@ -21700,9 +21717,39 @@ function confirmarPlataformaCine(){
 
 }
 
+function reintentarConfirmacionPlataformaCine(){
+
+    const nombre =
+        localStorage.getItem(
+            "nombrePlataformaCinePendiente"
+        ) || "";
+
+    const popupConfirmacion =
+        document.getElementById(
+            "popupConfirmarPlataformaCine"
+        );
+
+    if(popupConfirmacion){
+        popupConfirmacion.style.display = "none";
+    }
+
+    abrirAgregarPlataformaCine();
+
+    const campo =
+        document.getElementById(
+            "nombreAgregarPlataformaCine"
+        );
+
+    if(campo){
+        campo.value = nombre;
+    }
+
+}
+
 /// ========================
 // CANCELAR CONFIRMACION PLATAFORMA CINE
 // ========================
+
 
 function cancelarConfirmacionPlataformaCine(){
 
@@ -21801,26 +21848,49 @@ function guardarNuevaPlataformaCine(){
         });
 
    
-    if(existe || guardadas.length >= 10){
+   if(existe){
 
-        const mensajeConfirmacion =
-            document.getElementById(
-                "mensajeConfirmarPlataformaCine"
-            );
+    const mensajeConfirmacion =
+        document.getElementById(
+            "mensajeConfirmarPlataformaCine"
+        );
 
-        if(mensajeConfirmacion){
+    if(mensajeConfirmacion){
+        mensajeConfirmacion.innerHTML =
+            "⚠ Esa plataforma ya está guardada.";
 
-            mensajeConfirmacion.innerHTML = existe
-                ? "⚠ Esa plataforma ya está guardada."
-                : "⚠ Alcanzaste el máximo de 10 plataformas personalizadas. Eliminá una para agregar otra.";
-
-            mensajeConfirmacion.style.color =
-                "#FF4444";
-
-        }
-
-        return;
+        mensajeConfirmacion.style.color =
+            "#FF4444";
     }
+
+    document.getElementById(
+        "btnGuardarConfirmarCine"
+    ).style.display = "none";
+
+    document.getElementById(
+        "btnReintentarConfirmarCine"
+    ).style.display = "block";
+
+    return;
+}
+
+if(guardadas.length >= 10){
+
+    const mensajeConfirmacion =
+        document.getElementById(
+            "mensajeConfirmarPlataformaCine"
+        );
+
+    if(mensajeConfirmacion){
+        mensajeConfirmacion.innerHTML =
+            "⚠ Alcanzaste el máximo de 10 plataformas personalizadas. Eliminá una para agregar otra.";
+
+        mensajeConfirmacion.style.color =
+            "#FF4444";
+    }
+
+    return;
+}
 
 
  const urlRecibida =
@@ -21994,12 +22064,12 @@ function abrirAgregarPlataformaCine(){
 
     }
 
-    const nombreRecibido =
-        localStorage.getItem(
-            "appCompartidaTitulo"
-        );
+   const nombreRecibido =
+    localStorage.getItem(
+        "appCompartidaTitulo"
+    ) || "";
 
-   const nombrePlataforma =
+const nombrePlataforma =
     nombreRecibido.replace(
         /^[ÉE]chale un vistazo a\s+/i,
         ""
