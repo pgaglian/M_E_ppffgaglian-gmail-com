@@ -4814,8 +4814,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
         <p id="mensajeConfirmarJuegoPerfil"
            style="text-align:center;color:#ccc;line-height:1.5;">
         </p>
-
-        <button
+<button
     id="btnGuardarConfirmarJuego"
     type="button"
     onclick="confirmarJuegoPerfil()"
@@ -4831,7 +4830,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
     ✅ Sí, guardar
 </button>
 
-        <button
+<button
     id="btnReintentarConfirmarJuego"
     type="button"
     onclick="reintentarConfirmacionJuegoPerfil()"
@@ -4845,6 +4844,21 @@ box-shadow:0 4px 10px rgba(0,0,0,0.3);
     border-radius:10px;
     ">
     ↩️ No, volver a intentar
+</button>
+
+<button
+    type="button"
+    onclick="cancelarConfirmacionJuegoPerfil()"
+    style="
+    display:block;
+    width:100%;
+    margin:10px 0;
+    padding:12px;
+    font-size:16px;
+    font-weight:bold;
+    border-radius:10px;
+    ">
+    ✖ Cancelar
 </button>
 
     </div>
@@ -18476,37 +18490,6 @@ function confirmarJuegoPerfil(){
     guardarJuegoEnPerfil(url);
 }
 
-
-function reintentarConfirmacionJuegoPerfil(){
-
-    const nombre =
-        localStorage.getItem(
-            "nombreJuegoPerfilPendiente"
-        ) || "";
-
-    const popupConfirmacion =
-        document.getElementById(
-            "popupConfirmarJuegoPerfil"
-        );
-
-    if(popupConfirmacion){
-        popupConfirmacion.style.display = "none";
-    }
-
-    cerrarAgregarJuegoPerfil();
-
-    const campo =
-        document.getElementById(
-            "nombreAgregarJuegoPerfil"
-        );
-
-    if(campo){
-        campo.value = nombre;
-    }
-
-}
-
-
 /* Guardado exclusivo en el perfil seleccionado */
 
 function guardarJuegoEnPerfil(url){
@@ -18527,66 +18510,95 @@ function guardarJuegoEnPerfil(url){
     }catch(error){
         juegos = [];
     }
+    const mensajeJuegoDuplicado =
+        document.getElementById("mensajeConfirmarJuegoPerfil");
 
     const duplicado = juegos.some(function(juego){
         return juego.nombre &&
             juego.nombre.trim().toLowerCase() === nombre.trim().toLowerCase();
     });
+       if(duplicado){
 
-    if(duplicado){
+    const mensajeConfirmacion =
+        document.getElementById(
+            "mensajeConfirmarJuegoPerfil"
+        );
 
-        const mensaje =
-            document.getElementById("mensajeConfirmarJuegoPerfil");
+    if(mensajeConfirmacion){
+        mensajeConfirmacion.innerHTML =
+            "⚠ Ese juego ya está guardado en este perfil.";
 
-        if(mensaje){
-            mensaje.textContent =
-                "⚠️ Ese juego ya está guardado en este perfil.";
+        mensajeConfirmacion.style.color =
+            "#FF4444";
+        mensajeConfirmacion.style.display = "block";
+    }
 
-            mensaje.style.color = "#FF4444";
-            mensaje.style.display = "block";
-        }
-
+    const btnGuardar =
         document.getElementById(
             "btnGuardarConfirmarJuego"
-        ).style.display = "none";
+        );
 
+    const btnReintentar =
         document.getElementById(
             "btnReintentarConfirmarJuego"
-        ).style.display = "block";
+        );
 
-        return;
+    if(btnGuardar){
+        btnGuardar.style.display = "none";
     }
 
+    if(btnReintentar){
+        btnReintentar.style.display = "block";
+    }
+
+    const popupLink =
+        document.getElementById(
+            "popupLinkJuegoPerfil"
+        );
+
+    if(popupLink){
+        popupLink.style.display = "none";
+    }
+
+    const popupConfirmacion =
+        document.getElementById(
+            "popupConfirmarJuegoPerfil"
+        );
+
+    if(popupConfirmacion){
+        popupConfirmacion.style.display = "flex";
+    }
+
+    return;
+}
     if(juegos.length >= 10){
 
-        const mensaje =
-            document.getElementById("mensajeConfirmarJuegoPerfil");
-
-        if(mensaje){
-            mensaje.textContent =
+        if(mensajeJuegoDuplicado){
+            mensajeJuegoDuplicado.textContent =
                 "⚠ Ya tenés 10 juegos en este perfil. Eliminá uno para agregar otro.";
-
-            mensaje.style.color = "#FFD700";
-            mensaje.style.display = "block";
+            mensajeJuegoDuplicado.style.color = "#FFD700";
+            mensajeJuegoDuplicado.style.display = "block";
         }
 
         return;
     }
-
     juegos.push({
         nombre: nombre,
         url: url
     });
 
-    localStorage.setItem(clave, JSON.stringify(juegos));
 
-    const mensajeGuardado =
-        document.getElementById("mensajeConfirmarJuegoPerfil");
+localStorage.setItem(clave, JSON.stringify(juegos));
 
-    if(mensajeGuardado){
-        mensajeGuardado.textContent = "✔ Juego guardado en el perfil";
-        mensajeGuardado.style.color = "#32CD32";
-    }
+
+
+const mensajeGuardado =
+    document.getElementById("mensajeConfirmarJuegoPerfil");
+
+if(mensajeGuardado){
+    mensajeGuardado.textContent = "✔ Juego guardado en el perfil";
+    mensajeGuardado.style.color = "#32CD32";
+}
 
     setTimeout(function(){
 
@@ -18622,6 +18634,49 @@ function guardarJuegoEnPerfil(url){
 
 }
 
+function reintentarConfirmacionJuegoPerfil(){
+
+    const nombre =
+        localStorage.getItem("nombreJuegoPerfilPendiente") || "";
+
+    const popupConfirmacion =
+        document.getElementById("popupConfirmarJuegoPerfil");
+
+    const popupLink =
+        document.getElementById("popupLinkJuegoPerfil");
+
+    const popupAgregar =
+        document.getElementById("popupAgregarJuegoPerfil");
+
+    const campo =
+        document.getElementById("nombreAgregarJuegoPerfil");
+
+    if(popupConfirmacion){
+        popupConfirmacion.style.display = "none";
+    }
+
+    if(popupLink){
+        popupLink.style.display = "none";
+    }
+
+    if(popupAgregar){
+        popupAgregar.style.display = "flex";
+    }
+
+    if(campo){
+        campo.value = nombre;
+    }
+
+    const btnGuardar =
+        document.getElementById("btnGuardarConfirmarJuego");
+
+    const btnReintentar =
+        document.getElementById("btnReintentarConfirmarJuego");
+
+    if(btnGuardar) btnGuardar.style.display = "block";
+    if(btnReintentar) btnReintentar.style.display = "none";
+
+}
 
 /* Limpiar únicamente el proceso pendiente de Juegos */
 function cancelarConfirmacionJuegoPerfil(){
@@ -33236,11 +33291,21 @@ function recibirAppCompartida(){
             ""
         );
 
-    // ========================
+        // ========================
     // JUEGOS: FLUJO INDEPENDIENTE
     // ========================
 
     if(moduloDestino === "juegos"){
+
+        localStorage.setItem(
+            "nombreJuegoPerfilPendiente",
+            nombreCompartido
+        );
+
+        localStorage.setItem(
+            "validacionJuegoPerfilActiva",
+            "true"
+        );
 
         const popup =
             document.getElementById(
@@ -33259,12 +33324,30 @@ function recibirAppCompartida(){
                     ? "¿El juego que compartiste desde Google Play es el correcto?"
                     : "¿El juego que compartiste desde App Store es el correcto?";
 
+            mensaje.style.color = "";
+
+            document.getElementById(
+                "btnGuardarConfirmarJuego"
+            ).style.display = "block";
+
+            document.getElementById(
+                "btnReintentarConfirmarJuego"
+            ).style.display = "none";
+
             popup.style.display = "flex";
 
         }
 
-    }
+        const campo =
+            document.getElementById(
+                "nombreAgregarJuegoPerfil"
+            );
 
+        if(campo && titulo){
+            campo.value = nombreCompartido;
+        }
+
+    }
     // ========================
     // MÚSICA: FLUJO INDEPENDIENTE
     // ========================
