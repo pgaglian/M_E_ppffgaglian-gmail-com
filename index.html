@@ -2778,10 +2778,10 @@ box-shadow:0 6px 18px rgba(0,0,0,.45);
 
 </div>
 
-<div class="card" id="accionPizarra" data-titulo="📒 Mi Organizador"
+<div class="card" id="accionPizarra" data-titulo="📒 Organizador"
 onclick="mostrar('MiOrganizador')">
 
-<h2>📒 Mi Organizador</h2>
+<h2>📒 Organizador</h2>
 <p>Organizá tu día, notas y recordatorios</p>
 
 </div>
@@ -5900,20 +5900,37 @@ y la revisamos. 🛠️🔧
             margin-bottom:15px;
             ">
 
-        <button
-            type="button"
-            onclick="guardarLinkPlataformaCine()"
-            style="
-            display:block;
-            width:100%;
-            margin:8px 0;
-            padding:12px;
-            font-size:16px;
-            font-weight:bold;
-            border-radius:10px;
-            ">
-            ✅ Guardar enlace
-        </button>
+       <button
+    id="btnGuardarLinkPlataformaCine"
+    type="button"
+    onclick="guardarLinkPlataformaCine()"
+    style="
+    display:block;
+    width:100%;
+    margin:8px 0;
+    padding:12px;
+    font-size:16px;
+    font-weight:bold;
+    border-radius:10px;
+    ">
+    ✅ Guardar enlace
+</button>
+
+<button
+    id="btnReintentarLinkPlataformaCine"
+    type="button"
+    onclick="reintentarLinkPlataformaCine()"
+    style="
+    display:none;
+    width:100%;
+    margin:8px 0;
+    padding:12px;
+    font-size:16px;
+    font-weight:bold;
+    border-radius:10px;
+    ">
+    ↩️ Volver a intentar
+</button>
 
         <button
             type="button"
@@ -8607,23 +8624,10 @@ font-size:18px;
     margin:10px 0 25px;
 ">
 
-        📒 Mi Organizador
+        📒 Organizador
     </h2>
 
-
-    <!-- MENSAJE GENERAL DEL MODULO -->
-
-    <div id="mensajeMiOrganizador"
-         style="
-         display:none;
-         text-align:center;
-         font-weight:bold;
-         padding:12px;
-         margin:10px 15px;
-         ">
-    </div>
-
-
+   
     <!-- OPCIONES PRINCIPALES -->
 
     <div id="menuMiOrganizador"
@@ -8662,6 +8666,17 @@ font-size:18px;
 
         </div>
 
+                <!-- QUINCENA -->
+
+        <div class="card"
+             onclick="abrirVistaOrganizador('quincena')"
+             style="text-align:center;cursor:pointer;">
+
+            <h2>📆 Quincena</h2>
+
+            <p>Planificación de 15 días</p>
+
+        </div>
 
         <!-- MES -->
 
@@ -8733,10 +8748,208 @@ font-size:18px;
             margin:20px 0;
             ">
         </h2>
+<div id="contenidoVistaOrganizador">
 
-        <div id="contenidoVistaOrganizador">
+    <!-- AVISOS DE LA VISTA -->
+
+    <div id="avisosVistaOrganizador"
+         style="
+         display:none;
+         text-align:center;
+         padding:12px;
+         margin:10px 0 20px;
+         border-radius:10px;
+         font-weight:bold;
+         ">
+    </div>
+
+        <!-- CALENDARIO SEMANAL -->
+
+    <div id="calendarioSemanaOrganizador"
+         style="
+         display:none;
+         max-width:750px;
+         margin:20px auto;
+         padding:12px;
+         box-sizing:border-box;
+         ">
+
+                <!-- NAVEGACION DEL MES Y SEMANA -->
+
+        <div style="
+             display:flex;
+             justify-content:space-between;
+             align-items:center;
+             gap:8px;
+             margin-bottom:15px;
+             ">
+
+            <button onclick="cambiarSemanaOrganizador(-1)">
+                ◀
+            </button>
+
+            <h3 id="tituloMesSemanaOrganizador"
+                style="
+                color:#FFD700;
+                text-align:center;
+                margin:0;
+                flex:1;
+                ">
+            </h3>
+
+            <button onclick="cambiarSemanaOrganizador(1)">
+                ▶
+            </button>
 
         </div>
+
+        <!-- VOLVER A HOY -->
+
+        <div style="text-align:center;margin-bottom:15px;">
+
+            <button onclick="volverSemanaActualOrganizador()">
+                ☀️ Hoy
+            </button>
+
+        </div>
+
+        <!-- IR A UNA FECHA -->
+
+        <div style="
+             text-align:center;
+             margin-bottom:18px;
+             ">
+
+            <label for="fechaElegidaSemanaOrganizador"
+                   style="display:block;margin-bottom:8px;">
+                Ir directamente a una fecha
+            </label>
+
+            <input
+                id="fechaElegidaSemanaOrganizador"
+                type="date"
+                onchange="irAFechaSemanaOrganizador(this.value)"
+                style="
+                max-width:100%;
+                box-sizing:border-box;
+                padding:10px;
+                border-radius:8px;
+                font-size:16px;
+                ">
+
+        </div>
+
+        <!-- DIAS DE LA SEMANA -->
+
+        <div id="diasSemanaOrganizador"
+             style="
+             display:grid;
+             grid-template-columns:repeat(7,minmax(0,1fr));
+             gap:5px;
+             text-align:center;
+             ">
+
+        </div>
+
+    </div>
+
+    <!-- FIN CALENDARIO SEMANAL -->
+
+        <!-- ACCIONES DE MI ORGANIZADOR -->
+
+    <div id="accionesVistaOrganizador"
+         style="
+         display:flex;
+         flex-wrap:wrap;
+         justify-content:center;
+         gap:12px;
+         margin:20px 0;
+         ">
+
+        <button onclick="nuevaTareaOrganizador()">
+            ＋ Nueva tarea
+        </button>
+
+        <button onclick="nuevaNotaOrganizador()">
+            📝 Nota rápida
+        </button>
+
+        <button onclick="nuevoRecordatorioOrganizador()">
+            ⏰ Recordatorio
+        </button>
+
+    </div>
+
+
+<!-- FORMULARIO NUEVA TAREA -->
+
+<div id="formularioNuevaTarea"
+     style="
+     display:none;
+     max-width:600px;
+     margin:20px auto;
+     padding:18px;
+     border-radius:12px;
+     background:rgba(255,255,255,0.06);
+     font-family:inherit;
+     ">
+
+    <h3 style="text-align:center;color:#FFD700;">
+        ＋ Nueva tarea
+    </h3>
+
+    <label>Nombre de la tarea</label>
+
+    <input id="nombreNuevaTarea"
+           type="text"
+           placeholder="¿Qué tenés que hacer?"
+           style="width:100%;box-sizing:border-box;padding:12px;margin:8px 0 15px;font-family:inherit;font-size:16px;font-weight:normal;">
+
+    <label>Fecha</label>
+
+    <input id="fechaNuevaTarea"
+           type="date"
+           style="width:100%;box-sizing:border-box;padding:12px;margin:8px 0 15px;font-family:inherit;font-size:16px;font-weight:normal;color:#FFFFFF;background:#303030;border:1px solid #FFD700;border-radius:8px;color-scheme:dark;">
+
+    <label>Hora (opcional)</label>
+
+    <input id="horaNuevaTarea"
+           type="time"
+           style="width:100%;box-sizing:border-box;padding:12px;margin:8px 0 15px;font-family:inherit;font-size:16px;font-weight:normal;">
+
+    <label>Descripción (opcional)</label>
+
+    <textarea id="descripcionNuevaTarea"
+              placeholder="Agregá algún detalle..."
+              style="width:100%;box-sizing:border-box;padding:12px;margin:8px 0 15px;min-height:90px;font-family:inherit;font-size:16px;font-weight:normal;"></textarea>
+
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+
+        <button onclick="guardarNuevaTareaOrganizador()">
+            💾 Guardar
+        </button>
+
+        <button onclick="cancelarNuevaTareaOrganizador()">
+            ✖ Cancelar
+        </button>
+
+      </div>
+
+    <!-- MENSAJE DE VALIDACION Y CONFIRMACION -->
+    <div id="mensajeMiOrganizador"
+         style="
+         display:none;
+         text-align:center;
+         font-weight:bold;
+         padding:12px;
+         margin-top:12px;
+         ">
+    </div>
+
+</div>
+
+
+</div>
 
     </div>
 
@@ -19821,7 +20034,11 @@ function inicio(){
 // NAVEGACION INTERNA - MI ORGANIZADOR
 // ==========================================
 
+let vistaOrganizadorActual = "hoy";
+
 function abrirVistaOrganizador(vista){
+
+    vistaOrganizadorActual = vista;
 
     document.getElementById("encabezadoMiOrganizador").style.display = "none";
 
@@ -19839,12 +20056,34 @@ function abrirVistaOrganizador(vista){
         titulo.innerHTML = "☀️ Hoy";
     }
 
-    if(vista === "semana"){
+       if(vista === "semana"){
         titulo.innerHTML = "📅 Semana";
     }
 
-    if(vista === "mes"){
+    if(vista === "quincena"){
+        titulo.innerHTML = "📆 Quincena";
+    }
+
+      if(vista === "mes"){
         titulo.innerHTML = "🗓️ Mes";
+    }
+
+    // Mostrar el calendario solamente en Semana
+
+    const calendarioSemana = document.getElementById("calendarioSemanaOrganizador");
+
+    if(vista === "semana"){
+
+        calendarioSemana.style.display = "block";
+
+        fechaBaseSemanaOrganizador = new Date();
+
+        renderizarSemanaOrganizador();
+
+    } else {
+
+        calendarioSemana.style.display = "none";
+
     }
 
 }
@@ -19864,6 +20103,318 @@ function volverMenuOrganizador(){
 
 }
 
+// ==========================================
+// ABRIR FORMULARIO - NUEVA TAREA
+// ==========================================
+function nuevaTareaOrganizador(){
+
+    // En Hoy siempre usamos la fecha actual
+    if(vistaOrganizadorActual === "hoy"){
+        fechaSeleccionadaOrganizador = new Date();
+    }
+
+    // Preparar automáticamente la fecha seleccionada
+    const fecha = fechaSeleccionadaOrganizador;
+
+    const fechaTexto =
+        fecha.getFullYear() + "-" +
+        String(fecha.getMonth() + 1).padStart(2, "0") + "-" +
+        String(fecha.getDate()).padStart(2, "0");
+
+    document.getElementById("fechaNuevaTarea").value = fechaTexto;
+
+    document.getElementById("fechaNuevaTarea").disabled = true;
+
+    document.getElementById("accionesVistaOrganizador").style.display = "none";
+
+    document.getElementById("formularioNuevaTarea").style.display = "block";
+
+}
+
+// ==========================================
+// GUARDAR NUEVA TAREA
+// ==========================================
+
+function guardarNuevaTareaOrganizador(){
+
+    const nombre = document.getElementById("nombreNuevaTarea").value.trim();
+    const fecha = document.getElementById("fechaNuevaTarea").value;
+    const hora = document.getElementById("horaNuevaTarea").value;
+    const descripcion = document.getElementById("descripcionNuevaTarea").value.trim();
+
+    const mensaje = document.getElementById("mensajeMiOrganizador");
+
+    if(!nombre){
+
+    mensaje.textContent = "⚠️ No podés guardar: el nombre de la tarea es obligatorio.";
+    mensaje.style.color = "#FF4444";
+    mensaje.style.display = "block";
+    return;
+
+}
+
+    if(!fecha){
+
+        mensaje.textContent = "⚠️ No hay una fecha seleccionada.";
+        mensaje.style.display = "block";
+        return;
+
+    }
+
+    const tareas = JSON.parse(
+        localStorage.getItem("tareasMiOrganizador") || "[]"
+    );
+
+    tareas.push({
+        id: Date.now(),
+        nombre: nombre,
+        fecha: fecha,
+        hora: hora,
+        descripcion: descripcion,
+        completada: false
+    });
+
+    localStorage.setItem("tareasMiOrganizador", JSON.stringify(tareas));
+
+    document.getElementById("formularioNuevaTarea").style.display = "none";
+    document.getElementById("accionesVistaOrganizador").style.display = "flex";
+
+    document.getElementById("nombreNuevaTarea").value = "";
+    document.getElementById("fechaNuevaTarea").value = "";
+    document.getElementById("horaNuevaTarea").value = "";
+    document.getElementById("descripcionNuevaTarea").value = "";
+
+mensaje.textContent = "✅ Tarea guardada correctamente.";
+mensaje.style.display = "block";
+
+setTimeout(() => {
+    mensaje.style.display = "none";
+    mensaje.textContent = "";
+}, 1000);
+
+}
+
+
+// ==========================================
+// CANCELAR NUEVA TAREA
+// ==========================================
+
+function cancelarNuevaTareaOrganizador(){
+
+    document.getElementById("formularioNuevaTarea").style.display = "none";
+
+    document.getElementById("accionesVistaOrganizador").style.display = "flex";
+
+    document.getElementById("nombreNuevaTarea").value = "";
+    document.getElementById("fechaNuevaTarea").value = "";
+    document.getElementById("horaNuevaTarea").value = "";
+    document.getElementById("descripcionNuevaTarea").value = "";
+
+}
+
+
+// ==========================================
+// CALENDARIO SEMANAL - MI ORGANIZADOR
+// ==========================================
+
+let fechaBaseSemanaOrganizador = new Date();
+let fechaSeleccionadaOrganizador = new Date();
+
+function renderizarSemanaOrganizador(){
+
+    const contenedor = document.getElementById("diasSemanaOrganizador");
+
+    const titulo = document.getElementById("tituloMesSemanaOrganizador");
+
+    const fecha = new Date(
+        fechaBaseSemanaOrganizador.getFullYear(),
+        fechaBaseSemanaOrganizador.getMonth(),
+        fechaBaseSemanaOrganizador.getDate()
+    );
+
+    // Buscar el lunes de la semana seleccionada
+
+    const diaSemana = fecha.getDay();
+
+    const diferencia = diaSemana === 0 ? -6 : 1 - diaSemana;
+
+    const lunes = new Date(fecha);
+
+    lunes.setDate(fecha.getDate() + diferencia);
+
+    const nombresDias = [
+        "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"
+    ];
+
+    const meses = [
+        "Enero", "Febrero", "Marzo", "Abril",
+        "Mayo", "Junio", "Julio", "Agosto",
+        "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    ];
+
+    const domingo = new Date(lunes);
+
+    domingo.setDate(lunes.getDate() + 6);
+
+    // Mostrar el mes correspondiente a la semana
+
+    if(
+        lunes.getMonth() === domingo.getMonth() &&
+        lunes.getFullYear() === domingo.getFullYear()
+    ){
+
+        titulo.textContent =
+            meses[lunes.getMonth()] + " " + lunes.getFullYear();
+
+    } else {
+
+        titulo.textContent =
+            meses[lunes.getMonth()] + " " + lunes.getFullYear() +
+            " / " +
+            meses[domingo.getMonth()] + " " + domingo.getFullYear();
+
+    }
+
+    const hoy = new Date();
+
+    const hoyClave =
+        hoy.getFullYear() + "-" +
+        String(hoy.getMonth() + 1).padStart(2, "0") + "-" +
+        String(hoy.getDate()).padStart(2, "0");
+
+    contenedor.innerHTML = "";
+
+    // Generar los siete días
+
+    for(let i = 0; i < 7; i++){
+
+        const dia = new Date(lunes);
+
+        dia.setDate(lunes.getDate() + i);
+
+        const clave =
+            dia.getFullYear() + "-" +
+            String(dia.getMonth() + 1).padStart(2, "0") + "-" +
+            String(dia.getDate()).padStart(2, "0");
+
+        const esHoy = clave === hoyClave;
+
+       const fechaSeleccionadaClave =
+        fechaSeleccionadaOrganizador.getFullYear() + "-" +
+        String(fechaSeleccionadaOrganizador.getMonth() + 1).padStart(2, "0") + "-" +
+        String(fechaSeleccionadaOrganizador.getDate()).padStart(2, "0");
+
+        const esSeleccionado = clave === fechaSeleccionadaClave;
+
+
+        const esOtroMes =
+            dia.getMonth() !== fechaBaseSemanaOrganizador.getMonth() ||
+            dia.getFullYear() !== fechaBaseSemanaOrganizador.getFullYear();
+
+        const tarjeta = document.createElement("div");
+
+        tarjeta.style.cursor = "pointer";
+
+tarjeta.onclick = function(){
+
+    fechaSeleccionadaOrganizador = new Date(
+        dia.getFullYear(),
+        dia.getMonth(),
+        dia.getDate()
+    );
+
+    fechaBaseSemanaOrganizador = new Date(fechaSeleccionadaOrganizador);
+
+    renderizarSemanaOrganizador();
+
+};
+
+        tarjeta.style.cssText = `
+            min-width:0;
+            box-sizing:border-box;
+            padding:10px 2px;
+            border-radius:10px;
+            text-align:center;
+
+        background:${esSeleccionado ? "rgba(255,215,0,0.25)" : "rgba(255,255,255,0.06)"};
+        border:${esSeleccionado ? "2px solid #FFD700" : "1px solid rgba(255,255,255,0.15)"};
+           
+            color:${esOtroMes ? "#888888" : "inherit"};
+        `;
+
+        tarjeta.innerHTML = `
+            <div style="font-size:clamp(10px,2.5vw,14px);font-weight:bold;">
+                ${nombresDias[i]}
+            </div>
+
+            <div style="font-size:clamp(16px,4vw,23px);font-weight:bold;margin-top:8px;color:${esHoy ? "#FFD700" : "inherit"};">
+                ${dia.getDate()}
+            </div>
+
+            <div style="font-size:clamp(9px,2vw,11px);margin-top:5px;">
+                ${esOtroMes ? meses[dia.getMonth()].substring(0,3) : "&nbsp;"}
+            </div>
+        `;
+
+        contenedor.appendChild(tarjeta);
+
+    }
+
+}
+
+
+// ==========================================
+// CAMBIAR SEMANA
+// ==========================================
+
+function cambiarSemanaOrganizador(direccion){
+
+    fechaBaseSemanaOrganizador.setDate(
+        fechaBaseSemanaOrganizador.getDate() + (direccion * 7)
+    );
+
+    renderizarSemanaOrganizador();
+
+}
+
+// ==========================================
+// VOLVER A LA SEMANA ACTUAL
+// ==========================================
+
+function volverSemanaActualOrganizador(){
+
+    fechaBaseSemanaOrganizador = new Date();
+
+    fechaSeleccionadaOrganizador = new Date();
+
+    renderizarSemanaOrganizador();
+
+    document.getElementById("fechaElegidaSemanaOrganizador").value = "";
+
+}
+
+
+// ==========================================
+// IR A UNA FECHA ELEGIDA
+// ==========================================
+
+function irAFechaSemanaOrganizador(fechaSeleccionada){
+
+    if(!fechaSeleccionada) return;
+
+    const partes = fechaSeleccionada.split("-");
+
+    fechaSeleccionadaOrganizador = new Date(
+        Number(partes[0]),
+        Number(partes[1]) - 1,
+        Number(partes[2])
+    );
+
+    fechaBaseSemanaOrganizador = new Date(fechaSeleccionadaOrganizador);
+
+    renderizarSemanaOrganizador();
+
+}
 
 //========================
 // SALUDO DINÁMICO
@@ -20722,52 +21273,91 @@ localStorage.setItem(
 // ========================
 // POPUP INGRESAR LINK PLATAFORMA CINE
 // ========================
-
 function abrirLinkPlataformaCine(){
 
     const popup =
-        document.getElementById(
-            "popupLinkPlataformaCine"
-        );
+        document.getElementById("popupLinkPlataformaCine");
 
-    if(!popup){
-        return;
-    }
+    if(!popup) return;
 
     const campo =
-        document.getElementById(
-            "urlAgregarPlataformaCine"
-        );
+        document.getElementById("urlAgregarPlataformaCine");
 
-        if(campo){
+    if(campo){
         campo.value = "";
     }
 
     const aviso =
-        document.getElementById(
-            "avisoLinkPlataformaCine"
-        );
+        document.getElementById("avisoLinkPlataformaCine");
 
     if(aviso){
         aviso.remove();
     }
 
-    popup.style.display = "flex";
+    document.getElementById(
+        "btnGuardarLinkPlataformaCine"
+    ).style.display = "block";
 
+    document.getElementById(
+        "btnReintentarLinkPlataformaCine"
+    ).style.display = "none";
+
+    popup.style.display = "flex";
 }
+
 
 function cerrarLinkPlataformaCine(){
 
     const popup =
-        document.getElementById(
-            "popupLinkPlataformaCine"
-        );
+        document.getElementById("popupLinkPlataformaCine");
 
-    if(!popup){
-        return;
+    if(popup){
+        popup.style.display = "none";
     }
 
-    popup.style.display = "none";
+    const aviso =
+        document.getElementById("avisoLinkPlataformaCine");
+
+    if(aviso){
+        aviso.remove();
+    }
+
+    document.getElementById(
+        "btnGuardarLinkPlataformaCine"
+    ).style.display = "block";
+
+    document.getElementById(
+        "btnReintentarLinkPlataformaCine"
+    ).style.display = "none";
+
+}
+
+function reintentarLinkPlataformaCine(){
+
+    const nombre =
+        localStorage.getItem(
+            "nombrePlataformaCinePendiente"
+        ) || "";
+
+    cerrarLinkPlataformaCine();
+
+    const campo =
+        document.getElementById(
+            "nombreAgregarPlataformaCine"
+        );
+
+    if(campo){
+        campo.value = nombre;
+    }
+
+    const popup =
+        document.getElementById(
+            "popupAgregarPlataformaCine"
+        );
+
+    if(popup){
+        popup.style.display = "flex";
+    }
 
 }
 
@@ -20839,13 +21429,22 @@ function guardarLinkPlataformaCine(){
 
     if(existe){
 
-        aviso.textContent =
-            "⚠ Esa plataforma ya está guardada.";
+    aviso.textContent =
+        "⚠ Esa plataforma ya está guardada.";
 
-        aviso.style.display = "block";
-        return;
+    aviso.style.display = "block";
 
-    }
+    document.getElementById(
+        "btnGuardarLinkPlataformaCine"
+    ).style.display = "none";
+
+    document.getElementById(
+        "btnReintentarLinkPlataformaCine"
+    ).style.display = "block";
+
+    return;
+
+}
 
     if(guardadas.length >= 10){
 
